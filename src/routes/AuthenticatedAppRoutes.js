@@ -1,7 +1,8 @@
-import React, { Fragment, PureComponent } from 'react';
+import React, { PureComponent } from 'react';
 import { Route, Switch, Redirect, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
+import { PrivateContainer } from 'views/containers';
 import { HelloWorld } from 'views';
 
 const NotFoundPage = ({ component: Component, ...rest }) => (
@@ -15,19 +16,21 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
 class AuthenticatedAppRoutes extends PureComponent {
     render() {
         return (
-            <Fragment>
+            <PrivateContainer>
                 <Switch>
                     {/*Private*/}
                     <PrivateRoute path='/' exact component={HelloWorld} />
                     {/*Not found*/}
                     <NotFoundPage path='*' />
                 </Switch>
-            </Fragment>
+            </PrivateContainer>
         );
     }
 }
 
-const mapState = state => {};
+const mapState = state => {
+    return {};
+};
 
 const _AuthenticatedAppRoutes = withRouter(
     connect(mapState)(AuthenticatedAppRoutes)
