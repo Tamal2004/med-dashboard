@@ -1,0 +1,42 @@
+export default () => ({
+    backdrop: {
+        backgroundColor: 'rgba(0, 0, 0, 0.8)',
+    },
+    paper: {
+        position: 'absolute',
+        width: '100%',
+        maxWidth: '50vw',
+        outline: 'none',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+    },
+    card: {
+        width: '100%',
+        overflow: 'unset',
+        backgroundColor: 'transparent',
+        boxShadow: 'none',
+    },
+    image: {
+        marginBottom: '-0.6%',
+        borderStyle: 'none',
+        margin: 'auto',
+        top: 0,
+        bottom: 0,
+        left: 0,
+        right: 0,
+    },
+    chevron: {
+        display: 'block',
+        color: 'whitesmoke',
+        width: '12%',
+        height: '100%',
+        minHeight: '500px',
+        position: 'absolute',
+        top: '50%',
+        transform: 'translateY(-50%)',
+        bottom: 0,
+        backgroundColor: 'none',
+        cursor: 'pointer',
+    },
+});

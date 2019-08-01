@@ -1,9 +1,18 @@
 import React from 'react';
+import { Provider } from 'react-redux';
+import { Router } from 'react-router-dom';
+import store from 'store';
+import { history } from 'routes';
+import App from './App';
 
-const App = () => (
-    <div>
-        <h1>Hi this is React</h1>
-    </div>
-);
+const IndexApp = () => {
+	return (
+		<Provider store={store}>
+			<Router history={history}>
+				<App />
+			</Router>
+		</Provider>
+	);
+};
 
-export default App;
+export default IndexApp;
