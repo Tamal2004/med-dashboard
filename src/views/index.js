@@ -4,15 +4,16 @@ import { Router } from 'react-router-dom';
 
 // Local
 import App from 'App';
+import store from 'store'
 import { history } from 'routes';
 
 const Root = () => {
     return (
-        //<Provider store={{}}>
+        <Provider store={store}>
             <Router history={history}>
                 <App />
             </Router>
-        //</Provider>
+        </Provider>
     );
 };
 
