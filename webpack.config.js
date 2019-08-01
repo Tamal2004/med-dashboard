@@ -24,6 +24,9 @@ module.exports = {
     },
     plugins: [
         new CopyWebpackPlugin(['index.html']),
-        new webpack.HotModuleReplacementPlugin()
+        new webpack.HotModuleReplacementPlugin(),
+        new webpack.DefinePlugin({
+            HELLO: JSON.stringify(process.env.HELLO)
+        })
     ]
 };
