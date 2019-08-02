@@ -1,7 +1,7 @@
 import React from 'react';
 
-const SearchPage = () => {
+const ClientSearch = () => {
 	return 'SearchPage PAGE';
 };
 
-export { SearchPage as default, SearchPage };
+export { ClientSearch as default, ClientSearch };

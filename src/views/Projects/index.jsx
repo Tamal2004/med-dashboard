@@ -1,7 +1,5 @@
-import React from 'react';
-
-const ProjectsHome = () => {
-	return 'PROJECT PAGE';
-};
-
-export { ProjectsHome as default, ProjectsHome };
+export * from './Home';
+export * from './New';
+export * from './Report';
+export * from './Search';
+export * from './Single';

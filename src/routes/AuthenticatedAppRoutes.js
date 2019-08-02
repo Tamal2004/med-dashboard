@@ -1,13 +1,15 @@
 import React, { PureComponent } from 'react';
-import { Route, Switch, Redirect, withRouter } from 'react-router-dom';
+import { Route, Switch, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import { PrivateContainer } from 'views/Containers';
-import { AccountHome, ClientHome, ProjectsHome, TestersHome } from 'views';
-
-const NotFoundPage = ({ component: Component, ...rest }) => (
-    <Route {...rest} render={props => <Redirect to='/' />} />
-);
+import {
+    AccountRoutes,
+    ClientRoutes,
+    HomeRoutes,
+    ProjectRoutes,
+    TesterRoutes
+} from './partials';
 
 class AuthenticatedAppRoutes extends PureComponent {
     render() {
@@ -15,31 +17,19 @@ class AuthenticatedAppRoutes extends PureComponent {
             <PrivateContainer>
                 <Switch>
                     {/*Default*/}
-                    <Route path={'/'} exact component={TestersHome} />
+                    <Route path={'/'} exact component={HomeRoutes} />
 
                     {/*Account*/}
-                    <Route path={'/profile'} component={AccountHome} />
+                    <Route path={'/account'} component={AccountRoutes} />
 
                     {/*Client*/}
-                    <Route
-                        path={['/clients', '/clients/all']}
-                        component={ClientHome}
-                    />
+                    <Route path={'/client'} component={ClientRoutes} />
 
                     {/*Project*/}
-                    <Route
-                        path={['/projects', '/projects/all']}
-                        component={ProjectsHome}
-                    />
+                    <Route path={'/project'} component={ProjectRoutes} />
 
                     {/*Tester*/}
-                    <Route
-                        path={['/testers', '/testers/all']}
-                        component={TestersHome}
-                    />
-
-                    {/*Not found*/}
-                    <NotFoundPage path='*' />
+                    <Route path={'/tester'} component={TesterRoutes} />
                 </Switch>
             </PrivateContainer>
         );

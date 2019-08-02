@@ -1,7 +1,5 @@
-import React from 'react';
-
-const TestersHome = () => {
-	return 'TESTER PAGE';
-};
-
-export { TestersHome as default, TestersHome };
+export * from './Home';
+export * from './Mail';
+export * from './New';
+export * from './Single';
+export * from './Search';

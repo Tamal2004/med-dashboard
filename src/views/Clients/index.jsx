@@ -1,4 +1,4 @@
-export * from './AddNew';
 export * from './Home';
-export * from './SingleClient';
+export * from './New';
+export * from './Single';
 export * from './Search';

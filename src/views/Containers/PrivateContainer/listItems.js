@@ -101,7 +101,7 @@ export const secondaryListItems = (
     <Fragment>
         {/*Tester*/}
         <Menu>
-            <MenuItem icon={<AccountIcon />} tag='testers-1' title='Account'>
+            <MenuItem icon={<AccountIcon />} tag='account-1' title='Account'>
                 <LinkItem to={'/profile'} title={'Account'}>
                     <LinkListItem text='Account' />
                 </LinkItem>
