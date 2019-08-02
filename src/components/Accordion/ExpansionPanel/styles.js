@@ -14,7 +14,8 @@ export default ({ spacing, palette, shape }) => ({
 		}
 	},
 	expanded: {
-		margin: '0px !important'
+		margin: '0px !important',
+		borderBottom: '1px solid rgba(0, 0, 0, 0.12) !important'
 	},
 	border: {
 		border: '1px solid',

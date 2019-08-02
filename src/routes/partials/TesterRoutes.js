@@ -17,10 +17,10 @@ const TesterRoutes = ({ match }) => {
 				exact
 				component={TesterHome}
 			/>
-			<Route path={`${match.path}/:id`} component={TesterSingle} />
 			<Route path={`${match.path}/new`} component={TesterNew} />
 			<Route path={`${match.path}/search`} component={TesterSearch} />
 			<Route path={`${match.path}/mail`} component={TesterMail} />
+			<Route path={`${match.path}/:id`} component={TesterSingle} />
 			<Route path={'*'} component={TesterHome} />
 		</Switch>
 	);
