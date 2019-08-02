@@ -1,8 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from 'views';
+import App from './App';
 import * as serviceWorker from './serviceWorker';
+import startServices from 'services';
+import enhanceProtypes from 'libs/prototypeEnhancers';
+
+enhanceProtypes();
+startServices();
 
 ReactDOM.render(<App />, document.getElementById('root'));
 
