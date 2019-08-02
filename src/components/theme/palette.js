@@ -2,7 +2,7 @@ import { amber, green } from '@material-ui/core/colors';
 
 export default {
     primary: {
-        main: '#387ff5'
+        main: '#E27E2E'
     },
     common: {
         transparent: 'rgba(0, 0, 0, 0)'
