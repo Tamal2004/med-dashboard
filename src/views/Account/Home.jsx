@@ -1,7 +1,7 @@
 import React from 'react';
 
 const AccountHome = () => {
-	return 'Account PAGE';
+	return 'Account Home';
 };
 
 export { AccountHome as default, AccountHome };

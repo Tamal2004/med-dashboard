@@ -1,7 +1,7 @@
 import React from 'react';
 
 const ClientHome = () => {
-	return 'CLIENT PAGE';
+	return 'CLIENT Home';
 };
 
 export { ClientHome as default, ClientHome };
