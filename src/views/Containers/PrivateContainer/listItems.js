@@ -71,7 +71,7 @@ export const mainListItems = (
         {/*Client*/}
         <Menu>
             <MenuItem icon={<ClientIcon />} tag='clients-1' title='Clients'>
-                <LinkItem to={'/clients'} title={'Clients'}>
+                <LinkItem to={'/client'} title={'Clients'}>
                     <LinkListItem text='Clients' />
                 </LinkItem>
             </MenuItem>
@@ -80,7 +80,7 @@ export const mainListItems = (
         {/*Project*/}
         <Menu>
             <MenuItem icon={<ProjectIcon />} tag='clients-1' title='Projects'>
-                <LinkItem to={'/projects'} title={'Projects'}>
+                <LinkItem to={'/project'} title={'Projects'}>
                     <LinkListItem text='Projects' />
                 </LinkItem>
             </MenuItem>
@@ -89,7 +89,7 @@ export const mainListItems = (
         {/*Tester*/}
         <Menu>
             <MenuItem icon={<TesterIcon />} tag='testers-1' title='Testers'>
-                <LinkItem to={'/testers'} title={'Testers'}>
+                <LinkItem to={'/tester'} title={'Testers'}>
                     <LinkListItem text='Testers' />
                 </LinkItem>
             </MenuItem>

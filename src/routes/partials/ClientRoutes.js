@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Redirect, Switch } from 'react-router-dom';
 
 import { ClientHome, ClientNew, ClientSearch, ClientSingle } from 'views';
 

@@ -1,7 +1,7 @@
 import React from 'react';
 
-const TesterSingle = props => {
-	return <h3>Tester id: {props.id}</h3>;
+const TesterSingle = ({ match }) => {
+	return <h3>Tester id: {match.params.idd}</h3>;
 };
 
 export { TesterSingle as default, TesterSingle };

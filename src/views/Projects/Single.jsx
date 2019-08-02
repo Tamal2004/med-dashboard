@@ -1,7 +1,8 @@
 import React from 'react';
 
-const ProjectSingle = props => {
-	return <h3>Project id: {props.id}</h3>;
+const ProjectSingle = ({ match }) => {
+	console.log('proejct ', match);
+	return <h3>Project id: {match.params.id}</h3>;
 };
 
 export { ProjectSingle as default, ProjectSingle };
