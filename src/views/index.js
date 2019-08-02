@@ -1,7 +1,9 @@
 import React from 'react';
 
+import ClientsLanding from './ClientsLanding';
+
 const HelloWorld = () => {
-	return 'HelloWorld';
+    return <ClientsLanding />;
 };
 
 export { HelloWorld as default, HelloWorld };
