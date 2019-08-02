@@ -3,7 +3,7 @@ import { Route, Switch, Redirect, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import { PrivateContainer } from 'views/containers';
-import { HelloWorld } from 'views';
+import { AccountHome, ClientHome, ProjectsHome, TestersHome } from 'views';
 
 const NotFoundPage = ({ component: Component, ...rest }) => (
     <Route {...rest} render={props => <Redirect to='/' />} />
@@ -19,7 +19,12 @@ class AuthenticatedAppRoutes extends PureComponent {
             <PrivateContainer>
                 <Switch>
                     {/*Private*/}
-                    <PrivateRoute path='/' exact component={HelloWorld} />
+                    <PrivateRoute path='/' exact component={TestersHome} />
+                    <PrivateRoute path='/profile' component={AccountHome} />
+                    <PrivateRoute path='/clients' component={ClientHome} />
+                    <PrivateRoute path='/projects' component={ProjectsHome} />
+                    <PrivateRoute path='/testers' component={TestersHome} />
+
                     {/*Not found*/}
                     <NotFoundPage path='*' />
                 </Switch>

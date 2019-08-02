@@ -1,7 +1,4 @@
-import React from 'react';
-
-const HelloWorld = () => {
-	return 'HelloWorld';
-};
-
-export { HelloWorld as default, HelloWorld };
+export * from './account';
+export * from './clients';
+export * from './projects';
+export * from './testers';
