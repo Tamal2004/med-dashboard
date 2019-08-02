@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import { Route, Switch, Redirect, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import { PrivateContainer } from 'views/containers';
+import { PrivateContainer } from 'views/Containers';
 import { AccountHome, ClientHome, ProjectsHome, TestersHome } from 'views';
 
 const NotFoundPage = ({ component: Component, ...rest }) => (

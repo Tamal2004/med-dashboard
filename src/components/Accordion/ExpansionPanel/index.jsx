@@ -10,7 +10,8 @@ function ExpansionPanel(props) {
 	return (
 		<MuiExpansionPanel
 			classes={{
-				root: classNames(classes.root, border && classes.border)
+				root: classNames(classes.root, border && classes.border),
+				expanded: classes.expanded
 			}}
 		>
 			{children}
