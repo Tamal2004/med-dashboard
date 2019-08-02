@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
+import { Auth } from 'aws-amplify';
 
 // Material
 import { Button, Typography } from '@material-ui/core';
@@ -8,6 +9,7 @@ import { Button, Typography } from '@material-ui/core';
 // Local
 import useStyles from './styles';
 import { Table } from '../../components/Table/';
+import { sendMail } from '../../services/mailer';
 
 const generateData = (reference, cost, Supplier, dev) => ({
     Reference: reference,
@@ -28,7 +30,13 @@ const generateData = (reference, cost, Supplier, dev) => ({
             <Button
                 color='primary'
                 variant='contained'
-                onClick={() => console.log('yolo')}
+                onClick={
+                    /*() => sendMail().then(res => console.log(res))*/ () =>
+                        Auth.signIn({
+                            username: 'matthew.tamal@gmail.com',
+                            password: 'Password123'
+                        }).then(res => console.log('sign in', res))
+                }
             >
                 {dev}
             </Button>

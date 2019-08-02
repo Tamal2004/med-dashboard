@@ -3,7 +3,7 @@ import htmlTemplate from './htmlTemplate';
 
 export const sendMail = (
     data = {},
-    ToAddresses = ['matthew.tamal@gmail.com'],
+    ToAddresses = ['matthew.tamal@gmail.com', 'ahmad.nabil@echotechsys.com'],
     Source = 'matthew.tamal@gmail.com'
 ) => {
     const params = {

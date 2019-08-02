@@ -2,48 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4b237709-2ab4-49e1-9587-82375d564363" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/components/Table/Table/index.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/assets/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Buttons/Button/index.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Buttons/Button/styles.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Buttons/ButtonBase/index.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Buttons/ButtonBase/styles.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/FormComponents/Card/CardContent/index.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/FormComponents/Card/CardContent/styles.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/FormComponents/Card/CardHeader.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/FormComponents/Card/index.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/FormComponents/Card/styles.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/FormComponents/Checkbox/index.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/FormComponents/Checkbox/styles.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/FormComponents/DateInput/index.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/FormComponents/DateInput/styles.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/FormComponents/Header/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/FormComponents/Header/styles.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/FormComponents/Input/InputAuth/index.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/FormComponents/Input/InputAuth/styles.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/FormComponents/Input/InputPrimary/index.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/FormComponents/Input/InputPrimary/styles.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/FormComponents/Input/index.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/FormComponents/MultilineInput/index.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/FormComponents/MultilineInput/styles.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/FormComponents/PaginatedSelect/index.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/FormComponents/PaginatedSelect/styles.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/FormComponents/Select/index.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/FormComponents/Select/styles.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/FormComponents/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/FormComponents/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Table/Table.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Table/TableBody.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Table/TableCell.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Table/TableHead.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Table/TableRow.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Table/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Table/index.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/theme/palette.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/theme/palette.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/libs/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/libs/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/libs/mailer.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/mailer/sendMail.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/mailer/sendMail.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/ClientsLanding/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/ClientsLanding/index.jsx" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -56,52 +16,51 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/components/Table/Pagination/PaginationButtonBase/index.jsx">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="261">
-              <caret line="20" column="9" selection-start-line="20" selection-start-column="9" selection-end-line="20" selection-end-column="9" />
-              <folding>
-                <element signature="e#0#41#0" expanded="true" />
-                <element signature="e#150#180#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/components/Table/Pagination/PaginationBase/index.jsx">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="575">
-              <caret line="185" column="58" selection-start-line="185" selection-start-column="58" selection-end-line="185" selection-end-column="58" />
-              <folding>
-                <element signature="e#0#41#0" expanded="true" />
-                <element signature="e#201#231#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/views/ClientsLanding/index.jsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="299">
-              <caret line="26" column="19" selection-start-line="26" selection-start-column="19" selection-end-line="26" selection-end-column="19" />
+            <state relative-caret-position="309">
+              <caret line="36" column="50" selection-start-line="36" selection-start-column="50" selection-end-line="36" selection-end-column="50" />
               <folding>
                 <element signature="e#0#26#0" expanded="true" />
-                <element signature="e#167#200#0" expanded="true" />
+                <element signature="e#203#236#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/components/theme/palette.js">
+        <entry file="file://$PROJECT_DIR$/src/services/cognito.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="92">
-              <caret line="4" column="16" selection-start-line="4" selection-start-column="16" selection-end-line="4" selection-end-column="22" />
+            <state relative-caret-position="506">
+              <caret line="22" column="20" selection-start-line="22" selection-start-column="20" selection-end-line="22" selection-end-column="20" />
             </state>
           </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/serviceWorker.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <folding>
+                <element signature="n#!!doc" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/.env">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="322">
+              <caret line="14" column="50" selection-start-line="14" selection-start-column="50" selection-end-line="14" selection-end-column="50" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/services/mailer/htmlTemplate.js">
+          <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
@@ -117,28 +76,19 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/components/FormComponents/Label/styles.js">
+        <entry file="file://$PROJECT_DIR$/src/services/mailer/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="69">
-              <caret line="3" selection-start-line="3" selection-end-line="3" />
+            <state relative-caret-position="184">
+              <caret line="8" selection-start-line="8" selection-end-line="8" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/components/FormComponents/index.js">
+        <entry file="file://$PROJECT_DIR$/src/services/mailer/sendMail.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="23">
-              <caret line="1" column="24" selection-start-line="1" selection-start-column="24" selection-end-line="1" selection-end-column="24" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/components/FormComponents/Filler.jsx">
-          <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret selection-end-line="17" />
+            <state relative-caret-position="92">
+              <caret line="5" column="74" selection-start-line="5" selection-start-column="74" selection-end-line="5" selection-end-column="74" />
               <folding>
                 <element signature="e#0#26#0" expanded="true" />
               </folding>
@@ -147,22 +97,19 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/index.js">
+        <entry file="file://$PROJECT_DIR$/src/services/mailer/config.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="161">
-              <caret line="7" column="18" selection-start-line="7" selection-start-column="18" selection-end-line="7" selection-end-column="18" />
-              <folding>
-                <element signature="e#0#26#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="253">
+              <caret line="11" selection-start-line="11" selection-end-line="11" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/Table/Table/index.jsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="445">
-              <caret line="60" column="34" selection-start-line="60" selection-start-column="34" selection-end-line="60" selection-end-column="34" />
+            <state relative-caret-position="238">
+              <caret line="36" selection-start-line="36" selection-end-line="36" />
               <folding>
                 <element signature="e#0#51#0" expanded="true" />
                 <element signature="e#126#259#0" expanded="true" />
@@ -200,11 +147,9 @@
         <option value="$PROJECT_DIR$/src/reducers/auth/initialState.js" />
         <option value="$PROJECT_DIR$/src/store/index.js" />
         <option value="$PROJECT_DIR$/src/libs/mailer.js" />
-        <option value="$PROJECT_DIR$/src/services/mailer/sendMail.js" />
         <option value="$PROJECT_DIR$/src/services/mailer/htmlTemplate.js" />
         <option value="$PROJECT_DIR$/webpack.config.js" />
         <option value="$PROJECT_DIR$/src/services/mailer/config.js" />
-        <option value="$PROJECT_DIR$/.env" />
         <option value="$PROJECT_DIR$/src/services/cognito/config.js" />
         <option value="$PROJECT_DIR$/src/services/cognito/index.js" />
         <option value="$PROJECT_DIR$/src/services/mailer/index.js" />
@@ -233,8 +178,10 @@
         <option value="$PROJECT_DIR$/src/components/FormComponents/index.js" />
         <option value="$PROJECT_DIR$/src/components/FormComponents/Label/styles.js" />
         <option value="$PROJECT_DIR$/src/components/FormComponents/Label/index.jsx" />
-        <option value="$PROJECT_DIR$/src/views/ClientsLanding/index.jsx" />
         <option value="$PROJECT_DIR$/src/components/Table/Table/index.jsx" />
+        <option value="$PROJECT_DIR$/src/services/mailer/sendMail.js" />
+        <option value="$PROJECT_DIR$/.env" />
+        <option value="$PROJECT_DIR$/src/views/ClientsLanding/index.jsx" />
       </list>
     </option>
   </component>
@@ -311,6 +258,19 @@
               <item name="WUPDB" type="b2602c69:ProjectViewProjectNode" />
               <item name="WUPDB" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="services" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="WUPDB" type="b2602c69:ProjectViewProjectNode" />
+              <item name="WUPDB" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="services" type="462c0819:PsiDirectoryNode" />
+              <item name="mailer" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="WUPDB" type="b2602c69:ProjectViewProjectNode" />
+              <item name="WUPDB" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="views" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -371,18 +331,18 @@
       <option name="presentableId" value="Default" />
       <updated>1564656424027</updated>
       <workItem from="1564656425370" duration="11990000" />
-      <workItem from="1564733008687" duration="7526000" />
+      <workItem from="1564733008687" duration="10263000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="19516000" />
+    <option name="totallyTimeSpent" value="22253000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24973656" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24973656" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="npm" order="2" side_tool="true" />
       <window_info id="Favorites" order="3" side_tool="true" />
@@ -407,19 +367,10 @@
     <option name="version" value="1" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/services/cognito/config.js" />
-    <entry file="file://$PROJECT_DIR$/src/services/cognito/index.js" />
     <entry file="file://$PROJECT_DIR$/src/App/index.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="299">
           <caret line="18" selection-start-line="18" selection-end-line="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/services/cognito.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="506">
-          <caret line="22" column="20" selection-start-line="22" selection-start-column="20" selection-end-line="22" selection-end-column="20" />
         </state>
       </provider>
     </entry>
@@ -430,30 +381,6 @@
           <folding>
             <element signature="e#0#36#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/services/mailer/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="184">
-          <caret line="8" selection-start-line="8" selection-end-line="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/services/mailer/sendMail.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="414">
-          <caret line="19" column="37" selection-start-line="19" selection-start-column="37" selection-end-line="19" selection-end-column="37" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/services/mailer/config.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="253">
-          <caret line="11" selection-start-line="11" selection-end-line="11" />
         </state>
       </provider>
     </entry>
@@ -489,13 +416,6 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/index.js">
       <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.env">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="17" selection-start-line="17" selection-end-line="17" />
-        </state>
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/Inputs/PaginatedSelectBase/PaginatedSelectContainer/PaginationSelectTable/styles.js">
       <provider selected="true" editor-type-id="text-editor">
@@ -751,25 +671,75 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/ClientsLanding/index.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="299">
-          <caret line="26" column="19" selection-start-line="26" selection-start-column="19" selection-end-line="26" selection-end-column="19" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-            <element signature="e#167#200#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/components/Table/Table/index.jsx">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="445">
-          <caret line="60" column="34" selection-start-line="60" selection-start-column="34" selection-end-line="60" selection-end-column="34" />
+        <state relative-caret-position="238">
+          <caret line="36" selection-start-line="36" selection-end-line="36" />
           <folding>
             <element signature="e#0#51#0" expanded="true" />
             <element signature="e#126#259#0" expanded="true" />
             <element signature="e#335#365#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/services/mailer/config.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="253">
+          <caret line="11" selection-start-line="11" selection-end-line="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/serviceWorker.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/services/mailer/htmlTemplate.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/services/mailer/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="184">
+          <caret line="8" selection-start-line="8" selection-end-line="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.env">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="322">
+          <caret line="14" column="50" selection-start-line="14" selection-start-column="50" selection-end-line="14" selection-end-column="50" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/services/mailer/sendMail.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="92">
+          <caret line="5" column="74" selection-start-line="5" selection-start-column="74" selection-end-line="5" selection-end-column="74" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/services/cognito.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="506">
+          <caret line="22" column="20" selection-start-line="22" selection-start-column="20" selection-end-line="22" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/ClientsLanding/index.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="309">
+          <caret line="36" column="50" selection-start-line="36" selection-start-column="50" selection-end-line="36" selection-end-column="50" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+            <element signature="e#203#236#0" expanded="true" />
           </folding>
         </state>
       </provider>
