@@ -9,21 +9,34 @@ const NotFoundPage = ({ component: Component, ...rest }) => (
     <Route {...rest} render={props => <Redirect to='/' />} />
 );
 
-const PrivateRoute = ({ component: Component, ...rest }) => (
-    <Route {...rest} render={props => <Component {...props} />} />
-);
-
 class AuthenticatedAppRoutes extends PureComponent {
     render() {
         return (
             <PrivateContainer>
                 <Switch>
-                    {/*Private*/}
-                    <PrivateRoute path='/' exact component={TestersHome} />
-                    <PrivateRoute path='/profile' component={AccountHome} />
-                    <PrivateRoute path='/clients' component={ClientHome} />
-                    <PrivateRoute path='/projects' component={ProjectsHome} />
-                    <PrivateRoute path='/testers' component={TestersHome} />
+                    {/*Default*/}
+                    <Route path={'/'} exact component={TestersHome} />
+
+                    {/*Account*/}
+                    <Route path={'/profile'} component={AccountHome} />
+
+                    {/*Client*/}
+                    <Route
+                        path={['/clients', '/clients/all']}
+                        component={ClientHome}
+                    />
+
+                    {/*Project*/}
+                    <Route
+                        path={['/projects', '/projects/all']}
+                        component={ProjectsHome}
+                    />
+
+                    {/*Tester*/}
+                    <Route
+                        path={['/testers', '/testers/all']}
+                        component={TestersHome}
+                    />
 
                     {/*Not found*/}
                     <NotFoundPage path='*' />

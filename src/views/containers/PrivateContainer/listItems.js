@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
+
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -8,6 +9,8 @@ import AccountIcon from '@material-ui/icons/AccountBox';
 import TesterIcon from '@material-ui/icons/People';
 import ClientIcon from '@material-ui/icons/NaturePeople';
 import ProjectIcon from '@material-ui/icons/BarChart';
+
+import { Accordion, AccordionPanel } from 'components';
 
 const anchorStyle = {
     color: 'inherit',
@@ -20,31 +23,41 @@ const LinkItem = ({ to, title, children }) => (
     </Link>
 );
 
+const LinkListItem = ({ icon, text }) => (
+    <ListItem button>
+        <ListItemIcon>{icon}</ListItemIcon>
+        <ListItemText primary={text} />
+    </ListItem>
+);
+
+const Menu = ({ children, ...restProps }) => {
+    return <Accordion {...restProps}>{children}</Accordion>;
+};
+
+const MenuItem = ({ children, ...restProps }) => {
+    return (
+        <AccordionPanel reverse={true} {...restProps}>
+            {children}
+        </AccordionPanel>
+    );
+};
+
 export const mainListItems = (
     <Fragment>
-        <LinkItem to={'/clients'} title={'Clients'}>
-            <ListItem button>
-                <ListItemIcon>
-                    <ClientIcon />
-                </ListItemIcon>
-                <ListItemText primary='Clients' />
-            </ListItem>
-        </LinkItem>
+        <Menu>
+            <MenuItem icon={<ClientIcon />} tag='clients-1' title='Clients'>
+                <LinkItem to={'/clients'} title={'Clients'}>
+                    <LinkListItem icon={<ClientIcon />} text='Clients' />
+                </LinkItem>
+            </MenuItem>
+        </Menu>
+
         <LinkItem to={'/projects'} title={'Projects'}>
-            <ListItem button>
-                <ListItemIcon>
-                    <ProjectIcon />
-                </ListItemIcon>
-                <ListItemText primary='Projects' />
-            </ListItem>
+            <LinkListItem icon={<ProjectIcon />} text='Projects' />
         </LinkItem>
+
         <LinkItem to={'/testers'} title={'Testers'}>
-            <ListItem button>
-                <ListItemIcon>
-                    <TesterIcon />
-                </ListItemIcon>
-                <ListItemText primary='Testers' />
-            </ListItem>
+            <LinkListItem icon={<TesterIcon />} text='Testers' />
         </LinkItem>
     </Fragment>
 );
@@ -52,12 +65,7 @@ export const mainListItems = (
 export const secondaryListItems = (
     <Fragment>
         <LinkItem to={'/profile'} title={'Account'}>
-            <ListItem button>
-                <ListItemIcon>
-                    <AccountIcon />
-                </ListItemIcon>
-                <ListItemText primary='Account' />
-            </ListItem>
+            <LinkListItem icon={<AccountIcon />} text='Account' />
         </LinkItem>
     </Fragment>
 );

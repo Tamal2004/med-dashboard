@@ -59,7 +59,7 @@ export default function Dashboard(props) {
                     </IconButton>
                 </div>
                 <Divider />
-                <List>{mainListItems}</List>
+                <List disablePadding={true}>{mainListItems}</List>
                 <Divider />
                 <List>{secondaryListItems}</List>
             </Drawer>
