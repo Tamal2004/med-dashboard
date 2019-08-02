@@ -13,11 +13,12 @@ export default ({ spacing, palette, shape }) => ({
 			display: 'none'
 		}
 	},
+	expanded: {
+		margin: '0px !important',
+		borderBottom: '1px solid rgba(0, 0, 0, 0.12) !important'
+	},
 	border: {
 		border: '1px solid',
 		borderColor: palette.grey[200]
-	},
-	expanded: {
-		margin: '0px'
 	}
 });
