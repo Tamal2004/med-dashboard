@@ -3,7 +3,7 @@ import { Route, Switch, Redirect, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import { PrivateContainer } from 'views/containers';
-import { AccountHome, ClientHome, ProjectsHome, TestersHome } from 'views';
+import { AccountHome, ClientHome, ProjectsHome, TestersHome, ClientsLanding } from 'views';
 
 const NotFoundPage = ({ component: Component, ...rest }) => (
     <Route {...rest} render={props => <Redirect to='/' />} />
@@ -15,7 +15,7 @@ class AuthenticatedAppRoutes extends PureComponent {
             <PrivateContainer>
                 <Switch>
                     {/*Default*/}
-                    <Route path={'/'} exact component={TestersHome} />
+                    <Route path={'/'} exact component={ClientsLanding} />
 
                     {/*Account*/}
                     <Route path={'/profile'} component={AccountHome} />
