@@ -1,0 +1,14 @@
+{
+    "staging": {
+        "awscloudformation": {
+            "AuthRoleName": "wupdb-staging-20190802194730-authRole",
+            "UnauthRoleArn": "arn:aws:iam::632481467481:role/wupdb-staging-20190802194730-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::632481467481:role/wupdb-staging-20190802194730-authRole",
+            "Region": "eu-west-1",
+            "DeploymentBucketName": "wupdb-staging-20190802194730-deployment",
+            "UnauthRoleName": "wupdb-staging-20190802194730-unauthRole",
+            "StackName": "wupdb-staging-20190802194730",
+            "StackId": "arn:aws:cloudformation:eu-west-1:632481467481:stack/wupdb-staging-20190802194730/4d55d510-b52c-11e9-a4a2-06bacc45a76c"
+        }
+    }
+}

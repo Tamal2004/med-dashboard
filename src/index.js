@@ -2,8 +2,18 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import API, { graphqlOperation } from '@aws-amplify/api'
+import PubSub from '@aws-amplify/pubsub';
 import startServices from 'services';
 import enhanceProtypes from 'libs/prototypeEnhancers';
+
+
+import awsconfig from './aws-exports';
+
+
+API.configure(awsconfig);
+PubSub.configure(awsconfig);
+
 
 enhanceProtypes();
 startServices();

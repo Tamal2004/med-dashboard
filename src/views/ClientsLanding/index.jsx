@@ -2,14 +2,28 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { Auth } from 'aws-amplify';
-
+import API, { graphqlOperation } from '@aws-amplify/api';
 // Material
-import { Button, Typography } from '@material-ui/core';
+import {
+    Button,
+    Typography,
+    Card,
+    Input,
+    FormLabel,
+    Grid
+} from '@material-ui/core';
 
 // Local
 import useStyles from './styles';
 import { Table } from '../../components/Table/';
 import { sendMail } from '../../services/mailer';
+import { createBlog } from "../../graphql/mutations";
+
+
+async function createNewBlog() {
+    const blog = { name: 'Using first check'};
+    return await API.graphql(graphqlOperation(createBlog, { input: blog }));
+}
 
 const generateData = (reference, cost, Supplier, dev) => ({
     Reference: reference,
@@ -24,7 +38,18 @@ const generateData = (reference, cost, Supplier, dev) => ({
         ),
         value: cost
     },
-    Supplier,
+    Supplier: {
+        Component: (
+            <Button
+                color='primary'
+                variant='contained'
+                onClick={() => createNewBlog().then(res => console.log(res))}
+            >
+                {Supplier}
+            </Button>
+        ),
+        value: Supplier
+    },
     'Trim Development For': {
         Component: (
             <Button
@@ -73,6 +98,16 @@ const ClientsLanding = props => {
     return (
         <div className={c.root}>
             <Table data={trimData} page={1} />
+            {/*<Card className={c.form}>
+                <Grid container >
+                    <Grid item xs={6}className={c.controlLabel}>
+                        <FormLabel className={c.label}>Label: </FormLabel>
+                    </Grid>
+                    <Grid item xs={6}className={c.controlInput}>
+                        <Input fullWidth className={c.input} />
+                    </Grid>
+                </Grid>
+            </Card>*/}
         </div>
     );
 };
