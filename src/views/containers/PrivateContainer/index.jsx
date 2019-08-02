@@ -1,6 +1,5 @@
 import React from 'react';
 import clsx from 'clsx';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -17,7 +16,7 @@ import { Logo } from 'assets';
 const useStyles = styles;
 
 export default function Dashboard(props) {
-    const classes = useStyles();
+    const c = useStyles();
     const [open, setOpen] = React.useState(true);
     const handleDrawerOpen = () => {
         setOpen(true);
@@ -27,20 +26,19 @@ export default function Dashboard(props) {
     };
 
     return (
-        <div className={classes.root}>
-            <CssBaseline />
+        <div className={c.root}>
             <AppBar
                 position='absolute'
-                className={clsx(classes.appBar, open && classes.appBarShift)}
+                className={clsx(c.appBar, open && c.appBarShift)}
             >
-                <Toolbar className={classes.toolbar}>
+                <Toolbar className={c.toolbar}>
                     <IconButton
                         color='primary'
                         aria-label='open drawer'
                         onClick={handleDrawerOpen}
                         className={clsx(
-                            classes.menuButton,
-                            open && classes.menuButtonHidden
+                            c.menuButton,
+                            open && c.menuButtonHidden
                         )}
                     >
                         <MenuIcon />
@@ -50,15 +48,12 @@ export default function Dashboard(props) {
             <Drawer
                 variant='permanent'
                 classes={{
-                    paper: clsx(
-                        classes.drawerPaper,
-                        !open && classes.drawerPaperClose
-                    )
+                    paper: clsx(c.drawerPaper, !open && c.drawerPaperClose)
                 }}
                 open={open}
             >
-                <div className={classes.toolbarIcon}>
-                    <img className={classes.logo} src={Logo} alt='WUP' />
+                <div className={c.toolbarIcon}>
+                    <img className={c.logo} src={Logo} alt='WUP' />
                     <IconButton onClick={handleDrawerClose}>
                         <ChevronLeftIcon />
                     </IconButton>
@@ -68,9 +63,9 @@ export default function Dashboard(props) {
                 <Divider />
                 <List>{secondaryListItems}</List>
             </Drawer>
-            <main className={classes.content}>
-                <div className={classes.appBarSpacer} />
-                <Container maxWidth='lg' className={classes.container}>
+            <main className={c.content}>
+                <div className={c.appBarSpacer} />
+                <Container maxWidth='lg' className={c.container}>
                     {props.children}
                 </Container>
             </main>
