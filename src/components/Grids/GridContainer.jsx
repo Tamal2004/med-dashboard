@@ -1,21 +1,25 @@
 import React from 'react';
-import classNames from 'classnames';
+import classNames from 'clsx';
 import PropTypes from 'prop-types';
-import withStyles from '@material-ui/core/styles/withStyles';
+import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 
-const style = ({ palette, spacing }) => ({
+const useStyles = makeStyles(theme => ({
+    root: {
+        flexGrow: 1,
+        background: '#fff'
+    },
     divider: {
         borderTop: '1px solid',
-        borderColor: palette.grey[300],
-        marginTop: spacing.unit * 3,
-        paddingTop: spacing.unit
+        borderColor: theme.palette.grey[300],
+        marginTop: theme.spacing(3),
+        paddingTop: theme.spacing(1)
     }
-});
+}));
 
 function GridContainer(props) {
+    const c = useStyles();
     const {
-        classes: c,
         justify,
         spacing,
         children,
@@ -28,7 +32,7 @@ function GridContainer(props) {
             container
             justify={justify}
             spacing={spacing}
-            className={classNames(className, hasDivider && c.divider)}
+            className={classNames(c.root, className, hasDivider && c.divider)}
             {...restProps}
         >
             {children}
@@ -38,7 +42,7 @@ function GridContainer(props) {
 
 GridContainer.defaultProps = {
     justify: 'center',
-    spacing: 40,
+    spacing: 2,
     hasDivider: false
 };
 
@@ -49,6 +53,4 @@ GridContainer.propTypes = {
     hasDivider: PropTypes.bool
 };
 
-const _GridContainer = withStyles(style)(GridContainer);
-
-export { _GridContainer as default, _GridContainer as GridContainer };
+export { GridContainer as default, GridContainer };
