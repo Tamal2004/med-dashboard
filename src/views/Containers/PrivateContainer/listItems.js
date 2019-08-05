@@ -143,8 +143,11 @@ export const secondaryListItems = (
         {/*Tester*/}
         <Menu>
             <MenuItem icon={<AccountIcon />} tag='account-1' title='Account'>
-                <LinkItem to={'/account'} title={'Account'}>
-                    <LinkListItem text='Account' />
+                <LinkItem to={'/profile'} title={'Profile'}>
+                    <LinkListItem text='Profile' />
+                </LinkItem>
+                <LinkItem to={'/logout'} title={'Logout'}>
+                    <LinkListItem text='Logout' />
                 </LinkItem>
             </MenuItem>
         </Menu>

@@ -20,7 +20,7 @@ class AuthenticatedAppRoutes extends PureComponent {
                     <Route path={'/'} exact component={HomeRoutes} />
 
                     {/*Account*/}
-                    <Route path={'/account'} component={AccountRoutes} />
+                    <Route path={'/profile'} component={AccountRoutes} />
 
                     {/*Client*/}
                     <Route path={'/client'} component={ClientRoutes} />

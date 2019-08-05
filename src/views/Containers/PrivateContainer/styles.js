@@ -38,10 +38,13 @@ export default makeStyles(theme => ({
             duration: theme.transitions.duration.enteringScreen
         })
     },
+    barTitle: {
+        fontWeight: 700
+    },
     menuButton: {
         marginRight: 36
     },
-    menuButtonHidden: {
+    menuItemHidden: {
         display: 'none'
     },
     title: {
