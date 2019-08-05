@@ -13,12 +13,10 @@ import {
 
 // Local
 import { LabelBase } from 'components';
-import { composeClasses } from 'helpers';
+import { composeClasses } from 'libs';
 import SelectCancellableIcon from './SelectCancellableIcon';
 import SelectDropdownIcon from './SelectDropdownIcon';
 import SelectPlaceholder from './SelectPlaceholder';
-
-
 
 // Todo: First click after load is eaten up, fix
 /*

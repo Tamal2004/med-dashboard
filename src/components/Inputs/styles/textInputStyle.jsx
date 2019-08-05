@@ -2,32 +2,28 @@ import { amendColor } from 'components/Global/variables';
 import GreenTick from 'components/Global/assets/img/green-tick.svg';
 
 export default theme => ({
-    textField: {
-        marginBottom: 16,
-    },
     textArea: {
         border: '1px solid #e6e6e6',
         borderRadius: '4px',
         padding: '6px 15px 7px',
         minHeight: 129,
-        fontSize: '.875rem',
+        fontSize: '.875rem'
     },
     inputTextAreaField: {
-        padding: 0,
+        padding: 0
     },
     inputTextField: {
-        height: 47,
         fontSize: '.875rem',
-        padding: '6px 15px 7px 20px',
+        padding: '6px 12px',
         border: '1px solid  #e6e6e6',
-        borderRadius: 4,
+        borderRadius: 4
     },
     inputLabelRoot: {
         color: 'rgba(0, 0, 0, 0.87)',
-        position: 'relative',
+        position: 'relative'
     },
     inputLabelFocused: {
-        color: 'rgba(0, 0, 0, 0.87) !important',
+        color: 'rgba(0, 0, 0, 0.87) !important'
     },
     inputLabelShrank: {
         fontSize: '.875rem',
@@ -36,19 +32,19 @@ export default theme => ({
         '&::after': {
             content: `url(${GreenTick})`,
             marginLeft: 15,
-            display: 'none',
-        },
+            display: 'none'
+        }
     },
     inputHasSuccess: {
         '&::after': {
-            display: 'inline-block',
+            display: 'inline-block'
         },
         '& + div > div': {
-            borderColor: '#8fc255',
-        },
+            borderColor: '#8fc255'
+        }
     },
     inputHasError: {
-        borderColor: '#eb5151',
+        borderColor: '#eb5151'
     },
     disabledTextField: {
         height: 47,
@@ -56,9 +52,9 @@ export default theme => ({
         padding: '6px 0 7px 20px;',
         border: '1px solid  #e6e6e6',
         borderRadius: 4,
-        backgroundColor: '#f5f5f5',
+        backgroundColor: '#f5f5f5'
     },
     bgAmendColor: {
-        backgroundColor: amendColor,
-    },
+        backgroundColor: amendColor
+    }
 });

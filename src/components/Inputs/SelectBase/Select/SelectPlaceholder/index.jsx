@@ -2,7 +2,7 @@ import React from 'react';
 import { withStyles, FormLabel } from '@material-ui/core';
 
 import styles from './styles';
-import { composeClasses } from 'helpers';
+import { composeClasses } from 'libs';
 
 /*
  * Domain: --

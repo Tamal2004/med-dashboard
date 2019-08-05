@@ -42,7 +42,7 @@ function GridContainer(props) {
 
 GridContainer.defaultProps = {
     justify: 'center',
-    spacing: 2,
+    spacing: 4,
     hasDivider: false
 };
 
