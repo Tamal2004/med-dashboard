@@ -1,6 +1,5 @@
 import React, { Fragment } from 'react';
 import { NavLink } from 'react-router-dom';
-import classNames from 'clsx';
 import { SvgIcon } from '@material-ui/core';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
