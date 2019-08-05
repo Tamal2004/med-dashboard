@@ -1,5 +1,9 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import { Link } from 'react-router-dom';
+import IconButton from '@material-ui/core/IconButton';
+import DeleteIcon from '@material-ui/icons/Delete';
+import EditIcon from '@material-ui/icons/Edit';
 
 import {
 	GridContainer,
@@ -9,9 +13,11 @@ import {
 	SearchInput
 } from 'components';
 
-import { Button, Typography } from '@material-ui/core';
-
 const useStyles = makeStyles(theme => ({
+	anchorStyle: {
+		textDecoration: 'none',
+		color: theme.palette.primary.main
+	},
 	buttonGridStyle: {
 		display: 'flex',
 		justifyContent: 'flex-end',
@@ -19,27 +25,31 @@ const useStyles = makeStyles(theme => ({
 	}
 }));
 
+const LinkTo = ({ to, children }) => {
+	const c = useStyles();
+	return (
+		<Link className={c.anchorStyle} to={to}>
+			{children}
+		</Link>
+	);
+};
+
 const generateData = (reference, cost, Supplier, dev) => ({
-	Reference: reference,
-	'Trim Cost': {
-		Component: (
-			<Typography
-				style={{ color: 'blue' }}
-				onClick={() => console.log('pushing')}
-			>
-				{cost}
-			</Typography>
-		),
+	Client: {
+		Component: <LinkTo to={'/client/' + reference}>{reference}</LinkTo>,
+		value: reference
+	},
+	'Latest project': {
+		Component: <LinkTo to={'/project/' + cost}>{cost}</LinkTo>,
 		value: cost
 	},
-	Supplier,
-	'Trim Development For': {
-		Component: (
-			<Button color='primary' variant='contained'>
-				{dev}
-			</Button>
-		),
-		value: dev
+	'Latest project date': Supplier,
+	'Last contact date': dev,
+	'': {
+		value: cost,
+		checkAction: () => console.log('Check Meh'),
+		editAction: () => console.log('Edit Meh'),
+		deleteAction: () => console.log('Delete Meh')
 	}
 });
 
@@ -69,7 +79,7 @@ const ClientHome = () => {
 				<NavigateButton>Add a new client</NavigateButton>
 			</GridItem>
 			<GridItem md={12}>
-				<Table data={trimData} page={1} />
+				<Table action={true} data={trimData} page={1} />
 			</GridItem>
 		</GridContainer>
 	);
