@@ -12,6 +12,7 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import { mainListItems, secondaryListItems } from './listItems';
 import styles from './styles';
 import { Logo } from 'assets';
+import { history } from 'libs/history';
 
 const useStyles = styles;
 
@@ -25,6 +26,14 @@ export default function Dashboard(props) {
         setOpen(false);
     };
 
+    const BarTitle = () => {
+        const hist = history ? history.location.pathname : '';
+        const splitInfo = hist.split('/');
+        const text = splitInfo.length >= 1 ? splitInfo[1] : '';
+
+        return <div className={c.barTitle}>{text.toUpperCase()}</div>;
+    };
+
     return (
         <div className={c.root}>
             <AppBar
@@ -36,13 +45,11 @@ export default function Dashboard(props) {
                         color='primary'
                         aria-label='open drawer'
                         onClick={handleDrawerOpen}
-                        className={clsx(
-                            c.menuButton,
-                            open && c.menuButtonHidden
-                        )}
+                        className={clsx(c.menuButton, open && c.menuItemHidden)}
                     >
                         <MenuIcon />
                     </IconButton>
+                    <BarTitle />
                 </Toolbar>
             </AppBar>
             <Drawer
@@ -59,9 +66,16 @@ export default function Dashboard(props) {
                     </IconButton>
                 </div>
                 <Divider />
-                <List disablePadding={true}>{mainListItems}</List>
+                <List
+                    className={(!open && c.menuItemHidden) || ''}
+                    disablePadding={true}
+                >
+                    {mainListItems}
+                </List>
                 <Divider />
-                <List>{secondaryListItems}</List>
+                <List className={(!open && c.menuItemHidden) || ''}>
+                    {secondaryListItems}
+                </List>
             </Drawer>
             <main className={c.content}>
                 <div className={c.appBarSpacer} />

@@ -1,12 +1,8 @@
 const styles = ({ spacing }) => ({
-    root: {
-        display: 'block',
-        minWidth: spacing.unit * 45,
-        height: spacing.unitHeight,
-        margin: 'auto',
-        marginTop: spacing.unitHeight + spacing.unitPadding,
-        marginBottom: spacing.unit * -4.5
-    },
+	root: {
+		display: 'block',
+		minWidth: spacing(2)
+	}
 });
 
 export { styles as default, styles };

@@ -5,15 +5,16 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import TextField from '@material-ui/core/TextField';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import IconButton from '@material-ui/core/IconButton';
+import SearchIcon from '@material-ui/icons/Search';
 import SvgIcon from '@material-ui/core/SvgIcon';
 
 import styles from './styles/textInputStyle';
 
-function TextInput({ ...props }) {
+function SearchInput({ ...props }) {
     const {
         classes,
         labelText,
-        placeholderText,
+        placeholder,
         inputType,
         value,
         isDisabled,
@@ -46,18 +47,13 @@ function TextInput({ ...props }) {
                 inputProps: {
                     className: textArea ? classes.textArea : ''
                 },
-                endAdornment: isDisabled ? (
+                endAdornment: (
                     <InputAdornment position='end'>
-                        <IconButton disabled>
-                            <SvgIcon>
-                                <path
-                                    fill='rgba(0, 0, 0, 0.38)'
-                                    d='M12,1A5,5 0 0,0 7,6V8H6A2,2 0 0,0 4,10V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V10A2,2 0 0,0 18,8H17V6A5,5 0 0,0 12,1M12,2.9C13.71,2.9 15.1,4.29 15.1,6V8H8.9V6C8.9,4.29 10.29,2.9 12,2.9M11,11H13V15H11V11M11,17H13V19H11V17Z'
-                                />
-                            </SvgIcon>
+                        <IconButton color='primary' edge='end'>
+                            <SearchIcon />
                         </IconButton>
                     </InputAdornment>
-                ) : null
+                )
             }}
             InputLabelProps={{
                 shrink: true,
@@ -73,7 +69,7 @@ function TextInput({ ...props }) {
                             : classNames(classes.inputLabelShrank)
                 }
             }}
-            placeholder={placeholderText}
+            placeholder={placeholder}
             value={value}
             onChange={handleText}
             disabled={isDisabled ? true : false}
@@ -81,8 +77,8 @@ function TextInput({ ...props }) {
     );
 }
 
-TextInput.defaultProps = {
-    placeholderText: '',
+SearchInput.defaultProps = {
+    placeholder: '',
     inputType: 'type',
     labelText: null,
     value: '',
@@ -94,13 +90,13 @@ TextInput.defaultProps = {
     textArea: false
 };
 
-TextInput.propTypes = {
+SearchInput.propTypes = {
     classes: PropTypes.object.isRequired,
     labelText: PropTypes.node,
     labelProps: PropTypes.object,
     inputProps: PropTypes.object
 };
 
-const _TextInput = withStyles(styles)(TextInput);
+const _SearchInput = withStyles(styles)(SearchInput);
 
-export { _TextInput as default, _TextInput as TextInput };
+export { _SearchInput as default, _SearchInput as SearchInput };

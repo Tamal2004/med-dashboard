@@ -18,7 +18,18 @@ import styles from './styles';
 import { composeClasses } from 'libs';
 import { PaginationBase } from '../Pagination';
 
+import SvgIcon from '@material-ui/core/SvgIcon';
+import DeleteIcon from '@material-ui/icons/Delete';
+import EditIcon from '@material-ui/icons/Edit';
+import CheckFillIcon from '@material-ui/icons/CheckBox';
+import CheckEmptyIcon from '@material-ui/icons/CheckBoxOutlineBlankSharp';
+
 const capitalize = value => (value ? value.toUpperCase() : value);
+
+const isActionColumn = value =>
+    Object.prototype.hasOwnProperty.call(value, [
+        'checkAction' || 'editAction' || 'deleteAction'
+    ]);
 
 class Table extends Component {
     ITEMS_PER_PAGE = 10;
@@ -26,7 +37,8 @@ class Table extends Component {
     state = {
         sortIndex: null,
         initialData: this.props.data,
-        data: this.props.data
+        data: this.props.data,
+        checked: []
     };
 
     // Classes
@@ -56,7 +68,6 @@ class Table extends Component {
             aValue = typeof aValue === 'object' ? aValue.value : aValue;
             bValue = typeof bValue === 'object' ? bValue.value : bValue;
 
-
             let aParsed = aValue.toLowerCase();
             const bParsed = bValue.toLowerCase();
 
@@ -76,18 +87,103 @@ class Table extends Component {
         this.setState({ data });
     };
 
-    renderCell = value => {
-        const { c } = this;
+    isChecked = id => this.state.checked.includes(id);
 
-        const renderedValue = typeof value === 'object' ? value.Component : value;
+    checkIndex = id => {
+        const { checked } = this.state;
+        let newChecked = [];
+        if (this.isChecked(id)) {
+            checked.splice(checked.indexOf(id), 1);
+            newChecked = [...checked];
+        } else {
+            newChecked = [...checked, id];
+        }
 
-        return <Fragment>{renderedValue}</Fragment>;
+        this.setState({ checked: newChecked });
     };
 
-    renderRow = row =>
+    CheckAction = (onClick = () => {}, idx) => (
+        <SvgIcon
+            size='small'
+            color='action'
+            aria-label='Check'
+            fontSize='small'
+            onClick={() => {
+                this.checkIndex(idx);
+                return onClick();
+            }}
+        >
+            {this.isChecked(idx) ? <CheckFillIcon /> : <CheckEmptyIcon />}
+        </SvgIcon>
+    );
+
+    DeleteAction = (onClick = () => {}) => (
+        <SvgIcon
+            size='small'
+            color='error'
+            fontSize='small'
+            aria-label='Delete'
+            onClick={() => onClick()}
+        >
+            <DeleteIcon />
+        </SvgIcon>
+    );
+
+    EditAction = (onClick = () => {}) => (
+        <SvgIcon
+            size='small'
+            color='action'
+            fontSize='small'
+            aria-label='Edit'
+            onClick={() => onClick()}
+        >
+            <EditIcon />
+        </SvgIcon>
+    );
+
+    renderCell = (value = '', idx) => {
+        const { c } = this;
+        let returnValue = value;
+        const isExists = key =>
+            Object.prototype.hasOwnProperty.call(value, key);
+
+        if (value) {
+            if (typeof value === 'object') {
+                if (isExists('Component')) returnValue = value.Component;
+                if (isExists('checkAction'))
+                    returnValue = (
+                        <Fragment>
+                            {' '}
+                            {this.CheckAction(value.checkAction, idx)}
+                        </Fragment>
+                    );
+                if (isExists('editAction'))
+                    returnValue = (
+                        <Fragment>
+                            {returnValue} {this.EditAction(value.editAction)}
+                        </Fragment>
+                    );
+                if (isExists('deleteAction'))
+                    returnValue = (
+                        <Fragment>
+                            {returnValue}{' '}
+                            {this.DeleteAction(value.deleteAction)}
+                        </Fragment>
+                    );
+            }
+        }
+
+        return <Fragment>{returnValue}</Fragment>;
+    };
+
+    renderRow = (row, index) =>
         Object.entries(row).map(([category, value]) => (
-            <TableCell className={this.c.cell} key={category}>
-                {this.renderCell(value)}
+            <TableCell
+                className={this.c.cell}
+                align={isActionColumn(value) ? 'right' : 'inherit'}
+                key={category}
+            >
+                {this.renderCell(value, index)}
             </TableCell>
         ));
 
@@ -108,7 +204,7 @@ class Table extends Component {
                 index >= startIndex &&
                 index < endIndex && (
                     <TableRow key={index} className={c.row}>
-                        {renderRow(row)}
+                        {renderRow(row, index)}
                     </TableRow>
                 )
         );
@@ -133,7 +229,7 @@ class Table extends Component {
 
     render() {
         const {
-            props: { data: [datum = {}] = [] },
+            props: { data: [datum = {}] = [], action },
             state: { data },
             c,
             handleSort,
@@ -157,12 +253,8 @@ class Table extends Component {
                                 const headerWidth = header.includes('Reference')
                                     ? unitWidth * 1.5
                                     : unitWidth * 2;
+                                const len = headers.length;
 
-                                console.log(
-                                    'check',
-                                    header,
-                                    header.includes('Reference')
-                                );
                                 return (
                                     <TableCell
                                         className={clsx(c.cell, c.cellHeader)}
@@ -171,10 +263,16 @@ class Table extends Component {
                                             minWidth: headerWidth
                                         }}
                                         key={index}
-                                        onClick={() => handleSort(index)}
+                                        onClick={() =>
+                                            action &&
+                                            index < len - 1 &&
+                                            handleSort(index)
+                                        }
                                     >
                                         {header}
-                                        {renderSortIcon(index)}
+                                        {action &&
+                                            index < len - 1 &&
+                                            renderSortIcon(index)}
                                     </TableCell>
                                 );
                             })}
@@ -187,12 +285,15 @@ class Table extends Component {
     }
 }
 
-Table.defaultProps = {};
+Table.defaultProps = {
+    action: false
+};
 
 Table.propTypes = {
     classes: PropTypes.object.isRequired,
     data: PropTypes.array.isRequired,
-    filter: PropTypes.string
+    filter: PropTypes.string,
+    action: PropTypes.bool
 };
 
 const _Table = withStyles(styles)(Table);

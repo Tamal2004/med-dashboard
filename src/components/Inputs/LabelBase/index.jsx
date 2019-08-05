@@ -6,10 +6,8 @@ import { withStyles, FormLabel } from '@material-ui/core';
 
 // Local
 import styles from './styles';
-import { CheckIcon } from 'assets';
-import { Icon } from 'components';
 
-const LabelBase = ({ classes: c, className, label, success, ...restProps }) => (
+const LabelBase = ({ classes: c, className, label, ...restProps }) => (
     <Fragment>
         <FormLabel
             classes={{
@@ -19,7 +17,6 @@ const LabelBase = ({ classes: c, className, label, success, ...restProps }) => (
             {...restProps}
         >
             {label}
-            {success && <CheckIcon className={c.icon} />}
         </FormLabel>
     </Fragment>
 );

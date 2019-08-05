@@ -1,7 +1,7 @@
 import React from 'react';
 
-const AccountHome = () => {
-	return 'Account Home';
+const ProfileHome = () => {
+	return 'Profile Home';
 };
 
-export { AccountHome as default, AccountHome };
+export { ProfileHome as default, ProfileHome };

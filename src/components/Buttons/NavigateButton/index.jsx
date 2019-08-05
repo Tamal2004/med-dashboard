@@ -7,13 +7,7 @@ import { styles } from './styles';
 import { ButtonBase } from 'components';
 
 const NavigateButton = ({ classes: c, ...restProps }) => {
-    return (
-        <ButtonBase
-            classes={c}
-            color='primary'
-            {...restProps}
-        />
-    );
+	return <ButtonBase classes={c} color='primary' {...restProps} />;
 };
 
 const _NavigateButton = withStyles(styles)(NavigateButton);

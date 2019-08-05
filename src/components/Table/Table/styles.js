@@ -1,41 +1,31 @@
-import { hexToRgb } from 'libs';
-
 export default ({ palette, spacing, transitions, typography }) => ({
-    root: {},
+    root: {
+        borderTop: '1px solid #eeeeee'
+    },
     row: {
-        height: spacing(4.5),
-        maxHeight: spacing(4.5),
-
         position: 'relative',
-
-        '&:nth-of-type(even)': {
-            backgroundColor: palette.background.default
-        },
         '&:hover': {
-            backgroundColor: `${hexToRgb(
-                palette.primary.main,
-                palette.action.hoverOpacity
-            )}`
+            backgroundColor: palette.background.default
         }
     },
     body: {},
     header: {
-        backgroundColor: palette.grey[300],
-        cursor: 'unset',
+        cursor: 'pointer',
         '&:hover': {
-            backgroundColor: palette.grey[300]
+            backgroundColor: palette.grey[50]
         }
     },
     cell: {
-        paddingLeft: spacing(),
-        paddingRight: spacing(),
+        padding: `${spacing(2)}px ${spacing()}px`,
         minWidth: spacing(10.5),
         maxWidth: spacing(31.5),
         whiteSpace: 'nowrap',
         overflow: 'hidden',
-        textOverflow: 'ellipsis'
+        textOverflow: 'ellipsis',
+        borderColor: '#eeeeee'
     },
     cellHeader: {
+        borderColor: '#eeeeee',
         color: palette.text.primary,
         fontWeight: typography.fontWeightHeavy,
         fontSize: typography.button.fontSize,
@@ -55,7 +45,10 @@ export default ({ palette, spacing, transitions, typography }) => ({
         top: 0,
         right: 0,
         cursor: 'pointer',
-        transition: `transform ${transitions.duration.complex}ms ${transitions.easing.easeInOut}`
+        marginRight: 15,
+        transition: `transform ${transitions.duration.complex}ms ${
+            transitions.easing.easeInOut
+        }`
     },
     activeIcon: {
         fill: palette.common.black
@@ -63,5 +56,5 @@ export default ({ palette, spacing, transitions, typography }) => ({
     reverseIcon: {
         transform: 'rotate(180deg)'
     },
-    ripple: { color: 'yellow'}
+    ripple: { color: 'yellow' }
 });

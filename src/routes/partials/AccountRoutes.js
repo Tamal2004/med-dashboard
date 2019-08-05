@@ -1,13 +1,13 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
-import { AccountHome } from 'views';
+import { ProfileHome } from 'views';
 
 const AccountRoutes = ({ match }) => {
 	return (
 		<Switch>
-			<Route path={match.path} exact component={AccountHome} />
-			<Route path={'*'} component={AccountHome} />
+			<Route path={match.path} exact component={ProfileHome} />
+			<Route path={'*'} component={ProfileHome} />
 		</Switch>
 	);
 };
