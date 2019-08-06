@@ -26,10 +26,11 @@ import CheckEmptyIcon from '@material-ui/icons/CheckBoxOutlineBlankSharp';
 
 const capitalize = value => (value ? value.toUpperCase() : value);
 
-const isActionColumn = value =>
-    Object.prototype.hasOwnProperty.call(value, [
-        'checkAction' || 'editAction' || 'deleteAction'
-    ]);
+const isActionColumn = value => {
+    let actionHandlers = ['checkAction', 'editAction', 'deleteAction'];
+    let isExists = elem => value.hasOwnProperty(elem);
+    return actionHandlers.some(isExists); // if one exists
+};
 
 class Table extends Component {
     ITEMS_PER_PAGE = 10;
@@ -151,12 +152,7 @@ class Table extends Component {
             if (typeof value === 'object') {
                 if (isExists('Component')) returnValue = value.Component;
                 if (isExists('checkAction'))
-                    returnValue = (
-                        <Fragment>
-                            {' '}
-                            {this.CheckAction(value.checkAction, idx)}
-                        </Fragment>
-                    );
+                    returnValue = this.CheckAction(value.checkAction, idx);
                 if (isExists('editAction'))
                     returnValue = (
                         <Fragment>
