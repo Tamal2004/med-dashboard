@@ -41,13 +41,7 @@ const generateData = (reference, cost, Supplier, dev) => ({
 		value: cost
 	},
 	'Latest project date': Supplier,
-	'Last contact date': dev,
-	'': {
-		value: cost,
-		checkAction: () => console.log('Check Meh'),
-		editAction: () => console.log('Edit Meh'),
-		deleteAction: () => console.log('Delete Meh')
-	}
+	'Last contact date': dev
 });
 
 const trimData = [
@@ -60,8 +54,6 @@ const trimData = [
 	generateData('ETCBR-214', '25.00', 'Azeroth', 'Rich Look Retailers'),
 	generateData('ETCBR-787', '2.00', 'Gater', 'Poor Look Retailers'),
 	generateData('ETCBR-883', '4.00', 'Simon', 'Ugly Look Retailers'),
-	generateData('ETCBR-214', '6.00', 'Derek', 'Funny Look Retailers'),
-	generateData('ETCBR-883', '4.00', 'Simon', 'Ugly Look Retailers'),
 	generateData('ETCBR-214', '6.00', 'Derek', 'Funny Look Retailers')
 ];
 
@@ -73,7 +65,9 @@ const ClientHome = () => {
 				<SearchInput placeholder='Search by name or project reference' />
 			</GridItem>
 			<GridItem md={6} className={c.buttonGridStyle}>
-				<NavigateButton>Add a new client</NavigateButton>
+				<NavigateButton color='secondary'>
+					Add a new client
+				</NavigateButton>
 			</GridItem>
 			<GridItem md={12}>
 				<Table action={true} data={trimData} page={1} />

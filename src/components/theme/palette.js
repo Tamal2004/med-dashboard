@@ -4,6 +4,9 @@ export default {
     primary: {
         main: '#E27E2E'
     },
+    secondary: {
+        main: '#d86305'
+    },
     common: {
         transparent: 'rgba(0, 0, 0, 0)'
     },
