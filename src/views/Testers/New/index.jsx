@@ -23,7 +23,6 @@ import {
 // Selectors
 import {
     selectCounties,
-    selectCountries,
     selectEducationStages,
     selectEmployeeCounts,
     selectEmploymentSectors,
@@ -31,12 +30,13 @@ import {
     selectEthnicities,
     selectGenders,
     selectMaritalStatuses,
+    selectNationalities,
     selectTitles
 } from 'selectors';
 
 const TesterApplication = ({
     counties,
-    countries,
+    nationalities,
     educationStages,
     employeeCounts,
     employmentSectors,
@@ -48,6 +48,7 @@ const TesterApplication = ({
     isStudent,
     isEmployed,
     isRetired,
+    hasManualAddress,
     invalid
 }) => {
     const c = useStyles();
@@ -58,91 +59,101 @@ const TesterApplication = ({
                 Tester Application Form
             </Typography>
             <Typography className={c.info} variant='h5' gutterBottom>
-                If you would like to be a tester plase read the Tester Terms &
-                Conditions, and complete the form below.
+                Thank you for your interest in becoming a website tester. So we
+                can match you with the most suitable testing opportunities
+                please fill out the form below with as much information as
+                possible.
+            </Typography>
+            <Typography className={c.info} variant='h5' gutterBottom>
+                If you have any queries, please contact Avril on
+                avril@webusability.co.uk.
             </Typography>
             <Typography className={c.info} variant='h5' gutterBottom>
                 Our database is maintained solely for our use in recruiting
-                testers. The information is not passed onto any other
+                testers. The information is not passed onto to any other
                 organisation.
             </Typography>
-            <Typography className={c.info} variant='h5' gutterBottom>
-                Remember, the more information you give us, the more change we
-                will recruit you.
-            </Typography>
             <Container title='Contact Details'>
-                <Select
-                    label='Title'
-                    data={titles}
-                    name='title'
-                    placeholder='Please select...'
-                    required
-                />
+                <Select label='Title' data={titles} name='title' required />
                 <Input label='First Name' name='firstName' required />
                 <Input label='Surname' name='surname' required />
-                <Input label='Preferred Email Address' name='email' required />
-                <Input
-                    label='Alternative Email Address'
-                    name='emailAlternative'
-                    required
-                />
-                <Input label='Preferred Phone Number' name='phone' required />
-                <Input label='Town' name='town' required />
-                <Select
-                    label='County'
-                    data={counties}
-                    name='county'
-                    placeholder='Please select...'
-                    required
-                />
-                <Select
-                    label='Country'
-                    data={countries}
-                    name='country'
-                    placeholder='Please select...'
-                    required
-                />
-                <Input label='Postcode' data={[]} name='postcode' required />
+                <Input label='Email Address' name='email' required />
+                <Input label='Phone Number' name='phone' required />
+                <Switch label='Enter address manually?' name='manualAddress' />
+                {!hasManualAddress && (
+                    <Input
+                        label='Enter address or postcode'
+                        name='address'
+                        required
+                    />
+                )}
+                {hasManualAddress && (
+                    <Fragment>
+                        <Input label='House name or number' name='house' />
+                        <Input label='Street' name='street' />
+                        <Input label='Town' name='town' />
+                        <Input label='County' name='county' />
+                        <Input label='Postcode' name='postcode' />
+                        <Input label='Country' name='country' />
+                    </Fragment>
+                )}
             </Container>
 
             <Container title='Personal Details'>
-                <Select
-                    label='Gender'
-                    data={genders}
-                    name='gender'
-                    placeholder='Please select...'
+                <Select label='Gender' data={genders} name='gender' required />
+                <Input label='Age' name='age' required type='number' />
+                <Input
+                    label='Date of Birth'
+                    placeholder='01/01/1985'
+                    name='dob'
                     required
                 />
-                <Input label='Age' name='age' required type='number' />
-                <Input label='Date of Birth' name='dob' required />
                 <Select
                     label='Marital Status'
                     data={maritalStatuses}
                     name='maritalStatus'
-                    placeholder='Please select...'
                     required
                 />
-                <Switch label='Do you have children?' name='hasChildren' required/>
+                <Switch
+                    label='Do you have children?'
+                    name='hasChildren'
+                    required
+                />
+                <Select
+                    label='Nationality'
+                    name='nationality'
+                    data={nationalities}
+                    required
+                />
                 <Select
                     label='Ethnicity'
                     data={ethnicities}
                     name='ethnicity'
-                    placeholder='Please select...'
                     required
                 />
                 <Input
+                    label='What is your first language?'
+                    name='firstLanguage'
+                    required
+                />
+                <Input label='Other languages spoken' name='otherLanguages' />
+                <MultiInput
                     label='Disability'
                     name='disability'
-                    placeholder='Please describe any disability you have.'
+                    placeholder={
+                        `Please describe any disability you have and, if relevant, ` +
+                        `the assistive technology you use (e.g. screen reader, screen magnifier).`
+                    }
                 />
                 <MultiInput
-                    label='Information about yourself'
+                    label='Tell us a bit about yourself'
                     name='selfInfo'
-                    multiline
-                    rows={8}
-                    rowsMax={8}
                     required
-                    placeholder={`Please include information about your interests, experience, previous jobs, areas of expertise and anything else that might help us match you with relevant projects.`}
+                    placeholder={
+                        `Please include information about your family, hobbies, interests, ` +
+                        `experiences, previous jobs, areas of expertise or anything else that ` +
+                        `might help us match you to relevant projects.`
+                    }
                 />
             </Container>
             <Container title='Employment Details'>
@@ -150,7 +161,6 @@ const TesterApplication = ({
                     label='Employment Status'
                     data={employmentStatuses}
                     name='employmentStatus'
-                    placeholder='Please select...'
                     required
                 />
                 {isEmployed && (
@@ -175,7 +185,6 @@ const TesterApplication = ({
                             }Number of Employees`}
                             data={employeeCounts}
                             name='employeeCount'
-                            placeholder='Please select...'
                             required
                         />
                     </Fragment>
@@ -187,7 +196,6 @@ const TesterApplication = ({
                             label='Stage'
                             data={educationStages}
                             name='educationStage'
-                            placeholder='Please select...'
                             required
                         />
                         <Input
@@ -230,13 +238,11 @@ const TesterApplication = ({
 };
 
 const mapState = state => {
-    const employmentStatus = formValueSelector('TesterApplication')(
-        state,
-        'employmentStatus'
-    );
+    const formSelector = formValueSelector('TesterApplication');
+    const employmentStatus = formSelector(state, 'employmentStatus');
     return {
         counties: selectCounties(state),
-        countries: selectCountries(state),
+        nationalities: selectNationalities(state),
         educationStages: selectEducationStages(state),
         employeeCounts: selectEmployeeCounts(state),
         employmentSectors: selectEmploymentSectors(state),
@@ -250,28 +256,25 @@ const mapState = state => {
             employmentStatus === 2 ||
             employmentStatus === 3 ||
             employmentStatus === 4,
-        isRetired: employmentStatus === 4
+        isRetired: employmentStatus === 4,
+        hasManualAddress: formSelector(state, 'manualAddress')
     };
 };
 
 const mapDispatch = {};
 
-const validate = (values, { isStudent, isEmployed }) => {
+const validate = (values, { isStudent, isEmployed, hasManualAddress }) => {
     const required = [
         'title',
         'firstName',
         'surname',
         'email',
-        'emailAlternative',
         'phone',
-        'town',
-        'county',
-        'country',
-        'postcode',
         'gender',
         'age',
         'dob',
         'maritalStatus',
+        'nationality',
         'ethnicity',
         'selfInfo',
         'employmentStatus'
@@ -283,6 +286,7 @@ const validate = (values, { isStudent, isEmployed }) => {
         required.push('institution');
     }
     if (isEmployed) required.push('employeeCount');
+    if (!hasManualAddress) required.push('address');
 
     return { ...validateRequired(values, required) };
 };

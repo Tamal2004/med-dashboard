@@ -6,10 +6,11 @@ export default color => {
             marginTop: '-0.95em',
             width: '3em',
             height: '1em',
+            display: 'none',
             '&::before': {
                 borderWidth: '0 1em 1em 1em',
-                borderColor: `transparent transparent ${color} transparent`,
-            },
-        },
+                borderColor: `transparent transparent ${color} transparent`
+            }
+        }
     };
 };

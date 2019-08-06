@@ -1,5 +1,5 @@
 import COUNTIES from './counties';
-import COUNTRIES from './countries';
+import NATIONALITIES from './nationalities';
 import EDUCATION_STAGES from './educationStages';
 import EMPLOYEE_COUNTS from './employeeCounts';
 import EMPLOYMENT_SECTORS from './employmentSectors';
@@ -11,7 +11,6 @@ import TITLES from './titles';
 
 export {
     COUNTIES,
-    COUNTRIES,
     EDUCATION_STAGES,
     EMPLOYEE_COUNTS,
     EMPLOYMENT_SECTORS,
@@ -19,5 +18,6 @@ export {
     ETHNICITIES,
     GENDERS,
     MARITAL_STATUSES,
+    NATIONALITIES,
     TITLES
 };

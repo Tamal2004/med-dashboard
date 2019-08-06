@@ -10,12 +10,6 @@ export const selectCounties = createCachedSelector(
     ({ counties }) => mapArray(counties)
 )(() => 'placeholder');
 
-// Countries
-export const selectCountries = createCachedSelector(
-    selectDatasets,
-    ({ countries }) => mapArray(countries)
-)(() => 'placeholder');
-
 // Education Statuses
 export const selectEducationStages = createCachedSelector(
     selectDatasets,
@@ -56,6 +50,12 @@ export const selectGenders = createCachedSelector(
 export const selectMaritalStatuses = createCachedSelector(
     selectDatasets,
     ({ maritalStatuses }) => mapArray(maritalStatuses)
+)(() => 'placeholder');
+
+// Nationalities
+export const selectNationalities = createCachedSelector(
+    selectDatasets,
+    ({ nationalities }) => mapArray(nationalities)
 )(() => 'placeholder');
 
 // Titles

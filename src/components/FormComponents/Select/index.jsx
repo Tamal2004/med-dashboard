@@ -12,6 +12,10 @@ const Select = ({ required = false, label, ...restProps }) => (
     </Control>
 );
 
+Select.defaultProps = {
+    placeholder: 'Please select...'
+};
+
 Select.propTypes = {
     data: PropTypes.array.isRequired
 };

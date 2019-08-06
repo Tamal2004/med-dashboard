@@ -14,8 +14,8 @@ export default theme => ({
             display: 'block',
             width: 0,
             height: 0,
-            borderStyle: 'solid',
-        },
+            borderStyle: 'solid'
+        }
     },
     popperLight: arrowGenerator(theme.palette.common.white),
     popperDark: arrowGenerator(theme.palette.common.black),
@@ -25,10 +25,10 @@ export default theme => ({
         borderRadius: 0,
         backgroundColor: theme.palette.common.white,
         padding: '6px 10px',
-        fontSize: '.9rem',
+        fontSize: '.9rem'
     },
     tooltipDark: {
         color: theme.palette.common.white,
-        backgroundColor: theme.palette.common.black,
-    },
+        backgroundColor: theme.palette.common.black
+    }
 });
