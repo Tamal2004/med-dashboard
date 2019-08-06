@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import clsx from 'clsx';
 import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
@@ -8,7 +8,9 @@ import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import Container from '@material-ui/core/Container';
 import MenuIcon from '@material-ui/icons/Menu';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import CloseIcon from '@material-ui/icons/Close';
+import ArrowLeftIcon from '@material-ui/icons/ArrowLeft';
+import ArrowRightIcon from '@material-ui/icons/ArrowRight';
 import { mainListItems, secondaryListItems } from './listItems';
 import styles from './styles';
 import { Logo } from 'assets';
@@ -26,12 +28,35 @@ export default function Dashboard(props) {
         setOpen(false);
     };
 
+    const NavIcon = () => (
+        <Fragment>
+            <IconButton
+                size='small'
+                edge='start'
+                title='Go Back'
+                disabled={history.length <= 1}
+                onClick={() => history && history.goBack()}
+            >
+                <ArrowLeftIcon />
+            </IconButton>
+            <IconButton
+                size='small'
+                edge='start'
+                title='Go Forward'
+                disabled={history.length <= 1}
+                onClick={() => history && history.goForward()}
+            >
+                <ArrowRightIcon />
+            </IconButton>
+        </Fragment>
+    );
+
     const BarTitle = () => {
         const hist = history ? history.location.pathname : '';
         const splitInfo = hist.split('/');
         const text = splitInfo.length >= 1 ? splitInfo[1] : '';
 
-        return <div className={c.barTitle}>{text.toUpperCase()}</div>;
+        return <div className={c.barTitle}>{text.toUpperCase()} </div>;
     };
 
     return (
@@ -49,6 +74,7 @@ export default function Dashboard(props) {
                     >
                         <MenuIcon />
                     </IconButton>
+                    <NavIcon />
                     <BarTitle />
                 </Toolbar>
             </AppBar>
@@ -61,8 +87,8 @@ export default function Dashboard(props) {
             >
                 <div className={c.toolbarIcon}>
                     <img className={c.logo} src={Logo} alt='WUP' />
-                    <IconButton onClick={handleDrawerClose}>
-                        <ChevronLeftIcon />
+                    <IconButton size='small' onClick={handleDrawerClose}>
+                        <CloseIcon />
                     </IconButton>
                 </div>
                 <Divider />

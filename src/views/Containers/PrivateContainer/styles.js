@@ -39,7 +39,8 @@ export default makeStyles(theme => ({
         })
     },
     barTitle: {
-        fontWeight: 700
+        fontWeight: 700,
+        marginLeft: 10
     },
     menuButton: {
         marginRight: 36
