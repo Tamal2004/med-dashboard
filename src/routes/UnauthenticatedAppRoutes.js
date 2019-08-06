@@ -6,10 +6,6 @@ const NotFoundPage = ({ component: Component, ...rest }) => (
     <Route {...rest} render={props => <Redirect to='/' />} />
 );
 
-const PrivateRoute = ({ component: Component, ...rest }) => (
-    <Route {...rest} render={props => <Component {...props} />} />
-);
-
 class UnauthenticatedAppRoutes extends PureComponent {
     render() {
         return (
