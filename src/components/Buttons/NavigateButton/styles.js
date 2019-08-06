@@ -1,4 +1,4 @@
-const styles = ({ spacing }) => ({
+const styles = ({ palette, spacing }) => ({
     root: {
         display: 'block',
         minWidth: spacing(2)

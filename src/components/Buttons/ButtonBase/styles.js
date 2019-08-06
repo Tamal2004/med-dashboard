@@ -6,7 +6,7 @@ const styles = ({ shadows, palette }) => ({
     contained: {
         '&$disabled': {
             color: '#ffffff',
-            backgroundColor: '#96baf5'
+            backgroundColor: palette.grey[400]
         }
     },
     disabled: {}

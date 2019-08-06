@@ -14,5 +14,14 @@ export default makeStyles(({ palette, spacing }) => ({
     info: {
         padding: spacing(4),
         paddingBottom: 0
+    },
+    footer: {
+        padding: spacing(3)
+    },
+    submit: {
+        width: `calc(100% - ${spacing(6)}px)`,
+        height: spacing(6),
+        marginLeft: spacing(3),
+        marginRight: spacing(3)
     }
 }));

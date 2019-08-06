@@ -22,7 +22,7 @@ const CheckboxBase = ({
             icon={<CheckboxBlankIcon className={c.icon} />}
             checkedIcon={<CheckboxFilledIcon className={c.icon} />}
             color={color}
-            checked={value}
+            checked={!!value}
             {...input}
             {...restProps}
         />
