@@ -1,17 +1,14 @@
-import React, { Component, Fragment } from 'react';
+import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { reduxForm } from 'redux-form';
 
 // Material
-import { Paper, Card, Typography, Grid, FormLabel } from '@material-ui/core';
+import { Paper, Typography } from '@material-ui/core';
 
 // Local
 import useStyles from './styles';
-import { Select } from './Select';
-import { Input } from './Input';
-import { MultiInput } from './MultiInput';
-import { SelectBase } from 'components';
+import { SelectBase, Container, Select, Input, MultiInput } from 'components';
 
 const employmentDataset = [
     { label: 'Unemployed', value: 0 },
@@ -20,15 +17,6 @@ const employmentDataset = [
     { label: 'Retired', value: 3 },
     { label: 'Student', value: 4 }
 ];
-
-const renderEmploymentDetails = employmentStatus => {
-    let render = null;
-    if (employmentStatus === 4) {
-        render = <h1>student</h1>;
-    }
-
-    return <Fragment>{render}</Fragment>;
-};
 
 const TesterApplication = props => {
     const c = useStyles();
@@ -54,10 +42,7 @@ const TesterApplication = props => {
                 Remember, the more information you give us, the more change we
                 will recruit you.
             </Typography>
-            <Card className={c.contact}>
-                <Typography className={c.header} variant='h4'>
-                    Contact Details
-                </Typography>
+            <Container title='Contact Details'>
                 <Select
                     label='Title'
                     data={[]}
@@ -90,11 +75,9 @@ const TesterApplication = props => {
                     required
                 />
                 <Input label='Postcode' data={[]} name='postcode' required />
-            </Card>
-            <Card className={c.contact}>
-                <Typography className={c.header} variant='h4'>
-                    Personal Details
-                </Typography>
+            </Container>
+
+            <Container title='Personal Details'>
                 <Select
                     label='Gender'
                     data={[]}
@@ -131,11 +114,8 @@ const TesterApplication = props => {
                     rowsMax={8}
                     placeholder={`Please include information about your interests, experience, previous jobs, areas of expertise and anything else that might help us match you with relevant projects.`}
                 />
-            </Card>
-            <Card className={c.contact}>
-                <Typography className={c.header} variant='h4'>
-                    Employment Details
-                </Typography>
+            </Container>
+            <Container title='Employment Details'>
                 <Select
                     label='Employment Status'
                     data={employmentDataset}
@@ -179,7 +159,35 @@ const TesterApplication = props => {
                         />
                     </Fragment>
                 )}
-            </Card>
+            </Container>
+            <Container title='Employment Details'>
+                <Select
+                    label='Employment Status'
+                    data={employmentDataset}
+                    name='employment'
+                    placeholder='Please select...'
+                    required
+                />
+                {true && (
+                    <Fragment>
+                        <Input label='Job Title' name='jobTitle' />
+                        <Input label='Business Name' name='businessName' />
+                        <Select
+                            label='Sector'
+                            data={[]}
+                            name='sector'
+                            placeholder='Please select...'
+                        />
+                        <Select
+                            label='Number of employees'
+                            data={[]}
+                            name='employeeCount'
+                            placeholder='Please select...'
+                            required
+                        />
+                    </Fragment>
+                )}
+            </Container>
         </Paper>
     );
 };

@@ -18,12 +18,4 @@ const MultiInput = ({ required = false, label, ...restProps }) => (
     </Control>
 );
 
-MultiInput.defaultProps = {
-    multi: false
-};
-
-MultiInput.propTypes = {
-    multi: PropTypes.bool
-};
-
 export { MultiInput as default, MultiInput };
