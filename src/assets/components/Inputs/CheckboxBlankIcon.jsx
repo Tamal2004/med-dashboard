@@ -5,8 +5,8 @@ import { withStyles } from '@material-ui/core';
 
 const styles = ({ spacing }) => ({
     root: {
-        width: spacing.unit * 3,
-        height: spacing.unit * 3
+        width: spacing(3),
+        height: spacing(3)
     }
 });
 

@@ -73,7 +73,7 @@ const GridWrapper = ({ children }) => {
 const TesterHome = () => {
 	const c = useStyles();
 	return (
-		<div>
+		<Fragment>
 			<GridWrapper>
 				<GridItem md={12} className={c.buttonGridStyle}>
 					<LinkTo to={'/tester/search'}>
@@ -94,7 +94,7 @@ const TesterHome = () => {
 					<Table action={true} data={trimData} page={1} />
 				</GridItem>
 			</GridWrapper>
-		</div>
+		</Fragment>
 	);
 };
 
