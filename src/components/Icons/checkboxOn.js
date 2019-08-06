@@ -9,13 +9,13 @@ function CheckBoxIconFilled(props) {
                     fill: '#FFFFFF',
                     fillOpacity: 0,
                     stroke: color,
-                    strokeLinejoin: 'round',
+                    strokeLinejoin: 'round'
                 }}
                 d='M6,3h7c1.7,0,3,1.3,3,3v6c0,1.7-1.3,3-3,3H6c-1.7,0-3-1.3-3-3V6C3,4.3,4.3,3,6,3z'
             />
             <path
                 style={{
-                    fill: color,
+                    fill: color
                 }}
                 d='M11,12.6H8c-1.4,0-2.6-1.2-2.6-2.6V8c0-1.5,1.1-2.6,2.6-2.6h3c1.4,0,2.6,1.2,2.6,2.6v2.1 C13.6,11.5,12.5,12.6,11,12.6z'
             />

@@ -8,17 +8,17 @@ const styles = theme => ({
         borderColor: '#8fc355',
         '&:hover': {
             backgroundColor: '#8fc355',
-            borderColor: '#8fc355',
+            borderColor: '#8fc355'
         },
         '&.active': {
             backgroundColor: '#8fc355',
             borderColor: '#8fc355',
-            opacity: '1',
-        },
+            opacity: '1'
+        }
     },
     saveDraftDisabled: {
         color: '#ffffff !important',
-        backgroundColor: '#c1dba4 !important',
+        backgroundColor: '#c1dba4 !important'
     },
     nextButton: {
         boxShadow: 'none',
@@ -31,16 +31,16 @@ const styles = theme => ({
         borderColor: '#387ff5',
         '&:hover': {
             backgroundColor: '#387ff5',
-            borderColor: '#387ff5',
+            borderColor: '#387ff5'
         },
         '&:active': {
             backgroundColor: '#387ff5',
-            borderColor: '#387ff5',
-        },
+            borderColor: '#387ff5'
+        }
     },
     disabledNextButton: {
         color: '#ffffff !important',
-        backgroundColor: '#96baf5 !important',
+        backgroundColor: '#96baf5 !important'
     },
     handoverButton: {
         marginTop: '6px',
@@ -53,12 +53,12 @@ const styles = theme => ({
         borderColor: '#000000',
         '&:hover': {
             backgroundColor: '#000000',
-            borderColor: '#000000',
+            borderColor: '#000000'
         },
         '&.active': {
             backgroundColor: '#000000',
-            borderColor: '#000000',
-        },
+            borderColor: '#000000'
+        }
     },
 
     publishButton: {
@@ -73,18 +73,18 @@ const styles = theme => ({
         borderColor: '#387ff5',
         '&:hover': {
             backgroundColor: '#387ff5',
-            borderColor: '#387ff5',
+            borderColor: '#387ff5'
         },
         '&.active': {
             backgroundColor: '#387ff5',
             borderColor: '#387ff5',
-            opacity: '1',
-        },
+            opacity: '1'
+        }
     },
     disabledPublishButton: {
         color: '#ffffff !important',
-        backgroundColor: '#96baf5 !important',
-    },
+        backgroundColor: '#96baf5 !important'
+    }
 });
 
 export { styles as default, styles };

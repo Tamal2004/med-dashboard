@@ -4,7 +4,7 @@ export default ({ palette, spacing, typography }) => ({
         borderColor: palette.grey[200],
         minWidth: spacing.unit * 55,
         height: spacing.unit * 63,
-        marginBottom: spacing.unit * 3,
+        marginBottom: spacing.unit * 3
     },
     footer: {
         width: '100%',

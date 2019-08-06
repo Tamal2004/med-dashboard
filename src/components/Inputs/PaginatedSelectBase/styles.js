@@ -5,4 +5,4 @@ export default ({ spacing }) => ({
         height: spacing.unitPadding * 3,
         position: 'relative'
     }
-})
+});

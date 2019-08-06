@@ -46,9 +46,7 @@ export default ({ palette, spacing, transitions, typography }) => ({
         right: 0,
         cursor: 'pointer',
         marginRight: 15,
-        transition: `transform ${transitions.duration.complex}ms ${
-            transitions.easing.easeInOut
-        }`
+        transition: `transform ${transitions.duration.complex}ms ${transitions.easing.easeInOut}`
     },
     activeIcon: {
         fill: palette.common.black

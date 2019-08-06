@@ -67,5 +67,5 @@ export default ({ palette, spacing, transitions, typography }) => ({
     reverseIcon: {
         transform: 'rotate(180deg)'
     },
-    ripple: { color: 'yellow'}
+    ripple: { color: 'yellow' }
 });

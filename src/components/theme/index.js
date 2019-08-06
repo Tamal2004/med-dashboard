@@ -8,7 +8,7 @@ import typography from './typography';
 
 // TODO: Revise 'LEGACY'
 export default createMuiTheme({
-	palette,
-	overrides,
-	typography
+    palette,
+    overrides,
+    typography
 });
