@@ -76,25 +76,14 @@ const TesterSingle = ({ match }) => {
 	return (
 		<div>
 			<GridWrapper>
-				<GridItem md={12} className={c.buttonGridStyle}>
-					<NavigateButton color='secondary'>
-						Add a new client
-					</NavigateButton>
-				</GridItem>
-			</GridWrapper>
-
-			<GridWrapper>
 				<GridItem md={6}>
-					<h3>Client id: {match.params.id}</h3>
+					<h3>Tester: {match.params.id} Details</h3>
 				</GridItem>
 				<GridItem md={6}>
-					<GridItem md={12}>Upper</GridItem>
-					<GridItem md={12}>Lower</GridItem>
+					<GridItem md={12}>Contact Details Card</GridItem>
+					<GridItem md={12}>Employment Details Card</GridItem>
+					<GridItem md={12}>Test Session</GridItem>
 				</GridItem>
-			</GridWrapper>
-
-			<GridWrapper>
-				<GridItem md={12}>Test sessions</GridItem>
 			</GridWrapper>
 
 			<GridWrapper>

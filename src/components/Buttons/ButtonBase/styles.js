@@ -1,7 +1,6 @@
 const styles = ({ shadows, palette }) => ({
     root: {
-        boxShadow: shadows[0],
-        color: palette.common.white
+        boxShadow: shadows[0]
     },
     contained: {
         '&$disabled': {
