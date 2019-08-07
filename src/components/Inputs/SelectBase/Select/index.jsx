@@ -207,6 +207,7 @@ class Select extends Component {
                 getContentAnchorEl: null,
                 disableAutoFocusItem: true,
                 disableAutoFocus: true,
+                disablePortal: true,
                 ModalClasses: { root: c.modal }
             },
             classes: { ...Object.splice(c, ['root', 'select', 'icon']) },

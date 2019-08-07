@@ -1,6 +1,7 @@
 export default ({ spacing, palette }) => ({
     placeholder: {
         color: palette.grey[400],
+        fontSize: 'inherit',
         position: 'absolute',
         display: 'inline-block',
         whiteSpace: 'nowrap',
@@ -8,9 +9,9 @@ export default ({ spacing, palette }) => ({
         paddingRight: spacing.unit * 4,
         textOverflow: 'ellipsis',
         height: 'inherit',
-        paddingLeft: spacing.unit * 2,
+        paddingLeft: spacing.unit * 2
     },
     focused: {
-        display: 'none !important',
-    },
+        display: 'none !important'
+    }
 });

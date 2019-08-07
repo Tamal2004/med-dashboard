@@ -19,6 +19,7 @@ const TooltipIcon = ({
     title,
     onClick,
     disabled,
+    color = 'default',
     Icon: IconComponent // Pascal Case --> Component
 }) => (
     <Tooltip title={title}>
@@ -29,7 +30,7 @@ const TooltipIcon = ({
                 onClick={onClick}
             >
                 <Icon className={className} disabled={disabled}>
-                    <IconComponent />
+                    <IconComponent color={color} />
                 </Icon>
             </ButtonBase>
         </div>
@@ -38,7 +39,4 @@ const TooltipIcon = ({
 
 const _TooltipIcon = withStyles(styles)(TooltipIcon);
 
-export {
-    _TooltipIcon as default,
-    _TooltipIcon as TooltipIcon
-};
+export { _TooltipIcon as default, _TooltipIcon as TooltipIcon };

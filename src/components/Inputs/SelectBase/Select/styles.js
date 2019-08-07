@@ -1,7 +1,7 @@
 export default ({ unitHeight, unitWidth, listMaxNumber, iconRight }) => ({
     spacing,
     palette,
-    shape,
+    shape
 }) => {
     const menuItemHeight = unitHeight / 2;
     const listItemNumber = listMaxNumber;
@@ -16,13 +16,14 @@ export default ({ unitHeight, unitWidth, listMaxNumber, iconRight }) => ({
     return {
         root: {
             display: 'flex',
+            fontSize: 'inherit',
             alignItems: 'center',
             paddingRight: spacing.unit,
             height: 'inherit',
             color: palette.grey[700],
             '&:hover': {
-                color: palette.text.primary,
-            },
+                color: palette.text.primary
+            }
         },
         select: {
             display: 'inline-block',
@@ -36,22 +37,22 @@ export default ({ unitHeight, unitWidth, listMaxNumber, iconRight }) => ({
             '&:hover': {
                 border: '1px solid',
                 borderColor: palette.primary.main,
-                borderRadius: shape.borderRadius,
-            },
+                borderRadius: shape.borderRadius
+            }
         },
         selectCancellable: {
-            paddingRight: Number(iconRight) + spacing.unit * 3, // Icon margin + font size
+            paddingRight: Number(iconRight) + spacing.unit * 3 // Icon margin + font size
         },
         icon: {
             position: 'relative',
-            top: 0,
+            top: 0
         },
         list: {
             marginTop: menuItemHeight * 2 + 2,
             maxHeight: listHeight,
             maxWidth: 0,
             borderTopLeftRadius: 'unset',
-            borderTopRightRadius: 'unset',
+            borderTopRightRadius: 'unset'
         },
         listItem: {
             '& > li': {
@@ -65,24 +66,26 @@ export default ({ unitHeight, unitWidth, listMaxNumber, iconRight }) => ({
                 overflow: 'hidden',
                 whiteSpace: 'nowrap',
                 paddingTop: menuItemPadding,
-                paddingBottom: menuItemPadding,
-            },
+                paddingBottom: menuItemPadding
+            }
         },
         placeholder: {
             lineHeight: `${menuItemHeight * 2}px`,
-            width: unitWidth,
+            width: unitWidth
         },
 
         inputRoot: {
             width: '100%',
             position: 'absolute',
+            fontSize: 'inherit',
             //left: Number(unitWidth) + spacing.unit,
             // InputBase
             '& > div': {
+                fontSize: 'inherit',
                 height: 'inherit',
 
                 '&:before': {
-                  display: 'none'
+                    display: 'none'
                 },
                 '&::after': {
                     display: 'none'
@@ -99,12 +102,11 @@ export default ({ unitHeight, unitWidth, listMaxNumber, iconRight }) => ({
             zIndex: 1
         },
 
-
         modal: {
-            width: 0,
+            width: 0
         },
         selectQuery: {
-            color: palette.common.transparent,
+            color: palette.common.transparent
         },
         placeholderQuery: {
             display: 'none'
@@ -118,7 +120,8 @@ export default ({ unitHeight, unitWidth, listMaxNumber, iconRight }) => ({
             // InputBase
             '& > div': {
                 marginTop: 0,
-                height: 'inherit',
+                fontSize: 'inherit',
+                height: 'inherit'
             },
             '&:hover': {
                 borderColor: palette.grey[400]
@@ -128,7 +131,7 @@ export default ({ unitHeight, unitWidth, listMaxNumber, iconRight }) => ({
         success: {
             borderColor: `${palette.success.primary} !important`, // Focus override
             '&:hover': {
-                borderColor: `${palette.success.hover} !important`, // Focus override
+                borderColor: `${palette.success.hover} !important` // Focus override
             }
         },
         disabled: {
@@ -140,7 +143,7 @@ export default ({ unitHeight, unitWidth, listMaxNumber, iconRight }) => ({
         },
         container: {
             position: 'unset',
-            width: '100%',
+            width: '100%'
         }
     };
 };

@@ -5,6 +5,9 @@ export default makeStyles(({ palette, spacing }) => ({
         marginTop: spacing(3),
         marginBottom: spacing(3)
     },
+    cardRoot: {
+        margin: 0
+    },
     left: {
         paddingRight: spacing(4),
         paddingLeft: spacing(2)
@@ -20,5 +23,8 @@ export default makeStyles(({ palette, spacing }) => ({
         height: spacing(6),
         display: 'flex',
         alignItems: 'center'
+    },
+    cardLabel: {
+        height: spacing(5)
     }
 }));

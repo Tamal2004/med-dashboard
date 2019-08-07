@@ -2,8 +2,8 @@ import { hexToRgb } from 'libs';
 
 export default ({ palette, spacing, typography }) => ({
     root: {
-        width: spacing(4),
-        height: spacing.unit * 4,
+        width: spacing(4.5),
+        height: spacing(4.5),
         minWidth: 'unset',
         minHeight: 'unset',
         padding: spacing.unit,
@@ -23,9 +23,9 @@ export default ({ palette, spacing, typography }) => ({
     },
     /* When active */
     colorPrimary: {
-        backgroundColor: palette.action.selected,
+        backgroundColor: palette.primary.light,
         '&:hover': {
-            backgroundColor: palette.action.hover
+            backgroundColor: palette.primary.main
         }
     },
     /* Default */
