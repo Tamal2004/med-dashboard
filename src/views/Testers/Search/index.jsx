@@ -2,23 +2,11 @@ import React, { Fragment } from 'react';
 import classNames from 'clsx';
 import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
-import ListItem from '@material-ui/core/ListItem';
-import Checkbox from '@material-ui/core/Checkbox';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-
-import FormGroup from '@material-ui/core/FormGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormControl from '@material-ui/core/FormControl';
-import FormLabel from '@material-ui/core/FormLabel';
-
-import { CheckboxBlankIcon, CheckboxFilledIcon } from 'assets';
+import { SearchFilter } from './SearchFilter';
 
 import {
 	GridContainer,
 	GridItem,
-	Accordion,
-	SearchAccordionPanel,
 	NavigateButton,
 	Table,
 	SearchInput
@@ -88,70 +76,6 @@ const GridWrapper = ({ className, children }) => {
 	);
 };
 
-const FilterBlock = ({ children, ...restProps }) => {
-	return <Accordion {...restProps}>{children}</Accordion>;
-};
-
-const FilterItem = ({ children, ...restProps }) => {
-	return (
-		<SearchAccordionPanel reverse={true} {...restProps}>
-			{children}
-		</SearchAccordionPanel>
-	);
-};
-
-const Filter = ({ text }) => {
-	const c = useStyles();
-	const [value, setValue] = React.useState('female');
-
-	function handleChange(event) {
-		console.log('handleChange', event.target.value);
-		setValue(event.target.value);
-	}
-
-	return (
-		<FormControl component='fieldset'>
-			<FormGroup
-				aria-label='position'
-				name='position'
-				value={value}
-				onChange={handleChange}
-			>
-				<FormControlLabel
-					value='end'
-					control={
-						<Checkbox
-							icon={<CheckboxBlankIcon className={c.icon} />}
-							checkedIcon={
-								<CheckboxFilledIcon className={c.icon} />
-							}
-							checked={true}
-							color='primary'
-						/>
-					}
-					label='End'
-					labelPlacement='end'
-				/>
-				<FormControlLabel
-					value='end'
-					control={
-						<Checkbox
-							icon={<CheckboxBlankIcon className={c.icon} />}
-							checkedIcon={
-								<CheckboxFilledIcon className={c.icon} />
-							}
-							checked={true}
-							color='primary'
-						/>
-					}
-					label='End'
-					labelPlacement='end'
-				/>
-			</FormGroup>
-		</FormControl>
-	);
-};
-
 const TesterSearch = () => {
 	const c = useStyles();
 	return (
@@ -168,11 +92,7 @@ const TesterSearch = () => {
 
 			<GridWrapper className={c.filterGridWrapper}>
 				<GridItem md={3}>
-					<FilterBlock>
-						<FilterItem tag='filters-1' title='Clients'>
-							<Filter />
-						</FilterItem>
-					</FilterBlock>
+					<SearchFilter />
 				</GridItem>
 				<GridItem md={9}>
 					<div className={c.filterButtonWrapper}>
