@@ -2,7 +2,8 @@ import { makeStyles } from '@material-ui/core';
 
 export default makeStyles(({ palette, spacing, typography }) => ({
     control: {
-        height: spacing(6)
+        height: spacing(6),
+        fontSize: typography['subtitle1'].fontSize
     },
     dropdownRoot: {
         marginRight: spacing(1)

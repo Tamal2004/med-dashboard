@@ -8,9 +8,10 @@ import { InputBase } from 'components';
 import { Control } from '../Control';
 
 const MultiInput = ({
-    required = false,
+    required,
     label,
     isCard,
+    memo,
     active,
     ...restProps
 }) => {
@@ -19,8 +20,10 @@ const MultiInput = ({
         ...c,
         root: clsx(c.root, isCard && cardRoot, !active && inactiveRoot)
     };
+    const controlProps = { required, label, isCard, memo };
+
     return (
-        <Control label={label} required={required} isCard={isCard}>
+        <Control {...controlProps}>
             <InputBase
                 styles={multiInputStyles}
                 multiline
@@ -33,6 +36,7 @@ const MultiInput = ({
 };
 
 MultiInput.defaultProps = {
+    required: false,
     isCard: false,
     active: true
 };

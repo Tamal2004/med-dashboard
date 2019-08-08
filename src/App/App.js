@@ -1,7 +1,9 @@
 import React, { PureComponent, lazy, Suspense } from 'react';
 import { connect } from 'react-redux';
+import { compose } from 'redux';
 
 // Local
+import { withModalProvider } from 'components';
 const AuthenticatedApp = lazy(() => import('./AuthenticatedApp'));
 const UnauthenticatedApp = lazy(() => import('./UnauthenticatedApp'));
 
@@ -19,4 +21,7 @@ class App extends PureComponent {
 
 const mapStateToProps = ({ auth }) => ({ auth });
 
-export default connect(mapStateToProps)(App);
+export default compose(
+    connect(mapStateToProps),
+    withModalProvider
+)(App);

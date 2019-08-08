@@ -79,7 +79,6 @@ const TesterApplication = ({
                 <Input label='Surname' name='surname' required />
                 <Input label='Email Address' name='email' required />
                 <Input label='Phone Number' name='phone' required />
-                <Switch label='Enter address manually?' name='manualAddress' />
                 {!hasManualAddress && (
                     <Input
                         label='Enter address or postcode'
@@ -87,6 +86,7 @@ const TesterApplication = ({
                         required
                     />
                 )}
+                <Switch label='Enter address manually?' name='manualAddress' />
                 {hasManualAddress && (
                     <Fragment>
                         <Input label='House name or number' name='house' />
@@ -101,7 +101,6 @@ const TesterApplication = ({
 
             <Container title='Personal Details'>
                 <Select label='Gender' data={genders} name='gender' required />
-                <Input label='Age' name='age' required type='number' />
                 <Input
                     label='Date of Birth'
                     placeholder='01/01/1985'
@@ -140,7 +139,7 @@ const TesterApplication = ({
                 <MultiInput
                     label='Disability'
                     name='disability'
-                    placeholder={
+                    memo={
                         `Please describe any disability you have and, if relevant, ` +
                         `the assistive technology you use (e.g. screen reader, screen magnifier).`
                     }
@@ -149,7 +148,7 @@ const TesterApplication = ({
                     label='Tell us a bit about yourself'
                     name='selfInfo'
                     required
-                    placeholder={
+                    memo={
                         `Please include information about your family, hobbies, interests, ` +
                         `experiences, previous jobs, areas of expertise or anything else that ` +
                         `might help us match you to relevant projects.`

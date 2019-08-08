@@ -24,6 +24,8 @@ export default makeStyles(({ palette, spacing }) => ({
         display: 'flex',
         alignItems: 'center'
     },
+    labelText: { color: palette.text.primary },
+    memo: { color: palette.text.hint },
     cardLabel: {
         height: spacing(5)
     }

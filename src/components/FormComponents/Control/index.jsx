@@ -7,7 +7,7 @@ import useStyles from './styles';
 import { Grid, FormLabel, Typography } from '@material-ui/core';
 import { SelectBase } from 'components';
 
-const Control = ({ required = false, label, isCard, children }) => {
+const Control = ({ required = false, label, isCard, memo, children }) => {
     const c = useStyles();
     return (
         <Grid container className={clsx(c.root, isCard && c.cardRoot)}>
@@ -16,10 +16,11 @@ const Control = ({ required = false, label, isCard, children }) => {
                     required={required}
                     className={clsx(c.label, isCard && c.cardLabel)}
                 >
-                    <Typography variant={isCard ? 'subtitle2' : 'subtitle1'}>
+                    <Typography className={c.labelText} variant={isCard ? 'subtitle2' : 'subtitle1'}>
                         {label}
                     </Typography>
                 </FormLabel>
+                {memo && <Typography className={c.memo} variant='subtitle2'>{memo}</Typography>}
             </Grid>
             <Grid item xs={6} className={c.right}>
                 {children}
@@ -35,6 +36,7 @@ Control.defaultProps = {
 
 Control.propTypes = {
     label: PropTypes.string.isRequired,
+    memo: PropTypes.string,
     isCard: PropTypes.bool
 };
 

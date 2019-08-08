@@ -5,7 +5,7 @@ import cloneDeep from 'lodash/cloneDeep';
 import ModalContext from './ModalContext';
 import ModalContainer from '../ModalContainer/index';
 
-import { setModal, openModal, closeModal } from 'store/actions';
+import { setModal, openModal, closeModal } from 'actions';
 
 class ModalProvider extends Component {
     state = {
