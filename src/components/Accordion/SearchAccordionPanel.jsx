@@ -38,6 +38,7 @@ class SearchAccordionPanel extends Component {
                         square
                         expanded={expandedId === tag}
                         onChange={() => handleChange(tag)}
+                        distance={true}
                         {...restProps}
                     >
                         <SearchExpansionPanelSummary

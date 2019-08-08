@@ -11,11 +11,21 @@ export default ({ spacing, palette, shape }) => ({
 		},
 		'&:before': {
 			display: 'none'
+		},
+		'&$expanded': {
+			margin: '0px'
+		}
+	},
+	distance: {
+		'&:not(:last-child)': {
+			marginBottom: 10
 		}
 	},
 	expanded: {
-		margin: '0px !important',
-		borderBottom: '1px solid rgba(0, 0, 0, 0.12) !important'
+		margin: '0px'
+	},
+	distanceExpanded: {
+		marginBottom: 10
 	},
 	border: {
 		border: '1px solid',

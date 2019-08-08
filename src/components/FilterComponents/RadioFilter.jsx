@@ -1,3 +1,16 @@
+/*******************************************************
+IMPLEMENTATION
+
+<RadioFilter
+	data={GENDERS}
+	onChange={e =>
+		onChange(e, FILTER_KEY['gender'], 'radio')
+	}
+	title={FILTER_KEY['gender']}
+	value={getFilterValues(FILTER_KEY['gender'])}
+/>
+********************************************************/
+
 import React from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
@@ -8,12 +21,9 @@ import FormControl from '@material-ui/core/FormControl';
 import { AccordionFilterContainer } from './FilterContainer';
 import { RadioControlLabel } from './ControlLabel';
 
-const borderColor = '1px solid rgba(0, 0, 0, 0.12)';
 const useStyles = makeStyles(theme => ({
 	controlPadding: {
-		paddingLeft: 16,
-		borderLeft: borderColor,
-		borderRight: borderColor
+		paddingLeft: 16
 	}
 }));
 

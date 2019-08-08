@@ -13,11 +13,7 @@ import {
 	TITLES
 } from 'libs';
 
-import {
-	CheckFilter,
-	RadioFilter,
-	RangeFilter
-} from 'components/FilterComponents';
+import { CheckFilter, RangeFilter } from 'components/FilterComponents';
 
 const FILTER_KEY = {
 	age: 'Age',
@@ -27,7 +23,7 @@ const FILTER_KEY = {
 	'employee-counts': 'Employee Counts',
 	'employment-sectors': 'Employment Sectors',
 	'employment-statuses': 'Employment Statuses',
-	ethnicity: 'Ethnicity',
+	ethnicities: 'Ethnicities',
 	'marital-statuses': 'Marital Statuses',
 	titles: 'Titles',
 	gender: 'Gender'
@@ -129,6 +125,7 @@ const SearchFilter = () => {
 								onChange(e, FILTER_KEY['age'], 'range', value)
 							}
 							value={getFilterValues(FILTER_KEY['age'])}
+							step={10}
 						/>
 						<CheckFilter
 							data={NATIONALITIES}
@@ -152,16 +149,122 @@ const SearchFilter = () => {
 								'checkbox'
 							)}
 						/>
-						<RadioFilter
+
+						<CheckFilter
+							data={EDUCATION_STAGES}
+							onChange={e =>
+								onChange(e, FILTER_KEY['education'], 'checkbox')
+							}
+							title={FILTER_KEY['education']}
+							checked={getFilterValues(
+								FILTER_KEY['education'],
+								'checkbox'
+							)}
+						/>
+
+						<CheckFilter
 							data={GENDERS}
 							onChange={e =>
-								onChange(e, FILTER_KEY['gender'], 'radio')
+								onChange(e, FILTER_KEY['gender'], 'checkbox')
 							}
 							title={FILTER_KEY['gender']}
-							value={getFilterValues(FILTER_KEY['gender'])}
+							checked={getFilterValues(
+								FILTER_KEY['gender'],
+								'checkbox'
+							)}
 						/>
-						Marital Status Children Ethnicity Disability Employment
-						Status Business Sector Number of Employees
+
+						<CheckFilter
+							data={EMPLOYEE_COUNTS}
+							onChange={e =>
+								onChange(
+									e,
+									FILTER_KEY['employee-counts'],
+									'checkbox'
+								)
+							}
+							title={FILTER_KEY['employee-counts']}
+							checked={getFilterValues(
+								FILTER_KEY['employee-counts'],
+								'checkbox'
+							)}
+						/>
+
+						<CheckFilter
+							data={EMPLOYMENT_SECTORS}
+							onChange={e =>
+								onChange(
+									e,
+									FILTER_KEY['employment-sectors'],
+									'checkbox'
+								)
+							}
+							title={FILTER_KEY['employment-sectors']}
+							checked={getFilterValues(
+								FILTER_KEY['employment-sectors'],
+								'checkbox'
+							)}
+						/>
+
+						<CheckFilter
+							data={EMPLOYMENT_STATUSES}
+							onChange={e =>
+								onChange(
+									e,
+									FILTER_KEY['employment-statuses'],
+									'checkbox'
+								)
+							}
+							title={FILTER_KEY['employment-statuses']}
+							checked={getFilterValues(
+								FILTER_KEY['employment-statuses'],
+								'checkbox'
+							)}
+						/>
+
+						<CheckFilter
+							data={ETHNICITIES}
+							onChange={e =>
+								onChange(
+									e,
+									FILTER_KEY['ethnicities'],
+									'checkbox'
+								)
+							}
+							title={FILTER_KEY['ethnicities']}
+							checked={getFilterValues(
+								FILTER_KEY['ethnicities'],
+								'checkbox'
+							)}
+						/>
+
+						<CheckFilter
+							data={MARITAL_STATUSES}
+							onChange={e =>
+								onChange(
+									e,
+									FILTER_KEY['marital-statuses'],
+									'checkbox'
+								)
+							}
+							title={FILTER_KEY['marital-statuses']}
+							checked={getFilterValues(
+								FILTER_KEY['marital-statuses'],
+								'checkbox'
+							)}
+						/>
+
+						<CheckFilter
+							data={TITLES}
+							onChange={e =>
+								onChange(e, FILTER_KEY['titles'], 'checkbox')
+							}
+							title={FILTER_KEY['titles']}
+							checked={getFilterValues(
+								FILTER_KEY['titles'],
+								'checkbox'
+							)}
+						/>
 					</Fragment>
 				)}
 			</FilterConsumer>

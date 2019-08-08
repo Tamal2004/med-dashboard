@@ -11,6 +11,7 @@ export default theme => ({
 	expansionPanelroot: {
 		borderLeft: borderColor,
 		borderRight: borderColor,
+		borderBottom: borderColor,
 		padding: 0,
 		display: 'block'
 	}
