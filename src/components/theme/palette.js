@@ -8,7 +8,8 @@ export default {
         main: '#313639'
     },
     common: {
-        transparent: 'rgba(0, 0, 0, 0)'
+        transparent: 'rgba(0, 0, 0, 0)',
+        offWhite: '#f8f8ff'
     },
     icon: {
         opacity: {

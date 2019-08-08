@@ -1,5 +1,4 @@
 import React, { Component, Fragment } from 'react';
-import { compose } from 'redux';
 import { connect } from 'react-redux';
 
 // Material
@@ -10,8 +9,6 @@ import RequestIcon from '@material-ui/icons/Autorenew';
 // Local
 import useStyles from './styles';
 import { validateRequired } from 'libs';
-import { EditableCard } from './EditableCard';
-import { IconedButton } from './IconedButton';
 import TesterDetails from './TesterDetails';
 import ContactDetails from './ContactDetails';
 import EmploymentDetails from './EmploymentDetails';
@@ -26,7 +23,8 @@ import {
     Input,
     MultiInput,
     Switch,
-    NavigateButton
+    NavigateButton,
+    withModal
 } from 'components';
 
 // Selectors
@@ -109,11 +107,9 @@ const validate = (values, { isStudent, isEmployed, hasManualAddress }) => {
     return { ...validateRequired(values, required) };
 };
 
-const _TesterSingle = compose(
-    connect(
-        mapState,
-        mapDispatch
-    )
+const _TesterSingle = connect(
+    mapState,
+    mapDispatch
 )(TesterSingle);
 
 export { _TesterSingle as default, _TesterSingle as TesterSingle };

@@ -11,18 +11,31 @@ const Control = ({ required = false, label, isCard, memo, children }) => {
     const c = useStyles();
     return (
         <Grid container className={clsx(c.root, isCard && c.cardRoot)}>
-            <Grid item xs={6} className={c.left}>
-                <FormLabel
-                    required={required}
-                    className={clsx(c.label, isCard && c.cardLabel)}
-                >
-                    <Typography className={c.labelText} variant={isCard ? 'subtitle2' : 'subtitle1'}>
-                        {label}
-                    </Typography>
-                </FormLabel>
-                {memo && <Typography className={c.memo} variant='subtitle2'>{memo}</Typography>}
-            </Grid>
-            <Grid item xs={6} className={c.right}>
+            {label && (
+                <Grid item xs={6} className={c.left}>
+                    <FormLabel
+                        required={required}
+                        className={clsx(c.label, isCard && c.cardLabel)}
+                    >
+                        <Typography
+                            className={c.labelText}
+                            variant={isCard ? 'subtitle2' : 'subtitle1'}
+                        >
+                            {label}
+                        </Typography>
+                    </FormLabel>
+                    {memo && (
+                        <Typography className={c.memo} variant='subtitle2'>
+                            {memo}
+                        </Typography>
+                    )}
+                </Grid>
+            )}
+            <Grid
+                item
+                xs={label ? 6 : 12}
+                className={clsx(c.right, !label && c.noLabelRight)}
+            >
                 {children}
             </Grid>
         </Grid>
@@ -31,12 +44,14 @@ const Control = ({ required = false, label, isCard, memo, children }) => {
 
 Control.defaultProps = {
     required: false,
-    isCard: false
+    isCard: false,
+    isCompact: false
 };
 
 Control.propTypes = {
-    label: PropTypes.string.isRequired,
+    label: PropTypes.string,
     memo: PropTypes.string,
+    isCompact: PropTypes.bool,
     isCard: PropTypes.bool
 };
 

@@ -12,7 +12,6 @@ import RequestIcon from '@material-ui/icons/Autorenew';
 import useStyles from './styles';
 import { validateRequired } from 'libs';
 import { EditableCard } from '../EditableCard';
-import { IconedButton } from '../IconedButton';
 import {
     GridContainer,
     GridItem,
@@ -20,7 +19,8 @@ import {
     Select,
     Input,
     MultiInput,
-    Switch
+    Switch,
+    IconedButton
 } from 'components';
 
 // Selectors
@@ -72,8 +72,13 @@ const TesterDetails = ({
                 active={isEditing}
                 required={isEditing}
             />
-            <Input label='Date of Birth' name='dob' isCard active={isEditing}
-                   required={isEditing} />
+            <Input
+                label='Date of Birth'
+                name='dob'
+                isCard
+                active={isEditing}
+                required={isEditing}
+            />
             <Select
                 label='Marital Status'
                 name='maritalStatus'

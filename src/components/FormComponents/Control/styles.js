@@ -19,6 +19,9 @@ export default makeStyles(({ palette, spacing }) => ({
         flexDirection: 'column',
         justifyContent: 'center'
     },
+    noLabelRight: {
+        paddingLeft: spacing(2)
+    },
     label: {
         height: spacing(6),
         display: 'flex',

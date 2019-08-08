@@ -1,5 +1,5 @@
 import React from "react";
-import classNames from 'classnames';
+import clsx from 'clsx';
 
 // Material
 import {
@@ -16,7 +16,7 @@ const ModalContent = ({
     className = {},
     children
 }) => (
-    <MuiDialogContent className={classNames(root, className)}>
+    <MuiDialogContent className={clsx(root, className)}>
         {children}
     </MuiDialogContent>
 );

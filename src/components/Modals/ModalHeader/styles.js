@@ -1,4 +1,4 @@
-export default ({ palette, spacing }) => ({
+export default ({ palette, spacing, typography }) => ({
     root: {
         backgroundColor: '#f4f4f4',
         margin: 0,
@@ -12,6 +12,9 @@ export default ({ palette, spacing }) => ({
         position: 'absolute',
         top: spacing.unit,
         right: spacing.unit,
-        color: palette.grey[500],
+        color: palette.grey[500]
     },
+    title: {
+        fontWeight: typography.fontWeightHeavy
+    }
 });

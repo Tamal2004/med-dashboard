@@ -7,7 +7,13 @@ import useStyles from './styles';
 import { Control } from '../Control';
 import { SelectBase } from 'components';
 
-const Select = ({ required = false, label, isCard, active, ...restProps }) => {
+const Select = ({
+    required = false,
+    label,
+    isCard,
+    active,
+    ...restProps
+}) => {
     const {
         cardControl,
         cardListItem,
@@ -28,8 +34,11 @@ const Select = ({ required = false, label, isCard, active, ...restProps }) => {
         select: clsx(c.select, isCard && cardSelect),
         dropdownRoot: clsx(c.dropdownRoot, !active && inactiveDropdownRoot)
     };
+
+    const controlProps = { required, label, isCard };
+
     return (
-        <Control label={label} required={required} isCard={isCard}>
+        <Control {...controlProps}>
             <SelectBase styles={selectStyles} {...restProps} />
         </Control>
     );

@@ -7,14 +7,22 @@ import useStyles from './styles';
 import { InputBase } from 'components';
 import { Control } from '../Control';
 
-const Input = ({ required = false, label, isCard, active, ...restProps }) => {
+const Input = ({
+    required = false,
+    label,
+    isCard,
+    active,
+    ...restProps
+}) => {
     const { cardRoot, inactiveRoot, ...c } = useStyles();
     const inputStyles = {
         ...c,
         root: clsx(c.root, isCard && cardRoot, !active && inactiveRoot)
     };
+
+    const controlProps = { required, label, isCard };
     return (
-        <Control label={label} required={required} isCard={isCard}>
+        <Control {...controlProps}>
             <InputBase styles={inputStyles} {...restProps} />
         </Control>
     );

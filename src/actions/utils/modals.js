@@ -1,4 +1,4 @@
-import { SET_MODAL, OPEN_MODAL, CLOSE_MODAL } from 'store/actionTypes';
+import { SET_MODAL, OPEN_MODAL, CLOSE_MODAL } from 'actionTypes';
 
 export const setModal = handlerName => ({
     type: SET_MODAL,

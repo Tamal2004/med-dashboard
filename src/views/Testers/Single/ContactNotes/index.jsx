@@ -9,7 +9,7 @@ import AddIcon from '@material-ui/icons/AddBox';
 import useStyles from './styles';
 import { validateRequired } from 'libs';
 import { EditableCard } from '../EditableCard';
-import { IconedButton } from '../IconedButton';
+import { ContactsModal } from 'views/Modals';
 import {
     GridContainer,
     GridItem,
@@ -18,9 +18,13 @@ import {
     Input,
     MultiInput,
     Switch,
-    PaginationBase
+    PaginationBase,
+    IconedButton,
+    withModal
 } from 'components';
 import { Link } from 'react-router-dom';
+import { compose } from 'redux';
+import { connect } from 'react-redux';
 
 const LinkTo = ({ to, children }) => {
     const c = useStyles();
@@ -31,8 +35,7 @@ const LinkTo = ({ to, children }) => {
     );
 };
 
-
-const ContactNotes = ({ data }) => {
+const ContactNotes = ({ data, handleContactsModal }) => {
     const [page, setPage] = useState(1);
     const c = useStyles();
 
@@ -41,7 +44,11 @@ const ContactNotes = ({ data }) => {
         <EditableCard title='Contact Notes'>
             <Table data={data} action page={page} itemsPerPage={5} />
             <div className={c.footer}>
-                <IconedButton Icon={AddIcon} color='secondary'>
+                <IconedButton
+                    Icon={AddIcon}
+                    color='secondary'
+                    onClick={() => handleContactsModal()}
+                >
                     Add a new contact note
                 </IconedButton>
                 <PaginationBase
@@ -77,4 +84,20 @@ ContactNotes.propTypes = {
     data: PropTypes.array.isRequired
 };
 
-export { ContactNotes as default, ContactNotes };
+const mapState = () => ({});
+
+const mapDispatch = {};
+
+const mapModal = {
+    handleContactsModal: ContactsModal
+};
+
+const _ContactNotes = compose(
+    connect(
+        mapState,
+        mapDispatch
+    ),
+    withModal(mapModal)
+)(ContactNotes);
+
+export { _ContactNotes as default, _ContactNotes as ContactNotes };

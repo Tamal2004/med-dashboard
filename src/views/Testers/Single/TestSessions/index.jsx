@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 // Material
@@ -9,7 +9,7 @@ import AddIcon from '@material-ui/icons/AddBox';
 import useStyles from './styles';
 import { validateRequired } from 'libs';
 import { EditableCard } from '../EditableCard';
-import { IconedButton } from '../IconedButton';
+import { SessionsModal } from 'views/Modals';
 import {
     GridContainer,
     GridItem,
@@ -18,9 +18,13 @@ import {
     Input,
     MultiInput,
     Switch,
-    PaginationBase
+    PaginationBase,
+    withModal,
+    IconedButton
 } from 'components';
 import { Link } from 'react-router-dom';
+import { compose } from 'redux';
+import { connect } from 'react-redux';
 
 const LinkTo = ({ to, children }) => {
     const c = useStyles();
@@ -31,16 +35,20 @@ const LinkTo = ({ to, children }) => {
     );
 };
 
-const TestSessions = ({ data }) => {
+const TestSessions = ({ data, handleSessionsModal }) => {
     const [page, setPage] = useState(1);
     const c = useStyles();
-
     const totalPages = Math.floor(data.length / 5) + !!(data.length % 5) || 1;
+
     return (
         <EditableCard title='Test Sessions'>
             <Table data={data} action page={page} itemsPerPage={5} />
             <div className={c.footer}>
-                <IconedButton Icon={AddIcon} color='secondary'>
+                <IconedButton
+                    Icon={AddIcon}
+                    color='secondary'
+                    onClick={() => handleSessionsModal()}
+                >
                     Add a new test session
                 </IconedButton>
                 <PaginationBase
@@ -83,4 +91,20 @@ TestSessions.propTypes = {
     data: PropTypes.array.isRequired
 };
 
-export { TestSessions as default, TestSessions };
+const mapState = () => ({});
+
+const mapDispatch = {};
+
+const mapModal = {
+    handleSessionsModal: SessionsModal
+};
+
+const _TestSessions = compose(
+    connect(
+        mapState,
+        mapDispatch
+    ),
+    withModal(mapModal)
+)(TestSessions);
+
+export { _TestSessions as default, _TestSessions as TestSessions };

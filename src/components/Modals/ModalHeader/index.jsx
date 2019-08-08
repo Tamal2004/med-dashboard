@@ -1,28 +1,29 @@
 import React from 'react';
-import classNames from 'classnames';
+import clsx from 'clsx';
 
 // Material
 import {
     withStyles,
     DialogTitle as MuiDialogTitle,
     Typography,
-    IconButton,
+    IconButton
 } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 
 // Local
 import styles from './styles';
 
-const ModalHeader = ({
-    classes: { root, button },
-    className = {},
-    onClose,
-    children,
-}) => (
-    <MuiDialogTitle disableTypography className={classNames(root, className)}>
-        <Typography variant='h6'>{children}</Typography>
+const ModalHeader = ({ classes: c, className = {}, onClose, children }) => (
+    <MuiDialogTitle disableTypography className={clsx(c.root, className)}>
+        <Typography variant='h6' className={c.title}>
+            {children}
+        </Typography>
         {onClose && (
-            <IconButton aria-label='Close' className={button} onClick={onClose}>
+            <IconButton
+                aria-label='Close'
+                className={c.button}
+                onClick={onClose}
+            >
                 <CloseIcon />
             </IconButton>
         )}

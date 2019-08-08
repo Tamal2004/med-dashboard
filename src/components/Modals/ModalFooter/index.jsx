@@ -1,5 +1,5 @@
 import React from "react";
-import classNames from 'classnames';
+import clsx from 'clsx';
 
 // Material
 import {
@@ -16,7 +16,7 @@ const ModalFooter = ({
     className = {},
     children
 }) => (
-    <MuiDialogActions className={classNames(root, className)}>
+    <MuiDialogActions className={clsx(root, className)}>
         {children}
     </MuiDialogActions>
 );

@@ -1,69 +1,20 @@
 import React from 'react';
-import withStyles from '@material-ui/core/styles/withStyles';
-import { CircularLoader } from 'components';
-import { Button as MaterialButton } from '@material-ui/core';
 
+import { withStyles } from '@material-ui/core';
+
+// Local
 import { styles } from './styles';
+import { ButtonBase } from 'components';
+import { composeClasses } from 'libs';
 
-function ButtonInput(props) {
-    const {
-        classes,
-        disabled = false,
-        isLoading = false,
-        onClick = () => {},
-        category = 'primary',
-        ...rest
-    } = props;
-    // Todo: size = lg md sm
-    // Todo: variant override = primary, success, default
+const Button = ({ classes, styles, ...restProps }) => (
+    <ButtonBase
+        classes={composeClasses({ classes, styles })}
+        color='primary'
+        {...restProps}
+    />
+);
 
-    let rootClass = null;
-    let disabledClass = null;
-    let text = '';
-    switch (category) {
-        case 'primary':
-            rootClass = 'nextButton';
-            disabledClass = 'disabledNextButton';
-            text = 'Publish to Database';
-            break;
-        case 'primaryNext':
-            rootClass = 'nextButton';
-            disabledClass = 'disabledNextButton';
-            text = 'Next';
-            break;
-        case 'secondary':
-            rootClass = 'saveDraft';
-            disabledClass = 'saveDraftDisabled';
-            text = 'Save Drafts';
-            break;
-        case 'publish-md':
-            rootClass = 'publishButton';
-            disabledClass = 'disabledPublishButton';
-            text = 'Publish to Database';
-            break;
-        case 'default':
-            text = 'Handover';
-            break;
-        default:
-            break;
-    }
+const _Button = withStyles(styles)(Button);
 
-    return (
-        <MaterialButton
-            variant='contained'
-            disabled={disabled}
-            onClick={onClick}
-            classes={{
-                root: classes[rootClass],
-                disabled: classes[disabledClass],
-            }}
-            {...rest}
-        >
-            {isLoading ? <CircularLoader /> : text}
-        </MaterialButton>
-    );
-}
-
-const Button = withStyles(styles)(ButtonInput);
-
-export { Button as default, Button };
+export { _Button as default, _Button as Button };
