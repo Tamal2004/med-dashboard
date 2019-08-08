@@ -1,3 +1,19 @@
+/*******************************************************
+IMPLEMENTATION
+
+<CheckFilter
+	data={NATIONALITIES}
+	onChange={e =>
+		onChange(e, FILTER_KEY['country'], 'checkbox')
+	}
+	title={FILTER_KEY['country']}
+	checked={getFilterValues(
+		FILTER_KEY['country'],
+		'checkbox'
+	)}
+/>
+********************************************************/
+
 import React from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
