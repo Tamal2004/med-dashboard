@@ -1,33 +1,33 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import { FilterProvider, FilterConsumer } from './context';
 import {
-	NATIONALITIES,
-	COUNTIES,
-	EDUCATION_STAGES,
 	EMPLOYEE_COUNTS,
 	EMPLOYMENT_SECTORS,
 	EMPLOYMENT_STATUSES,
 	ETHNICITIES,
 	GENDERS,
-	MARITAL_STATUSES,
-	TITLES
+	MARITAL_STATUSES
 } from 'libs';
 
 import { CheckFilter, RangeFilter } from 'components/FilterComponents';
 
 const FILTER_KEY = {
 	age: 'Age',
+	children: 'Children',
 	county: 'County',
 	country: 'Country',
+	disability: 'Disability',
 	education: 'Education Stages',
 	'employee-counts': 'Employee Counts',
-	'employment-sectors': 'Employment Sectors',
+	'business-sectors': 'Business Sectors',
 	'employment-statuses': 'Employment Statuses',
 	ethnicities: 'Ethnicities',
 	'marital-statuses': 'Marital Statuses',
 	titles: 'Titles',
 	gender: 'Gender'
 };
+
+const TOGGLE_DATA = ['Yes', 'No'];
 
 const SearchFilter = () => {
 	const [filterValues, setFilter] = useState({});
@@ -119,49 +119,6 @@ const SearchFilter = () => {
 			<FilterConsumer>
 				{({ onChange }) => (
 					<Fragment>
-						<RangeFilter
-							title={FILTER_KEY['age']}
-							onChange={(e, value) =>
-								onChange(e, FILTER_KEY['age'], 'range', value)
-							}
-							value={getFilterValues(FILTER_KEY['age'])}
-							step={10}
-						/>
-						<CheckFilter
-							data={NATIONALITIES}
-							onChange={e =>
-								onChange(e, FILTER_KEY['country'], 'checkbox')
-							}
-							title={FILTER_KEY['country']}
-							checked={getFilterValues(
-								FILTER_KEY['country'],
-								'checkbox'
-							)}
-						/>
-						<CheckFilter
-							data={COUNTIES}
-							onChange={e =>
-								onChange(e, FILTER_KEY['county'], 'checkbox')
-							}
-							title={FILTER_KEY['county']}
-							checked={getFilterValues(
-								FILTER_KEY['county'],
-								'checkbox'
-							)}
-						/>
-
-						<CheckFilter
-							data={EDUCATION_STAGES}
-							onChange={e =>
-								onChange(e, FILTER_KEY['education'], 'checkbox')
-							}
-							title={FILTER_KEY['education']}
-							checked={getFilterValues(
-								FILTER_KEY['education'],
-								'checkbox'
-							)}
-						/>
-
 						<CheckFilter
 							data={GENDERS}
 							onChange={e =>
@@ -174,50 +131,39 @@ const SearchFilter = () => {
 							)}
 						/>
 
+						<RangeFilter
+							title={FILTER_KEY['age']}
+							onChange={(e, value) =>
+								onChange(e, FILTER_KEY['age'], 'range', value)
+							}
+							value={getFilterValues(FILTER_KEY['age'])}
+							step={10}
+						/>
+
 						<CheckFilter
-							data={EMPLOYEE_COUNTS}
+							data={MARITAL_STATUSES}
 							onChange={e =>
 								onChange(
 									e,
-									FILTER_KEY['employee-counts'],
+									FILTER_KEY['marital-statuses'],
 									'checkbox'
 								)
 							}
-							title={FILTER_KEY['employee-counts']}
+							title={FILTER_KEY['marital-statuses']}
 							checked={getFilterValues(
-								FILTER_KEY['employee-counts'],
+								FILTER_KEY['marital-statuses'],
 								'checkbox'
 							)}
 						/>
 
 						<CheckFilter
-							data={EMPLOYMENT_SECTORS}
+							data={TOGGLE_DATA}
 							onChange={e =>
-								onChange(
-									e,
-									FILTER_KEY['employment-sectors'],
-									'checkbox'
-								)
+								onChange(e, FILTER_KEY['children'], 'checkbox')
 							}
-							title={FILTER_KEY['employment-sectors']}
+							title={FILTER_KEY['children']}
 							checked={getFilterValues(
-								FILTER_KEY['employment-sectors'],
-								'checkbox'
-							)}
-						/>
-
-						<CheckFilter
-							data={EMPLOYMENT_STATUSES}
-							onChange={e =>
-								onChange(
-									e,
-									FILTER_KEY['employment-statuses'],
-									'checkbox'
-								)
-							}
-							title={FILTER_KEY['employment-statuses']}
-							checked={getFilterValues(
-								FILTER_KEY['employment-statuses'],
+								FILTER_KEY['children'],
 								'checkbox'
 							)}
 						/>
@@ -239,29 +185,65 @@ const SearchFilter = () => {
 						/>
 
 						<CheckFilter
-							data={MARITAL_STATUSES}
+							data={TOGGLE_DATA}
 							onChange={e =>
 								onChange(
 									e,
-									FILTER_KEY['marital-statuses'],
+									FILTER_KEY['disability'],
 									'checkbox'
 								)
 							}
-							title={FILTER_KEY['marital-statuses']}
+							title={FILTER_KEY['disability']}
 							checked={getFilterValues(
-								FILTER_KEY['marital-statuses'],
+								FILTER_KEY['disability'],
 								'checkbox'
 							)}
 						/>
 
 						<CheckFilter
-							data={TITLES}
+							data={EMPLOYMENT_STATUSES}
 							onChange={e =>
-								onChange(e, FILTER_KEY['titles'], 'checkbox')
+								onChange(
+									e,
+									FILTER_KEY['employment-statuses'],
+									'checkbox'
+								)
 							}
-							title={FILTER_KEY['titles']}
+							title={FILTER_KEY['employment-statuses']}
 							checked={getFilterValues(
-								FILTER_KEY['titles'],
+								FILTER_KEY['employment-statuses'],
+								'checkbox'
+							)}
+						/>
+
+						<CheckFilter
+							data={EMPLOYMENT_SECTORS}
+							onChange={e =>
+								onChange(
+									e,
+									FILTER_KEY['business-sectors'],
+									'checkbox'
+								)
+							}
+							title={FILTER_KEY['business-sectors']}
+							checked={getFilterValues(
+								FILTER_KEY['business-sectors'],
+								'checkbox'
+							)}
+						/>
+
+						<CheckFilter
+							data={EMPLOYEE_COUNTS}
+							onChange={e =>
+								onChange(
+									e,
+									FILTER_KEY['employee-counts'],
+									'checkbox'
+								)
+							}
+							title={FILTER_KEY['employee-counts']}
+							checked={getFilterValues(
+								FILTER_KEY['employee-counts'],
 								'checkbox'
 							)}
 						/>
