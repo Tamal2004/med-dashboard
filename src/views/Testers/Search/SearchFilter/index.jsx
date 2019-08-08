@@ -1,7 +1,7 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import { FilterProvider, FilterConsumer } from './context';
 import {
-	COUNTRIES,
+	NATIONALITIES,
 	COUNTIES,
 	EDUCATION_STAGES,
 	EMPLOYEE_COUNTS,
@@ -131,7 +131,7 @@ const SearchFilter = () => {
 							value={getFilterValues(FILTER_KEY['age'])}
 						/>
 						<CheckFilter
-							data={COUNTRIES}
+							data={NATIONALITIES}
 							onChange={e =>
 								onChange(e, FILTER_KEY['country'], 'checkbox')
 							}
