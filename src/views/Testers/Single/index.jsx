@@ -16,6 +16,7 @@ import TesterDetails from './TesterDetails';
 import ContactDetails from './ContactDetails';
 import EmploymentDetails from './EmploymentDetails';
 import TestSessions from './TestSessions';
+import ContactNotes from './ContactNotes';
 import {
     GridContainer,
     GridItem,
@@ -54,12 +55,21 @@ const TesterSingle = ({ match, genders }) => {
                     <GridItem md={12}>
                         <ContactDetails />
                     </GridItem>
-                    <GridItem md={12}><EmploymentDetails /></GridItem>
+                    <GridItem md={12}>
+                        <EmploymentDetails />
+                    </GridItem>
                 </Grid>
             </GridContainer>
 
             <GridContainer className={c.root} alignItems='center'>
-                <GridItem md={12}><TestSessions /></GridItem>
+                <GridItem md={12}>
+                    <TestSessions />
+                </GridItem>
+            </GridContainer>
+            <GridContainer className={c.root} alignItems='center'>
+                <GridItem md={12}>
+                    <ContactNotes />
+                </GridItem>
             </GridContainer>
         </Fragment>
     );

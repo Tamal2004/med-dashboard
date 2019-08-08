@@ -33,8 +33,6 @@ const isActionColumn = value => {
 };
 
 class Table extends Component {
-    ITEMS_PER_PAGE = 10;
-
     state = {
         sortIndex: null,
         initialData: this.props.data,
@@ -185,16 +183,15 @@ class Table extends Component {
 
     renderTable = () => {
         const {
-            props: { page },
+            props: { page, itemsPerPage },
             state: { data },
-            ITEMS_PER_PAGE,
             c,
             handleClick,
             renderRow
         } = this;
 
-        const startIndex = (page - 1) * ITEMS_PER_PAGE;
-        const endIndex = page * ITEMS_PER_PAGE;
+        const startIndex = (page - 1) * itemsPerPage;
+        const endIndex = page * itemsPerPage;
         return data.map(
             (row, index) =>
                 index >= startIndex &&
@@ -225,19 +222,18 @@ class Table extends Component {
 
     render() {
         const {
-            props: { data: [datum = {}] = [], action },
+            props: { data: [datum = {}] = [], action, itemsPerPage },
             state: { data },
             c,
             handleSort,
             renderSortIcon,
             renderTable,
-            ITEMS_PER_PAGE
         } = this;
 
         const headers = Object.keys(datum);
         const totalPages =
-            Math.floor(data.length / ITEMS_PER_PAGE) +
-                !!(data.length % ITEMS_PER_PAGE) || 1;
+            Math.floor(data.length / itemsPerPage) +
+                !!(data.length % itemsPerPage) || 1;
 
         return (
             <Fragment>
@@ -282,14 +278,16 @@ class Table extends Component {
 }
 
 Table.defaultProps = {
-    action: false
+    action: false,
+    itemsPerPage: 10,
 };
 
 Table.propTypes = {
     classes: PropTypes.object.isRequired,
     data: PropTypes.array.isRequired,
     filter: PropTypes.string,
-    action: PropTypes.bool
+    action: PropTypes.bool,
+    itemsPerPage: PropTypes.number
 };
 
 const _Table = withStyles(styles)(Table);

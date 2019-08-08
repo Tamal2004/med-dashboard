@@ -31,17 +31,18 @@ const LinkTo = ({ to, children }) => {
     );
 };
 
-const TestSessions = ({ data }) => {
+
+const ContactNotes = ({ data }) => {
     const [page, setPage] = useState(1);
     const c = useStyles();
 
     const totalPages = Math.floor(data.length / 5) + !!(data.length % 5) || 1;
     return (
-        <EditableCard title='Test Sessions'>
+        <EditableCard title='Contact Notes'>
             <Table data={data} action page={page} itemsPerPage={5} />
             <div className={c.footer}>
                 <IconedButton Icon={AddIcon} color='secondary'>
-                    Add a new test session
+                    Add a new contact note
                 </IconedButton>
                 <PaginationBase
                     handlePage={page => setPage(page)}
@@ -52,35 +53,28 @@ const TestSessions = ({ data }) => {
     );
 };
 
-const generateData = (reference, client, project, notes) => ({
+const generateData = (reference, project, contactType, contactedBy) => ({
     Date: '02/06/2019',
-    Time: '10:00',
-    Client: {
-        Component: <LinkTo to={'/project/' + client}>{client}</LinkTo>,
-        value: reference
-    },
     Project: {
         Component: <LinkTo to={'/project/' + project}>{project}</LinkTo>,
-        value: reference
+        value: project
     },
-    Notes: notes
+    'Contact type': contactType,
+    'Contacted by': contactedBy,
+    Details: '[Copy of email text]'
 });
-TestSessions.defaultProps = {
-    data: Array.range(0, 50)
+
+ContactNotes.defaultProps = {
+    data: Array.range(0, 3)
         .map(() => [
-            generateData(
-                'ETCBR-644',
-                'Disney',
-                'EM21',
-                'i-view, confirmed, 11/06'
-            ),
-            generateData('ETCBR-644', 'CITB', 'JE28', 'Chippenham')
+            generateData('ETCBR-644', 'EM21', 'Approached', 'Gavin'),
+            generateData('ETCBR-666', 'JE24', 'Ad', 'Avril Swift')
         ])
         .flatMap(x => x)
 };
 
-TestSessions.propTypes = {
+ContactNotes.propTypes = {
     data: PropTypes.array.isRequired
 };
 
-export { TestSessions as default, TestSessions };
+export { ContactNotes as default, ContactNotes };
