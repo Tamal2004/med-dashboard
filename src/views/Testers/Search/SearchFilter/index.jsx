@@ -1,7 +1,7 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import { FilterProvider, FilterConsumer } from './context';
 import {
-	COUNTRIES,
+	NATIONALITIES as COUNTRIES,
 	COUNTIES,
 	EDUCATION_STAGES,
 	EMPLOYEE_COUNTS,
