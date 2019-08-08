@@ -14,18 +14,13 @@ const useStyles = makeStyles(theme => ({
 	}
 }));
 
-const RangeFilter = ({ value, onChange, title }) => {
+const RangeFilter = ({ value, onChange, title, step, min, max }) => {
 	const c = useStyles();
-	const getRandomId = () => Math.floor(Math.random() * 99 + 1); //between 1 to 99
-	const tag = title.split(' ').join('-') + '-' + getRandomId();
 
-	const handleBlur = () => {
-		console.log('handleBlur');
-	};
+	const handleChange = e => onChange(e, e.target.value);
 
-	console.log('Inside RangeFilter', value);
 	return (
-		<AccordionFilterContainer tag={tag} title={title}>
+		<AccordionFilterContainer title={title}>
 			<Grid
 				container
 				spacing={2}
@@ -35,24 +30,23 @@ const RangeFilter = ({ value, onChange, title }) => {
 				<Grid md={9} item>
 					<Slider
 						valueLabelDisplay='auto'
-						value={typeof value === 'number' ? value : 0}
+						value={Number(value)}
 						onChange={onChange}
-						aria-labelledby={tag}
+						aria-labelledby={title}
 						getAriaValueText={() => value}
 					/>
 				</Grid>
 				<Grid md={3} item>
 					<Input
-						value={typeof value === 'number' ? value : 0}
+						value={Number(value)}
 						margin='dense'
-						onChange={onChange}
-						onBlur={handleBlur}
+						onChange={handleChange}
 						inputProps={{
-							step: 10,
-							min: 0,
-							max: 100,
+							step: step,
+							min: min,
+							max: max,
 							type: 'number',
-							'aria-labelledby': tag
+							'aria-labelledby': title
 						}}
 					/>
 				</Grid>
@@ -61,7 +55,15 @@ const RangeFilter = ({ value, onChange, title }) => {
 	);
 };
 
+RangeFilter.defaultProps = {
+	step: 1,
+	max: 100,
+	min: 0
+};
 RangeFilter.propTypes = {
+	max: PropTypes.number,
+	min: PropTypes.number,
+	step: PropTypes.number,
 	title: PropTypes.string.isRequired
 };
 

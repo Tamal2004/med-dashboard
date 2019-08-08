@@ -19,13 +19,11 @@ const useStyles = makeStyles(theme => ({
 
 const CheckFilter = ({ checked, data, onChange, title }) => {
 	const c = useStyles();
-	const getRandomId = () => Math.floor(Math.random() * 99 + 1); //between 1 to 99
-	const tag = title.split(' ').join('-') + '-' + getRandomId();
 
 	const isChecked = datum => checked.includes(datum);
 
 	return (
-		<AccordionFilterContainer tag={tag} title={title}>
+		<AccordionFilterContainer title={title}>
 			<FormControl className={c.controlPadding} fullWidth={true}>
 				<FormGroup aria-label={title} name={title} onChange={onChange}>
 					{data.map((datum, idx) => (

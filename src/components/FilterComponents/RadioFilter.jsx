@@ -19,11 +19,9 @@ const useStyles = makeStyles(theme => ({
 
 const RadioFilter = ({ data, onChange, title, value }) => {
 	const c = useStyles();
-	const getRandomId = () => Math.floor(Math.random() * 99 + 1); //between 1 to 99
-	const tag = title.split(' ').join('-') + '-' + getRandomId();
 
 	return (
-		<AccordionFilterContainer tag={tag} title={title}>
+		<AccordionFilterContainer title={title}>
 			<FormControl className={c.controlPadding} fullWidth={true}>
 				<RadioGroup
 					aria-label={title}

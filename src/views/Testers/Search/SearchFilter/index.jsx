@@ -31,8 +31,8 @@ const SearchFilter = () => {
 		if (Object.prototype.hasOwnProperty.call(filterValues, key))
 			return filterValues[key];
 
-		if (type && type.trim() !== 'checkbox') return '';
-		return [];
+		if (type && type.trim() === 'checkbox') return [];
+		return '';
 	};
 
 	const valueSetup = (type, key, eventValue) => {
@@ -63,10 +63,10 @@ const SearchFilter = () => {
 	};
 
 	const onChange = (e, key, type, value) => {
-		console.log('onChange', e.target.value, key, type, value);
 		let keyValue = {};
 		let initValue;
 		let eventValue = e.target.value;
+		const filterValue = getFilterValues(key);
 
 		//checkbox, radio, select. range
 		switch (type) {
@@ -79,22 +79,14 @@ const SearchFilter = () => {
 				break;
 			case 'range':
 				initValue = value;
+				eventValue = value;
 				break;
 			default:
 				break;
 		}
 
-		if (
-			getFilterValues &&
-			typeof getFilterValues(key) !== 'number' &&
-			getFilterValues(key).length
-		) {
+		if (filterValue && filterValue.length) {
 			keyValue = { [key]: valueSetup(type, key, eventValue) };
-		} else if (
-			getFilterValues &&
-			typeof getFilterValues(key) !== 'number'
-		) {
-			keyValue = { [key]: valueSetup(type, key, value) };
 		} else {
 			keyValue = { [key]: initValue };
 		}
@@ -133,17 +125,14 @@ const SearchFilter = () => {
 								onChange(e, FILTER_KEY['gender'], 'radio')
 							}
 							title={FILTER_KEY['gender']}
-							value={getFilterValues(
-								FILTER_KEY['gender'],
-								'radio'
-							)}
+							value={getFilterValues(FILTER_KEY['gender'])}
 						/>
 						<RangeFilter
 							title={FILTER_KEY['age']}
 							onChange={(e, value) =>
 								onChange(e, FILTER_KEY['age'], 'range', value)
 							}
-							value={getFilterValues(FILTER_KEY['age'], 'range')}
+							value={getFilterValues(FILTER_KEY['age'])}
 						/>
 						Age Marital Status Children Ethnicity Disability
 						Employment Status Business Sector Number of Employees
