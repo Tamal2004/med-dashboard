@@ -6,12 +6,19 @@ import MuiExpansionPanel from '@material-ui/core/ExpansionPanel';
 import styles from './styles';
 
 function ExpansionPanel(props) {
-	const { classes, children, border } = props;
+	const { classes, children, border, distance } = props;
 	return (
 		<MuiExpansionPanel
 			classes={{
-				root: classNames(classes.root, border && classes.border),
-				expanded: classes.expanded
+				root: classNames(
+					classes.root,
+					border && classes.border,
+					distance && classes.distance
+				),
+				expanded: classNames(
+					classes.expanded,
+					distance && classes.distanceExpanded
+				)
 			}}
 		>
 			{children}
@@ -20,11 +27,13 @@ function ExpansionPanel(props) {
 }
 
 ExpansionPanel.defaultProps = {
-	border: false
+	border: false,
+	distance: false
 };
 
 ExpansionPanel.propTypes = {
-	border: PropTypes.bool
+	border: PropTypes.bool,
+	distance: PropTypes.bool
 };
 
 const _ExpansionPanel = withStyles(styles)(ExpansionPanel);
