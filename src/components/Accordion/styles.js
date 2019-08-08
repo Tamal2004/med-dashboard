@@ -1,3 +1,5 @@
+const borderColor = '1px solid rgba(0, 0, 0, 0.12)';
+
 export default theme => ({
 	image: {
 		height: '18px',
@@ -5,5 +7,11 @@ export default theme => ({
 	},
 	iconPadding: {
 		paddingRight: '16px'
+	},
+	expansionPanelroot: {
+		borderLeft: borderColor,
+		borderRight: borderColor,
+		padding: 0,
+		display: 'block'
 	}
 });
