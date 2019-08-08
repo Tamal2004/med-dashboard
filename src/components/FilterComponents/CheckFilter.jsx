@@ -8,12 +8,9 @@ import FormControl from '@material-ui/core/FormControl';
 import { AccordionFilterContainer } from './FilterContainer';
 import { CheckControlLabel } from './ControlLabel';
 
-const borderColor = '1px solid rgba(0, 0, 0, 0.12)';
 const useStyles = makeStyles(theme => ({
 	controlPadding: {
-		paddingLeft: 16,
-		borderLeft: borderColor,
-		borderRight: borderColor
+		paddingLeft: 16
 	}
 }));
 

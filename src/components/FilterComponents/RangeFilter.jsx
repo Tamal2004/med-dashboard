@@ -10,7 +10,9 @@ import { AccordionFilterContainer } from './FilterContainer';
 
 const useStyles = makeStyles(theme => ({
 	gridContainer: {
-		padding: 16
+		margin: 0,
+		padding: 9,
+		width: '100%'
 	}
 }));
 

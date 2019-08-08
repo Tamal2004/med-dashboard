@@ -1,35 +1,51 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import { FilterProvider, FilterConsumer } from './context';
-import { COUNTRIES, GENDERS } from 'libs';
+import {
+	COUNTRIES,
+	COUNTIES,
+	EDUCATION_STAGES,
+	EMPLOYEE_COUNTS,
+	EMPLOYMENT_SECTORS,
+	EMPLOYMENT_STATUSES,
+	ETHNICITIES,
+	GENDERS,
+	MARITAL_STATUSES,
+	TITLES
+} from 'libs';
+
 import {
 	CheckFilter,
 	RadioFilter,
 	RangeFilter
 } from 'components/FilterComponents';
 
-// COUNTIES,
-// COUNTRIES,
-// EDUCATION_STAGES,
-// EMPLOYEE_COUNTS,
-// EMPLOYMENT_SECTORS,
-// EMPLOYMENT_STATUSES,
-// ETHNICITIES,
-// GENDERS,
-// MARITAL_STATUSES,
-// TITLES
-
 const FILTER_KEY = {
+	age: 'Age',
+	county: 'County',
 	country: 'Country',
-	gender: 'Gender',
-	age: 'Age'
+	education: 'Education Stages',
+	'employee-counts': 'Employee Counts',
+	'employment-sectors': 'Employment Sectors',
+	'employment-statuses': 'Employment Statuses',
+	ethnicity: 'Ethnicity',
+	'marital-statuses': 'Marital Statuses',
+	titles: 'Titles',
+	gender: 'Gender'
 };
 
 const SearchFilter = () => {
 	const [filterValues, setFilter] = useState({});
 
+	const storeKey = key =>
+		key
+			.split(' ')
+			.join('-')
+			.toLowerCase();
+
 	const getFilterValues = (key, type = null) => {
-		if (Object.prototype.hasOwnProperty.call(filterValues, key))
-			return filterValues[key];
+		const theKey = storeKey(key);
+		if (Object.prototype.hasOwnProperty.call(filterValues, theKey))
+			return filterValues[storeKey(theKey)];
 
 		if (type && type.trim() === 'checkbox') return [];
 		return '';
@@ -39,7 +55,7 @@ const SearchFilter = () => {
 		let returnVal;
 		const stateFilterValue = filterValues[key];
 
-		//checkbox, radio, select. range
+		//checkbox, radio. range
 		switch (type) {
 			case 'checkbox':
 				const newValueExists = stateFilterValue.indexOf(eventValue);
@@ -52,7 +68,6 @@ const SearchFilter = () => {
 				break;
 			case 'radio':
 			case 'range':
-			case 'select':
 				returnVal = eventValue;
 				break;
 			default:
@@ -63,18 +78,18 @@ const SearchFilter = () => {
 	};
 
 	const onChange = (e, key, type, value) => {
+		const theKey = storeKey(key);
 		let keyValue = {};
 		let initValue;
 		let eventValue = e.target.value;
-		const filterValue = getFilterValues(key);
+		const filterValue = getFilterValues(theKey);
 
-		//checkbox, radio, select. range
+		//checkbox, radio, range
 		switch (type) {
 			case 'checkbox':
 				initValue = [eventValue];
 				break;
 			case 'radio':
-			case 'select':
 				initValue = eventValue;
 				break;
 			case 'range':
@@ -86,9 +101,9 @@ const SearchFilter = () => {
 		}
 
 		if (filterValue && filterValue.length) {
-			keyValue = { [key]: valueSetup(type, key, eventValue) };
+			keyValue = { [theKey]: valueSetup(type, theKey, eventValue) };
 		} else {
-			keyValue = { [key]: initValue };
+			keyValue = { [theKey]: initValue };
 		}
 
 		setFilter({ ...filterValues, ...keyValue });
@@ -108,6 +123,13 @@ const SearchFilter = () => {
 			<FilterConsumer>
 				{({ onChange }) => (
 					<Fragment>
+						<RangeFilter
+							title={FILTER_KEY['age']}
+							onChange={(e, value) =>
+								onChange(e, FILTER_KEY['age'], 'range', value)
+							}
+							value={getFilterValues(FILTER_KEY['age'])}
+						/>
 						<CheckFilter
 							data={COUNTRIES}
 							onChange={e =>
@@ -119,6 +141,17 @@ const SearchFilter = () => {
 								'checkbox'
 							)}
 						/>
+						<CheckFilter
+							data={COUNTIES}
+							onChange={e =>
+								onChange(e, FILTER_KEY['county'], 'checkbox')
+							}
+							title={FILTER_KEY['county']}
+							checked={getFilterValues(
+								FILTER_KEY['county'],
+								'checkbox'
+							)}
+						/>
 						<RadioFilter
 							data={GENDERS}
 							onChange={e =>
@@ -127,15 +160,8 @@ const SearchFilter = () => {
 							title={FILTER_KEY['gender']}
 							value={getFilterValues(FILTER_KEY['gender'])}
 						/>
-						<RangeFilter
-							title={FILTER_KEY['age']}
-							onChange={(e, value) =>
-								onChange(e, FILTER_KEY['age'], 'range', value)
-							}
-							value={getFilterValues(FILTER_KEY['age'])}
-						/>
-						Age Marital Status Children Ethnicity Disability
-						Employment Status Business Sector Number of Employees
+						Marital Status Children Ethnicity Disability Employment
+						Status Business Sector Number of Employees
 					</Fragment>
 				)}
 			</FilterConsumer>

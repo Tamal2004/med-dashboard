@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 
 import AccordionExpandIcon from '@material-ui/icons/ArrowDropDown';
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import SvgIcon from '@material-ui/core/SvgIcon';
 import ExpansionPanel from './ExpansionPanel';
-import ExpansionPanelDetails from './ExpansionPanelDetails';
 import { SearchExpansionPanelSummary } from './ExpansionPanelSummary';
 import { AccordionConsumer } from './context';
 import styles from './styles';
@@ -47,7 +47,9 @@ class SearchAccordionPanel extends Component {
                         >
                             {title}
                         </SearchExpansionPanelSummary>
-                        <ExpansionPanelDetails>
+                        <ExpansionPanelDetails
+                            classes={{ root: classes.expansionPanelroot }}
+                        >
                             {children}
                         </ExpansionPanelDetails>
                     </ExpansionPanel>

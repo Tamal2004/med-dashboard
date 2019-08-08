@@ -33,7 +33,6 @@ AccordionFilterContainer.defaultProps = {
 };
 
 AccordionFilterContainer.propTypes = {
-	tag: PropTypes.string.isRequired,
 	title: PropTypes.string
 };
 
