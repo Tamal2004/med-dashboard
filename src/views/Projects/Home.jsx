@@ -72,7 +72,7 @@ const MondayProjects = ({ weekday }) => {
 
 const ProjectHome = ({ location }) => {
 	const c = useStyles();
-	let params = new URLSearchParams(location.search);
+	const params = new URLSearchParams(location.search);
 	const queryParam = params.get('weekday');
 
 	return (
