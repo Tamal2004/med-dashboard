@@ -1,14 +1,6 @@
 import { makeStyles } from '@material-ui/core';
 
-export default makeStyles(({ palette, spacing }) => ({
-    container: {
-        marginBottom: 32,
-        backgroundColor: 'unset'
-    },
-    anchorStyle: {
-        textDecoration: 'none',
-        color: palette.primary.main
-    },
+const useStyles = makeStyles(({ palette, spacing }) => ({
     footer: {
         marginTop: spacing(3),
         display: 'flex',

@@ -1,39 +1,29 @@
-import React, { Fragment, useState } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-
-// Material
-import { Typography, Divider, makeStyles } from '@material-ui/core';
-import AddIcon from '@material-ui/icons/AddBox';
-
-// Local
-import useStyles from './styles';
-import { validateRequired } from 'libs';
-import { EditableCard } from '../EditableCard';
-import { ContactsModal } from 'views/Modals';
-import {
-    GridContainer,
-    GridItem,
-    Table,
-    Select,
-    Input,
-    MultiInput,
-    Switch,
-    PaginationBase,
-    IconedButton,
-    withModal
-} from 'components';
-import { Link } from 'react-router-dom';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 
-const LinkTo = ({ to, children }) => {
-    const c = useStyles();
-    return (
-        <Link className={c.anchorStyle} to={to}>
-            {children}
-        </Link>
-    );
-};
+// Material
+import AddIcon from '@material-ui/icons/AddBox';
+
+// Local
+import { EditableCard } from '../EditableCard';
+import { ContactsModal } from 'views/Modals';
+import {
+    Table,
+    PaginationBase,
+    IconedButton,
+    withModal, Link
+} from 'components';
+import { makeStyles } from '@material-ui/core';
+
+const useStyles = makeStyles(({ palette, spacing }) => ({
+    footer: {
+        marginTop: spacing(3),
+        display: 'flex',
+        justifyContent: 'space-between'
+    }
+}));
 
 const ContactNotes = ({ data, handleContactsModal }) => {
     const [page, setPage] = useState(1);
@@ -63,7 +53,7 @@ const ContactNotes = ({ data, handleContactsModal }) => {
 const generateData = (reference, project, contactType, contactedBy) => ({
     Date: '02/06/2019',
     Project: {
-        Component: <LinkTo to={'/project/' + project}>{project}</LinkTo>,
+        Component: <Link to={'/project/' + project}>{project}</Link>,
         value: project
     },
     'Contact type': contactType,

@@ -3,38 +3,18 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { reduxForm, formValueSelector } from 'redux-form';
 
-// Material
-import { Typography, Divider } from '@material-ui/core';
-import DeleteIcon from '@material-ui/icons/DeleteOutlined';
-import RequestIcon from '@material-ui/icons/Autorenew';
-
 // Local
-import useStyles from './styles';
 import { validateRequired } from 'libs';
-import { EditableCard } from '../EditableCard';
 import {
-    GridContainer,
-    GridItem,
-    Table,
-    Select,
     Input,
-    MultiInput,
     Switch,
-    IconedButton
+    IconedButton,
+    EditableCard,
+    EditableFooter
 } from 'components';
-
-// Selectors
-import {
-    selectEthnicities,
-    selectGenders,
-    selectMaritalStatuses,
-    selectNationalities,
-    selectTitles
-} from 'selectors';
 
 const ContactDetails = ({ hasManualAddress }) => {
     const [isEditing, setEditing] = useState(false);
-    const c = useStyles();
     return (
         <EditableCard
             title='Contact Details'
@@ -55,21 +35,21 @@ const ContactDetails = ({ hasManualAddress }) => {
                 active={isEditing}
                 required={isEditing}
             />
+            {!hasManualAddress && (
+                <Input
+                    label='Address or postcode'
+                    name='address'
+                    isCard
+                    active={isEditing}
+                    required={isEditing}
+                />
+            )}
             <Switch
                 label='Enter address manually?'
                 name='manualAddress'
                 isCard
                 active={isEditing}
             />
-            {!hasManualAddress && (
-                <Input
-                    label='Address or postcode'
-                    name='age'
-                    isCard
-                    active={isEditing}
-                    required={isEditing}
-                />
-            )}
             {hasManualAddress && (
                 <Fragment>
                     <Input
@@ -96,6 +76,7 @@ const ContactDetails = ({ hasManualAddress }) => {
                         name='country'
                         isCard
                         active={isEditing}
+                        required={isEditing}
                     />
                     <Input
                         label='Postcode'
@@ -105,12 +86,9 @@ const ContactDetails = ({ hasManualAddress }) => {
                     />
                 </Fragment>
             )}
-            <Input
-                label='Testing location'
-                name='testingLocation'
-                isCard
-                active={isEditing}
-            />
+            {isEditing && (
+                <EditableFooter onClick={() => setEditing(!isEditing)} />
+            )}
         </EditableCard>
     );
 };
@@ -124,30 +102,11 @@ const mapState = state => ({
 
 const mapDispatch = {};
 
-const validate = (values, { isStudent, isEmployed, hasManualAddress }) => {
-    const required = [
-        'title',
-        'firstName',
-        'surname',
-        'email',
-        'phone',
-        'gender',
-        'age',
-        'dob',
-        'maritalStatus',
-        'nationality',
-        'ethnicity',
-        'selfInfo',
-        'employmentStatus'
-    ];
+const validate = (values, { hasManualAddress }) => {
+    const required = ['email', 'phone'];
 
-    if (isStudent) {
-        required.push('subject');
-        required.push('educationStage');
-        required.push('institution');
-    }
-    if (isEmployed) required.push('employeeCount');
     if (!hasManualAddress) required.push('address');
+    else required.push('country');
 
     return { ...validateRequired(values, required) };
 };

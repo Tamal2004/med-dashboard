@@ -20,20 +20,12 @@ import {
     Switch,
     PaginationBase,
     withModal,
-    IconedButton
+    IconedButton,
+    Link
 } from 'components';
-import { Link } from 'react-router-dom';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 
-const LinkTo = ({ to, children }) => {
-    const c = useStyles();
-    return (
-        <Link className={c.anchorStyle} to={to}>
-            {children}
-        </Link>
-    );
-};
 
 const TestSessions = ({ data, handleSessionsModal }) => {
     const [page, setPage] = useState(1);
@@ -64,11 +56,11 @@ const generateData = (reference, client, project, notes) => ({
     Date: '02/06/2019',
     Time: '10:00',
     Client: {
-        Component: <LinkTo to={'/project/' + client}>{client}</LinkTo>,
+        Component: <Link to={'/project/' + client}>{client}</Link>,
         value: reference
     },
     Project: {
-        Component: <LinkTo to={'/project/' + project}>{project}</LinkTo>,
+        Component: <Link to={'/project/' + project}>{project}</Link>,
         value: reference
     },
     Notes: notes
