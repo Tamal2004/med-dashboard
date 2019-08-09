@@ -5,7 +5,7 @@ import { makeStyles } from '@material-ui/core';
 
 // Local
 import { validateRequired } from 'libs';
-import TesterDetails from './TesterDetails';
+import ProjectDetails from './ProjectDetails';
 import ContactDetails from './ContactDetails';
 import EmploymentDetails from './EmploymentDetails';
 import TestSessions from './TestSessions';
@@ -38,7 +38,7 @@ const ProjectSingle = ({ match }) => {
         <Fragment>
             <GridContainer className={c.root} alignItems='flex-start'>
                 <GridItem md={6}>
-                    <TesterDetails />
+                    <ProjectDetails />
                 </GridItem>
                 <GridItem md={6}>
                     <GridItem md={12}>
