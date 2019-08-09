@@ -3,10 +3,10 @@ import GreenTick from 'components/Global/assets/img/green-tick.svg';
 export default theme => ({
     inputLabelRoot: {
         color: 'rgba(0, 0, 0, 0.87)',
-        position: 'relative',
+        position: 'relative'
     },
     inputLabelFocused: {
-        color: 'rgba(0, 0, 0, 0.87) !important',
+        color: 'rgba(0, 0, 0, 0.87) !important'
     },
     inputLabelShrank: {
         fontSize: '.875rem',
@@ -15,8 +15,8 @@ export default theme => ({
         '&::after': {
             content: `url(${GreenTick})`,
             marginLeft: 15,
-            display: 'none',
-        },
+            display: 'none'
+        }
     },
     labelFileFieldCad: {
         '& + div': {
@@ -25,14 +25,14 @@ export default theme => ({
             '& > input': {
                 minHeight: 180,
                 cursor: 'pointer',
-                opacity: 0,
-            },
-        },
+                opacity: 0
+            }
+        }
     },
     customLabel: {
         fontWeight: 'bold',
         height: 35,
-        lineHeight: '35px',
+        lineHeight: '35px'
     },
     browseButton: {
         width: '80px',
@@ -42,49 +42,49 @@ export default theme => ({
         borderRadius: 0,
         height: 44,
         background:
-            'linear-gradient(rgba(255, 255, 255, 1), rgba(0, 0, 0, .07))',
+            'linear-gradient(rgba(255, 255, 255, 1), rgba(0, 0, 0, .07))'
     },
     browseButtonHTMLLabel: {
         border: '1px solid #e6e6e6',
         borderRadius: 4,
         marginTop: 10,
-        display: 'block',
+        display: 'block'
     },
     browseButtonImageWrapper: {
         position: 'relative',
-        minHeight: 200,
+        minHeight: 200
     },
     browseButtonUploadedImage: {
         padding: 30,
         textAlign: 'center',
         '& img': {
             maxHeight: 140,
-            maxWidth: '100%',
+            maxWidth: '100%'
         },
         '& > p': {
             display: 'block',
-            lineHeight: '20px',
-        },
+            lineHeight: '20px'
+        }
     },
     browseButtonPlaceholder: {
         lineHeight: '200px',
         textAlign: 'center',
         cursor: 'pointer',
         color: '#aeaeae',
-        fontSize: '1.5rem',
+        fontSize: '1.5rem'
     },
     browseButtonRoot: {
         borderTop: '1px solid #e6e6e6',
         height: 45,
         cursor: 'pointer',
         marginTop: -10,
-        display: 'flex',
+        display: 'flex'
     },
     fab: {
         position: 'absolute',
-        top: theme.spacing.unit,
-        right: theme.spacing.unit,
-        backgroundColor: theme.palette.background.paper,
+        top: theme.spacing(),
+        right: theme.spacing(),
+        backgroundColor: theme.palette.background.paper
     },
     fileListLabel: {
         color: '#aeaeae',
@@ -97,7 +97,7 @@ export default theme => ({
         lineHeight: '45px',
         paddingLeft: 15,
         '& span:not(:first-child):before': {
-            content: '", "',
-        },
-    },
+            content: '", "'
+        }
+    }
 });

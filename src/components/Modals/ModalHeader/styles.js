@@ -2,16 +2,16 @@ export default ({ palette, spacing, typography }) => ({
     root: {
         backgroundColor: '#f4f4f4',
         margin: 0,
-        padding: spacing.unit * 2,
-        paddingLeft: spacing.unit * 5,
-        paddingRight: spacing.unit * 5,
-        borderTopLeftRadius: spacing.unit / 2,
-        borderTopRightRadius: spacing.unit / 2
+        padding: spacing(2),
+        paddingLeft: spacing(5),
+        paddingRight: spacing(5),
+        borderTopLeftRadius: spacing(2),
+        borderTopRightRadius: spacing(2)
     },
     button: {
         position: 'absolute',
-        top: spacing.unit,
-        right: spacing.unit,
+        top: spacing(),
+        right: spacing(),
         color: palette.grey[500]
     },
     title: {

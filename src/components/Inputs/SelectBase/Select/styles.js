@@ -11,14 +11,14 @@ export default ({ unitHeight, unitWidth, listMaxNumber, iconRight }) => ({
     const listHeight = listItemHeight * listItemNumber;
 
     // Padding = 2 + 2 ------ ScrollBar = 3 |||| spacing.units
-    const listItemWidth = unitWidth - spacing.unit * 7;
+    const listItemWidth = unitWidth - spacing(7);
 
     return {
         root: {
             display: 'flex',
             fontSize: 'inherit',
             alignItems: 'center',
-            paddingRight: spacing.unit,
+            paddingRight: spacing(),
             height: 'inherit',
             color: palette.grey[700],
             '&:hover': {
@@ -28,10 +28,10 @@ export default ({ unitHeight, unitWidth, listMaxNumber, iconRight }) => ({
         select: {
             display: 'inline-block',
             lineHeight: `${menuItemHeight * 2}px`,
-            marginRight: spacing.unit * -4,
+            marginRight: spacing(-4),
             width: '100%',
             height: 'inherit',
-            paddingLeft: spacing.unit * 2,
+            paddingLeft: spacing(2),
             paddingTop: 0,
             paddingBottom: 0,
             '&:hover': {
@@ -41,7 +41,7 @@ export default ({ unitHeight, unitWidth, listMaxNumber, iconRight }) => ({
             }
         },
         selectCancellable: {
-            paddingRight: Number(iconRight) + spacing.unit * 3 // Icon margin + font size
+            paddingRight: Number(iconRight) + spacing(3) // Icon margin + font size
         },
         icon: {
             position: 'relative',
@@ -58,7 +58,7 @@ export default ({ unitHeight, unitWidth, listMaxNumber, iconRight }) => ({
             '& > li': {
                 height: menuItemHeight,
                 //width: listItemWidth,
-                width: `calc(100% - ${spacing.unit * 4}px)`,
+                width: `calc(100% - ${spacing(4)}px)`,
                 //width: 'calc(100% - 32px);',
                 lineHeight: `${menuItemHeight}px`,
                 textOverflow: 'ellipsis',
@@ -95,8 +95,8 @@ export default ({ unitHeight, unitWidth, listMaxNumber, iconRight }) => ({
 
         input: {
             height: 'inherit',
-            paddingLeft: spacing.unit * 2,
-            paddingRight: Number(iconRight) + spacing.unit * 3,
+            paddingLeft: spacing(2),
+            paddingRight: Number(iconRight) + spacing(3),
             paddingTop: 0,
             paddingBottom: 0,
             zIndex: 1

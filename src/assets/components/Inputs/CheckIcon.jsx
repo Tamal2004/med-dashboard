@@ -4,19 +4,18 @@ import classNames from 'classnames';
 // Material
 import { withStyles } from '@material-ui/core';
 
-
 const styles = ({ spacing }) => ({
     root: {
-        width: spacing.unit * 3,
-        height: spacing.unit * 3
+        width: spacing(3),
+        height: spacing(3)
     }
 });
 
 const CheckIcon = ({
-                       classes: { root },
-                       className,
-                       color: fill = '#8fc255'
-                   }) => {
+    classes: { root },
+    className,
+    color: fill = '#8fc255'
+}) => {
     return (
         <svg
             className={classNames(root, className)}

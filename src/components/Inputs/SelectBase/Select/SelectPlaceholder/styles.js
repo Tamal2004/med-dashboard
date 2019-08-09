@@ -6,10 +6,10 @@ export default ({ spacing, palette }) => ({
         display: 'inline-block',
         whiteSpace: 'nowrap',
         overflow: 'hidden',
-        paddingRight: spacing.unit * 4,
+        paddingRight: spacing(4),
         textOverflow: 'ellipsis',
         height: 'inherit',
-        paddingLeft: spacing.unit * 2
+        paddingLeft: spacing(2)
     },
     focused: {
         display: 'none !important'

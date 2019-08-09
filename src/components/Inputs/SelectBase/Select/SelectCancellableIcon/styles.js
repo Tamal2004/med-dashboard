@@ -4,13 +4,13 @@ export const root = ({ palette, spacing }) => ({
     alignItems: 'center',
     alignSelf: 'flex-end',
     height: 'inherit',
-    right: spacing.unit * 4,
+    right: spacing(4),
     zIndex: 2,
     color: palette.grey[700],
     cursor: 'pointer',
     '&:hover': {
-        color: palette.error.main,
-    },
+        color: palette.error.main
+    }
 });
 
 export default theme => ({
@@ -18,6 +18,6 @@ export default theme => ({
     icon: {
         height: 'inherit',
         width: '90%',
-        color: 'inherit',
-    },
+        color: 'inherit'
+    }
 });
