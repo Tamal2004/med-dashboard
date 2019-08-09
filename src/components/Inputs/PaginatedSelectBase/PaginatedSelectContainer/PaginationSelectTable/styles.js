@@ -3,8 +3,8 @@ import { hexToRgb } from 'helpers';
 export default ({ palette, spacing, transitions, typography }) => ({
     root: {},
     row: {
-        height: spacing.unit * 4.5,
-        maxHeight: spacing.unit * 4.5,
+        height: spacing(4.5),
+        maxHeight: spacing(4.5),
         cursor: 'pointer',
 
         position: 'relative',
@@ -31,10 +31,10 @@ export default ({ palette, spacing, transitions, typography }) => ({
         }
     },
     cell: {
-        paddingLeft: spacing.unit,
-        paddingRight: spacing.unit,
-        minWidth: spacing.unit * 10.5,
-        maxWidth: spacing.unit * 31.5,
+        paddingLeft: spacing(),
+        paddingRight: spacing(),
+        minWidth: spacing(10.5),
+        maxWidth: spacing(31.5),
         whiteSpace: 'nowrap',
         overflow: 'hidden',
         textOverflow: 'ellipsis'
@@ -44,11 +44,11 @@ export default ({ palette, spacing, transitions, typography }) => ({
         fontWeight: typography.fontWeightHeavy,
         fontSize: typography.button.fontSize,
         position: 'relative',
-        paddingRight: spacing.unit * 3,
+        paddingRight: spacing(3),
         '&:last-child': {
-            paddingRight: spacing.unit * 3.5,
+            paddingRight: spacing(3.5),
             '& > svg': {
-                right: spacing.unit / 2
+                right: spacing() / 2
             }
         }
     },

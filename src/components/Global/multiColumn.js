@@ -43,7 +43,7 @@ import GreenTick from './assets/img/green-tick.svg';
 
 const styles = theme => ({
     textField: {
-        marginBottom: theme.spacing.unit * 2.5
+        marginBottom: theme.spacing(2.5)
     },
     bgAmendColor: {
         backgroundColor: amendColor

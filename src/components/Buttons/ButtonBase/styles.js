@@ -8,6 +8,10 @@ const styles = ({ shadows, palette }) => ({
             backgroundColor: palette.grey[400]
         }
     },
+
+    containedPrimary: {
+        color: palette.common.offWhite
+    },
     disabled: {}
 });
 

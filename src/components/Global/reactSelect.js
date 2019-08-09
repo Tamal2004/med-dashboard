@@ -21,20 +21,20 @@ const styles = theme => ({
         border: '1px solid  #e6e6e6',
         borderRadius: 4,
         height: '45px',
-        marginBottom: theme.spacing.unit * 2.5,
+        marginBottom: theme.spacing(2.5)
     },
     amendBgColor: {
-        background: amendColor,
+        background: amendColor
     },
     inputLabelRoot: {
         color: 'rgba(0, 0, 0, 0.87)',
-        position: 'relative',
+        position: 'relative'
     },
     inputLabelFocused: {
-        color: 'rgba(0, 0, 0, 0.87) !important',
+        color: 'rgba(0, 0, 0, 0.87) !important'
     },
     inputLabelAsterisk: {
-        color: 'red',
+        color: 'red'
     },
     inputLabelShrank: {
         fontSize: '.875rem',
@@ -43,24 +43,24 @@ const styles = theme => ({
         '&::after': {
             content: `url(${GreenTick})`,
             marginLeft: 15,
-            display: 'none',
-        },
+            display: 'none'
+        }
     },
     inputHasSuccess: {
         '&::after': {
-            display: 'inline-block',
+            display: 'inline-block'
         },
         '& + div > div': {
-            borderColor: '#8fc255',
-        },
+            borderColor: '#8fc255'
+        }
     },
     inputHasError: {
-        borderColor: '#eb5151',
+        borderColor: '#eb5151'
     },
     searchIcon: {
         position: 'absolute',
         right: '5%',
-        top: '25%',
+        top: '25%'
     },
     loaderContainer: {
         width: '100%',
@@ -71,12 +71,12 @@ const styles = theme => ({
         borderRadius: 4,
         marginTop: 0,
         top: 36,
-        left: 0,
+        left: 0
     },
     loader: {
         color: '#e6e6e6',
         marginTop: 10,
-        marginLeft: 'calc(50% - 12.5px)',
+        marginLeft: 'calc(50% - 12.5px)'
     },
     valueContainer: {
         display: 'flex',
@@ -89,24 +89,24 @@ const styles = theme => ({
             overflow: 'hidden',
             textOverflow: 'ellipsis',
             lineHeight: '45px',
-            height: 45,
-        },
+            height: 45
+        }
     },
     singleValue: {
-        fontSize: '0.875rem',
+        fontSize: '0.875rem'
     },
     placeholder: {
         position: 'absolute',
         left: 22,
-        fontSize: '0.875rem',
+        fontSize: '0.875rem'
     },
     paper: {
         position: 'absolute',
         zIndex: 1,
         marginTop: -20,
         left: 0,
-        right: 0,
-    },
+        right: 0
+    }
 });
 
 function inputComponent({ inputRef, ...props }) {
@@ -129,8 +129,8 @@ function Control(props) {
                     ),
                     inputRef: props.innerRef,
                     children: props.children,
-                    ...props.innerProps,
-                },
+                    ...props.innerProps
+                }
             }}
             {...props.selectProps.textFieldProps}
         />
@@ -147,7 +147,7 @@ function Option(props) {
                 fontWeight: props.isSelected ? 500 : 400,
                 fontSize: '0.875rem',
                 height: '20px',
-                padding: '10px',
+                padding: '10px'
             }}
             {...props.innerProps}
         >
@@ -208,7 +208,7 @@ const components = {
     Option,
     Placeholder,
     SingleValue,
-    ValueContainer,
+    ValueContainer
 };
 
 class SelectMenu extends PureComponent {
@@ -232,7 +232,7 @@ class SelectMenu extends PureComponent {
             type = null,
             search = () => {},
             action = () => {},
-            isAmend = false,
+            isAmend = false
         } = this.props;
 
         const selectStyles = {
@@ -240,9 +240,9 @@ class SelectMenu extends PureComponent {
                 ...base,
                 color: theme.palette.text.primary,
                 '& input': {
-                    font: 'inherit',
-                },
-            }),
+                    font: 'inherit'
+                }
+            })
         };
 
         const loader = (
@@ -273,14 +273,14 @@ class SelectMenu extends PureComponent {
                         helperText: loading ? loader : null,
                         FormHelperTextProps: {
                             component: 'div',
-                            className: classes.loaderContainer,
+                            className: classes.loaderContainer
                         },
                         required: required,
                         label: label,
                         InputLabelProps: {
                             shrink: true,
                             FormLabelClasses: {
-                                asterisk: classes.inputLabelAsterisk,
+                                asterisk: classes.inputLabelAsterisk
                             },
                             classes: {
                                 root: classes.inputLabelRoot,
@@ -290,9 +290,9 @@ class SelectMenu extends PureComponent {
                                           classes.inputLabelShrank,
                                           classes.inputHasSuccess
                                       )
-                                    : classNames(classes.inputLabelShrank),
-                            },
-                        },
+                                    : classNames(classes.inputLabelShrank)
+                            }
+                        }
                     }}
                 />
             </React.Fragment>
@@ -302,7 +302,7 @@ class SelectMenu extends PureComponent {
 
 SelectMenu.propTypes = {
     classes: PropTypes.object.isRequired,
-    theme: PropTypes.object.isRequired,
+    theme: PropTypes.object.isRequired
 };
 
 const SelectFields = withStyles(styles, { withTheme: true })(SelectMenu);

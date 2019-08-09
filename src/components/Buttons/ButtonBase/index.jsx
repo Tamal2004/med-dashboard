@@ -8,7 +8,12 @@ import { CircularLoader } from 'components';
 
 const ButtonBase = ({ classes, children, isLoading, ...restProps }) => {
 	return (
-		<Button variant='contained' classes={classes} {...restProps}>
+		<Button
+			variant='contained'
+			color='primary'
+			classes={classes}
+			{...restProps}
+		>
 			{isLoading ? <CircularLoader /> : children}
 		</Button>
 	);

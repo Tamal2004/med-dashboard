@@ -6,7 +6,7 @@ export default ({ palette, spacing, typography }) => ({
         height: spacing(4.5),
         minWidth: 'unset',
         minHeight: 'unset',
-        padding: spacing.unit,
+        padding: spacing(),
         border: '1px solid',
         borderLeft: 'unset',
         borderColor: palette.grey[400],
