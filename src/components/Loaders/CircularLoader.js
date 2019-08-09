@@ -1,19 +1,18 @@
-import React, { Component } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
-class CircularLoader extends Component {
-	render() {
-		return (
-			<CircularProgress
-				size='25px'
-				style={{
-					color: 'rgb(244, 244, 244)',
-					position: 'absolute',
-					top: '10%',
-				}}
-			/>
-		);
-	}
-}
+const CircularLoader = ({ color, size }) => {
+	return <CircularProgress color={color} size={size} />;
+};
+
+CircularLoader.defaultProps = {
+	color: 'primary',
+	size: 40
+};
+CircularLoader.propTypes = {
+	color: PropTypes.string,
+	size: PropTypes.number
+};
 
 export { CircularLoader as default, CircularLoader };

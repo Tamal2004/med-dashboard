@@ -65,7 +65,7 @@ const ClientHome = () => {
 				<SearchInput placeholder='Search by name or project reference' />
 			</GridItem>
 			<GridItem md={6} className={c.buttonGridStyle}>
-				<NavigateButton color='secondary'>
+				<NavigateButton variant='outlined'>
 					Add a new client
 				</NavigateButton>
 			</GridItem>
