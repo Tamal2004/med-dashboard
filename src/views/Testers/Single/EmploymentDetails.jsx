@@ -5,7 +5,6 @@ import { reduxForm, formValueSelector } from 'redux-form';
 
 
 // Local
-import useStyles from './styles';
 import { validateRequired } from 'libs';
 import {
     Select,
@@ -29,10 +28,10 @@ const EmploymentDetails = ({
     employmentStatuses,
     isStudent,
     isEmployed,
-    isRetired
+    isRetired,
+    invalid
 }) => {
     const [isEditing, setEditing] = useState(false);
-    const c = useStyles();
     return (
         <EditableCard
             title='Employment Details'
@@ -107,7 +106,7 @@ const EmploymentDetails = ({
                 </Fragment>
             )}
             {isEditing && (
-                <EditableFooter onClick={() => setEditing(!isEditing)} />
+                <EditableFooter onClick={() => setEditing(!isEditing)} disabled={invalid}/>
             )}
         </EditableCard>
     );

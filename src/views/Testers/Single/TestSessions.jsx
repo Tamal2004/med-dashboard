@@ -1,31 +1,31 @@
-import React, { Fragment, useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import { compose } from 'redux';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 // Material
-import { Typography, Divider, makeStyles } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/AddBox';
 
 // Local
-import useStyles from './styles';
 import { validateRequired } from 'libs';
-import { EditableCard } from '../EditableCard';
 import { SessionsModal } from 'views/Modals';
 import {
-    GridContainer,
-    GridItem,
     Table,
-    Select,
-    Input,
-    MultiInput,
-    Switch,
     PaginationBase,
-    withModal,
     IconedButton,
-    Link
+    EditableCard,
+    Link,
+    withModal
 } from 'components';
-import { compose } from 'redux';
-import { connect } from 'react-redux';
 
+const useStyles = makeStyles(({ palette, spacing }) => ({
+    footer: {
+        marginTop: spacing(3),
+        display: 'flex',
+        justifyContent: 'space-between'
+    }
+}));
 
 const TestSessions = ({ data, handleSessionsModal }) => {
     const [page, setPage] = useState(1);

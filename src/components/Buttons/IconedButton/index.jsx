@@ -10,9 +10,10 @@ import { validateRequired } from 'libs';
 
 const IconedButton = ({ Icon, children, ...props }) => {
     const c = useStyles();
+    const color = props.disabled ? 'disabled' : props.color;
     return (
         <Button className={c.root} {...props}>
-            <Icon color={props.color} className={c.icon} />
+            <Icon color={color} className={c.icon} />
             {children}
         </Button>
     );

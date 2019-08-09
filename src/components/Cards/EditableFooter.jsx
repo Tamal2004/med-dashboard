@@ -20,13 +20,13 @@ const useStyles = makeStyles(({ spacing }) => ({
         paddingRight: spacing(2)
     }
 }));
-const EditableFooter = ({ label, onClick }) => {
+const EditableFooter = ({ label, onClick, disabled }) => {
     const c = useStyles();
     return (
         <Fragment>
             <Divider className={c.divider} />
             <div className={c.root}>
-                <IconedButton Icon={EditIcon} onClick={onClick}>
+                <IconedButton Icon={EditIcon} onClick={onClick} disabled={disabled}>
                     {label}
                 </IconedButton>
             </div>
@@ -35,11 +35,13 @@ const EditableFooter = ({ label, onClick }) => {
 };
 
 EditableFooter.defaultProps = {
-    label: 'Save Edits'
+    label: 'Save Edits',
+    disabled: false
 };
 
 EditableFooter.propTypes = {
-    label: PropTypes.string
+    label: PropTypes.string,
+    disabled: PropTypes.bool
 };
 
 export { EditableFooter as default, EditableFooter };

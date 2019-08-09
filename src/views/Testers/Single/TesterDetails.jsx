@@ -4,23 +4,20 @@ import { connect } from 'react-redux';
 import { reduxForm, formValueSelector } from 'redux-form';
 
 // Material
-import { Typography, Divider } from '@material-ui/core';
+import { Grid, Typography, Divider, makeStyles } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/DeleteOutlined';
 import RequestIcon from '@material-ui/icons/Autorenew';
+import EditIcon from '@material-ui/icons/Edit';
 
 // Local
-import useStyles from './styles';
-import { validateRequired } from 'libs';
-import { EditableCard } from '../EditableCard';
+import { validateRequired, mapFromValue } from 'libs';
 import {
-    GridContainer,
-    GridItem,
-    Table,
     Select,
     Input,
     MultiInput,
     Switch,
-    IconedButton
+    IconedButton,
+    EditableCard
 } from 'components';
 
 // Selectors
@@ -32,29 +29,80 @@ import {
     selectTitles
 } from 'selectors';
 
+const useStyles = makeStyles(({ palette, spacing, typography }) => ({
+    name: {
+        paddingLeft: spacing(2),
+        paddingRight: spacing(2),
+        fontWeight: typography.fontWeightHeavy
+    },
+    divider: {
+        margin: spacing(),
+        marginLeft: spacing(2),
+        marginRight: spacing(2)
+    },
+    footer: {
+        paddingLeft: spacing(2),
+        paddingRight: spacing(2),
+        display: 'flex',
+        justifyContent: 'space-between'
+    }
+}));
+
 const TesterDetails = ({
     match,
+    titles,
     genders,
     martitalStatuses,
     nationalities,
-    ethnicities
+    ethnicities,
+    invalid,
+    title,
+    firstName,
+    surname
 }) => {
     const [isEditing, setEditing] = useState(false);
     const c = useStyles();
-    const title = 'Mr.';
-    const firstName = 'Matt';
-    const surname = 'Tamal';
+
     return (
         <EditableCard
             title='Tester Details'
             onEdit={() => setEditing(!isEditing)}
             color={isEditing ? 'primary' : 'secondary'}
         >
-            <Typography
-                className={c.name}
-                variant='subtitle1'
-            >{`${title} ${firstName} ${surname}`}</Typography>
-
+            {isEditing ? (
+                <Grid container>
+                    <Grid item xs={4}>
+                        <Select
+                            name='title'
+                            placeholder='Title'
+                            data={titles}
+                            isCard
+                            active={isEditing}
+                        />
+                    </Grid>
+                    <Grid item xs={4}>
+                        <Input
+                            name='firstName'
+                            placeholder='First Name'
+                            isCard
+                            active={isEditing}
+                        />
+                    </Grid>
+                    <Grid item xs={4}>
+                        <Input
+                            name='surname'
+                            placeholder='Surname'
+                            isCard
+                            active={isEditing}
+                        />
+                    </Grid>
+                </Grid>
+            ) : (
+                <Typography
+                    className={c.name}
+                    variant='subtitle1'
+                >{`${title} ${firstName} ${surname}`}</Typography>
+            )}
             <Divider className={c.divider} />
             <Select
                 label='Gender'
@@ -134,6 +182,7 @@ const TesterDetails = ({
                 name='selfInfo'
                 isCard
                 active={isEditing}
+                required={isEditing}
             />
             <Divider className={c.divider} />
             <MultiInput
@@ -154,6 +203,7 @@ const TesterDetails = ({
                 isCard
                 active={isEditing}
             />
+            <Divider className={c.divider} />
             <div className={c.footer}>
                 <IconedButton
                     color='secondary'
@@ -162,51 +212,71 @@ const TesterDetails = ({
                 >
                     Request Update
                 </IconedButton>
-                <IconedButton
-                    onClick={() => console.log('arstarst')}
-                    Icon={DeleteIcon}
-                >
-                    Delete Tester
-                </IconedButton>
+                {isEditing ? (
+                    <IconedButton
+                        Icon={EditIcon}
+                        onClick={() => setEditing(!isEditing)}
+                        disabled={invalid}
+                    >
+                        Save Edits
+                    </IconedButton>
+                ) : (
+                    <IconedButton
+                        onClick={() => console.log('arstarst')}
+                        Icon={DeleteIcon}
+                    >
+                        Delete Tester
+                    </IconedButton>
+                )}
             </div>
         </EditableCard>
     );
 };
 
-const mapState = state => ({
-    genders: selectGenders(state),
-    martitalStatuses: selectMaritalStatuses(state),
-    nationalities: selectNationalities(state),
-    ethnicities: selectEthnicities(state)
-});
+TesterDetails.defaultProps = {
+    title: 'Dr.',
+    firstName: 'John',
+    surname: 'Smith'
+};
+
+const mapState = state => {
+    const formSelector = formValueSelector('TesterDetails');
+    const titles = selectTitles(state);
+    return {
+        titles,
+        genders: selectGenders(state),
+        martitalStatuses: selectMaritalStatuses(state),
+        nationalities: selectNationalities(state),
+        ethnicities: selectEthnicities(state),
+        initialValues: {
+            hasChildren: false,
+            title: 1,
+            firstName: 'Matt',
+            surname: 'Tamal'
+        },
+        title: mapFromValue(titles, formSelector(state, 'title')),
+        firstName: formSelector(state, 'firstName'),
+        surname: formSelector(state, 'surname')
+    };
+};
 
 const mapDispatch = {};
 
-const validate = (values, { isStudent, isEmployed, hasManualAddress }) => {
+const validate = values => {
     const required = [
         'title',
         'firstName',
         'surname',
-        'email',
-        'phone',
         'gender',
         'age',
         'dob',
         'maritalStatus',
+        'hasChildren',
         'nationality',
         'ethnicity',
-        'selfInfo',
-        'employmentStatus'
+        'firstLanguage',
+        'selfInfo'
     ];
-
-    if (isStudent) {
-        required.push('subject');
-        required.push('educationStage');
-        required.push('institution');
-    }
-    if (isEmployed) required.push('employeeCount');
-    if (!hasManualAddress) required.push('address');
-
     return { ...validateRequired(values, required) };
 };
 

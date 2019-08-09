@@ -1,31 +1,17 @@
-import React, { Component, Fragment } from 'react';
+import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 
 // Material
-import { Button, Grid, Typography, Divider } from '@material-ui/core';
-import DeleteIcon from '@material-ui/icons/DeleteOutlined';
-import RequestIcon from '@material-ui/icons/Autorenew';
+import { makeStyles } from '@material-ui/core';
 
 // Local
-import useStyles from './styles';
 import { validateRequired } from 'libs';
 import TesterDetails from './TesterDetails';
 import ContactDetails from './ContactDetails';
 import EmploymentDetails from './EmploymentDetails';
 import TestSessions from './TestSessions';
 import ContactNotes from './ContactNotes';
-import {
-    GridContainer,
-    GridItem,
-    Table,
-    TooltipIcon,
-    Select,
-    Input,
-    MultiInput,
-    Switch,
-    NavigateButton,
-    withModal
-} from 'components';
+import { GridContainer, GridItem } from 'components';
 
 // Selectors
 import {
@@ -41,7 +27,13 @@ import {
     selectTitles
 } from 'selectors';
 
-const TesterSingle = ({ match, genders }) => {
+const useStyles = makeStyles(() => ({
+    root: {
+        backgroundColor: 'unset'
+    }
+}));
+
+const TesterSingle = ({ match }) => {
     const c = useStyles();
     return (
         <Fragment>
@@ -49,14 +41,14 @@ const TesterSingle = ({ match, genders }) => {
                 <GridItem md={6}>
                     <TesterDetails />
                 </GridItem>
-                <Grid item md={6}>
+                <GridItem md={6}>
                     <GridItem md={12}>
                         <ContactDetails />
                     </GridItem>
                     <GridItem md={12}>
                         <EmploymentDetails />
                     </GridItem>
-                </Grid>
+                </GridItem>
             </GridContainer>
 
             <GridContainer className={c.root} alignItems='center'>
@@ -73,39 +65,9 @@ const TesterSingle = ({ match, genders }) => {
     );
 };
 
-const mapState = state => ({
-    genders: selectGenders(state)
-});
+const mapState = () => ({});
 
 const mapDispatch = {};
-
-const validate = (values, { isStudent, isEmployed, hasManualAddress }) => {
-    const required = [
-        'title',
-        'firstName',
-        'surname',
-        'email',
-        'phone',
-        'gender',
-        'age',
-        'dob',
-        'maritalStatus',
-        'nationality',
-        'ethnicity',
-        'selfInfo',
-        'employmentStatus'
-    ];
-
-    if (isStudent) {
-        required.push('subject');
-        required.push('educationStage');
-        required.push('institution');
-    }
-    if (isEmployed) required.push('employeeCount');
-    if (!hasManualAddress) required.push('address');
-
-    return { ...validateRequired(values, required) };
-};
 
 const _TesterSingle = connect(
     mapState,

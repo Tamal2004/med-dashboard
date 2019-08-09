@@ -7,13 +7,14 @@ import { connect } from 'react-redux';
 import AddIcon from '@material-ui/icons/AddBox';
 
 // Local
-import { EditableCard } from '../EditableCard';
 import { ContactsModal } from 'views/Modals';
 import {
     Table,
     PaginationBase,
     IconedButton,
-    withModal, Link
+    EditableCard,
+    Link,
+    withModal
 } from 'components';
 import { makeStyles } from '@material-ui/core';
 
