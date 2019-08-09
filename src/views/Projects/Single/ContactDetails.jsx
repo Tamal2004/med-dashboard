@@ -13,7 +13,7 @@ import {
     EditableFooter
 } from 'components';
 
-const ContactDetails = ({ hasManualAddress, invalid }) => {
+const ContactDetails = ({ hasManualAddress }) => {
     const [isEditing, setEditing] = useState(false);
     return (
         <EditableCard
@@ -87,10 +87,7 @@ const ContactDetails = ({ hasManualAddress, invalid }) => {
                 </Fragment>
             )}
             {isEditing && (
-                <EditableFooter
-                    onClick={() => setEditing(!isEditing)}
-                    disabled={invalid}
-                />
+                <EditableFooter onClick={() => setEditing(!isEditing)} />
             )}
         </EditableCard>
     );
