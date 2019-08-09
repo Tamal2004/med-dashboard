@@ -18,7 +18,6 @@ import {
     Select,
     MultiInput
 } from 'components';
-import { Link } from 'react-router-dom';
 
 const ContactsModal = ({ data, onClose }) => {
     const c = useStyles();
@@ -35,7 +34,6 @@ const ContactsModal = ({ data, onClose }) => {
                 <MultiInput
                     name='notes'
                     placeholder='Message details'
-                    isCompact
                 />
             </ModalContent>
             <Divider />

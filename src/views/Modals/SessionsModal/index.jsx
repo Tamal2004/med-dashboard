@@ -1,8 +1,7 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { reduxForm } from 'redux-form';
-import PropTypes from 'prop-types';
 
 // Material
 import { Divider } from '@material-ui/core';
@@ -19,7 +18,6 @@ import {
     Input,
     MultiInput
 } from 'components';
-import { Link } from 'react-router-dom';
 
 const SessionsModal = ({ data, onClose }) => {
     const c = useStyles();
