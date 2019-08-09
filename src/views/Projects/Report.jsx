@@ -55,7 +55,7 @@ const ProjectReport = ({ location }) => {
 	const params = new URLSearchParams(location.search);
 	const projectRef = params.get('ref');
 	const profileType = params.get('type');
-	console.log(projectRef, profileType);
+
 	return (
 		<GridContainer alignItems='center'>
 			<GridItem md={12}>
