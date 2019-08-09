@@ -3,22 +3,14 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { reduxForm, formValueSelector } from 'redux-form';
 
-// Material
-import { Typography, Divider } from '@material-ui/core';
 
 // Local
-import useStyles from './styles';
 import { validateRequired } from 'libs';
-import { EditableCard } from '../EditableCard';
 import {
-    GridContainer,
-    GridItem,
-    Table,
     Select,
     Input,
-    MultiInput,
-    Switch,
-    IconedButton
+    EditableCard,
+    EditableFooter
 } from 'components';
 
 // Selectors
@@ -36,10 +28,10 @@ const EmploymentDetails = ({
     employmentStatuses,
     isStudent,
     isEmployed,
-    isRetired
+    isRetired,
+    invalid
 }) => {
     const [isEditing, setEditing] = useState(false);
-    const c = useStyles();
     return (
         <EditableCard
             title='Employment Details'
@@ -113,6 +105,9 @@ const EmploymentDetails = ({
                     />
                 </Fragment>
             )}
+            {isEditing && (
+                <EditableFooter onClick={() => setEditing(!isEditing)} disabled={invalid}/>
+            )}
         </EditableCard>
     );
 };
@@ -138,20 +133,8 @@ const mapState = state => {
 
 const mapDispatch = {};
 
-const validate = (values, { isStudent, isEmployed, hasManualAddress }) => {
+const validate = (values, { isStudent, isEmployed }) => {
     const required = [
-        'title',
-        'firstName',
-        'surname',
-        'email',
-        'phone',
-        'gender',
-        'age',
-        'dob',
-        'maritalStatus',
-        'nationality',
-        'ethnicity',
-        'selfInfo',
         'employmentStatus'
     ];
 
@@ -161,7 +144,6 @@ const validate = (values, { isStudent, isEmployed, hasManualAddress }) => {
         required.push('institution');
     }
     if (isEmployed) required.push('employeeCount');
-    if (!hasManualAddress) required.push('address');
 
     return { ...validateRequired(values, required) };
 };

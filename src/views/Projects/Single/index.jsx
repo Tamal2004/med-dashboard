@@ -32,7 +32,7 @@ const useStyles = makeStyles(() => ({
     }
 }));
 
-const TesterSingle = ({ match }) => {
+const ProjectSingle = ({ match }) => {
     const c = useStyles();
     return (
         <Fragment>
@@ -65,4 +65,4 @@ const TesterSingle = ({ match }) => {
 };
 
 
-export { TesterSingle as default, TesterSingle };
+export { ProjectSingle as default, ProjectSingle };

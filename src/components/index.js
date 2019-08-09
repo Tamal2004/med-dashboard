@@ -13,3 +13,4 @@ export * from './Icons';
 export * from './Cards';
 export * from './Modals';
 export * from './FormComponents';
+export * from './Typography';

@@ -1,39 +1,31 @@
-import React, { Fragment, useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import { compose } from 'redux';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 // Material
-import { Typography, Divider, makeStyles } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/AddBox';
 
 // Local
-import useStyles from './styles';
 import { validateRequired } from 'libs';
-import { EditableCard } from '../EditableCard';
 import { SessionsModal } from 'views/Modals';
 import {
-    GridContainer,
-    GridItem,
     Table,
-    Select,
-    Input,
-    MultiInput,
-    Switch,
     PaginationBase,
-    withModal,
-    IconedButton
+    IconedButton,
+    EditableCard,
+    Link,
+    withModal
 } from 'components';
-import { Link } from 'react-router-dom';
-import { compose } from 'redux';
-import { connect } from 'react-redux';
 
-const LinkTo = ({ to, children }) => {
-    const c = useStyles();
-    return (
-        <Link className={c.anchorStyle} to={to}>
-            {children}
-        </Link>
-    );
-};
+const useStyles = makeStyles(({ palette, spacing }) => ({
+    footer: {
+        marginTop: spacing(3),
+        display: 'flex',
+        justifyContent: 'space-between'
+    }
+}));
 
 const TestSessions = ({ data, handleSessionsModal }) => {
     const [page, setPage] = useState(1);
@@ -64,11 +56,11 @@ const generateData = (reference, client, project, notes) => ({
     Date: '02/06/2019',
     Time: '10:00',
     Client: {
-        Component: <LinkTo to={'/project/' + client}>{client}</LinkTo>,
+        Component: <Link to={'/project/' + client}>{client}</Link>,
         value: reference
     },
     Project: {
-        Component: <LinkTo to={'/project/' + project}>{project}</LinkTo>,
+        Component: <Link to={'/project/' + project}>{project}</Link>,
         value: reference
     },
     Notes: notes

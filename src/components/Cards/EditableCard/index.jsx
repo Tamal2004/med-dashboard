@@ -7,18 +7,7 @@ import EditIcon from '@material-ui/icons/EditOutlined';
 
 // Local
 import useStyles from './styles';
-import { validateRequired } from 'libs';
-import {
-    GridContainer,
-    GridItem,
-    Table,
-    TooltipIcon,
-    Select,
-    Input,
-    MultiInput,
-    Switch,
-    NavigateButton
-} from 'components';
+import { TooltipIcon } from 'components';
 
 const EditableCard = ({ title, actionTitle, onEdit, color, children }) => {
     const c = useStyles();
