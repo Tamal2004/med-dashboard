@@ -10,7 +10,7 @@ import styles from './styles';
 
 class Tooltip extends Component {
     state = {
-        arrowRef: null,
+        arrowRef: null
     };
 
     handleArrowRef = arrowRef => this.setState({ arrowRef });
@@ -18,7 +18,7 @@ class Tooltip extends Component {
     renderTitle = () => {
         const {
             classes: { arrow },
-            title = null,
+            title = null
         } = this.props;
 
         return (
@@ -36,6 +36,7 @@ class Tooltip extends Component {
             children,
             dark,
             onClick = () => {},
+            ...restProps
         } = this.props;
 
         const popper = dark ? popperDark : popperLight;
@@ -45,8 +46,8 @@ class Tooltip extends Component {
 
         const popperOptions = {
             modifiers: {
-                arrow: { enabled: Boolean(arrowRef), element: arrowRef },
-            },
+                arrow: { enabled: Boolean(arrowRef), element: arrowRef }
+            }
         };
 
         return (
@@ -55,6 +56,7 @@ class Tooltip extends Component {
                 onClick={onClick}
                 classes={{ popper, tooltip }}
                 PopperProps={{ popperOptions }}
+                {...restProps}
             >
                 {children}
             </MuiTooltip>

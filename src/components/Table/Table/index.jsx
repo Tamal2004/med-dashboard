@@ -17,6 +17,7 @@ import DropdownIcon from '@material-ui/icons/KeyboardArrowDown';
 import styles from './styles';
 import { composeClasses } from 'libs';
 import { PaginationBase } from '../Pagination';
+import { Tooltip } from '../../Tooltips';
 
 import SvgIcon from '@material-ui/core/SvgIcon';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -31,6 +32,8 @@ const isActionColumn = value => {
     let isExists = elem => value.hasOwnProperty(elem);
     return actionHandlers.some(isExists); // if one exists
 };
+
+const ref = React.createRef();
 
 class Table extends Component {
     state = {
@@ -141,7 +144,6 @@ class Table extends Component {
     );
 
     renderCell = (value = '', idx) => {
-        const { c } = this;
         let returnValue = value;
         const isExists = key =>
             Object.prototype.hasOwnProperty.call(value, key);
@@ -167,8 +169,19 @@ class Table extends Component {
             }
         }
 
-        return <Fragment>{returnValue}</Fragment>;
+        return (
+            <Tooltip
+                placement='bottom-start'
+                title={this.rawValue(value || '')}
+            >
+                <div className={this.c.titleWrapper} ref={ref}>
+                    {returnValue}
+                </div>
+            </Tooltip>
+        );
     };
+
+    rawValue = obj => (obj && typeof obj === 'object' ? obj.value : obj);
 
     renderRow = (row, index) =>
         Object.entries(row).map(([category, value]) => (
@@ -227,7 +240,7 @@ class Table extends Component {
             c,
             handleSort,
             renderSortIcon,
-            renderTable,
+            renderTable
         } = this;
 
         const headers = Object.keys(datum);
@@ -279,7 +292,7 @@ class Table extends Component {
 
 Table.defaultProps = {
     action: false,
-    itemsPerPage: 10,
+    itemsPerPage: 10
 };
 
 Table.propTypes = {

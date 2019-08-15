@@ -15,6 +15,7 @@ export default ({ palette, spacing, transitions, typography }) => ({
             backgroundColor: palette.grey[50]
         }
     },
+    titleWrapper: { display: 'inline-flex' },
     cell: {
         padding: `${spacing(2)}px ${spacing()}px`,
         minWidth: spacing(10.5),
