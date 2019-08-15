@@ -1,22 +1,18 @@
 import React, { Fragment } from 'react';
 import classNames from 'clsx';
-import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import { SearchFilter } from './SearchFilter';
 
 import {
 	GridContainer,
 	GridItem,
+	Link,
 	NavigateButton,
 	Table,
 	SearchInput
 } from 'components';
 
 const useStyles = makeStyles(theme => ({
-	anchorStyle: {
-		textDecoration: 'none',
-		color: theme.palette.primary.main
-	},
 	gridDistance: {
 		marginBottom: 32
 	},
@@ -34,22 +30,13 @@ const useStyles = makeStyles(theme => ({
 	}
 }));
 
-const LinkTo = ({ to, children }) => {
-	const c = useStyles();
-	return (
-		<Link className={c.anchorStyle} to={to}>
-			{children}
-		</Link>
-	);
-};
-
 const generateData = (reference, cost, Supplier, dev) => ({
 	Client: {
-		Component: <LinkTo to={'/client/' + reference}>{reference}</LinkTo>,
+		Component: <Link to={'/client/' + reference}>{reference}</Link>,
 		value: reference
 	},
 	'Latest project': {
-		Component: <LinkTo to={'/project/' + cost}>{cost}</LinkTo>,
+		Component: <Link to={'/project/' + cost}>{cost}</Link>,
 		value: cost
 	},
 	'Latest project date': Supplier,
@@ -96,11 +83,11 @@ const TesterSearch = () => {
 				</GridItem>
 				<GridItem md={9}>
 					<div className={c.filterButtonWrapper}>
-						<LinkTo to={'/tester/mail'}>
+						<Link to={'/tester/mail'}>
 							<NavigateButton color='secondary'>
 								Email Testers
 							</NavigateButton>
-						</LinkTo>
+						</Link>
 					</div>
 					<Table action={true} data={trimData} page={1} />
 				</GridItem>

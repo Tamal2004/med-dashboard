@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListSubheader from '@material-ui/core/ListSubheader';
@@ -9,17 +8,13 @@ import ListItemText from '@material-ui/core/ListItemText';
 import PersonIcon from '@material-ui/icons/Person';
 import AnonymousIcon from '@material-ui/icons/PersonOutline';
 
-import { GridContainer, GridItem, ReportTable } from 'components';
+import { GridContainer, GridItem, Link, ReportTable } from 'components';
 
 const useStyles = makeStyles(theme => ({
 	root: {
 		width: '100%',
 		maxWidth: 320,
 		margin: 'auto'
-	},
-	anchorStyle: {
-		textDecoration: 'none',
-		color: theme.palette.primary.main
 	},
 	button: {
 		border: '1px solid rgba(0,0,0, 0.4)',
@@ -30,15 +25,6 @@ const useStyles = makeStyles(theme => ({
 		marginBottom: 20
 	}
 }));
-
-const LinkTo = ({ to, children }) => {
-	const c = useStyles();
-	return (
-		<Link className={c.anchorStyle} to={to}>
-			{children}
-		</Link>
-	);
-};
 
 const ListLinkItem = ({ title, children, onClick }) => {
 	const c = useStyles();
@@ -79,7 +65,7 @@ const ProjectReport = ({ location }) => {
 								</ListSubheader>
 							}
 						>
-							<LinkTo
+							<Link
 								to={{
 									pathname: '/project/report',
 									search: '?ref=xyz&type=named'
@@ -88,9 +74,9 @@ const ProjectReport = ({ location }) => {
 								<ListLinkItem title={'Named profiles'}>
 									<PersonIcon />
 								</ListLinkItem>
-							</LinkTo>
+							</Link>
 
-							<LinkTo
+							<Link
 								to={{
 									pathname: '/project/report',
 									search: '?ref=wry&type=anonymous'
@@ -99,7 +85,7 @@ const ProjectReport = ({ location }) => {
 								<ListLinkItem title={'Anonymous profiles'}>
 									<AnonymousIcon />
 								</ListLinkItem>
-							</LinkTo>
+							</Link>
 						</List>
 					</div>
 				)}

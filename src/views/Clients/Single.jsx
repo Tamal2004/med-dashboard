@@ -1,32 +1,14 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import { Link } from 'react-router-dom';
 
-import { GridContainer, GridItem, Table } from 'components';
-
-const useStyles = makeStyles(theme => ({
-	anchorStyle: {
-		textDecoration: 'none',
-		color: theme.palette.primary.main
-	}
-}));
-
-const LinkTo = ({ to, children }) => {
-	const c = useStyles();
-	return (
-		<Link className={c.anchorStyle} to={to}>
-			{children}
-		</Link>
-	);
-};
+import { GridContainer, GridItem, Link, Table } from 'components';
 
 const generateData = (reference, cost, Supplier, dev) => ({
 	'Project reference': {
-		Component: <LinkTo to={'/project/' + reference}>{reference}</LinkTo>,
+		Component: <Link to={'/project/' + reference}>{reference}</Link>,
 		value: reference
 	},
 	'Project title': {
-		Component: <LinkTo to={'/project/' + reference}>{reference}</LinkTo>,
+		Component: <Link to={'/project/' + reference}>{reference}</Link>,
 		value: reference
 	},
 	'Observed date': '06/08/2019',

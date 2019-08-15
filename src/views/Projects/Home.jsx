@@ -1,20 +1,16 @@
 import React, { Fragment } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Link } from 'react-router-dom';
 
 import {
 	GridContainer,
 	GridItem,
+	Link,
 	NavigateButton,
 	Table,
 	SearchInput
 } from 'components';
 
 const useStyles = makeStyles(theme => ({
-	anchorStyle: {
-		textDecoration: 'none',
-		color: theme.palette.primary.main
-	},
 	buttonGridStyle: {
 		display: 'flex',
 		justifyContent: 'flex-end',
@@ -22,22 +18,13 @@ const useStyles = makeStyles(theme => ({
 	}
 }));
 
-const LinkTo = ({ to, children }) => {
-	const c = useStyles();
-	return (
-		<Link className={c.anchorStyle} to={to}>
-			{children}
-		</Link>
-	);
-};
-
 const generateData = (reference, cost, Supplier, dev) => ({
 	'Project reference': {
-		Component: <LinkTo to={'/project/' + reference}>{reference}</LinkTo>,
+		Component: <Link to={'/project/' + reference}>{reference}</Link>,
 		value: reference
 	},
 	Client: {
-		Component: <LinkTo to={'/client/' + cost}>{cost}</LinkTo>,
+		Component: <Link to={'/client/' + cost}>{cost}</Link>,
 		value: cost
 	},
 	'Project name': Supplier,
@@ -81,13 +68,11 @@ const ProjectHome = ({ location }) => {
 				<SearchInput placeholder='Search by name or project reference' />
 			</GridItem>
 			<GridItem md={6} className={c.buttonGridStyle}>
-				<LinkTo
-					to={{ pathname: '/project', search: '?weekday=monday' }}
-				>
+				<Link to={{ pathname: '/project', search: '?weekday=monday' }}>
 					<NavigateButton variant='outlined'>
 						List projects for Monday morning
 					</NavigateButton>
-				</LinkTo>
+				</Link>
 			</GridItem>
 			<GridItem md={12}>
 				{queryParam ? (

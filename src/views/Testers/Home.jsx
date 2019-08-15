@@ -1,16 +1,17 @@
 import React, { Fragment } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Link } from 'react-router-dom';
 
-import { GridContainer, GridItem, NavigateButton, Table } from 'components';
+import {
+	GridContainer,
+	GridItem,
+	Link,
+	NavigateButton,
+	Table
+} from 'components';
 
 const useStyles = makeStyles(theme => ({
 	gridDistance: {
 		marginBottom: 32
-	},
-	anchorStyle: {
-		textDecoration: 'none',
-		color: theme.palette.primary.main
 	},
 	buttonAnchor: {
 		textDecoration: 'none',
@@ -26,23 +27,14 @@ const useStyles = makeStyles(theme => ({
 	}
 }));
 
-const LinkTo = ({ to, children }) => {
-	const c = useStyles();
-	return (
-		<Link className={c.anchorStyle} to={to}>
-			{children}
-		</Link>
-	);
-};
-
 const generateData = (reference, cost, Supplier, dev) => ({
 	'Tester name': {
-		Component: <LinkTo to={'/tester/' + reference}>{reference}</LinkTo>,
+		Component: <Link to={'/tester/' + reference}>{reference}</Link>,
 		value: reference
 	},
 	'Tester number': 1014,
 	'Last project': {
-		Component: <LinkTo to={'/project/' + Supplier}>{Supplier}</LinkTo>,
+		Component: <Link to={'/project/' + Supplier}>{Supplier}</Link>,
 		value: reference
 	},
 	'Last testing date': '02/06/2019',
@@ -76,16 +68,16 @@ const TesterHome = () => {
 		<Fragment>
 			<GridWrapper>
 				<GridItem md={12} className={c.buttonGridStyle}>
-					<LinkTo to={'/tester/search'}>
+					<Link to={'/tester/search'}>
 						<NavigateButton variant='outlined' color='primary'>
 							Search for a tester
 						</NavigateButton>
-					</LinkTo>
-					<LinkTo to={'/tester/new'}>
+					</Link>
+					<Link to={'/tester/new'}>
 						<NavigateButton color='secondary'>
 							Add a new tester
 						</NavigateButton>
-					</LinkTo>
+					</Link>
 				</GridItem>
 			</GridWrapper>
 

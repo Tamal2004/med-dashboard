@@ -1,36 +1,22 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Link } from 'react-router-dom';
 
-import { GridContainer, GridItem, Table, SearchInput } from 'components';
+import { GridContainer, GridItem, Link, Table, SearchInput } from 'components';
 
 const useStyles = makeStyles(theme => ({
-	anchorStyle: {
-		textDecoration: 'none',
-		color: theme.palette.primary.main
-	},
 	searchMessage: {
 		paddingTop: 5,
 		textAlign: 'center'
 	}
 }));
 
-const LinkTo = ({ to, children }) => {
-	const c = useStyles();
-	return (
-		<Link className={c.anchorStyle} to={to}>
-			{children}
-		</Link>
-	);
-};
-
 const generateData = (reference, cost, Supplier, dev) => ({
 	Client: {
-		Component: <LinkTo to={'/client/' + reference}>{reference}</LinkTo>,
+		Component: <Link to={'/client/' + reference}>{reference}</Link>,
 		value: reference
 	},
 	'Latest project': {
-		Component: <LinkTo to={'/project/' + cost}>{cost}</LinkTo>,
+		Component: <Link to={'/project/' + cost}>{cost}</Link>,
 		value: cost
 	},
 	'Latest project date': Supplier,
