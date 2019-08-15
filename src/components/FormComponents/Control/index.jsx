@@ -51,7 +51,6 @@ Control.defaultProps = {
 Control.propTypes = {
     label: PropTypes.string,
     memo: PropTypes.string,
-    isCompact: PropTypes.bool,
     isCard: PropTypes.bool
 };
 

@@ -7,7 +7,7 @@ import { makeStyles } from '@material-ui/core';
 import { validateRequired } from 'libs';
 import ProjectDetails from './ProjectDetails';
 import ContactDetails from './ContactDetails';
-import EmploymentDetails from './EmploymentDetails';
+import ClientFeedback from './ClientFeedback';
 import TestSessions from './TestSessions';
 import ContactNotes from './ContactNotes';
 import { GridContainer, GridItem } from 'components';
@@ -45,7 +45,7 @@ const ProjectSingle = ({ match }) => {
                         <ContactDetails />
                     </GridItem>
                     <GridItem md={12}>
-                        <EmploymentDetails />
+                        <ClientFeedback />
                     </GridItem>
                 </GridItem>
             </GridContainer>

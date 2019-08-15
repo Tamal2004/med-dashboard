@@ -33,6 +33,7 @@ const useStyles = makeStyles(({ palette, spacing, typography }) => ({
     name: {
         paddingLeft: spacing(2),
         paddingRight: spacing(2),
+        lineHeight: `${spacing(4)}px`,
         fontWeight: typography.fontWeightHeavy
     },
     divider: {
@@ -100,7 +101,7 @@ const TesterDetails = ({
             ) : (
                 <Typography
                     className={c.name}
-                    variant='subtitle1'
+                    variant='h6'
                 >{`${title} ${firstName} ${surname}`}</Typography>
             )}
             <Divider className={c.divider} />

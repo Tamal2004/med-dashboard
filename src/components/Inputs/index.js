@@ -4,3 +4,4 @@ export * from './LabelBase';
 export * from './CheckboxBase';
 export * from './SearchInput';
 export * from './SwitchBase';
+export * from './DateInputBase';
