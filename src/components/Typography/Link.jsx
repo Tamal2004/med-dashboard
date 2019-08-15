@@ -22,7 +22,10 @@ const Link = ({ children, ...props }) => {
 };
 
 Link.propTypes = {
-    to: PropTypes.string.isRequired
+    to: PropTypes.oneOfType([
+        PropTypes.string.isRequired,
+        PropTypes.object.isRequired
+    ])
 };
 
 export { Link as default, Link };

@@ -1,14 +1,10 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 
-import {
-	GridContainer,
-	GridItem,
-	Link,
-	NavigateButton,
-	Table,
-	SearchInput
-} from 'components';
+import { GridContainer, GridItem, Table, SearchInput } from 'components';
+
+import { selectCounties } from 'selectors';
 
 const useStyles = makeStyles(theme => ({
 	searchMessage: {
@@ -17,28 +13,7 @@ const useStyles = makeStyles(theme => ({
 	}
 }));
 
-const generateData = (reference, cost, Supplier, dev) => ({
-	Client: {
-		Component: <Link to={'/client/' + reference}>{reference}</Link>,
-		value: reference
-	},
-	'Latest project': {
-		Component: <Link to={'/project/' + cost}>{cost}</Link>,
-		value: cost
-	},
-	'Latest project date': Supplier,
-	'Last contact date': dev
-});
-
-const trimData = [
-	generateData('ETCBR-644', '2.00', 'Gavin', 'Old Look Retailers'),
-	generateData('ETCBR-666', '4.00', 'Matt', 'New Look Retailers'),
-	generateData('ETCBR-675', '7.00', 'Alex', 'Decent Look Retailers'),
-	generateData('ETCBR-734', '24.00', 'Frieza', 'Great Look Retailers'),
-	generateData('ETCBR-246', '6.00', 'Penny', 'Good Look Retailers')
-];
-
-const ClientSearch = () => {
+const ClientSearch = ({ countries }) => {
 	const c = useStyles();
 	return (
 		<GridContainer alignItems='center'>
@@ -50,10 +25,19 @@ const ClientSearch = () => {
 				</div>
 			</GridItem>
 			<GridItem md={12}>
-				<Table action={true} data={trimData} page={1} />
+				<Table action={true} data={countries} page={1} />
 			</GridItem>
 		</GridContainer>
 	);
 };
 
-export { ClientSearch as default, ClientSearch };
+const mapState = state => ({
+	countries: selectCounties(state)
+});
+
+const _ClientSearch = connect(
+	mapState,
+	null
+)(ClientSearch);
+
+export { _ClientSearch as default, _ClientSearch as ClientSearch };

@@ -1,14 +1,16 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 
 import {
 	GridContainer,
 	GridItem,
-	Link,
 	NavigateButton,
 	Table,
 	SearchInput
 } from 'components';
+
+import { selectCounties } from 'selectors';
 
 const useStyles = makeStyles(theme => ({
 	buttonGridStyle: {
@@ -18,33 +20,7 @@ const useStyles = makeStyles(theme => ({
 	}
 }));
 
-const generateData = (reference, cost, Supplier, dev) => ({
-	Client: {
-		Component: <Link to={'/client/' + reference}>{reference}</Link>,
-		value: reference
-	},
-	'Latest project': {
-		Component: <Link to={'/project/' + cost}>{cost}</Link>,
-		value: cost
-	},
-	'Latest project date': Supplier,
-	'Last contact date': dev
-});
-
-const trimData = [
-	generateData('ETCBR-644', '2.00', 'Gavin', 'Old Look Retailers'),
-	generateData('ETCBR-666', '4.00', 'Matt', 'New Look Retailers'),
-	generateData('ETCBR-675', '7.00', 'Alex', 'Decent Look Retailers'),
-	generateData('ETCBR-734', '24.00', 'Frieza', 'Great Look Retailers'),
-	generateData('ETCBR-246', '6.00', 'Penny', 'Good Look Retailers'),
-	generateData('ETCBR-836', '244.00', 'Sheldor', 'Luxury Look Retailers'),
-	generateData('ETCBR-214', '25.00', 'Azeroth', 'Rich Look Retailers'),
-	generateData('ETCBR-787', '2.00', 'Gater', 'Poor Look Retailers'),
-	generateData('ETCBR-883', '4.00', 'Simon', 'Ugly Look Retailers'),
-	generateData('ETCBR-214', '6.00', 'Derek', 'Funny Look Retailers')
-];
-
-const ClientHome = () => {
+const ClientHome = ({ countries }) => {
 	const c = useStyles();
 	return (
 		<GridContainer alignItems='center'>
@@ -57,10 +33,19 @@ const ClientHome = () => {
 				</NavigateButton>
 			</GridItem>
 			<GridItem md={12}>
-				<Table action={true} data={trimData} page={1} />
+				<Table action={true} data={countries} page={1} />
 			</GridItem>
 		</GridContainer>
 	);
 };
 
-export { ClientHome as default, ClientHome };
+const mapState = state => ({
+	countries: selectCounties(state)
+});
+
+const _ClientHome = connect(
+	mapState,
+	null
+)(ClientHome);
+
+export { _ClientHome as default, _ClientHome as ClientHome };

@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react';
+import { connect } from 'react-redux';
 import classNames from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import { SearchFilter } from './SearchFilter';
@@ -11,6 +12,7 @@ import {
 	Table,
 	SearchInput
 } from 'components';
+import { selectCounties } from 'selectors';
 
 const useStyles = makeStyles(theme => ({
 	gridDistance: {
@@ -30,27 +32,6 @@ const useStyles = makeStyles(theme => ({
 	}
 }));
 
-const generateData = (reference, cost, Supplier, dev) => ({
-	Client: {
-		Component: <Link to={'/client/' + reference}>{reference}</Link>,
-		value: reference
-	},
-	'Latest project': {
-		Component: <Link to={'/project/' + cost}>{cost}</Link>,
-		value: cost
-	},
-	'Latest project date': Supplier,
-	'Last contact date': dev
-});
-
-const trimData = [
-	generateData('ETCBR-644', '2.00', 'Gavin', 'Old Look Retailers'),
-	generateData('ETCBR-666', '4.00', 'Matt', 'New Look Retailers'),
-	generateData('ETCBR-675', '7.00', 'Alex', 'Decent Look Retailers'),
-	generateData('ETCBR-734', '24.00', 'Frieza', 'Great Look Retailers'),
-	generateData('ETCBR-246', '6.00', 'Penny', 'Good Look Retailers')
-];
-
 const GridWrapper = ({ className, children }) => {
 	const c = useStyles();
 	return (
@@ -63,7 +44,7 @@ const GridWrapper = ({ className, children }) => {
 	);
 };
 
-const TesterSearch = () => {
+const TesterSearch = ({ countries }) => {
 	const c = useStyles();
 	return (
 		<Fragment>
@@ -89,11 +70,20 @@ const TesterSearch = () => {
 							</NavigateButton>
 						</Link>
 					</div>
-					<Table action={true} data={trimData} page={1} />
+					<Table action={true} data={countries} page={1} />
 				</GridItem>
 			</GridWrapper>
 		</Fragment>
 	);
 };
 
-export { TesterSearch as default, TesterSearch };
+const mapState = state => ({
+	countries: selectCounties(state)
+});
+
+const _TesterSearch = connect(
+	mapState,
+	null
+)(TesterSearch);
+
+export { _TesterSearch as default, _TesterSearch as TesterSearch };

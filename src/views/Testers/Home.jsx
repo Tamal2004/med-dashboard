@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react';
+import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 
 import {
@@ -8,6 +9,7 @@ import {
 	NavigateButton,
 	Table
 } from 'components';
+import { selectCounties } from 'selectors';
 
 const useStyles = makeStyles(theme => ({
 	gridDistance: {
@@ -27,32 +29,6 @@ const useStyles = makeStyles(theme => ({
 	}
 }));
 
-const generateData = (reference, cost, Supplier, dev) => ({
-	'Tester name': {
-		Component: <Link to={'/tester/' + reference}>{reference}</Link>,
-		value: reference
-	},
-	'Tester number': 1014,
-	'Last project': {
-		Component: <Link to={'/project/' + Supplier}>{Supplier}</Link>,
-		value: reference
-	},
-	'Last testing date': '02/06/2019',
-	'Last contact date': '02/06/2019'
-});
-
-const trimData = [
-	generateData('ETCBR-644', '2.00', 'Gavin', 'Old Look Retailers'),
-	generateData('ETCBR-666', '4.00', 'Matt', 'New Look Retailers'),
-	generateData('ETCBR-675', '7.00', 'Alex', 'Decent Look Retailers'),
-	generateData('ETCBR-734', '24.00', 'Frieza', 'Great Look Retailers'),
-	generateData('ETCBR-246', '6.00', 'Penny', 'Good Look Retailers'),
-	generateData('ETCBR-836', '244.00', 'Sheldor', 'Luxury Look Retailers'),
-	generateData('ETCBR-214', '25.00', 'Azeroth', 'Rich Look Retailers'),
-	generateData('ETCBR-787', '2.00', 'Gater', 'Poor Look Retailers'),
-	generateData('ETCBR-883', '4.00', 'Simon', 'Ugly Look Retailers')
-];
-
 const GridWrapper = ({ children }) => {
 	const c = useStyles();
 	return (
@@ -62,7 +38,7 @@ const GridWrapper = ({ children }) => {
 	);
 };
 
-const TesterHome = () => {
+const TesterHome = ({ countries }) => {
 	const c = useStyles();
 	return (
 		<Fragment>
@@ -83,11 +59,20 @@ const TesterHome = () => {
 
 			<GridWrapper>
 				<GridItem md={12}>
-					<Table action={true} data={trimData} page={1} />
+					<Table action={true} data={countries} page={1} />
 				</GridItem>
 			</GridWrapper>
 		</Fragment>
 	);
 };
 
-export { TesterHome as default, TesterHome };
+const mapState = state => ({
+	countries: selectCounties(state)
+});
+
+const _TesterHome = connect(
+	mapState,
+	null
+)(TesterHome);
+
+export { _TesterHome as default, _TesterHome as TesterHome };
