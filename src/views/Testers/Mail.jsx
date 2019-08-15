@@ -54,21 +54,7 @@ const names = [
 const TesterMail = props => {
 	const c = useStyles();
 
-	function handleChange(value) {
-		console.log(value);
-		// console.log('props', props.to);
-		// const EventValue = event.target.value;
-		// let ToValue = props.to;
-
-		// ToValue = [
-		// 	...EventValue.filter(item => ToValue.indexOf(item) === -1),
-		// 	...ToValue.filter(item => EventValue.indexOf(item) !== -1)
-		// ];
-
-		// console.log('finalValue', ToValue);
-		// setPersonName(event.target.value);
-		props.change('to', value);
-	}
+	const handleChange = value => props.change('to', value);
 
 	return (
 		<Fragment>
@@ -84,6 +70,7 @@ const TesterMail = props => {
 					{/*conditionally disabled if has data*/}
 					<Select label='To' name='to' data={[]} required />
 
+					{/*Todo: Multiselect housekeeping*/}
 					<MultiSelect
 						label='To'
 						data={names}

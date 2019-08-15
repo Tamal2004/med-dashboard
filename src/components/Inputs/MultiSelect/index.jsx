@@ -5,6 +5,7 @@ import Chip from '@material-ui/core/Chip';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
+import DropdownIcon from '@material-ui/icons/KeyboardArrowDown';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -26,9 +27,7 @@ const useStyles = makeStyles(theme => ({
 		float: 'right'
 	},
 	formControl: {
-		margin: theme.spacing(1),
-		minWidth: 120,
-		maxWidth: 300
+		minWidth: 120
 	},
 	chips: {
 		display: 'flex',
@@ -39,6 +38,17 @@ const useStyles = makeStyles(theme => ({
 	},
 	noLabel: {
 		marginTop: theme.spacing(3)
+	},
+	temp: {
+		background: 'tomato',
+		'&::before': {
+			content: "'aa'"
+		}
+	},
+	selectRoot: {
+		border: '1px solid',
+		borderColor: '#e0e0e0',
+		borderRadius: 4
 	}
 }));
 
@@ -59,9 +69,10 @@ const MultiSelect = ({ data, onChange, value }) => {
 
 	return (
 		<Fragment>
-			<FormControl className={c.formControl}>
+			<FormControl fullWidth className={c.formControl}>
 				<Select
 					multiple
+					classes={{ root: c.selectRoot }}
 					value={value || []}
 					onChange={handleChange}
 					renderValue={selected => (
@@ -76,6 +87,7 @@ const MultiSelect = ({ data, onChange, value }) => {
 						</div>
 					)}
 					MenuProps={MenuProps}
+					IconComponent={DropdownIcon}
 				>
 					{data.map(name => (
 						<MenuItem key={name} value={name}>
