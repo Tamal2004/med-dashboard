@@ -19,7 +19,9 @@ import {
     MultiInput
 } from 'components';
 
-const SessionsModal = ({ data, onClose }) => {
+import { selectFacilities } from 'selectors';
+
+const SessionsModal = ({ facilities, data, onClose }) => {
     const c = useStyles();
     return (
         <Fragment>
@@ -35,7 +37,7 @@ const SessionsModal = ({ data, onClose }) => {
                 <Select
                     label='Testing Location'
                     name='testingLocation'
-                    data={[]}
+                    data={facilities}
                     required
                 />
                 <Input
@@ -50,7 +52,7 @@ const SessionsModal = ({ data, onClose }) => {
                     placeholder='e.g. 16:30'
                     required
                 />
-                <MultiInput name='notes' placeholder='Notes'/>
+                <MultiInput name='notes' placeholder='Notes' />
             </ModalContent>
             <Divider />
             <ModalFooter className={c.footer}>
@@ -74,7 +76,7 @@ SessionsModal.defaultProps = {};
 
 SessionsModal.propTypes = {};
 
-const mapState = () => ({});
+const mapState = state => ({ facilities: selectFacilities(state) });
 const mapDispatch = {};
 
 const _SessionsModal = compose(

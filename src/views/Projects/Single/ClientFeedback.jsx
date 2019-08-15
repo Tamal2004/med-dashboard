@@ -25,10 +25,10 @@ const ClientFeedback = ({ invalid }) => {
             onEdit={() => setEditing(!isEditing)}
             color={isEditing ? 'primary' : 'secondary'}
         >
-            <DateInput label='Feedback obtained' name='feedbackDate' isCard active={isEditing} />
+            <DateInput label='Feedback obtained' name='feedbackObtained' isCard active={isEditing} />
             <Input
                 label='Satisfaction Score'
-                name='satisfaction'
+                name='satisfactionScore'
                 isCard
                 active={isEditing}
                 type='number'

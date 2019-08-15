@@ -3,12 +3,6 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { reduxForm, formValueSelector } from 'redux-form';
 
-// Material
-import { Divider, makeStyles } from '@material-ui/core';
-import DeleteIcon from '@material-ui/icons/DeleteOutlined';
-import RequestIcon from '@material-ui/icons/Autorenew';
-import EditIcon from '@material-ui/icons/Edit';
-
 // Local
 import { validateRequired, mapFromValue } from 'libs';
 import {
@@ -16,31 +10,14 @@ import {
     Input,
     IconedButton,
     EditableCard,
-    EditableFooter
+    EditableFooter,
+    CardDivider
 } from 'components';
 
 // Selectors
 import //selectProjectStatuses
 'selectors';
 
-const useStyles = makeStyles(({ palette, spacing, typography }) => ({
-    name: {
-        paddingLeft: spacing(2),
-        paddingRight: spacing(2),
-        fontWeight: typography.fontWeightHeavy
-    },
-    divider: {
-        margin: spacing(),
-        marginLeft: spacing(2),
-        marginRight: spacing(2)
-    },
-    footer: {
-        paddingLeft: spacing(2),
-        paddingRight: spacing(2),
-        display: 'flex',
-        justifyContent: 'space-between'
-    }
-}));
 
 const ProjectDetails = ({
     match,
@@ -52,7 +29,6 @@ const ProjectDetails = ({
     invalid
 }) => {
     const [isEditing, setEditing] = useState(false);
-    const c = useStyles();
 
     return (
         <EditableCard
@@ -85,7 +61,7 @@ const ProjectDetails = ({
             />
             <Select
                 label='Client'
-                name='clientId'
+                name='client'
                 data={[]}
                 isCard
                 active={isEditing}
@@ -100,8 +76,7 @@ const ProjectDetails = ({
             />
             <Input
                 label='Other Contact'
-                name='otherContacts'
-                type='number'
+                name='otherContact'
                 isCard
                 active={isEditing}
                 required={isEditing}
@@ -115,12 +90,12 @@ const ProjectDetails = ({
             />
             <Input
                 label='Purchase Order Number'
-                name='orderNumber'
+                name='purchaseOrderNumber'
                 isCard
                 active={isEditing}
                 required={isEditing}
             />
-            <Divider className={c.divider} />
+            <CardDivider />
             <Input
                 label='Project Manager'
                 name='manager'
@@ -144,7 +119,7 @@ const ProjectDetails = ({
             />
             <Input
                 label='Main Recruiter'
-                name='reqruiter'
+                name='mainRecruiter'
                 isCard
                 active={isEditing}
                 required={isEditing}

@@ -6,7 +6,7 @@ import { makeStyles } from '@material-ui/core';
 // Local
 import { validateRequired } from 'libs';
 import ProjectDetails from './ProjectDetails';
-import ContactDetails from './ContactDetails';
+import ProjectManagement from './ProjectManagement';
 import ClientFeedback from './ClientFeedback';
 import TestSessions from './TestSessions';
 import ContactNotes from './ContactNotes';
@@ -38,15 +38,15 @@ const ProjectSingle = ({ match }) => {
         <Fragment>
             <GridContainer className={c.root} alignItems='flex-start'>
                 <GridItem md={6}>
-                    <ProjectDetails />
-                </GridItem>
-                <GridItem md={6}>
                     <GridItem md={12}>
-                        <ContactDetails />
+                        <ProjectDetails />
                     </GridItem>
                     <GridItem md={12}>
                         <ClientFeedback />
                     </GridItem>
+                </GridItem>
+                <GridItem md={6}>
+                    <ProjectManagement />
                 </GridItem>
             </GridContainer>
 
@@ -63,6 +63,5 @@ const ProjectSingle = ({ match }) => {
         </Fragment>
     );
 };
-
 
 export { ProjectSingle as default, ProjectSingle };
