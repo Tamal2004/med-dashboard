@@ -1,14 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { compose } from 'redux';
 import { Field } from 'redux-form';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 
 // Material
-import {
-    withStyles,
-    FormControl
-} from '@material-ui/core';
+import { withStyles, FormControl } from '@material-ui/core';
 import { DatePicker } from '@material-ui/pickers';
 
 // Local
@@ -27,8 +24,11 @@ const DateInputBase = ({
     label,
     required,
     disabled,
+    handleForm,
     ...restProps
 }) => {
+    useEffect(() => handleForm(form));
+
     const c = composeClasses({ classes, styles });
     const id = `${form}-${fieldName}`;
     const success = !disabled && Boolean(value);
@@ -38,7 +38,6 @@ const DateInputBase = ({
         success && c.success,
         disabled && c.disabled
     );
-
 
     const datePickerProps = {
         className: datePickerClassName,
@@ -65,6 +64,7 @@ const DateInputBase = ({
 
 DateInputBase.propTypes = {
     classes: PropTypes.object.isRequired,
+    handleForm: () => {}
 };
 
 const _DateInputBase = compose(
@@ -73,11 +73,7 @@ const _DateInputBase = compose(
 )(DateInputBase);
 
 const __DateInputBase = props => (
-    <Field
-        {...props}
-        component={_DateInputBase}
-        fieldName={props.name}
-    />
+    <Field {...props} component={_DateInputBase} fieldName={props.name} />
 );
 
 export { __DateInputBase as default, __DateInputBase as DateInputBase };

@@ -1,6 +1,7 @@
 import React, { Fragment, useState } from 'react';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
+import { formValueSelector } from 'redux-form';
 import PropTypes from 'prop-types';
 
 // Material
@@ -9,20 +10,21 @@ import NamedIcon from '@material-ui/icons/Person';
 import AnonymousIcon from '@material-ui/icons/PersonOutline';
 
 // Local
-import { validateRequired } from 'libs';
+import { validateRequired, history } from 'libs';
 import { SessionsModal } from 'views/Modals';
 import {
     Table,
     PaginationBase,
     IconedButton,
     EditableCard,
-    Link,
     withModal,
     SearchInput,
     GridContainer,
     GridItem,
+    Link,
     Control
 } from 'components';
+import List from '../Report';
 
 const useStyles = makeStyles(({ palette, spacing }) => ({
     root: {
@@ -39,7 +41,7 @@ const useStyles = makeStyles(({ palette, spacing }) => ({
     }
 }));
 
-const TesterDetails = ({ data, handleSessionsModal }) => {
+const TesterDetails = ({ data, handleSessionsModal, projectReference }) => {
     const [page, setPage] = useState(1);
     const c = useStyles();
     const totalPages = Math.floor(data.length / 5) + !!(data.length % 5) || 1;
@@ -53,14 +55,22 @@ const TesterDetails = ({ data, handleSessionsModal }) => {
                         <IconedButton
                             className={c.button}
                             Icon={NamedIcon}
-                            onClick={() => handleSessionsModal()}
+                            onClick={() =>
+                                history.push(
+                                    `/project/report?ref=${projectReference}&type=named`
+                                )
+                            }
                         >
                             Named Report
                         </IconedButton>
                         <IconedButton
                             className={c.button}
                             Icon={AnonymousIcon}
-                            onClick={() => handleSessionsModal()}
+                            onClick={() =>
+                                history.push(
+                                    `/project/report?ref=${projectReference}&type=anonymous`
+                                )
+                            }
                         >
                             Anonymous Report
                         </IconedButton>
@@ -107,7 +117,9 @@ TesterDetails.propTypes = {
     data: PropTypes.array.isRequired
 };
 
-const mapState = () => ({});
+const mapState = state => ({
+    projectReference: formValueSelector('ProjectDetails')(state, 'reference')
+});
 
 const mapDispatch = {};
 

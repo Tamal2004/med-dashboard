@@ -18,7 +18,6 @@ import {
 import //selectProjectStatuses
 'selectors';
 
-
 const ProjectDetails = ({
     match,
     titles,
@@ -135,6 +134,7 @@ const ProjectDetails = ({
 
 const mapState = state => {
     return {
+        initialValues: { reference: 'astarst' }
         //projectStatuses: selectProjectStasuses(state)
     };
 };

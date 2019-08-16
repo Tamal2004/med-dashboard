@@ -109,9 +109,6 @@ export const mainListItems = (
                 <LinkItem to={'/project/new'} title={'Add New Project'}>
                     <LinkListItem text='Add New Project' />
                 </LinkItem>
-                <LinkItem to={'/project/report'} title={'Project Report'}>
-                    <LinkListItem text='Project Report' />
-                </LinkItem>
                 <LinkItem to={'/project/search'} title={'Search Project'}>
                     <LinkListItem text='Search Project' />
                 </LinkItem>

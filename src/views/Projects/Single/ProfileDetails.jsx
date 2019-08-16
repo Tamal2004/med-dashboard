@@ -39,6 +39,7 @@ const useStyles = makeStyles(({ palette, spacing, typography }) => ({
 
 const ProfileDetails = ({ data }) => {
     const [page, setPage] = useState(1);
+    const [input, setInput] = useState('');
     const c = useStyles();
 
     const totalPages = Math.floor(data.length / 5) + !!(data.length % 5) || 1;
@@ -52,6 +53,8 @@ const ProfileDetails = ({ data }) => {
                     Adornment={AddIcon}
                     placeholder='Profile...'
                     color='secondary'
+                    handleText={({ target: { value } }) => setInput(value)}
+                    value={input}
                 />
                 <Table
                     data={data}

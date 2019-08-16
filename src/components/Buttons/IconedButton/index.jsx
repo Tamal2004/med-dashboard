@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 import PropTypes from 'prop-types';
 
 // Material
@@ -6,10 +6,10 @@ import { Button } from '@material-ui/core';
 
 // Local
 import useStyles from './styles';
-import { validateRequired } from 'libs';
+import { validateRequired, composeClasses } from 'libs';
 
-const IconedButton = ({ Icon, children, ...props }) => {
-    const c = useStyles();
+const IconedButton = ({ styles, Icon, children, ...props }) => {
+    const c = composeClasses({ classes: useStyles(), styles });
     const color = props.disabled ? 'disabled' : props.color;
     return (
         <Button className={c.root} {...props}>
@@ -21,7 +21,8 @@ const IconedButton = ({ Icon, children, ...props }) => {
 
 IconedButton.defaultProps = {
     color: 'primary',
-    variant: 'outlined'
+    variant: 'outlined',
+    children: <Fragment/>
 };
 
 IconedButton.propTypes = {

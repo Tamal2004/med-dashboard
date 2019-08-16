@@ -134,7 +134,7 @@ class Table extends Component {
             color='action'
             fontSize='small'
             aria-label='Edit'
-            onClick={() => onClick()}
+            onClick={onClick}
         >
             <EditIcon />
         </SvgIcon>
