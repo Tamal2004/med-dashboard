@@ -25,6 +25,12 @@ import EditIcon from '@material-ui/icons/Edit';
 import CheckFillIcon from '@material-ui/icons/CheckBox';
 import CheckEmptyIcon from '@material-ui/icons/CheckBoxOutlineBlankSharp';
 
+// '': {
+//         checkAction: () => console.log('Check Meh'),
+//         editAction: () => console.log('Edit Meh'),
+//         deleteAction: () => console.log('Delete Meh')
+//     }
+
 const capitalize = value => (value ? value.toUpperCase() : value);
 
 const isActionColumn = value => {
@@ -144,7 +150,7 @@ class Table extends Component {
     );
 
     renderCell = (value = '', idx) => {
-        let returnValue = value;
+        let returnValue = this.props.action ? '' : value;
         const isExists = key =>
             Object.prototype.hasOwnProperty.call(value, key);
 

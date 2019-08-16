@@ -70,7 +70,7 @@ const TesterSearch = ({ countries }) => {
 							</NavigateButton>
 						</Link>
 					</div>
-					<Table action={true} data={countries} page={1} />
+					<Table data={countries} page={1} />
 				</GridItem>
 			</GridWrapper>
 		</Fragment>

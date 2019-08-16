@@ -8,6 +8,7 @@
         "@material-ui/core": "^4.3.0",
         "@material-ui/icons": "^4.2.1",
         "aws-amplify": "^1.1.32",
+        "aws-amplify-react": "^2.3.12",
         "aws-sdk": "^2.503.0",
         "classnames": "^2.2.6",
         "re-reselect": "^3.4.0",

@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from 'react';
+import propTypes from 'prop-types';
 import classNames from 'classnames';
 
 // Material
@@ -63,6 +64,14 @@ class Tooltip extends Component {
         );
     }
 }
+
+Tooltip.defaultProps = {
+    title: ''
+};
+
+Tooltip.propTypes = {
+    title: propTypes.oneOfType([propTypes.string, propTypes.number])
+};
 
 const ComposedTooltip = withStyles(styles)(Tooltip);
 
