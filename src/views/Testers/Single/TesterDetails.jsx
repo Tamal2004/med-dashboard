@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { reduxForm, formValueSelector } from 'redux-form';
 
 // Material
-import { Grid, Typography, Divider, makeStyles } from '@material-ui/core';
+import { Grid, Typography, makeStyles } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/DeleteOutlined';
 import RequestIcon from '@material-ui/icons/Autorenew';
 import EditIcon from '@material-ui/icons/Edit';
@@ -17,7 +17,7 @@ import {
     MultiInput,
     Switch,
     IconedButton,
-    EditableCard
+    EditableCard,CardDivider
 } from 'components';
 
 // Selectors
@@ -33,6 +33,7 @@ const useStyles = makeStyles(({ palette, spacing, typography }) => ({
     name: {
         paddingLeft: spacing(2),
         paddingRight: spacing(2),
+        lineHeight: `${spacing(4)}px`,
         fontWeight: typography.fontWeightHeavy
     },
     divider: {
@@ -100,10 +101,10 @@ const TesterDetails = ({
             ) : (
                 <Typography
                     className={c.name}
-                    variant='subtitle1'
+                    variant='h6'
                 >{`${title} ${firstName} ${surname}`}</Typography>
             )}
-            <Divider className={c.divider} />
+            <CardDivider />
             <Select
                 label='Gender'
                 name='gender'
@@ -179,12 +180,12 @@ const TesterDetails = ({
             />
             <MultiInput
                 label='Screening Information'
-                name='selfInfo'
+                name='about'
                 isCard
                 active={isEditing}
                 required={isEditing}
             />
-            <Divider className={c.divider} />
+            <CardDivider />
             <MultiInput
                 label='Notes for Clients'
                 name='clientNotes'
@@ -203,7 +204,7 @@ const TesterDetails = ({
                 isCard
                 active={isEditing}
             />
-            <Divider className={c.divider} />
+            <CardDivider />
             <div className={c.footer}>
                 <IconedButton
                     color='secondary'
@@ -275,7 +276,7 @@ const validate = values => {
         'nationality',
         'ethnicity',
         'firstLanguage',
-        'selfInfo'
+        'about'
     ];
     return { ...validateRequired(values, required) };
 };

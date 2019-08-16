@@ -1,283 +1,130 @@
-import React, { useState } from 'react';
+import React, { Fragment, useState } from 'react';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
-import { reduxForm, formValueSelector } from 'redux-form';
+import { formValueSelector } from 'redux-form';
+import PropTypes from 'prop-types';
 
 // Material
-import { Grid, Typography, Divider, makeStyles } from '@material-ui/core';
-import DeleteIcon from '@material-ui/icons/DeleteOutlined';
-import RequestIcon from '@material-ui/icons/Autorenew';
-import EditIcon from '@material-ui/icons/Edit';
+import { makeStyles, Typography, ButtonGroup } from '@material-ui/core';
+import NamedIcon from '@material-ui/icons/Person';
+import AnonymousIcon from '@material-ui/icons/PersonOutline';
 
 // Local
-import { validateRequired, mapFromValue } from 'libs';
+import { validateRequired, history } from 'libs';
+import { SessionsModal } from 'views/Modals';
 import {
-    Select,
-    Input,
-    MultiInput,
-    Switch,
+    Table,
+    PaginationBase,
     IconedButton,
-    EditableCard
+    EditableCard,
+    withModal,
+    SearchInput,
+    GridContainer,
+    GridItem,
+    Link,
+    Control
 } from 'components';
+import List from '../Report';
 
-// Selectors
-import {
-    selectEthnicities,
-    selectGenders,
-    selectMaritalStatuses,
-    selectNationalities,
-    selectTitles
-} from 'selectors';
-
-const useStyles = makeStyles(({ palette, spacing, typography }) => ({
-    name: {
-        paddingLeft: spacing(2),
-        paddingRight: spacing(2),
-        fontWeight: typography.fontWeightHeavy
-    },
-    divider: {
-        margin: spacing(),
-        marginLeft: spacing(2),
-        marginRight: spacing(2)
+const useStyles = makeStyles(({ palette, spacing }) => ({
+    root: {
+        backgroundColor: 'unset',
+        margin: spacing()
     },
     footer: {
-        paddingLeft: spacing(2),
-        paddingRight: spacing(2),
+        marginTop: spacing(3),
         display: 'flex',
         justifyContent: 'space-between'
+    },
+    button: {
+        textTransform: 'none'
     }
 }));
 
-const TesterDetails = ({
-    match,
-    titles,
-    genders,
-    martitalStatuses,
-    nationalities,
-    ethnicities,
-    invalid,
-    title,
-    firstName,
-    surname
-}) => {
-    const [isEditing, setEditing] = useState(false);
+const TesterDetails = ({ data, handleSessionsModal, projectReference }) => {
+    const [page, setPage] = useState(1);
     const c = useStyles();
+    const totalPages = Math.floor(data.length / 5) + !!(data.length % 5) || 1;
 
     return (
-        <EditableCard
-            title='Tester Details'
-            onEdit={() => setEditing(!isEditing)}
-            color={isEditing ? 'primary' : 'secondary'}
-        >
-            {isEditing ? (
-                <Grid container>
-                    <Grid item xs={4}>
-                        <Select
-                            name='title'
-                            placeholder='Title'
-                            data={titles}
-                            isCard
-                            active={isEditing}
-                        />
-                    </Grid>
-                    <Grid item xs={4}>
-                        <Input
-                            name='firstName'
-                            placeholder='First Name'
-                            isCard
-                            active={isEditing}
-                        />
-                    </Grid>
-                    <Grid item xs={4}>
-                        <Input
-                            name='surname'
-                            placeholder='Surname'
-                            isCard
-                            active={isEditing}
-                        />
-                    </Grid>
-                </Grid>
-            ) : (
-                <Typography
-                    className={c.name}
-                    variant='subtitle1'
-                >{`${title} ${firstName} ${surname}`}</Typography>
-            )}
-            <Divider className={c.divider} />
-            <Select
-                label='Gender'
-                name='gender'
-                data={genders}
-                isCard
-                active={isEditing}
-                required={isEditing}
-            />
-            <Input
-                label='Age'
-                name='age'
-                type='number'
-                isCard
-                active={isEditing}
-                required={isEditing}
-            />
-            <Input
-                label='Date of Birth'
-                name='dob'
-                isCard
-                active={isEditing}
-                required={isEditing}
-            />
-            <Select
-                label='Marital Status'
-                name='maritalStatus'
-                data={martitalStatuses}
-                isCard
-                active={isEditing}
-                required={isEditing}
-            />
-            <Switch
-                label='Any children?'
-                name='hasChildren'
-                isCard
-                active={isEditing}
-                required={isEditing}
-            />
-            <Select
-                label='Nationality'
-                name='nationality'
-                data={nationalities}
-                isCard
-                active={isEditing}
-                required={isEditing}
-            />
-            <Select
-                label='Ethnicity'
-                name='ethnicity'
-                data={ethnicities}
-                isCard
-                active={isEditing}
-                required={isEditing}
-            />
-            <Input
-                label='First Language'
-                name='firstLanguage'
-                isCard
-                active={isEditing}
-                required={isEditing}
-            />
-            <Input
-                label='Other Languages'
-                name='otherLanguages'
-                isCard
-                active={isEditing}
-            />
-            <MultiInput
-                label='Disability'
-                name='disability'
-                isCard
-                active={isEditing}
-            />
-            <MultiInput
-                label='Screening Information'
-                name='selfInfo'
-                isCard
-                active={isEditing}
-                required={isEditing}
-            />
-            <Divider className={c.divider} />
-            <MultiInput
-                label='Notes for Clients'
-                name='clientNotes'
-                isCard
-                active={isEditing}
-            />
-            <MultiInput
-                label="Facilitators' Comments"
-                name='facilitatorComments'
-                isCard
-                active={isEditing}
-            />
-            <Input
-                label='Last Updated'
-                name='lastUpdated'
-                isCard
-                active={isEditing}
-            />
-            <Divider className={c.divider} />
+        <EditableCard title='Tester Details'>
+            <Table data={data} action page={page} itemsPerPage={5} />
             <div className={c.footer}>
-                <IconedButton
-                    color='secondary'
-                    onClick={() => console.log('arstarst')}
-                    Icon={RequestIcon}
-                >
-                    Request Update
-                </IconedButton>
-                {isEditing ? (
-                    <IconedButton
-                        Icon={EditIcon}
-                        onClick={() => setEditing(!isEditing)}
-                        disabled={invalid}
-                    >
-                        Save Edits
-                    </IconedButton>
-                ) : (
-                    <IconedButton
-                        onClick={() => console.log('arstarst')}
-                        Icon={DeleteIcon}
-                    >
-                        Delete Tester
-                    </IconedButton>
-                )}
+                <div>
+                    <ButtonGroup color='secondary'>
+                        <IconedButton
+                            className={c.button}
+                            Icon={NamedIcon}
+                            onClick={() =>
+                                history.push(
+                                    `/project/report?ref=${projectReference}&type=named`
+                                )
+                            }
+                        >
+                            Named Report
+                        </IconedButton>
+                        <IconedButton
+                            className={c.button}
+                            Icon={AnonymousIcon}
+                            onClick={() =>
+                                history.push(
+                                    `/project/report?ref=${projectReference}&type=anonymous`
+                                )
+                            }
+                        >
+                            Anonymous Report
+                        </IconedButton>
+                    </ButtonGroup>
+                </div>
+                <PaginationBase
+                    handlePage={page => setPage(page)}
+                    totalPages={totalPages}
+                />
             </div>
         </EditableCard>
     );
 };
 
+const generateData = (reference, client, project, notes) => ({
+    'Tester Number': {
+        Component: <Link to={'/project/' + project}>{project}</Link>,
+        value: reference
+    },
+    'Tester Name': {
+        Component: <Link to={'/project/' + project}>{project}</Link>,
+        value: reference
+    },
+    Profile: client,
+    'Testing Date': '01/01/2000',
+    'Testing Time': '2:30PM',
+    Notes: notes
+});
 TesterDetails.defaultProps = {
-    title: 'Dr.',
-    firstName: 'John',
-    surname: 'Smith'
+    data: Array.range(0, 50)
+        .map(() => [
+            generateData(
+                'ETCBR-644',
+                'Disney',
+                'EM21',
+                'i-view, confirmed, 11/06'
+            ),
+            generateData('ETCBR-644', 'CITB', 'JE28', 'Chippenham')
+        ])
+        .flatMap(x => x)
 };
 
-const mapState = state => {
-    const formSelector = formValueSelector('TesterDetails');
-    const titles = selectTitles(state);
-    return {
-        titles,
-        genders: selectGenders(state),
-        martitalStatuses: selectMaritalStatuses(state),
-        nationalities: selectNationalities(state),
-        ethnicities: selectEthnicities(state),
-        initialValues: {
-            hasChildren: false,
-            title: 1,
-            firstName: 'Matt',
-            surname: 'Tamal'
-        },
-        title: mapFromValue(titles, formSelector(state, 'title')),
-        firstName: formSelector(state, 'firstName'),
-        surname: formSelector(state, 'surname')
-    };
+TesterDetails.propTypes = {
+    data: PropTypes.array.isRequired
 };
+
+const mapState = state => ({
+    projectReference: formValueSelector('ProjectDetails')(state, 'reference')
+});
 
 const mapDispatch = {};
 
-const validate = values => {
-    const required = [
-        'title',
-        'firstName',
-        'surname',
-        'gender',
-        'age',
-        'dob',
-        'maritalStatus',
-        'hasChildren',
-        'nationality',
-        'ethnicity',
-        'firstLanguage',
-        'selfInfo'
-    ];
-    return { ...validateRequired(values, required) };
+const mapModal = {
+    handleSessionsModal: SessionsModal
 };
 
 const _TesterDetails = compose(
@@ -285,10 +132,7 @@ const _TesterDetails = compose(
         mapState,
         mapDispatch
     ),
-    reduxForm({
-        form: 'TesterDetails',
-        validate
-    })
+    withModal(mapModal)
 )(TesterDetails);
 
 export { _TesterDetails as default, _TesterDetails as TesterDetails };

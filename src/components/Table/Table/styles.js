@@ -28,6 +28,7 @@ export default ({ palette, spacing, transitions, typography }) => ({
     cellHeader: {
         borderColor: '#eeeeee',
         color: palette.text.primary,
+        backgroundColor: palette.grey[50],
         fontWeight: typography.fontWeightHeavy,
         fontSize: typography.button.fontSize,
         position: 'relative',

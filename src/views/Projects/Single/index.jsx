@@ -5,11 +5,11 @@ import { makeStyles } from '@material-ui/core';
 
 // Local
 import { validateRequired } from 'libs';
+import ProjectDetails from './ProjectDetails';
+import ProjectManagement from './ProjectManagement';
+import ClientFeedback from './ClientFeedback';
 import TesterDetails from './TesterDetails';
-import ContactDetails from './ContactDetails';
-import EmploymentDetails from './EmploymentDetails';
-import TestSessions from './TestSessions';
-import ContactNotes from './ContactNotes';
+import ProfileDetails from './ProfileDetails';
 import { GridContainer, GridItem } from 'components';
 
 // Selectors
@@ -38,31 +38,30 @@ const ProjectSingle = ({ match }) => {
         <Fragment>
             <GridContainer className={c.root} alignItems='flex-start'>
                 <GridItem md={6}>
-                    <TesterDetails />
+                    <GridItem md={12}>
+                        <ProjectDetails />
+                    </GridItem>
+                    <GridItem md={12}>
+                        <ProfileDetails />
+                    </GridItem>
                 </GridItem>
                 <GridItem md={6}>
                     <GridItem md={12}>
-                        <ContactDetails />
+                        <ProjectManagement />
                     </GridItem>
                     <GridItem md={12}>
-                        <EmploymentDetails />
+                        <ClientFeedback />
                     </GridItem>
                 </GridItem>
             </GridContainer>
 
             <GridContainer className={c.root} alignItems='center'>
                 <GridItem md={12}>
-                    <TestSessions />
-                </GridItem>
-            </GridContainer>
-            <GridContainer className={c.root} alignItems='center'>
-                <GridItem md={12}>
-                    <ContactNotes />
+                    <TesterDetails />
                 </GridItem>
             </GridContainer>
         </Fragment>
     );
 };
-
 
 export { ProjectSingle as default, ProjectSingle };

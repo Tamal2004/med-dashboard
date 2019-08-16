@@ -1,8 +1,7 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { reduxForm } from 'redux-form';
-import PropTypes from 'prop-types';
 
 // Material
 import { Divider } from '@material-ui/core';
@@ -19,9 +18,10 @@ import {
     Input,
     MultiInput
 } from 'components';
-import { Link } from 'react-router-dom';
 
-const SessionsModal = ({ data, onClose }) => {
+import { selectFacilities } from 'selectors';
+
+const SessionsModal = ({ facilities, data, onClose }) => {
     const c = useStyles();
     return (
         <Fragment>
@@ -37,7 +37,7 @@ const SessionsModal = ({ data, onClose }) => {
                 <Select
                     label='Testing Location'
                     name='testingLocation'
-                    data={[]}
+                    data={facilities}
                     required
                 />
                 <Input
@@ -52,7 +52,7 @@ const SessionsModal = ({ data, onClose }) => {
                     placeholder='e.g. 16:30'
                     required
                 />
-                <MultiInput name='notes' placeholder='Notes'/>
+                <MultiInput name='notes' placeholder='Notes' />
             </ModalContent>
             <Divider />
             <ModalFooter className={c.footer}>
@@ -76,7 +76,7 @@ SessionsModal.defaultProps = {};
 
 SessionsModal.propTypes = {};
 
-const mapState = () => ({});
+const mapState = state => ({ facilities: selectFacilities(state) });
 const mapDispatch = {};
 
 const _SessionsModal = compose(

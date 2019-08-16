@@ -5,3 +5,4 @@ export * from './CheckboxBase';
 export * from './MultiSelect';
 export * from './SearchInput';
 export * from './SwitchBase';
+export * from './DateInputBase';

@@ -8,7 +8,11 @@ import { ButtonBase } from '../ButtonBase';
 import { composeClasses } from 'libs';
 
 const Button = ({ classes, styles, ...restProps }) => (
-	<ButtonBase classes={composeClasses({ classes, styles })} {...restProps} />
+    <ButtonBase
+        styles={composeClasses({ classes, styles })}
+        color='primary'
+        {...restProps}
+    />
 );
 
 const _Button = withStyles(styles)(Button);

@@ -22,7 +22,9 @@ function SearchInput({ ...props }) {
         required,
         multiline,
         textArea,
-        rows
+        rows,
+        Adornment,
+        color
     } = props;
 
     return (
@@ -48,8 +50,8 @@ function SearchInput({ ...props }) {
                 },
                 endAdornment: (
                     <InputAdornment position='end'>
-                        <IconButton color='primary' edge='end'>
-                            <SearchIcon />
+                        <IconButton color={color} edge='end'>
+                            <Adornment color={color} />
                         </IconButton>
                     </InputAdornment>
                 )
@@ -86,7 +88,9 @@ SearchInput.defaultProps = {
     isAmend: false,
     required: false,
     multiline: false,
-    textArea: false
+    textArea: false,
+    Adornment: SearchIcon,
+    color: 'primary'
 };
 
 SearchInput.propTypes = {

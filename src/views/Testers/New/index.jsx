@@ -146,7 +146,7 @@ const TesterApplication = ({
                 />
                 <MultiInput
                     label='Tell us a bit about yourself'
-                    name='selfInfo'
+                    name='about'
                     required
                     memo={
                         `Please include information about your family, hobbies, interests, ` +
@@ -275,7 +275,7 @@ const validate = (values, { isStudent, isEmployed, hasManualAddress }) => {
         'maritalStatus',
         'nationality',
         'ethnicity',
-        'selfInfo',
+        'about',
         'employmentStatus'
     ];
 

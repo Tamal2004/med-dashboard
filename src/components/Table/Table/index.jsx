@@ -143,7 +143,7 @@ class Table extends Component {
             color='action'
             fontSize='small'
             aria-label='Edit'
-            onClick={() => onClick()}
+            onClick={onClick}
         >
             <EditIcon />
         </SvgIcon>
@@ -276,13 +276,13 @@ class Table extends Component {
                                         key={index}
                                         onClick={() =>
                                             action &&
-                                            index < len - 1 &&
+                                            index < len &&
                                             handleSort(index)
                                         }
                                     >
                                         {header}
                                         {action &&
-                                            index < len - 1 &&
+                                            index < len &&
                                             renderSortIcon(index)}
                                     </TableCell>
                                 );

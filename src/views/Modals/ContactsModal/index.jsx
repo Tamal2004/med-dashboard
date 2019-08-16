@@ -18,9 +18,11 @@ import {
     Select,
     MultiInput
 } from 'components';
-import { Link } from 'react-router-dom';
 
-const ContactsModal = ({ data, onClose }) => {
+// Selectors
+import { selectContactTypes } from 'selectors';
+
+const ContactsModal = ({ contactTypes, data, onClose }) => {
     const c = useStyles();
     return (
         <Fragment>
@@ -29,14 +31,10 @@ const ContactsModal = ({ data, onClose }) => {
                 <Select
                     label='Contact Type'
                     name='contactType'
-                    data={[]}
+                    data={contactTypes}
                     required
                 />
-                <MultiInput
-                    name='notes'
-                    placeholder='Message details'
-                    isCompact
-                />
+                <MultiInput name='notes' placeholder='Message details' />
             </ModalContent>
             <Divider />
             <ModalFooter className={c.footer}>
@@ -60,7 +58,7 @@ ContactsModal.defaultProps = {};
 
 ContactsModal.propTypes = {};
 
-const mapState = () => ({});
+const mapState = state => ({ contactTypes: selectContactTypes(state) });
 const mapDispatch = {};
 
 const _ContactsModal = compose(

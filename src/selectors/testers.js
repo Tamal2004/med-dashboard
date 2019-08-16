@@ -4,6 +4,12 @@ import createCachedSelector from 're-reselect';
 import { mapArray } from 'libs';
 import { selectDatasets } from './common';
 
+// Contact Types
+export const selectContactTypes = createCachedSelector(
+    selectDatasets,
+    ({ contactTypes }) => mapArray(contactTypes)
+)(() => 'placeholder');
+
 // Counties
 export const selectCounties = createCachedSelector(
     selectDatasets,
@@ -38,6 +44,12 @@ export const selectEmploymentStatuses = createCachedSelector(
 export const selectEthnicities = createCachedSelector(
     selectDatasets,
     ({ ethnicities }) => mapArray(ethnicities)
+)(() => 'placeholder');
+
+// Facilities
+export const selectFacilities = createCachedSelector(
+    selectDatasets,
+    ({ facilities }) => mapArray(facilities)
 )(() => 'placeholder');
 
 // Genders

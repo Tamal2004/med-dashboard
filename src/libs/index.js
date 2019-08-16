@@ -5,3 +5,4 @@ export * from './prototypeEnhancers';
 export * from './selectors';
 export * from './static';
 export * from './validation';
+export * from './normalizeDate';
