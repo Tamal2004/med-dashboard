@@ -173,7 +173,7 @@ class Select extends Component {
             classes,
             styles,
             input,
-            meta: { dirty, form },
+            meta: { dirty, form, ...meta },
             isCancellable,
             placeholder: placeholderValue,
             className,
@@ -225,6 +225,7 @@ class Select extends Component {
         const id = `${form}-${name}`;
         const valid = isNaN(value)  ? !!value : !!Number(value);
         const success = !disabled && valid;
+        const error = meta.touched && !!meta.error;
 
         // Todo: refactor later into query
         const valueIndex = this.props.data
@@ -251,6 +252,7 @@ class Select extends Component {
                     className={classNames(
                         c.control,
                         className,
+                        error && c.error,
                         success && c.success,
                         disabled && c.disabled
                     )}

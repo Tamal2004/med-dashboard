@@ -15,18 +15,9 @@ import {
 } from 'components';
 
 // Selectors
-import //selectProjectStatuses
-'selectors';
+import { selectProjectStatuses } from 'selectors';
 
-const ProjectDetails = ({
-    match,
-    titles,
-    genders,
-    martitalStatuses,
-    nationalities,
-    ethnicities,
-    invalid
-}) => {
+const ProjectDetails = ({ projectStatuses, clients, invalid }) => {
     const [isEditing, setEditing] = useState(false);
 
     return (
@@ -52,15 +43,14 @@ const ProjectDetails = ({
             <Select
                 label='Project Status'
                 name='status'
-                data={[]}
+                data={projectStatuses}
                 isCard
                 active={isEditing}
-                required={isEditing}
             />
             <Select
                 label='Client'
                 name='client'
-                data={[]}
+                data={clients}
                 isCard
                 active={isEditing}
                 required={isEditing}
@@ -77,21 +67,13 @@ const ProjectDetails = ({
                 name='otherContact'
                 isCard
                 active={isEditing}
-                required={isEditing}
             />
-            <Input
-                label='Project Cost'
-                name='cost'
-                isCard
-                active={isEditing}
-                required={isEditing}
-            />
+            <Input label='Project Cost' name='cost' isCard active={isEditing} />
             <Input
                 label='Purchase Order Number'
                 name='purchaseOrderNumber'
                 isCard
                 active={isEditing}
-                required={isEditing}
             />
             <CardDivider />
             <Input
@@ -99,28 +81,24 @@ const ProjectDetails = ({
                 name='manager'
                 isCard
                 active={isEditing}
-                required={isEditing}
             />
             <Input
                 label='Tester Facilitator'
                 name='testerFacilitator'
                 isCard
                 active={isEditing}
-                required={isEditing}
             />
             <Input
                 label='Client Facilitator'
                 name='clientFacilitator'
                 isCard
                 active={isEditing}
-                required={isEditing}
             />
             <Input
                 label='Main Recruiter'
                 name='mainRecruiter'
                 isCard
                 active={isEditing}
-                required={isEditing}
             />
             {isEditing && (
                 <EditableFooter
@@ -134,29 +112,18 @@ const ProjectDetails = ({
 
 const mapState = state => {
     return {
+        // clients: selectClients(state),
+        clients: selectProjectStatuses(state),
+        projectStatuses: selectProjectStatuses(state),
         initialValues: { reference: 'astarst' }
-        //projectStatuses: selectProjectStasuses(state)
     };
 };
 
 const mapDispatch = {};
 
 const validate = values => {
-    const required = [
-        'title',
-        'firstName',
-        'surname',
-        'gender',
-        'age',
-        'dob',
-        'maritalStatus',
-        'hasChildren',
-        'nationality',
-        'ethnicity',
-        'firstLanguage',
-        'selfInfo'
-    ];
-    return { ...validateRequired(values, required) };
+    const required = ['title', 'reference', 'client', 'principalContact'];
+    return validateRequired(values, required);
 };
 
 const _ProjectDetails = compose(

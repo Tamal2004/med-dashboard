@@ -9,17 +9,16 @@ import {
     TableHead,
     TableRow,
     TableCell,
-    TableBody
+    TableBody,
+    IconButton
 } from '@material-ui/core';
 import DropdownIcon from '@material-ui/icons/KeyboardArrowDown';
 
 // Local
 import styles from './styles';
 import { composeClasses } from 'libs';
-import { PaginationBase } from '../Pagination';
 import { Tooltip } from '../../Tooltips';
 
-import SvgIcon from '@material-ui/core/SvgIcon';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import CheckFillIcon from '@material-ui/icons/CheckBox';
@@ -42,6 +41,8 @@ const isActionColumn = value => {
 const ref = React.createRef();
 
 class Table extends Component {
+    HAS_ACTIONS = Object.keys(this.props.data[0]).includes('actions');
+
     state = {
         sortIndex: null,
         initialData: this.props.data,
@@ -111,9 +112,10 @@ class Table extends Component {
     };
 
     CheckAction = (onClick = () => {}, idx) => (
-        <SvgIcon
+        <IconButton
+            className={this.c.action}
             size='small'
-            color='action'
+            color='secondary'
             aria-label='Check'
             fontSize='small'
             onClick={() => {
@@ -122,58 +124,57 @@ class Table extends Component {
             }}
         >
             {this.isChecked(idx) ? <CheckFillIcon /> : <CheckEmptyIcon />}
-        </SvgIcon>
+        </IconButton>
     );
 
     DeleteAction = (onClick = () => {}) => (
-        <SvgIcon
+        <IconButton
+            className={this.c.action}
             size='small'
-            color='error'
-            fontSize='small'
+            color='primary'
             aria-label='Delete'
-            onClick={() => onClick()}
+            onClick={onClick}
         >
             <DeleteIcon />
-        </SvgIcon>
+        </IconButton>
     );
 
     EditAction = (onClick = () => {}) => (
-        <SvgIcon
+        <IconButton
+            className={this.c.action}
             size='small'
-            color='action'
+            color='secondary'
             fontSize='small'
             aria-label='Edit'
             onClick={onClick}
         >
             <EditIcon />
-        </SvgIcon>
+        </IconButton>
     );
 
     renderCell = (value = '', idx) => {
-        let returnValue = this.props.action ? '' : value;
         const isExists = key =>
             Object.prototype.hasOwnProperty.call(value, key);
 
-        if (value) {
-            if (typeof value === 'object') {
-                if (isExists('Component')) returnValue = value.Component;
-                if (isExists('checkAction'))
-                    returnValue = this.CheckAction(value.checkAction, idx);
-                if (isExists('editAction'))
-                    returnValue = (
-                        <Fragment>
-                            {returnValue} {this.EditAction(value.editAction)}
-                        </Fragment>
-                    );
-                if (isExists('deleteAction'))
-                    returnValue = (
-                        <Fragment>
-                            {returnValue}{' '}
-                            {this.DeleteAction(value.deleteAction)}
-                        </Fragment>
-                    );
-            }
-        }
+        const composeValue = () => {
+            if (value && typeof value === 'object') {
+                if (isExists('Component')) {
+                    return value.Component;
+                } else {
+                    const actions = [];
+                    if (isExists('checkAction'))
+                        actions.push(this.CheckAction(value.checkAction, idx));
+                    if (isExists('editAction'))
+                        actions.push(this.EditAction(value.editAction));
+                    if (isExists('deleteAction'))
+                        actions.push(this.DeleteAction(value.deleteAction));
+
+                    return actions.map((action, key) => (
+                        <Fragment key={key}>{action}</Fragment>
+                    ));
+                }
+            } else return value;
+        };
 
         return (
             <Tooltip
@@ -181,7 +182,7 @@ class Table extends Component {
                 title={this.rawValue(value || '')}
             >
                 <div className={this.c.titleWrapper} ref={ref}>
-                    {returnValue}
+                    {composeValue()}
                 </div>
             </Tooltip>
         );
@@ -244,16 +245,21 @@ class Table extends Component {
             props: { data: [datum = {}] = [], action, itemsPerPage },
             state: { data },
             c,
+            HAS_ACTIONS,
             handleSort,
             renderSortIcon,
             renderTable
         } = this;
 
-        const headers = Object.keys(datum);
+        const headers = Object.keys(datum).map(value =>
+            value === 'actions' ? ' ' : value
+        );
+
         const totalPages =
             Math.floor(data.length / itemsPerPage) +
                 !!(data.length % itemsPerPage) || 1;
 
+        const actionDecrement = HAS_ACTIONS ? 1 : 0;
         return (
             <Fragment>
                 <MuiTable className={c.root}>
@@ -275,14 +281,12 @@ class Table extends Component {
                                         }}
                                         key={index}
                                         onClick={() =>
-                                            action &&
-                                            index < len &&
+                                            index < len - actionDecrement &&
                                             handleSort(index)
                                         }
                                     >
                                         {header}
-                                        {action &&
-                                            index < len &&
+                                        {index < len - actionDecrement &&
                                             renderSortIcon(index)}
                                     </TableCell>
                                 );
@@ -297,7 +301,6 @@ class Table extends Component {
 }
 
 Table.defaultProps = {
-    action: false,
     itemsPerPage: 10
 };
 
@@ -305,7 +308,6 @@ Table.propTypes = {
     classes: PropTypes.object.isRequired,
     data: PropTypes.array.isRequired,
     filter: PropTypes.string,
-    action: PropTypes.bool,
     itemsPerPage: PropTypes.number
 };
 

@@ -12,7 +12,7 @@ import {
     IconButton,
     Button
 } from '@material-ui/core';
-import TodayIcon from '@material-ui/icons/CalendarToday';
+import TodayIcon from '@material-ui/icons/Today';
 import RemoveIcon from '@material-ui/icons/Delete';
 
 // Local
@@ -51,7 +51,11 @@ const useStyles = makeStyles(({ palette, spacing, typography }) => ({
     },
     icon: {
         fontSize: typography['subtitle1'].fontSize,
-        marginRight: 0
+        marginRight: 0,
+        color: palette.secondary.main
+    },
+    iconRemove: {
+        color: palette.primary.main
     }
 }));
 
@@ -91,7 +95,7 @@ const DateInput = ({
                                 root: c.buttonGroup,
                                 grouped: c.buttonGrouped
                             }}
-                            color='secondary'
+                            color='inherit'
                         >
                             <IconedButton
                                 Icon={TodayIcon}
@@ -100,7 +104,7 @@ const DateInput = ({
                             />
                             <IconedButton
                                 Icon={RemoveIcon}
-                                styles={{ icon: c.icon }}
+                                styles={{ icon: clsx(c.icon, c.iconRemove )}}
                                 onClick={() => change(form, name, '')}
                             />
                         </ButtonGroup>

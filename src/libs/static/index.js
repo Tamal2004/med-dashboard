@@ -9,6 +9,7 @@ import ETHNICITIES from './ethnicities';
 import FACILITIES from './facilities';
 import GENDERS from './genders';
 import MARITAL_STATUSES from './maritalStatuses';
+import PROJECT_STATUSES from './projectStatuses';
 import TITLES from './titles';
 
 export {
@@ -23,5 +24,6 @@ export {
     GENDERS,
     MARITAL_STATUSES,
     NATIONALITIES,
+    PROJECT_STATUSES,
     TITLES
 };

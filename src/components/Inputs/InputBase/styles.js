@@ -17,6 +17,12 @@ export default ({ spacing, palette, shape }) => ({
             borderColor: `${palette.success.hover} !important` // Focus override
         }
     },
+    error: {
+        borderColor: `${palette.error.main} !important`, // Focus override
+        '&:hover': {
+            borderColor: `${palette.error.dark} !important` // Focus override
+        }
+    },
     input: {
         height: '100%',
         padding: 0

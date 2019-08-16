@@ -1,6 +1,15 @@
 export const validateRequired = (values, required) => {
-    const valid = Object.values(Object.splice(values, required)).filter(
-        value => value !== '' || value != 0
-    ).length;
-    if (valid < required.length) return { [required[0]]: 'error' };
+    const initializedValues = {
+        ...required.reduce(
+            (acm, requiredKey) => ({ ...acm, [requiredKey]: '' }),
+            {}
+        ),
+        ...values
+    };
+    const requiredValues = Object.splice(initializedValues, required);
+
+    return Object.entries(requiredValues).reduce(
+        (acm, [key, value]) => (value ? acm : { ...acm, [key]: 'Required' }),
+        {}
+    );
 };

@@ -26,7 +26,7 @@ const InputBase = ({
     classes,
     styles,
     className,
-    meta: { form },
+    meta: { form, ...meta },
     fieldName,
     input,
     disabled,
@@ -35,14 +35,18 @@ const InputBase = ({
     ...restProps
 }) => {
     const c = composeClasses({ classes, styles });
-
     const id = `${form}-${fieldName}`;
 
     const success = !disabled && Boolean(input.value);
-
+    const error = meta.touched && !!meta.error;
     const inputBaseProps = {
         classes: {
-            root: classNames(c.root, className, success && c.success),
+            root: classNames(
+                c.root,
+                className,
+                error && c.error,
+                success && c.success
+            ),
             ...Object.splice(c, [
                 'input',
                 'focused',

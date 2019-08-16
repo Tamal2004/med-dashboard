@@ -58,8 +58,8 @@ const ProfileDetails = ({ data }) => {
                 />
                 <Table
                     data={data}
-                    action
                     page={page}
+                    action
                     itemsPerPage={5}
                     styles={{ root: c.table }}
                 />
@@ -77,7 +77,12 @@ const ProfileDetails = ({ data }) => {
 };
 
 const generateData = (reference, project, contactType, contactedBy) => ({
-    Profile: reference
+    Profile: reference,
+    actions: {
+        editAction: () => console.log('edit'),
+        deleteAction: () => console.log('delete'),
+        checkAction: () => console.log('checked')
+    }
 });
 
 ProfileDetails.defaultProps = {

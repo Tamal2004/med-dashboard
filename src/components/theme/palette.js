@@ -7,6 +7,9 @@ export default {
     secondary: {
         main: '#313639'
     },
+    error: {
+        main: '#ED4337'
+    },
     common: {
         transparent: 'rgba(0, 0, 0, 0)',
         offWhite: '#f8f8ff'

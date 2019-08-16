@@ -2,6 +2,9 @@ export default ({ palette, spacing, transitions, typography }) => ({
     root: {
         borderTop: '1px solid #eeeeee'
     },
+    action: {
+        cursor: 'pointer'
+    },
     row: {
         position: 'relative',
         '&:hover': {

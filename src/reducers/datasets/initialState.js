@@ -10,6 +10,7 @@ import {
     GENDERS,
     MARITAL_STATUSES,
     NATIONALITIES,
+    PROJECT_STATUSES,
     TITLES
 } from 'libs';
 
@@ -25,5 +26,6 @@ export default {
     genders: GENDERS,
     maritalStatuses: MARITAL_STATUSES,
     nationalities: NATIONALITIES,
+    projectStatuses: PROJECT_STATUSES,
     titles: TITLES
 };

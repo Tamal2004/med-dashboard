@@ -134,6 +134,12 @@ export default ({ unitHeight, unitWidth, listMaxNumber, iconRight }) => ({
                 borderColor: `${palette.success.hover} !important` // Focus override
             }
         },
+        error: {
+            borderColor: `${palette.error.main} !important`, // Focus override
+            '&:hover': {
+                borderColor: `${palette.error.dark} !important` // Focus override
+            }
+        },
         disabled: {
             backgroundColor: palette.grey[100],
             color: palette.grey[500],
