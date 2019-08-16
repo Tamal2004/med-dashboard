@@ -16,7 +16,7 @@ import {
 } from 'components';
 
 const ProjectManagement = () => {
-    const [isEditing, setEditing] = useState(false);
+    const [isEditing, setEditing] = useState(true);
     return (
         <EditableCard
             title='Project Management'

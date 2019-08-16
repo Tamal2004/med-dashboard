@@ -8,8 +8,8 @@ import { validateRequired } from 'libs';
 import ProjectDetails from './ProjectDetails';
 import ProjectManagement from './ProjectManagement';
 import ClientFeedback from './ClientFeedback';
-import TestSessions from './TestSessions';
-import ContactNotes from './ContactNotes';
+import TesterDetails from './TesterDetails';
+import ProfileDetails from './ProfileDetails';
 import { GridContainer, GridItem } from 'components';
 
 // Selectors
@@ -42,22 +42,22 @@ const ProjectSingle = ({ match }) => {
                         <ProjectDetails />
                     </GridItem>
                     <GridItem md={12}>
-                        <ClientFeedback />
+                        <ProfileDetails />
                     </GridItem>
                 </GridItem>
                 <GridItem md={6}>
-                    <ProjectManagement />
+                    <GridItem md={12}>
+                        <ProjectManagement />
+                    </GridItem>
+                    <GridItem md={12}>
+                        <ClientFeedback />
+                    </GridItem>
                 </GridItem>
             </GridContainer>
 
             <GridContainer className={c.root} alignItems='center'>
                 <GridItem md={12}>
-                    <TestSessions />
-                </GridItem>
-            </GridContainer>
-            <GridContainer className={c.root} alignItems='center'>
-                <GridItem md={12}>
-                    <ContactNotes />
+                    <TesterDetails />
                 </GridItem>
             </GridContainer>
         </Fragment>

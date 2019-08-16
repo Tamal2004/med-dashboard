@@ -257,13 +257,13 @@ class Table extends Component {
                                         key={index}
                                         onClick={() =>
                                             action &&
-                                            index < len - 1 &&
+                                            index < len &&
                                             handleSort(index)
                                         }
                                     >
                                         {header}
                                         {action &&
-                                            index < len - 1 &&
+                                            index < len &&
                                             renderSortIcon(index)}
                                     </TableCell>
                                 );

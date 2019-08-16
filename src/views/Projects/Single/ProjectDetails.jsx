@@ -36,7 +36,6 @@ const ProjectDetails = ({
             onEdit={() => setEditing(!isEditing)}
             color={isEditing ? 'primary' : 'secondary'}
         >
-            {' '}
             <Input
                 label='Project Reference'
                 name='reference'
