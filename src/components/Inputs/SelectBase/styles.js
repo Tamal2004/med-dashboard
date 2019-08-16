@@ -10,7 +10,7 @@ export default ({ spacing, palette, shape }) => ({
         // InputBase
         '& > div': {
             marginTop: 0,
-            height: 'inherit',
+            height: 'inherit'
         },
         '&:hover': {
             borderColor: palette.grey[500]
@@ -19,5 +19,5 @@ export default ({ spacing, palette, shape }) => ({
     cancellableRoot: {
         ...cancellableRoot({ spacing, palette }),
         display: 'none'
-    },
+    }
 });

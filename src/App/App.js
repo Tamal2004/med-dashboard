@@ -9,31 +9,31 @@ const AuthenticatedApp = lazy(() => import('./AuthenticatedApp'));
 const UnauthenticatedApp = lazy(() => import('./UnauthenticatedApp'));
 
 const loaderWrapper = {
-	display: 'flex',
-	justifyContent: 'center',
-	alignItems: 'center',
-	height: '100vh'
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '100vh'
 };
 
 const Loader = () => (
-	<div style={loaderWrapper}>
-		<CircularLoader />
-	</div>
+    <div style={loaderWrapper}>
+        <CircularLoader />
+    </div>
 );
 
 class App extends PureComponent {
-	render() {
-		return (
-			<Suspense fallback={<Loader />}>
-				{true ? <AuthenticatedApp /> : <UnauthenticatedApp />}
-			</Suspense>
-		);
-	}
+    render() {
+        return (
+            <Suspense fallback={<Loader />}>
+                {true ? <AuthenticatedApp /> : <UnauthenticatedApp />}
+            </Suspense>
+        );
+    }
 }
 
 const mapStateToProps = ({ auth }) => ({ auth });
 
 export default compose(
-	connect(mapStateToProps),
-	withModalProvider
+    connect(mapStateToProps),
+    withModalProvider
 )(App);
