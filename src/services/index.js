@@ -3,7 +3,6 @@ import configCognito from './cognito';
 
 export default () => {
     configMailer();
-    configCognito();
-}
+};
 
 export * from './mailer';

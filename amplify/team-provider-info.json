@@ -1,14 +1,19 @@
 {
-    "staginm": {
+    "staging": {
         "awscloudformation": {
-            "AuthRoleName": "wupdb-staginm-20190802213627-authRole",
-            "UnauthRoleArn": "arn:aws:iam::884738556926:role/wupdb-staginm-20190802213627-unauthRole",
-            "AuthRoleArn": "arn:aws:iam::884738556926:role/wupdb-staginm-20190802213627-authRole",
-            "Region": "us-east-1",
-            "DeploymentBucketName": "wupdb-staginm-20190802213627-deployment",
-            "UnauthRoleName": "wupdb-staginm-20190802213627-unauthRole",
-            "StackName": "wupdb-staginm-20190802213627",
-            "StackId": "arn:aws:cloudformation:us-east-1:884738556926:stack/wupdb-staginm-20190802213627/85f4ed70-b53b-11e9-9c9b-0a6d3ce3777a"
+            "AuthRoleName": "wupdb-staging-20190819195210-authRole",
+            "UnauthRoleArn": "arn:aws:iam::884738556926:role/wupdb-staging-20190819195210-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::884738556926:role/wupdb-staging-20190819195210-authRole",
+            "Region": "eu-west-1",
+            "DeploymentBucketName": "wupdb-staging-20190819195210-deployment",
+            "UnauthRoleName": "wupdb-staging-20190819195210-unauthRole",
+            "StackName": "wupdb-staging-20190819195210",
+            "StackId": "arn:aws:cloudformation:eu-west-1:884738556926:stack/wupdb-staging-20190819195210/b88e5ff0-c288-11e9-9a7b-061c3112010a"
+        },
+        "categories": {
+            "auth": {
+                "wupdb12392cb1": {}
+            }
         }
     }
 }

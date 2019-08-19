@@ -81,7 +81,6 @@ const generateData = (reference, project, contactType, contactedBy) => ({
     actions: {
         editAction: () => console.log('edit'),
         deleteAction: () => console.log('delete'),
-        checkAction: () => console.log('checked')
     }
 });
 
