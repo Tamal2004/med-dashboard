@@ -1,19 +1,16 @@
-import React  from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { reduxForm } from 'redux-form';
+import API, { graphqlOperation } from "@aws-amplify/api";
 
 // Material
-import {Paper, Typography, Grid, makeStyles} from '@material-ui/core';
+import { Paper, Typography, Grid, makeStyles } from '@material-ui/core';
 
 // Local
 import { validateRequired } from 'libs';
-import {
-    Container,
-    Select,
-    Input,
-    NavigateButton
-} from 'components';
+import { Container, Select, Input, NavigateButton } from 'components';
+import { createTask } from 'graphql/mutations';
 
 // Selectors
 import { selectProjectStatuses } from 'selectors';
@@ -40,6 +37,18 @@ const useStyles = makeStyles(({ palette, spacing }) => ({
         marginRight: spacing(3)
     }
 }));
+
+async function createNewTask() {
+    const task = {
+        title: 'First Task',
+        description: 'Realtime and Offline',
+        status: 'testing'
+    };
+    const res = await API.graphql(
+        graphqlOperation(createTask, { input: task })
+    );
+    console.log(res);
+}
 
 const ProjectNew = ({ projectStatuses, clients, invalid, pristine, reset }) => {
     const c = useStyles();
@@ -87,8 +96,8 @@ const ProjectNew = ({ projectStatuses, clients, invalid, pristine, reset }) => {
                         className={c.submit}
                         variant='contained'
                         color='primary'
-                        onClick={() => console.log('submitted')}
-                        disabled={invalid}
+                        onClick={createNewTask}
+                        //disabled={invalid}
                     >
                         Submit
                     </NavigateButton>
@@ -107,12 +116,7 @@ const mapState = state => ({
 const mapDispatch = {};
 
 const validate = values => {
-    const required = [
-        'reference',
-        'title',
-        'client',
-        'principalContact'
-    ];
+    const required = ['reference', 'title', 'client', 'principalContact'];
 
     return { ...validateRequired(values, required) };
 };
