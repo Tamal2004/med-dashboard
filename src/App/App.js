@@ -1,12 +1,14 @@
-import React, { PureComponent, lazy, Suspense } from 'react';
+import React, { Suspense } from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { CircularLoader } from 'components';
 
+// AWS
+import { AuthPiece } from 'aws-amplify-react';
+
 // Local
 import { withModalProvider } from 'components';
-const AuthenticatedApp = lazy(() => import('./AuthenticatedApp'));
-const UnauthenticatedApp = lazy(() => import('./UnauthenticatedApp'));
+import Routes from 'routes';
 
 const loaderWrapper = {
     display: 'flex',
@@ -21,11 +23,16 @@ const Loader = () => (
     </div>
 );
 
-class App extends PureComponent {
-    render() {
+class App extends AuthPiece {
+    constructor(props) {
+        super(props);
+        this._validAuthStates = ['signedIn'];
+    }
+
+    showComponent(theme) {
         return (
             <Suspense fallback={<Loader />}>
-                {true ? <AuthenticatedApp /> : <UnauthenticatedApp />}
+                <Routes />
             </Suspense>
         );
     }

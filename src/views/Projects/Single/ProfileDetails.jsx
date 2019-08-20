@@ -80,24 +80,26 @@ const generateData = (reference, project, contactType, contactedBy) => ({
     Profile: reference,
     actions: {
         editAction: () => console.log('edit'),
-        deleteAction: () => console.log('delete'),
+        deleteAction: () => console.log('delete')
     }
 });
 
 ProfileDetails.defaultProps = {
-    data: Array.range(0, 3)
-        .map(() => [
-            generateData('ETCBR-644', 'EM21', 'Approached', 'Gavin'),
-            generateData('ETCBR-666', 'JE24', 'Ad', 'Avril Swift')
-        ])
-        .flatMap(x => x)
+    data: []
 };
 
 ProfileDetails.propTypes = {
     data: PropTypes.array.isRequired
 };
 
-const mapState = () => ({});
+const mapState = () => ({
+    data: Array.range(0, 3)
+        .map(() => [
+            generateData('ETCBR-644', 'EM21', 'Approached', 'Gavin'),
+            generateData('ETCBR-666', 'JE24', 'Ad', 'Avril Swift')
+        ])
+        .flatMap(x => x)
+});
 
 const mapDispatch = {};
 

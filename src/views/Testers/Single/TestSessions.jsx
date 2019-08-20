@@ -66,6 +66,14 @@ const generateData = (reference, client, project, notes) => ({
     Notes: notes
 });
 TestSessions.defaultProps = {
+    data: []
+};
+
+TestSessions.propTypes = {
+    data: PropTypes.array.isRequired
+};
+
+const mapState = () => ({
     data: Array.range(0, 50)
         .map(() => [
             generateData(
@@ -77,13 +85,7 @@ TestSessions.defaultProps = {
             generateData('ETCBR-644', 'CITB', 'JE28', 'Chippenham')
         ])
         .flatMap(x => x)
-};
-
-TestSessions.propTypes = {
-    data: PropTypes.array.isRequired
-};
-
-const mapState = () => ({});
+});
 
 const mapDispatch = {};
 

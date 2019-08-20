@@ -6,6 +6,9 @@ export default makeStyles(({ palette, spacing }) => ({
         padding: spacing(4),
         width: '100%'
     },
+    noauthRoot: {
+        margin: 0
+    },
     header: {
         textAlign: 'center',
         paddingTop: spacing(2),
