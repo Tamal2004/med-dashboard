@@ -14,3 +14,39 @@ type Comment @model {
   content: String
   post: Post @connection(name: "PostComments")
 }
+
+type Tester @model {
+  id: ID!
+  title: String!
+  firstName: String!
+  surname: String!
+  email: String!
+  phone: String!
+  address: String
+  house: String
+  street: String
+  town: String
+  county: String
+  postcode: String
+  country: String
+  gender: String!
+  dob: String!
+  maritalStatus: String!
+  hasChildren: Boolean
+  nationality: String!
+  ethnicity: String!
+  firstLanguage: String!
+  otherLanguages: String
+  disability: String
+  about: String!
+  employmentStatus: String!
+  jobTitle: String
+  businessName: String
+  employmentSector: String
+  employeeCount: String
+  subject: String
+  educationStage: String
+  institution: String
+  clientNotes: String
+  facilitatorComments: String
+}

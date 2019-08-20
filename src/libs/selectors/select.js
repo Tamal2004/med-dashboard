@@ -28,4 +28,4 @@ export const mapFromValue = (data, id = null) => {
 };
 
 export const mapArray = data =>
-    data.map((datum, idx) => ({ label: datum, value: idx + 1 }));
+    data.map(datum => ({ label: datum, value: datum }));

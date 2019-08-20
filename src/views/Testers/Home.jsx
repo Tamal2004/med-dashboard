@@ -1,6 +1,7 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
+import API, { graphqlOperation } from '@aws-amplify/api';
 
 import {
     GridContainer,
@@ -9,7 +10,10 @@ import {
     NavigateButton,
     Table
 } from 'components';
+
+// Selectors
 import { selectCounties } from 'selectors';
+import { listBlogs } from 'graphql/queries';
 
 const useStyles = makeStyles(theme => ({
     gridDistance: {
@@ -38,8 +42,16 @@ const GridWrapper = ({ children }) => {
     );
 };
 
+async function getBlogs() {
+    const blogData = await API.graphql(graphqlOperation(listBlogs));
+    console.log('blogData', blogData);
+}
+
 const TesterHome = ({ testers }) => {
     const c = useStyles();
+    useEffect(() => {
+        getBlogs();
+    });
     return (
         <Fragment>
             <GridWrapper>
