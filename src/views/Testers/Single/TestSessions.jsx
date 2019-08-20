@@ -56,7 +56,7 @@ const generateData = (reference, client, project, notes) => ({
     Date: '02/06/2019',
     Time: '10:00',
     Client: {
-        Component: <Link to={'/project/' + client}>{client}</Link>,
+        Component: <Link to={'/client/' + client}>{client}</Link>,
         value: reference
     },
     Project: {

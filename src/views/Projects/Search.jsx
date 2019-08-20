@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 
-import { GridContainer, GridItem, Table, SearchInput } from 'components';
+import { GridContainer, GridItem, Table, SearchInput , Link} from 'components';
 
 import { selectCounties } from 'selectors';
 
@@ -13,7 +13,7 @@ const useStyles = makeStyles(theme => ({
 	}
 }));
 
-const ProjectSearch = ({ countries }) => {
+const ProjectSearch = ({ projects }) => {
 	const c = useStyles();
 	return (
 		<GridContainer alignItems='center'>
@@ -25,14 +25,32 @@ const ProjectSearch = ({ countries }) => {
 				</div>
 			</GridItem>
 			<GridItem md={12}>
-				<Table action={true} data={countries} page={1} />
+				<Table action={true} data={projects} page={1} />
 			</GridItem>
 		</GridContainer>
 	);
 };
+const generateProjects = (client, project, date = '07/04/2018', contactDate = '02/06/2019') => ({
+	Client: {
+		Component: <Link to={`/client/${client}`}>{client}</Link>,
+		value: client
+	},
+	'Latest Project': {
+		Component: <Link to={`/project/${project}`}>{project}</Link>,
+		value: project
+	},
+	'Latest Project Date': date,
+	'Last Contact Date': contactDate
+});
 
 const mapState = state => ({
-	countries: selectCounties(state)
+	projects: Array.range(0, 3)
+		.map(() => [
+			generateProjects('Aldi', 'EM21'),
+			generateProjects('Wessex Water', 'GM33','03/09/2018'),
+			generateProjects('Disney', 'JE24','03/09/2018', '08/12/2018'),
+		])
+		.flatMap(x => x)
 });
 
 const _ProjectSearch = connect(

@@ -1,6 +1,6 @@
 {
 	"auth": {
-		"wupdb12392cb1": {
+		"wupdbb41e8645": {
 			"service": "Cognito",
 			"providerPlugin": "awscloudformation",
 			"dependsOn": []
@@ -11,7 +11,7 @@
 			"service": "AppSync",
 			"providerPlugin": "awscloudformation",
 			"output": {
-				"securityType": "AMAZON_COGNITO_USER_POOLS"
+				"securityType": "API_KEY"
 			}
 		}
 	},

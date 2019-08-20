@@ -1,51 +1,162 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const onCreateTask = `subscription OnCreateTask {
-  onCreateTask {
+export const onCreateBlog = `subscription OnCreateBlog {
+  onCreateBlog {
+    id
+    name
+    posts {
+      items {
+        id
+        title
+      }
+      nextToken
+    }
+  }
+}
+`;
+export const onUpdateBlog = `subscription OnUpdateBlog {
+  onUpdateBlog {
+    id
+    name
+    posts {
+      items {
+        id
+        title
+      }
+      nextToken
+    }
+  }
+}
+`;
+export const onDeleteBlog = `subscription OnDeleteBlog {
+  onDeleteBlog {
+    id
+    name
+    posts {
+      items {
+        id
+        title
+      }
+      nextToken
+    }
+  }
+}
+`;
+export const onCreatePost = `subscription OnCreatePost {
+  onCreatePost {
     id
     title
-    description
-    status
+    blog {
+      id
+      name
+      posts {
+        nextToken
+      }
+    }
+    comments {
+      items {
+        id
+        content
+      }
+      nextToken
+    }
   }
 }
 `;
-export const onUpdateTask = `subscription OnUpdateTask {
-  onUpdateTask {
+export const onUpdatePost = `subscription OnUpdatePost {
+  onUpdatePost {
     id
     title
-    description
-    status
+    blog {
+      id
+      name
+      posts {
+        nextToken
+      }
+    }
+    comments {
+      items {
+        id
+        content
+      }
+      nextToken
+    }
   }
 }
 `;
-export const onDeleteTask = `subscription OnDeleteTask {
-  onDeleteTask {
+export const onDeletePost = `subscription OnDeletePost {
+  onDeletePost {
     id
     title
-    description
-    status
+    blog {
+      id
+      name
+      posts {
+        nextToken
+      }
+    }
+    comments {
+      items {
+        id
+        content
+      }
+      nextToken
+    }
   }
 }
 `;
-export const onCreatePrivateNote = `subscription OnCreatePrivateNote {
-  onCreatePrivateNote {
+export const onCreateComment = `subscription OnCreateComment {
+  onCreateComment {
     id
     content
+    post {
+      id
+      title
+      blog {
+        id
+        name
+      }
+      comments {
+        nextToken
+      }
+    }
   }
 }
 `;
-export const onUpdatePrivateNote = `subscription OnUpdatePrivateNote {
-  onUpdatePrivateNote {
+export const onUpdateComment = `subscription OnUpdateComment {
+  onUpdateComment {
     id
     content
+    post {
+      id
+      title
+      blog {
+        id
+        name
+      }
+      comments {
+        nextToken
+      }
+    }
   }
 }
 `;
-export const onDeletePrivateNote = `subscription OnDeletePrivateNote {
-  onDeletePrivateNote {
+export const onDeleteComment = `subscription OnDeleteComment {
+  onDeleteComment {
     id
     content
+    post {
+      id
+      title
+      blog {
+        id
+        name
+      }
+      comments {
+        nextToken
+      }
+    }
   }
 }
 `;

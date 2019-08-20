@@ -1,47 +1,110 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const getTask = `query GetTask($id: ID!) {
-  getTask(id: $id) {
+export const getBlog = `query GetBlog($id: ID!) {
+  getBlog(id: $id) {
     id
-    title
-    description
-    status
+    name
+    posts {
+      items {
+        id
+        title
+      }
+      nextToken
+    }
   }
 }
 `;
-export const listTasks = `query ListTasks(
-  $filter: ModelTaskFilterInput
+export const listBlogs = `query ListBlogs(
+  $filter: ModelBlogFilterInput
   $limit: Int
   $nextToken: String
 ) {
-  listTasks(filter: $filter, limit: $limit, nextToken: $nextToken) {
+  listBlogs(filter: $filter, limit: $limit, nextToken: $nextToken) {
     items {
       id
-      title
-      description
-      status
+      name
+      posts {
+        nextToken
+      }
     }
     nextToken
   }
 }
 `;
-export const getPrivateNote = `query GetPrivateNote($id: ID!) {
-  getPrivateNote(id: $id) {
+export const getPost = `query GetPost($id: ID!) {
+  getPost(id: $id) {
     id
-    content
+    title
+    blog {
+      id
+      name
+      posts {
+        nextToken
+      }
+    }
+    comments {
+      items {
+        id
+        content
+      }
+      nextToken
+    }
   }
 }
 `;
-export const listPrivateNotes = `query ListPrivateNotes(
-  $filter: ModelPrivateNoteFilterInput
+export const listPosts = `query ListPosts(
+  $filter: ModelPostFilterInput
   $limit: Int
   $nextToken: String
 ) {
-  listPrivateNotes(filter: $filter, limit: $limit, nextToken: $nextToken) {
+  listPosts(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      title
+      blog {
+        id
+        name
+      }
+      comments {
+        nextToken
+      }
+    }
+    nextToken
+  }
+}
+`;
+export const getComment = `query GetComment($id: ID!) {
+  getComment(id: $id) {
+    id
+    content
+    post {
+      id
+      title
+      blog {
+        id
+        name
+      }
+      comments {
+        nextToken
+      }
+    }
+  }
+}
+`;
+export const listComments = `query ListComments(
+  $filter: ModelCommentFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listComments(filter: $filter, limit: $limit, nextToken: $nextToken) {
     items {
       id
       content
+      post {
+        id
+        title
+      }
     }
     nextToken
   }

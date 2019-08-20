@@ -44,7 +44,7 @@ const GridWrapper = ({ className, children }) => {
 	);
 };
 
-const TesterSearch = ({ countries }) => {
+const TesterSearch = ({ testers }) => {
 	const c = useStyles();
 	return (
 		<Fragment>
@@ -70,15 +70,44 @@ const TesterSearch = ({ countries }) => {
 							</NavigateButton>
 						</Link>
 					</div>
-					<Table data={countries} page={1} />
+					<Table data={testers} page={1} />
 				</GridItem>
 			</GridWrapper>
 		</Fragment>
 	);
 };
 
+
+const generateProjects = (
+	tester,
+	Age,
+	Sex,
+	email,
+	Details = 'Great',
+	notes = 'Lots of notes'
+) => ({
+	'Tester Name': {
+		Component: <Link to={`/tester/${tester}`}>{tester}</Link>,
+		value: tester
+	},
+	Age,
+	Sex,
+	'Email Address': email,
+	Details,
+	'Client Notes': notes,
+	actions: {
+		checkAction: () => console.log('checked')
+	}
+});
+
 const mapState = state => ({
-	countries: selectCounties(state)
+	testers: Array.range(0, 3)
+		.map(() => [
+			generateProjects('John Test', 44, 'Male', 'john@test.com'),
+			generateProjects('Jill Test', 24, 'Female', 'jill@test.com'),
+			generateProjects('Jake Test', 46, 'Non-binary', 'jake@test.com'),
+		])
+		.flatMap(x => x)
 });
 
 const _TesterSearch = connect(

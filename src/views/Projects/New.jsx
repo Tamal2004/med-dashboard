@@ -10,7 +10,7 @@ import { Paper, Typography, Grid, makeStyles } from '@material-ui/core';
 // Local
 import { validateRequired } from 'libs';
 import { Container, Select, Input, NavigateButton } from 'components';
-import { createTask } from 'graphql/mutations';
+//import { createTask } from 'graphql/mutations';
 
 // Selectors
 import { selectProjectStatuses } from 'selectors';
@@ -38,17 +38,17 @@ const useStyles = makeStyles(({ palette, spacing }) => ({
     }
 }));
 
-async function createNewTask() {
-    const task = {
-        title: 'First Task',
-        description: 'Realtime and Offline',
-        status: 'testing'
-    };
-    const res = await API.graphql(
-        graphqlOperation(createTask, { input: task })
-    );
-    console.log(res);
-}
+// async function createNewTask() {
+//     const task = {
+//         title: 'First Task',
+//         description: 'Realtime and Offline',
+//         status: 'testing'
+//     };
+//     const res = await API.graphql(
+//         graphqlOperation(createTask, { input: task })
+//     );
+//     console.log(res);
+// }
 
 const ProjectNew = ({ projectStatuses, clients, invalid, pristine, reset }) => {
     const c = useStyles();
@@ -96,8 +96,8 @@ const ProjectNew = ({ projectStatuses, clients, invalid, pristine, reset }) => {
                         className={c.submit}
                         variant='contained'
                         color='primary'
-                        onClick={createNewTask}
-                        //disabled={invalid}
+                        //onClick={createNewTask}
+                        disabled={invalid}
                     >
                         Submit
                     </NavigateButton>
