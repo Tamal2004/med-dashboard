@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { reduxForm } from 'redux-form';
-import API, { graphqlOperation } from "@aws-amplify/api";
+import API, { graphqlOperation } from '@aws-amplify/api';
 
 // Material
 import { Paper, Typography, Grid, makeStyles } from '@material-ui/core';
@@ -78,6 +78,10 @@ const ProjectNew = ({ projectStatuses, clients, invalid, pristine, reset }) => {
                     label='Purchase Order Number'
                     name='purchaseOrderNumber'
                 />
+                <Input label='Project Manager' name='manager' required />
+                <Input label='Tester Facilitator' name='testerFacilitator' />
+                <Input label='Client Facilitator' name='clientFacilitator' />
+                <Input label='Main Recruiter' name='mainRecruiter' />
             </Container>
             <Grid container className={c.footer}>
                 <Grid item xs={6}>
@@ -116,7 +120,13 @@ const mapState = state => ({
 const mapDispatch = {};
 
 const validate = values => {
-    const required = ['reference', 'title', 'client', 'principalContact'];
+    const required = [
+        'reference',
+        'title',
+        'client',
+        'principalContact',
+        'manager'
+    ];
 
     return { ...validateRequired(values, required) };
 };

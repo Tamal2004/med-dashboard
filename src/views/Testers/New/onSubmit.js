@@ -3,7 +3,7 @@ export default async (
     dispatch,
     { isStudent, isEmployed, createTester }
 ) => {
-    const { manualAddress, termsChecked, ...pruned } = values;
+    const { manualAddress, termsChecked, dob, ...pruned } = values;
 
     let address = {};
     if (manualAddress) {
@@ -43,6 +43,17 @@ export default async (
         employment = { ...studentEmployment };
     }
 
-    const tester = { ...pruned, ...address, ...employment };
+    const serializeDate = date =>
+        date
+            .split('/')
+            .reverse()
+            .join('-');
+
+    const tester = {
+        ...pruned,
+        ...address,
+        ...employment,
+        dob: serializeDate(dob)
+    };
     return createTester(tester);
 };

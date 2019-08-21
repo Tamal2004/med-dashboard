@@ -128,7 +128,7 @@ const TesterApplication = ({
                 <Select label='Gender' data={genders} name='gender' required />
                 <Input
                     label='Date of Birth'
-                    placeholder='01/01/1985'
+                    placeholder='31/12/1999'
                     name='dob'
                     required
                     validate={validateDate}

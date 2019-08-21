@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import API, { graphqlOperation } from '@aws-amplify/api';
 
+// Components
 import {
     GridContainer,
     GridItem,
@@ -13,7 +14,10 @@ import {
 
 // Selectors
 import { selectCounties } from 'selectors';
-import { listBlogs } from 'graphql/queries';
+import { listTesters } from 'graphql/queries';
+
+// Actions
+import { fetchTesters } from 'actions';
 
 const useStyles = makeStyles(theme => ({
     gridDistance: {
@@ -43,14 +47,14 @@ const GridWrapper = ({ children }) => {
 };
 
 async function getBlogs() {
-    const blogData = await API.graphql(graphqlOperation(listBlogs));
+    const blogData = await API.graphql(graphqlOperation(listTesters));
     console.log('blogData', blogData);
 }
 
-const TesterHome = ({ testers }) => {
+const TesterHome = ({ testers, fetchTesters}) => {
     const c = useStyles();
     useEffect(() => {
-        getBlogs();
+        fetchTesters();
     });
     return (
         <Fragment>
@@ -108,9 +112,13 @@ const mapState = state => ({
         .flatMap(x => x)
 });
 
+const mapDispatch = {
+    fetchTesters
+};
+
 const _TesterHome = connect(
     mapState,
-    null
+    mapDispatch
 )(TesterHome);
 
 export { _TesterHome as default, _TesterHome as TesterHome };

@@ -1,162 +1,615 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const createBlog = `mutation CreateBlog($input: CreateBlogInput!) {
-  createBlog(input: $input) {
+export const createTodo = `mutation CreateTodo($input: CreateTodoInput!) {
+  createTodo(input: $input) {
     id
     name
-    posts {
+    description
+  }
+}
+`;
+export const updateTodo = `mutation UpdateTodo($input: UpdateTodoInput!) {
+  updateTodo(input: $input) {
+    id
+    name
+    description
+  }
+}
+`;
+export const deleteTodo = `mutation DeleteTodo($input: DeleteTodoInput!) {
+  deleteTodo(input: $input) {
+    id
+    name
+    description
+  }
+}
+`;
+export const createClient = `mutation CreateClient($input: CreateClientInput!) {
+  createClient(input: $input) {
+    id
+    name
+    projects {
       items {
         id
+        createdAt
+        reference
         title
+        status
+        principalContact
+        otherContact
+        cost
+        purchaseOrderNumber
+        manager
+        testerFacilitator
+        mainRecruiter
+        facility
+        screenerApproved
+        facilitationGuideSent
+        testerProfilesSent
+        facilitationGuideApproved
+        testerProfilesApproved
+        sessionDetailsSent
+        attendees
+        reportSent
+        feedbackEntered
+        videosUploaded
+        invoiced
+        feedbackObtained
+        satisfactionScore
+        clientComments
+        wuComments
+        profiles
       }
       nextToken
     }
   }
 }
 `;
-export const updateBlog = `mutation UpdateBlog($input: UpdateBlogInput!) {
-  updateBlog(input: $input) {
+export const updateClient = `mutation UpdateClient($input: UpdateClientInput!) {
+  updateClient(input: $input) {
     id
     name
-    posts {
+    projects {
       items {
         id
+        createdAt
+        reference
         title
+        status
+        principalContact
+        otherContact
+        cost
+        purchaseOrderNumber
+        manager
+        testerFacilitator
+        mainRecruiter
+        facility
+        screenerApproved
+        facilitationGuideSent
+        testerProfilesSent
+        facilitationGuideApproved
+        testerProfilesApproved
+        sessionDetailsSent
+        attendees
+        reportSent
+        feedbackEntered
+        videosUploaded
+        invoiced
+        feedbackObtained
+        satisfactionScore
+        clientComments
+        wuComments
+        profiles
       }
       nextToken
     }
   }
 }
 `;
-export const deleteBlog = `mutation DeleteBlog($input: DeleteBlogInput!) {
-  deleteBlog(input: $input) {
+export const deleteClient = `mutation DeleteClient($input: DeleteClientInput!) {
+  deleteClient(input: $input) {
     id
     name
-    posts {
+    projects {
       items {
         id
+        createdAt
+        reference
         title
+        status
+        principalContact
+        otherContact
+        cost
+        purchaseOrderNumber
+        manager
+        testerFacilitator
+        mainRecruiter
+        facility
+        screenerApproved
+        facilitationGuideSent
+        testerProfilesSent
+        facilitationGuideApproved
+        testerProfilesApproved
+        sessionDetailsSent
+        attendees
+        reportSent
+        feedbackEntered
+        videosUploaded
+        invoiced
+        feedbackObtained
+        satisfactionScore
+        clientComments
+        wuComments
+        profiles
       }
       nextToken
     }
   }
 }
 `;
-export const createPost = `mutation CreatePost($input: CreatePostInput!) {
-  createPost(input: $input) {
+export const createProject = `mutation CreateProject($input: CreateProjectInput!) {
+  createProject(input: $input) {
     id
+    createdAt
+    reference
     title
-    blog {
+    status
+    client {
       id
       name
-      posts {
+      projects {
         nextToken
       }
     }
-    comments {
+    principalContact
+    otherContact
+    cost
+    purchaseOrderNumber
+    manager
+    testerFacilitator
+    mainRecruiter
+    facility
+    screenerApproved
+    facilitationGuideSent
+    testerProfilesSent
+    facilitationGuideApproved
+    testerProfilesApproved
+    sessionDetailsSent
+    attendees
+    reportSent
+    feedbackEntered
+    videosUploaded
+    invoiced
+    feedbackObtained
+    satisfactionScore
+    clientComments
+    wuComments
+    profiles
+    sessions {
       items {
         id
-        content
+        profile
+        location
+        date
+        time
+        notes
+      }
+      nextToken
+    }
+    contactNotes {
+      items {
+        id
+        type
+        date
+        contactedBy
+        note
       }
       nextToken
     }
   }
 }
 `;
-export const updatePost = `mutation UpdatePost($input: UpdatePostInput!) {
-  updatePost(input: $input) {
+export const updateProject = `mutation UpdateProject($input: UpdateProjectInput!) {
+  updateProject(input: $input) {
     id
+    createdAt
+    reference
     title
-    blog {
+    status
+    client {
       id
       name
-      posts {
+      projects {
         nextToken
       }
     }
-    comments {
+    principalContact
+    otherContact
+    cost
+    purchaseOrderNumber
+    manager
+    testerFacilitator
+    mainRecruiter
+    facility
+    screenerApproved
+    facilitationGuideSent
+    testerProfilesSent
+    facilitationGuideApproved
+    testerProfilesApproved
+    sessionDetailsSent
+    attendees
+    reportSent
+    feedbackEntered
+    videosUploaded
+    invoiced
+    feedbackObtained
+    satisfactionScore
+    clientComments
+    wuComments
+    profiles
+    sessions {
       items {
         id
-        content
+        profile
+        location
+        date
+        time
+        notes
+      }
+      nextToken
+    }
+    contactNotes {
+      items {
+        id
+        type
+        date
+        contactedBy
+        note
       }
       nextToken
     }
   }
 }
 `;
-export const deletePost = `mutation DeletePost($input: DeletePostInput!) {
-  deletePost(input: $input) {
+export const deleteProject = `mutation DeleteProject($input: DeleteProjectInput!) {
+  deleteProject(input: $input) {
     id
+    createdAt
+    reference
     title
-    blog {
+    status
+    client {
       id
       name
-      posts {
+      projects {
         nextToken
       }
     }
-    comments {
+    principalContact
+    otherContact
+    cost
+    purchaseOrderNumber
+    manager
+    testerFacilitator
+    mainRecruiter
+    facility
+    screenerApproved
+    facilitationGuideSent
+    testerProfilesSent
+    facilitationGuideApproved
+    testerProfilesApproved
+    sessionDetailsSent
+    attendees
+    reportSent
+    feedbackEntered
+    videosUploaded
+    invoiced
+    feedbackObtained
+    satisfactionScore
+    clientComments
+    wuComments
+    profiles
+    sessions {
       items {
         id
-        content
+        profile
+        location
+        date
+        time
+        notes
+      }
+      nextToken
+    }
+    contactNotes {
+      items {
+        id
+        type
+        date
+        contactedBy
+        note
       }
       nextToken
     }
   }
 }
 `;
-export const createComment = `mutation CreateComment($input: CreateCommentInput!) {
-  createComment(input: $input) {
+export const createSession = `mutation CreateSession($input: CreateSessionInput!) {
+  createSession(input: $input) {
     id
-    content
-    post {
+    project {
       id
+      createdAt
+      reference
       title
-      blog {
+      status
+      client {
         id
         name
       }
-      comments {
+      principalContact
+      otherContact
+      cost
+      purchaseOrderNumber
+      manager
+      testerFacilitator
+      mainRecruiter
+      facility
+      screenerApproved
+      facilitationGuideSent
+      testerProfilesSent
+      facilitationGuideApproved
+      testerProfilesApproved
+      sessionDetailsSent
+      attendees
+      reportSent
+      feedbackEntered
+      videosUploaded
+      invoiced
+      feedbackObtained
+      satisfactionScore
+      clientComments
+      wuComments
+      profiles
+      sessions {
+        nextToken
+      }
+      contactNotes {
         nextToken
       }
     }
+    tester {
+      id
+      title
+      firstName
+      surname
+      email
+      phone
+      address
+      house
+      street
+      town
+      county
+      postcode
+      country
+      gender
+      dob
+      maritalStatus
+      hasChildren
+      nationality
+      ethnicity
+      firstLanguage
+      otherLanguages
+      disability
+      about
+      employmentStatus
+      jobTitle
+      businessName
+      employmentSector
+      employeeCount
+      subject
+      educationStage
+      institution
+      clientNotes
+      facilitatorComments
+      contactNotes {
+        nextToken
+      }
+      sessions {
+        nextToken
+      }
+    }
+    profile
+    location
+    date
+    time
+    notes
   }
 }
 `;
-export const updateComment = `mutation UpdateComment($input: UpdateCommentInput!) {
-  updateComment(input: $input) {
+export const updateSession = `mutation UpdateSession($input: UpdateSessionInput!) {
+  updateSession(input: $input) {
     id
-    content
-    post {
+    project {
       id
+      createdAt
+      reference
       title
-      blog {
+      status
+      client {
         id
         name
       }
-      comments {
+      principalContact
+      otherContact
+      cost
+      purchaseOrderNumber
+      manager
+      testerFacilitator
+      mainRecruiter
+      facility
+      screenerApproved
+      facilitationGuideSent
+      testerProfilesSent
+      facilitationGuideApproved
+      testerProfilesApproved
+      sessionDetailsSent
+      attendees
+      reportSent
+      feedbackEntered
+      videosUploaded
+      invoiced
+      feedbackObtained
+      satisfactionScore
+      clientComments
+      wuComments
+      profiles
+      sessions {
+        nextToken
+      }
+      contactNotes {
         nextToken
       }
     }
+    tester {
+      id
+      title
+      firstName
+      surname
+      email
+      phone
+      address
+      house
+      street
+      town
+      county
+      postcode
+      country
+      gender
+      dob
+      maritalStatus
+      hasChildren
+      nationality
+      ethnicity
+      firstLanguage
+      otherLanguages
+      disability
+      about
+      employmentStatus
+      jobTitle
+      businessName
+      employmentSector
+      employeeCount
+      subject
+      educationStage
+      institution
+      clientNotes
+      facilitatorComments
+      contactNotes {
+        nextToken
+      }
+      sessions {
+        nextToken
+      }
+    }
+    profile
+    location
+    date
+    time
+    notes
   }
 }
 `;
-export const deleteComment = `mutation DeleteComment($input: DeleteCommentInput!) {
-  deleteComment(input: $input) {
+export const deleteSession = `mutation DeleteSession($input: DeleteSessionInput!) {
+  deleteSession(input: $input) {
     id
-    content
-    post {
+    project {
       id
+      createdAt
+      reference
       title
-      blog {
+      status
+      client {
         id
         name
       }
-      comments {
+      principalContact
+      otherContact
+      cost
+      purchaseOrderNumber
+      manager
+      testerFacilitator
+      mainRecruiter
+      facility
+      screenerApproved
+      facilitationGuideSent
+      testerProfilesSent
+      facilitationGuideApproved
+      testerProfilesApproved
+      sessionDetailsSent
+      attendees
+      reportSent
+      feedbackEntered
+      videosUploaded
+      invoiced
+      feedbackObtained
+      satisfactionScore
+      clientComments
+      wuComments
+      profiles
+      sessions {
+        nextToken
+      }
+      contactNotes {
         nextToken
       }
     }
+    tester {
+      id
+      title
+      firstName
+      surname
+      email
+      phone
+      address
+      house
+      street
+      town
+      county
+      postcode
+      country
+      gender
+      dob
+      maritalStatus
+      hasChildren
+      nationality
+      ethnicity
+      firstLanguage
+      otherLanguages
+      disability
+      about
+      employmentStatus
+      jobTitle
+      businessName
+      employmentSector
+      employeeCount
+      subject
+      educationStage
+      institution
+      clientNotes
+      facilitatorComments
+      contactNotes {
+        nextToken
+      }
+      sessions {
+        nextToken
+      }
+    }
+    profile
+    location
+    date
+    time
+    notes
   }
 }
 `;
@@ -195,6 +648,27 @@ export const createTester = `mutation CreateTester($input: CreateTesterInput!) {
     institution
     clientNotes
     facilitatorComments
+    contactNotes {
+      items {
+        id
+        type
+        date
+        contactedBy
+        note
+      }
+      nextToken
+    }
+    sessions {
+      items {
+        id
+        profile
+        location
+        date
+        time
+        notes
+      }
+      nextToken
+    }
   }
 }
 `;
@@ -233,6 +707,27 @@ export const updateTester = `mutation UpdateTester($input: UpdateTesterInput!) {
     institution
     clientNotes
     facilitatorComments
+    contactNotes {
+      items {
+        id
+        type
+        date
+        contactedBy
+        note
+      }
+      nextToken
+    }
+    sessions {
+      items {
+        id
+        profile
+        location
+        date
+        time
+        notes
+      }
+      nextToken
+    }
   }
 }
 `;
@@ -271,6 +766,303 @@ export const deleteTester = `mutation DeleteTester($input: DeleteTesterInput!) {
     institution
     clientNotes
     facilitatorComments
+    contactNotes {
+      items {
+        id
+        type
+        date
+        contactedBy
+        note
+      }
+      nextToken
+    }
+    sessions {
+      items {
+        id
+        profile
+        location
+        date
+        time
+        notes
+      }
+      nextToken
+    }
+  }
+}
+`;
+export const createContactNote = `mutation CreateContactNote($input: CreateContactNoteInput!) {
+  createContactNote(input: $input) {
+    id
+    type
+    project {
+      id
+      createdAt
+      reference
+      title
+      status
+      client {
+        id
+        name
+      }
+      principalContact
+      otherContact
+      cost
+      purchaseOrderNumber
+      manager
+      testerFacilitator
+      mainRecruiter
+      facility
+      screenerApproved
+      facilitationGuideSent
+      testerProfilesSent
+      facilitationGuideApproved
+      testerProfilesApproved
+      sessionDetailsSent
+      attendees
+      reportSent
+      feedbackEntered
+      videosUploaded
+      invoiced
+      feedbackObtained
+      satisfactionScore
+      clientComments
+      wuComments
+      profiles
+      sessions {
+        nextToken
+      }
+      contactNotes {
+        nextToken
+      }
+    }
+    date
+    contactedBy
+    note
+    tester {
+      id
+      title
+      firstName
+      surname
+      email
+      phone
+      address
+      house
+      street
+      town
+      county
+      postcode
+      country
+      gender
+      dob
+      maritalStatus
+      hasChildren
+      nationality
+      ethnicity
+      firstLanguage
+      otherLanguages
+      disability
+      about
+      employmentStatus
+      jobTitle
+      businessName
+      employmentSector
+      employeeCount
+      subject
+      educationStage
+      institution
+      clientNotes
+      facilitatorComments
+      contactNotes {
+        nextToken
+      }
+      sessions {
+        nextToken
+      }
+    }
+  }
+}
+`;
+export const updateContactNote = `mutation UpdateContactNote($input: UpdateContactNoteInput!) {
+  updateContactNote(input: $input) {
+    id
+    type
+    project {
+      id
+      createdAt
+      reference
+      title
+      status
+      client {
+        id
+        name
+      }
+      principalContact
+      otherContact
+      cost
+      purchaseOrderNumber
+      manager
+      testerFacilitator
+      mainRecruiter
+      facility
+      screenerApproved
+      facilitationGuideSent
+      testerProfilesSent
+      facilitationGuideApproved
+      testerProfilesApproved
+      sessionDetailsSent
+      attendees
+      reportSent
+      feedbackEntered
+      videosUploaded
+      invoiced
+      feedbackObtained
+      satisfactionScore
+      clientComments
+      wuComments
+      profiles
+      sessions {
+        nextToken
+      }
+      contactNotes {
+        nextToken
+      }
+    }
+    date
+    contactedBy
+    note
+    tester {
+      id
+      title
+      firstName
+      surname
+      email
+      phone
+      address
+      house
+      street
+      town
+      county
+      postcode
+      country
+      gender
+      dob
+      maritalStatus
+      hasChildren
+      nationality
+      ethnicity
+      firstLanguage
+      otherLanguages
+      disability
+      about
+      employmentStatus
+      jobTitle
+      businessName
+      employmentSector
+      employeeCount
+      subject
+      educationStage
+      institution
+      clientNotes
+      facilitatorComments
+      contactNotes {
+        nextToken
+      }
+      sessions {
+        nextToken
+      }
+    }
+  }
+}
+`;
+export const deleteContactNote = `mutation DeleteContactNote($input: DeleteContactNoteInput!) {
+  deleteContactNote(input: $input) {
+    id
+    type
+    project {
+      id
+      createdAt
+      reference
+      title
+      status
+      client {
+        id
+        name
+      }
+      principalContact
+      otherContact
+      cost
+      purchaseOrderNumber
+      manager
+      testerFacilitator
+      mainRecruiter
+      facility
+      screenerApproved
+      facilitationGuideSent
+      testerProfilesSent
+      facilitationGuideApproved
+      testerProfilesApproved
+      sessionDetailsSent
+      attendees
+      reportSent
+      feedbackEntered
+      videosUploaded
+      invoiced
+      feedbackObtained
+      satisfactionScore
+      clientComments
+      wuComments
+      profiles
+      sessions {
+        nextToken
+      }
+      contactNotes {
+        nextToken
+      }
+    }
+    date
+    contactedBy
+    note
+    tester {
+      id
+      title
+      firstName
+      surname
+      email
+      phone
+      address
+      house
+      street
+      town
+      county
+      postcode
+      country
+      gender
+      dob
+      maritalStatus
+      hasChildren
+      nationality
+      ethnicity
+      firstLanguage
+      otherLanguages
+      disability
+      about
+      employmentStatus
+      jobTitle
+      businessName
+      employmentSector
+      employeeCount
+      subject
+      educationStage
+      institution
+      clientNotes
+      facilitatorComments
+      contactNotes {
+        nextToken
+      }
+      sessions {
+        nextToken
+      }
+    }
   }
 }
 `;
