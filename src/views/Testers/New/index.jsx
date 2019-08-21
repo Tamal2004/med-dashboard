@@ -2,16 +2,23 @@ import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { reduxForm, formValueSelector } from 'redux-form';
-import API, { graphqlOperation } from '@aws-amplify/api';
-
-import { createTester } from 'graphql/mutations';
 
 // Material
 import { Paper, Typography, Grid } from '@material-ui/core';
 
 // Local
 import useStyles from './styles';
-import { validateRequired } from 'libs';
+import onSubmit from './onSubmit';
+import validate from './validate';
+
+// Libs
+import {
+    validateEmail,
+    validateDate,
+    validateNumber
+} from 'libs';
+
+// Components
 import {
     SelectBase,
     Container,
@@ -37,65 +44,9 @@ import {
     selectTitles
 } from 'selectors';
 
-const onSubmit = async (values, dispatch, { isStudent, isEmployed }) => {
-    const { manualAddress, termsChecked, ...pruned } = values;
+// Actions
+import { createTester } from '../../../actions';
 
-    let address = {};
-    if (manualAddress) {
-        address = { address: undefined };
-    } else {
-        address = {
-            house: undefined,
-            street: undefined,
-            town: undefined,
-            county: undefined,
-            postcode: undefined,
-            country: undefined
-        };
-    }
-
-    const regularEmployment = {
-        jobTitle: undefined,
-        businessName: undefined,
-        employmentSector: undefined,
-        employeeCount: undefined
-    };
-
-    const studentEmployment = {
-        subject: undefined,
-        educationStage: undefined,
-        institution: undefined
-    };
-
-    // Unemployed
-    let employment = {
-        ...regularEmployment,
-        ...studentEmployment
-    };
-    if (isStudent) {
-        employment = { ...regularEmployment };
-    } else if (isEmployed) {
-        employment = { ...studentEmployment };
-    }
-
-    const tester = { ...pruned, ...address, ...employment };
-
-    return await API.graphql(graphqlOperation(createTester, { input: tester }));
-};
-
-const validateEmail = value =>
-    value && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)
-        ? 'Invalid email address'
-        : undefined;
-
-const validateDate = value =>
-    value &&
-    !/^([0-2][0-9]|(3)[0-1])(\/)(((0)[0-9])|((1)[0-2]))(\/)\d{4}$/i.test(value)
-        ? 'Invalid date'
-        : undefined;
-
-const validateNumber = value =>
-    value && !/^[0-9]/i.test(value) ? 'Invalid number' : undefined;
 
 const TesterApplication = ({
     counties,
@@ -147,7 +98,12 @@ const TesterApplication = ({
                     validate={validateEmail}
                     required
                 />
-                <Input label='Phone Number' name='phone' required validate={validateNumber}/>
+                <Input
+                    label='Phone Number'
+                    name='phone'
+                    required
+                    validate={validateNumber}
+                />
                 {!hasManualAddress && (
                     <Input
                         label='Enter address or postcode'
@@ -364,38 +320,7 @@ const mapState = state => {
     };
 };
 
-const mapDispatch = {};
-
-const validate = (values, { isStudent, isEmployed, hasManualAddress }) => {
-    const required = [
-        'title',
-        'firstName',
-        'surname',
-        'email',
-        'phone',
-        'gender',
-        'age',
-        'dob',
-        'maritalStatus',
-        'nationality',
-        'ethnicity',
-        'about',
-        'employmentStatus',
-        'termsChecked'
-    ];
-
-    if (isStudent) {
-        required.push('subject');
-        required.push('educationStage');
-        required.push('institution');
-    }
-    if (isEmployed) required.push('employeeCount');
-
-    if (hasManualAddress) required.push('country');
-    else required.push('address');
-
-    return { ...validateRequired(values, required) };
-};
+const mapDispatch = { createTester };
 
 const _TesterApplication = compose(
     connect(
