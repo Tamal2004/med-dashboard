@@ -1,20 +1,35 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import withStyles from '@material-ui/core/styles/withStyles';
+import { makeStyles, createStyles } from '@material-ui/styles';
 import Grid from '@material-ui/core/Grid';
 
-const styles = {};
-
-const GridItem = ({ xs = 12, sm = 6, md = 3, children, ...restProps }) => (
-	<Grid item xs={xs} sm={sm} md={md} {...restProps}>
-		{children}
-	</Grid>
+const useStyles = makeStyles((theme: Theme) =>
+	createStyles({
+		root: {
+			overflow: 'auto'
+		}
+	})
 );
+
+const GridItem = ({ xs = 12, sm = 6, md = 3, children, ...restProps }) => {
+	const c = useStyles();
+
+	return (
+		<Grid
+			item
+			xs={xs}
+			sm={sm}
+			md={md}
+			{...restProps}
+			classes={{ root: c.root }}
+		>
+			{children}
+		</Grid>
+	);
+};
 
 GridItem.propTypes = {
 	classes: PropTypes.object
 };
 
-const _GridItem = withStyles(styles)(GridItem);
-
-export { _GridItem as default, _GridItem as GridItem };
+export { GridItem as default, GridItem };
