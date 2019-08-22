@@ -41,14 +41,20 @@ const useStyles = makeStyles(({ palette, spacing }) => ({
     }
 }));
 
-const TesterDetails = ({ data, handleSessionsModal, projectReference }) => {
+const TesterDetails = ({
+    testerDetails,
+    handleSessionsModal,
+    projectReference
+}) => {
     const [page, setPage] = useState(1);
     const c = useStyles();
-    const totalPages = Math.floor(data.length / 5) + !!(data.length % 5) || 1;
+    const totalPages =
+        Math.floor(testerDetails.length / 5) + !!(testerDetails.length % 5) ||
+        1;
 
     return (
         <EditableCard title='Tester Details'>
-            <Table data={data} action page={page} itemsPerPage={5} />
+            <Table data={testerDetails} action page={page} itemsPerPage={5} />
             <div className={c.footer}>
                 <div>
                     <ButtonGroup color='secondary'>
@@ -99,8 +105,14 @@ const generateData = (reference, client, project, notes) => ({
     'Testing Time': '2:30PM',
     Notes: notes
 });
-TesterDetails.defaultProps = {
-    data: Array.range(0, 50)
+
+TesterDetails.propTypes = {
+    testerDetails: PropTypes.array.isRequired
+};
+
+const mapState = state => ({
+    projectReference: formValueSelector('ProjectDetails')(state, 'reference'),
+    testerDetails: Array.range(0, 50)
         .map(() => [
             generateData(
                 'ETCBR-644',
@@ -111,14 +123,6 @@ TesterDetails.defaultProps = {
             generateData('ETCBR-644', 'CITB', 'JE28', 'Chippenham')
         ])
         .flatMap(x => x)
-};
-
-TesterDetails.propTypes = {
-    data: PropTypes.array.isRequired
-};
-
-const mapState = state => ({
-    projectReference: formValueSelector('ProjectDetails')(state, 'reference')
 });
 
 const mapDispatch = {};

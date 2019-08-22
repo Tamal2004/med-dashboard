@@ -12,7 +12,6 @@ import ListIcon from '@material-ui/icons/ChevronRight';
 import { makeStyles } from '@material-ui/core/styles';
 
 import { Accordion, AccordionPanel } from 'components';
-import { history } from 'libs';
 
 const useStyles = makeStyles(theme => ({
     textStyle: {
@@ -34,9 +33,6 @@ const useStyles = makeStyles(theme => ({
 /*********************
  * Private Components *
  **********************/
-const isActiveLink = url => {
-    return url.trim() === history.location.pathname.trim();
-};
 const LinkItem = ({ to, title, children, ...rest }) => {
     const c = useStyles();
     return (
@@ -143,7 +139,7 @@ export const secondaryListItems = (
                 <LinkItem to={'/profile'} title={'Profile'}>
                     <LinkListItem text='Profile' />
                 </LinkItem>
-                <LinkItem to={'/logout'} title={'Logout'}>
+                <LinkItem to={'/profile/logout'} title={'Logout'}>
                     <LinkListItem text='Logout' />
                 </LinkItem>
             </MenuItem>
