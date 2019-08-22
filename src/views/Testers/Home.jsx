@@ -67,7 +67,7 @@ const TesterHome = ({ testers, handleEditModal }) => {
                         </NavigateButton>
                     </Link>
                     <Link to={'/tester/new'}>
-                        <NavigateButton color='secondary'>
+                        <NavigateButton variant='outlined' color='secondary'>
                             Add a new tester
                         </NavigateButton>
                     </Link>

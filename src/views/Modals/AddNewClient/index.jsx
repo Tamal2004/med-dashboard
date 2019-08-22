@@ -16,23 +16,14 @@ import {
 	Input
 } from 'components';
 
-import { selectTester } from 'selectors';
-
-const TesterTableEdit = ({ formData, onClose }) => {
+const AddNewClient = ({ onClose }) => {
 	const c = useStyles();
-	const rows = [];
-
-	formData.map((segment, index) =>
-		rows.push(
-			<Input key={index} label={segment.label} name={segment.key} />
-		)
-	);
 
 	return (
 		<Fragment>
-			<ModalHeader onClose={onClose}>Edit tester</ModalHeader>
+			<ModalHeader onClose={onClose}>Add new client</ModalHeader>
 			<ModalContent className={c.root}>
-				<Fragment>{rows}</Fragment>
+				<Input label='Client Name' name='name' />
 			</ModalContent>
 			<Divider />
 			<ModalFooter className={c.footer}>
@@ -52,38 +43,20 @@ const TesterTableEdit = ({ formData, onClose }) => {
 	);
 };
 
-TesterTableEdit.defaultProps = {};
+AddNewClient.defaultProps = {};
 
-TesterTableEdit.propTypes = {};
+AddNewClient.propTypes = {};
 
-const mapState = (state, { editiIndex }) => {
-	//initial method and variables
-	const name = value => value.split(' ').join('');
-	const mappedObj = {};
-	const formData = [];
-
-	//selector and mapping
-	const tester = selectTester(state, editiIndex);
-	Object.keys(tester).forEach(key => {
-		mappedObj[name(key)] = tester[key];
-		formData.push({ key: name(key), label: key });
-	});
-
-	return {
-		formData,
-		initialValues: mappedObj
-	};
-};
 const mapDispatch = {};
 
-const _TesterTableEdit = compose(
+const _AddNewClient = compose(
 	connect(
-		mapState,
+		null,
 		mapDispatch
 	),
 	reduxForm({
-		form: 'TesterTable'
+		form: 'NewClient'
 	})
-)(TesterTableEdit);
+)(AddNewClient);
 
-export { _TesterTableEdit as default, _TesterTableEdit as TesterTableEdit };
+export { _AddNewClient as default, _AddNewClient as AddNewClient };

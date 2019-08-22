@@ -60,9 +60,7 @@ const TesterSearch = ({ testers }) => {
 				<GridItem md={3}>
 					<div className={c.filterButtonWrapper}>
 						<Link to={'/tester/mail'}>
-							<NavigateButton color='secondary'>
-								Email Testers
-							</NavigateButton>
+							<NavigateButton>Email Testers</NavigateButton>
 						</Link>
 					</div>
 				</GridItem>
