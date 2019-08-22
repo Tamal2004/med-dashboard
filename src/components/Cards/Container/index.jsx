@@ -11,7 +11,7 @@ const Container = ({ title, children }) => {
     return (
         <Card className={c.root}>
             {title && (
-                <Typography className={c.header} variant='h4'>
+                <Typography className={c.header} variant='h5'>
                     {title}
                 </Typography>
             )}

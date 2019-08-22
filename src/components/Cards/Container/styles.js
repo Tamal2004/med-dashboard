@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core';
 export default makeStyles(({ palette, spacing, shadows }) => ({
     root: {
         margin: spacing(4),
-        boxShadow: shadows[6],
+        boxShadow: shadows[1],
         padding: spacing(4)
     },
     header: {

@@ -10,9 +10,8 @@ import Link from '@material-ui/core/Link';
 
 // Local
 import useStyles from './styles';
-import { validateRequired, composeClasses } from 'libs';
+import { validateRequired } from 'libs';
 import {
-    SelectBase,
     Container,
     Select,
     Input,
@@ -36,6 +35,16 @@ import {
     selectTitles
 } from 'selectors';
 
+const InfoWrapper = ({ children }) => {
+    const c = useStyles();
+
+    return (
+        <Typography className={c.info} variant='subtitle1' gutterBottom>
+            {children}
+        </Typography>
+    );
+};
+
 const TesterApplication = ({
     counties,
     nationalities,
@@ -58,24 +67,27 @@ const TesterApplication = ({
 
     return (
         <Paper className={classNames(c.root, noauth && c.noauthRoot)}>
-            <Typography className={c.header} variant='h2' gutterBottom>
+            <Typography className={c.header} variant='h4' gutterBottom>
                 Tester Application Form
             </Typography>
-            <Typography className={c.info} variant='h5' gutterBottom>
+            <InfoWrapper>
                 Thank you for your interest in becoming a website tester. So we
                 can match you with the most suitable testing opportunities
                 please fill out the form below with as much information as
                 possible.
-            </Typography>
-            <Typography className={c.info} variant='h5' gutterBottom>
-                If you have any queries, please contact Avril on
-                avril@webusability.co.uk.
-            </Typography>
-            <Typography className={c.info} variant='h5' gutterBottom>
+            </InfoWrapper>
+            <InfoWrapper>
+                If you have any queries, please contact Avril on&nbsp;
+                <Link href='mailto:avril@webusability.co.uk'>
+                    avril@webusability.co.uk
+                </Link>
+            </InfoWrapper>
+            <InfoWrapper>
                 Our database is maintained solely for our use in recruiting
                 testers. The information is not passed onto to any other
                 organisation.
-            </Typography>
+            </InfoWrapper>
+
             <Container title='Contact Details'>
                 <Select label='Title' data={titles} name='title' required />
                 <Input label='First Name' name='firstName' required />

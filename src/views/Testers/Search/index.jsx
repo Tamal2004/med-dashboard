@@ -49,11 +49,21 @@ const TesterSearch = ({ testers }) => {
 	return (
 		<Fragment>
 			<GridWrapper>
+				<GridItem md={3}></GridItem>
 				<GridItem md={6}>
 					<SearchInput placeholder='Search by name or project reference' />
 					<div className={c.searchMessage}>
 						Showing results for <b>'wpu'</b>. &nbsp;&nbsp;
 						<i>Search instead for 'wup'</i>
+					</div>
+				</GridItem>
+				<GridItem md={3}>
+					<div className={c.filterButtonWrapper}>
+						<Link to={'/tester/mail'}>
+							<NavigateButton color='secondary'>
+								Email Testers
+							</NavigateButton>
+						</Link>
 					</div>
 				</GridItem>
 			</GridWrapper>
@@ -63,20 +73,12 @@ const TesterSearch = ({ testers }) => {
 					<SearchFilter />
 				</GridItem>
 				<GridItem md={9}>
-					<div className={c.filterButtonWrapper}>
-						<Link to={'/tester/mail'}>
-							<NavigateButton color='secondary'>
-								Email Testers
-							</NavigateButton>
-						</Link>
-					</div>
 					<Table data={testers} page={1} />
 				</GridItem>
 			</GridWrapper>
 		</Fragment>
 	);
 };
-
 
 const generateProjects = (
 	tester,
@@ -105,7 +107,7 @@ const mapState = state => ({
 		.map(() => [
 			generateProjects('John Test', 44, 'Male', 'john@test.com'),
 			generateProjects('Jill Test', 24, 'Female', 'jill@test.com'),
-			generateProjects('Jake Test', 46, 'Non-binary', 'jake@test.com'),
+			generateProjects('Jake Test', 46, 'Non-binary', 'jake@test.com')
 		])
 		.flatMap(x => x)
 });

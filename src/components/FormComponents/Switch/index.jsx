@@ -7,13 +7,7 @@ import useStyles from './styles';
 import { SwitchBase } from 'components';
 import { Control } from '../Control';
 
-const Switch = ({
-    required = false,
-    label,
-    isCard,
-    active,
-    ...restProps
-}) => {
+const Switch = ({ required = false, label, isCard, active, ...restProps }) => {
     const { cardRoot, inactiveRoot, ...c } = useStyles();
     const switchStyles = {
         ...c,
@@ -23,7 +17,12 @@ const Switch = ({
     const controlProps = { required, label, isCard };
     return (
         <Control {...controlProps}>
-            <SwitchBase color='primary' styles={switchStyles} {...restProps} />
+            <SwitchBase
+                size='small'
+                color='primary'
+                styles={switchStyles}
+                {...restProps}
+            />
         </Control>
     );
 };

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
-import { ClientHome, ClientNew, ClientSearch, ClientSingle } from 'views';
+import { ClientHome, ClientSearch, ClientSingle } from 'views';
 
 const ClientRoutes = ({ match }) => {
 	return (
@@ -11,7 +11,6 @@ const ClientRoutes = ({ match }) => {
 				exact
 				component={ClientHome}
 			/>
-			<Route path={`${match.path}/new`} component={ClientNew} />
 			<Route path={`${match.path}/search`} component={ClientSearch} />
 			<Route path={`${match.path}/:id`} component={ClientSingle} />
 			<Route path={'*'} component={ClientHome} />

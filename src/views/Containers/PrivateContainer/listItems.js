@@ -87,9 +87,6 @@ export const mainListItems = (
                 <LinkItem to={'/client'} title={'Clients'}>
                     <LinkListItem text='Clients' />
                 </LinkItem>
-                <LinkItem to={'/client/new'} title={'Add New Client'}>
-                    <LinkListItem text='Add New' />
-                </LinkItem>
                 <LinkItem to={'/client/search'} title={'Search Client'}>
                     <LinkListItem text='Search Client' />
                 </LinkItem>

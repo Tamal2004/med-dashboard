@@ -283,7 +283,7 @@ class Table extends Component {
                                             minWidth: headerWidth
                                         }}
                                         key={index}
-                                        onClick={() => handleEditModal()}
+                                        onClick={() => handleSort(index)}
                                     >
                                         {header}
                                         {index < len - actionDecrement &&

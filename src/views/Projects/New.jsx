@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { reduxForm } from 'redux-form';
-import API, { graphqlOperation } from "@aws-amplify/api";
+import API, { graphqlOperation } from '@aws-amplify/api';
 
 // Material
 import { Paper, Typography, Grid, makeStyles } from '@material-ui/core';
@@ -20,10 +20,12 @@ const useStyles = makeStyles(({ palette, spacing }) => ({
     root: {
         margin: spacing(4),
         padding: spacing(4),
-        width: '100%'
+        textAlign: 'justify',
+        width: 'auto'
     },
     header: {
         textAlign: 'center',
+        fontWeight: 700,
         paddingTop: spacing(2),
         paddingBottom: spacing(4)
     },
@@ -55,7 +57,7 @@ const ProjectNew = ({ projectStatuses, clients, invalid, pristine, reset }) => {
 
     return (
         <Paper className={c.root}>
-            <Typography className={c.header} variant='h2' gutterBottom>
+            <Typography className={c.header} variant='h4' gutterBottom>
                 New Project Form
             </Typography>
             <Container title='Project Details'>
