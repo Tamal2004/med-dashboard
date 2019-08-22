@@ -1,11 +1,12 @@
 // export * from './AuthenticatedAppRoutes';
 // export * from './UnauthenticatedAppRoutes';
 
-import React, { PureComponent } from 'react';
+import React, { PureComponent, Fragment } from 'react';
 import { Route, Switch, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import { PrivateContainer } from 'views/Containers';
+import { TesterSingle } from 'views';
 import {
 	AccountRoutes,
 	ClientRoutes,
@@ -16,32 +17,32 @@ import {
 
 class AuthenticatedAppRoutes extends PureComponent {
 	render() {
+		const { isTester, name } = this.props.auth;
 		return (
 			<PrivateContainer>
 				<Switch>
-					{/*Default*/}
-					<Route path={'/'} exact component={HomeRoutes} />
-
-					{/*Account*/}
+					{!isTester ? (
+						<Fragment>
+							<Route path={'/'} exact component={HomeRoutes} />
+							<Route path={'/client'} component={ClientRoutes} />
+							<Route
+								path={'/project'}
+								component={ProjectRoutes}
+							/>
+							<Route path={'/tester'} component={TesterRoutes} />
+						</Fragment>
+					) : (
+						<Route path={'/'} exact component={TesterSingle} />
+					)}
 					<Route path={'/profile'} component={AccountRoutes} />
-
-					{/*Client*/}
-					<Route path={'/client'} component={ClientRoutes} />
-
-					{/*Project*/}
-					<Route path={'/project'} component={ProjectRoutes} />
-
-					{/*Tester*/}
-					<Route path={'/tester'} component={TesterRoutes} />
+					<Route path={`/tester/${name}`} component={TesterSingle} />
 				</Switch>
 			</PrivateContainer>
 		);
 	}
 }
 
-const mapState = state => {
-	return {};
-};
+const mapState = ({ auth }) => ({ auth });
 
 const _AuthenticatedAppRoutes = withRouter(
 	connect(mapState)(AuthenticatedAppRoutes)

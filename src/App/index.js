@@ -9,7 +9,6 @@ import {
     Greetings,
     ConfirmSignIn,
     SignUp,
-    ConfirmSignUp,
     TOTPSetup,
     Loading
 } from 'aws-amplify-react';
@@ -49,7 +48,6 @@ class IndexApp extends Component {
                                 Greetings,
                                 ConfirmSignIn,
                                 SignUp,
-                                ConfirmSignUp,
                                 TOTPSetup,
                                 Loading
                             ]}

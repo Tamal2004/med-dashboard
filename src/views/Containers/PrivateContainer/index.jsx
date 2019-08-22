@@ -3,17 +3,17 @@ import API, { graphqlOperation } from '@aws-amplify/api';
 import { listBlogs } from 'graphql/queries';
 import clsx from 'clsx';
 import Drawer from '@material-ui/core/Drawer';
+import Divider from '@material-ui/core/Divider';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import List from '@material-ui/core/List';
-import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import Container from '@material-ui/core/Container';
 import MenuIcon from '@material-ui/icons/Menu';
 import CloseIcon from '@material-ui/icons/Close';
 import ArrowLeftIcon from '@material-ui/icons/ArrowLeft';
 import ArrowRightIcon from '@material-ui/icons/ArrowRight';
-import { mainListItems, secondaryListItems } from './listItems';
+import { ListItems } from './listItems';
 import styles from './styles';
 import { Logo } from 'assets';
 import { history } from 'libs/history';
@@ -103,11 +103,7 @@ export default function Dashboard(props) {
                     className={(!open && c.menuItemHidden) || ''}
                     disablePadding={true}
                 >
-                    {mainListItems}
-                </List>
-                <Divider />
-                <List className={(!open && c.menuItemHidden) || ''}>
-                    {secondaryListItems}
+                    <ListItems />
                 </List>
             </Drawer>
             <main className={c.content}>
