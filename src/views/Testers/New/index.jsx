@@ -2,6 +2,9 @@ import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { reduxForm, formValueSelector } from 'redux-form';
+import API, { graphqlOperation } from '@aws-amplify/api';
+
+import { createTester } from 'graphql/mutations';
 
 // Material
 import { Paper, Typography, Grid } from '@material-ui/core';
@@ -34,6 +37,66 @@ import {
     selectTitles
 } from 'selectors';
 
+const onSubmit = async (values, dispatch, { isStudent, isEmployed }) => {
+    const { manualAddress, termsChecked, ...pruned } = values;
+
+    let address = {};
+    if (manualAddress) {
+        address = { address: undefined };
+    } else {
+        address = {
+            house: undefined,
+            street: undefined,
+            town: undefined,
+            county: undefined,
+            postcode: undefined,
+            country: undefined
+        };
+    }
+
+    const regularEmployment = {
+        jobTitle: undefined,
+        businessName: undefined,
+        employmentSector: undefined,
+        employeeCount: undefined
+    };
+
+    const studentEmployment = {
+        subject: undefined,
+        educationStage: undefined,
+        institution: undefined
+    };
+
+    // Unemployed
+    let employment = {
+        ...regularEmployment,
+        ...studentEmployment
+    };
+    if (isStudent) {
+        employment = { ...regularEmployment };
+    } else if (isEmployed) {
+        employment = { ...studentEmployment };
+    }
+
+    const tester = { ...pruned, ...address, ...employment };
+
+    return await API.graphql(graphqlOperation(createTester, { input: tester }));
+};
+
+const validateEmail = value =>
+    value && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)
+        ? 'Invalid email address'
+        : undefined;
+
+const validateDate = value =>
+    value &&
+    !/^([0-2][0-9]|(3)[0-1])(\/)(((0)[0-9])|((1)[0-2]))(\/)\d{4}$/i.test(value)
+        ? 'Invalid date'
+        : undefined;
+
+const validateNumber = value =>
+    value && !/^[0-9]/i.test(value) ? 'Invalid number' : undefined;
+
 const TesterApplication = ({
     counties,
     nationalities,
@@ -49,10 +112,11 @@ const TesterApplication = ({
     isEmployed,
     isRetired,
     hasManualAddress,
-    invalid
+    invalid,
+    handleSubmit,
+    submitting
 }) => {
     const c = useStyles();
-
     return (
         <Paper className={c.root}>
             <Typography className={c.header} variant='h2' gutterBottom>
@@ -77,8 +141,13 @@ const TesterApplication = ({
                 <Select label='Title' data={titles} name='title' required />
                 <Input label='First Name' name='firstName' required />
                 <Input label='Surname' name='surname' required />
-                <Input label='Email Address' name='email' required />
-                <Input label='Phone Number' name='phone' required />
+                <Input
+                    label='Email Address'
+                    name='email'
+                    validate={validateEmail}
+                    required
+                />
+                <Input label='Phone Number' name='phone' required validate={validateNumber}/>
                 {!hasManualAddress && (
                     <Input
                         label='Enter address or postcode'
@@ -94,7 +163,7 @@ const TesterApplication = ({
                         <Input label='Town' name='town' />
                         <Input label='County' name='county' />
                         <Input label='Postcode' name='postcode' />
-                        <Input label='Country' name='country' />
+                        <Input label='Country' name='country' required />
                     </Fragment>
                 )}
             </Container>
@@ -106,6 +175,7 @@ const TesterApplication = ({
                     placeholder='01/01/1985'
                     name='dob'
                     required
+                    validate={validateDate}
                 />
                 <Select
                     label='Marital Status'
@@ -225,8 +295,8 @@ const TesterApplication = ({
                         className={c.submit}
                         variant='contained'
                         color='primary'
-                        onClick={() => console.log('submitted')}
-                        disabled={invalid}
+                        onClick={handleSubmit}
+                        disabled={invalid || submitting}
                     >
                         Submit
                     </NavigateButton>
@@ -250,13 +320,47 @@ const mapState = state => {
         genders: selectGenders(state),
         maritalStatuses: selectMaritalStatuses(state),
         titles: selectTitles(state),
-        isStudent: employmentStatus === 5,
+        isStudent: employmentStatus === 'Student',
         isEmployed:
-            employmentStatus === 2 ||
-            employmentStatus === 3 ||
-            employmentStatus === 4,
-        isRetired: employmentStatus === 4,
-        hasManualAddress: formSelector(state, 'manualAddress')
+            employmentStatus === 'Part-time employment' ||
+            employmentStatus === 'Full-time employment' ||
+            employmentStatus === 'Retired',
+        isRetired: employmentStatus === 'Retired',
+        hasManualAddress: formSelector(state, 'manualAddress'),
+        initialValues: {
+            manualAddress: true,
+            title: 'Mr',
+            firstName: 'Matt',
+            surname: 'Tamal',
+            email: 'matt@echotechsys.com',
+            phone: '01306568988',
+            address: 'Avenue Adolphe Buyl 12 1050 Ixelles',
+            house: '12',
+            street: 'Avenue Adolphe',
+            town: 'Brussels',
+            county: 'Yorkshire',
+            postcode: '1050',
+            country: 'Belgium',
+            gender: 'Male',
+            dob: '01/01/1999',
+            maritalStatus: 'Single',
+            hasChildren: true,
+            nationality: 'United Kingdom',
+            ethnicity: 'Arab',
+            firstLanguage: 'English',
+            otherLanguages: 'Bengali',
+            disability: 'None',
+            about: 'Software developer',
+            employmentStatus: 'Full-time employment',
+            jobTitle: 'Software Engineer',
+            businessName: 'Matt Tamal',
+            employmentSector: 'Computers & ICT',
+            employeeCount: '1 - 9',
+            subject: 'Medicine',
+            educationStage: 'University',
+            institution: 'Cambridge University',
+            termsChecked: true
+        }
     };
 };
 
@@ -276,7 +380,8 @@ const validate = (values, { isStudent, isEmployed, hasManualAddress }) => {
         'nationality',
         'ethnicity',
         'about',
-        'employmentStatus'
+        'employmentStatus',
+        'termsChecked'
     ];
 
     if (isStudent) {
@@ -285,7 +390,9 @@ const validate = (values, { isStudent, isEmployed, hasManualAddress }) => {
         required.push('institution');
     }
     if (isEmployed) required.push('employeeCount');
-    if (!hasManualAddress) required.push('address');
+
+    if (hasManualAddress) required.push('country');
+    else required.push('address');
 
     return { ...validateRequired(values, required) };
 };
@@ -297,7 +404,8 @@ const _TesterApplication = compose(
     ),
     reduxForm({
         form: 'TesterApplication',
-        validate
+        validate,
+        onSubmit
     })
 )(TesterApplication);
 

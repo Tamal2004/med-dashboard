@@ -110,3 +110,86 @@ export const listComments = `query ListComments(
   }
 }
 `;
+export const getTester = `query GetTester($id: ID!) {
+  getTester(id: $id) {
+    id
+    title
+    firstName
+    surname
+    email
+    phone
+    address
+    house
+    street
+    town
+    county
+    postcode
+    country
+    gender
+    dob
+    maritalStatus
+    hasChildren
+    nationality
+    ethnicity
+    firstLanguage
+    otherLanguages
+    disability
+    about
+    employmentStatus
+    jobTitle
+    businessName
+    employmentSector
+    employeeCount
+    subject
+    educationStage
+    institution
+    clientNotes
+    facilitatorComments
+  }
+}
+`;
+export const listTesters = `query ListTesters(
+  $filter: ModelTesterFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listTesters(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      title
+      firstName
+      surname
+      email
+      phone
+      address
+      house
+      street
+      town
+      county
+      postcode
+      country
+      gender
+      dob
+      maritalStatus
+      hasChildren
+      nationality
+      ethnicity
+      firstLanguage
+      otherLanguages
+      disability
+      about
+      employmentStatus
+      jobTitle
+      businessName
+      employmentSector
+      employeeCount
+      subject
+      educationStage
+      institution
+      clientNotes
+      facilitatorComments
+    }
+    nextToken
+  }
+}
+`;

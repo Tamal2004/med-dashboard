@@ -160,3 +160,117 @@ export const onDeleteComment = `subscription OnDeleteComment {
   }
 }
 `;
+export const onCreateTester = `subscription OnCreateTester {
+  onCreateTester {
+    id
+    title
+    firstName
+    surname
+    email
+    phone
+    address
+    house
+    street
+    town
+    county
+    postcode
+    country
+    gender
+    dob
+    maritalStatus
+    hasChildren
+    nationality
+    ethnicity
+    firstLanguage
+    otherLanguages
+    disability
+    about
+    employmentStatus
+    jobTitle
+    businessName
+    employmentSector
+    employeeCount
+    subject
+    educationStage
+    institution
+    clientNotes
+    facilitatorComments
+  }
+}
+`;
+export const onUpdateTester = `subscription OnUpdateTester {
+  onUpdateTester {
+    id
+    title
+    firstName
+    surname
+    email
+    phone
+    address
+    house
+    street
+    town
+    county
+    postcode
+    country
+    gender
+    dob
+    maritalStatus
+    hasChildren
+    nationality
+    ethnicity
+    firstLanguage
+    otherLanguages
+    disability
+    about
+    employmentStatus
+    jobTitle
+    businessName
+    employmentSector
+    employeeCount
+    subject
+    educationStage
+    institution
+    clientNotes
+    facilitatorComments
+  }
+}
+`;
+export const onDeleteTester = `subscription OnDeleteTester {
+  onDeleteTester {
+    id
+    title
+    firstName
+    surname
+    email
+    phone
+    address
+    house
+    street
+    town
+    county
+    postcode
+    country
+    gender
+    dob
+    maritalStatus
+    hasChildren
+    nationality
+    ethnicity
+    firstLanguage
+    otherLanguages
+    disability
+    about
+    employmentStatus
+    jobTitle
+    businessName
+    employmentSector
+    employeeCount
+    subject
+    educationStage
+    institution
+    clientNotes
+    facilitatorComments
+  }
+}
+`;
