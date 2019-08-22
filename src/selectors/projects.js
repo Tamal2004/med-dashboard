@@ -15,5 +15,5 @@ export const selectProjectStatuses = createCachedSelector(
 // Project Clients
 export const selectProjectClients = createCachedSelector(
     selectProjectsReducer,
-    ({ projectClients }) => mapToSelect(projectClients, 'id', 'name')
+    ({ clients = [] }) => mapToSelect(clients, 'id', 'name')
 )(() => 'placeholder');

@@ -4,16 +4,47 @@ import API, { graphqlOperation } from '@aws-amplify/api';
 import { history } from 'libs';
 
 // Graph QL
+
 import { listProjects as gQLListProjects } from 'graphql/queries';
+import { createProject as gQLCreateProject, } from 'graphql/mutations';
+import { listProjectClients } from 'graphql/project';
 
 // Action Types
 import {
     REQUEST,
     SUCCESS,
     FAIL,
+    CREATE_PROJECT,
     FETCH_PROJECTS,
     FETCH_PROJECT_CLIENTS
 } from 'store/actionTypes';
+
+
+
+const createProjectAction = async => ({
+    type: CREATE_PROJECT,
+    async
+});
+
+export const createProject = project => async dispatch => {
+    dispatch(createProjectAction(REQUEST));
+    const res = await API.graphql(
+        graphqlOperation(gQLCreateProject, { input: project })
+    );
+
+    console.log(res)
+
+    if (!res.error) {
+        dispatch(createProjectAction(SUCCESS));
+        history.push('/project');
+    } else {
+        dispatch(createProjectAction(FAIL));
+    }
+};
+
+
+
+
 
 const fetchProjectsAction = (async, payload = []) => ({
     type: FETCH_PROJECTS,
@@ -42,19 +73,17 @@ const fetchProjectClientsAction = (async, payload = []) => ({
     payload
 });
 
+
+
+
 export const fetchProjectClients = () => async dispatch => {
     dispatch(fetchProjectClientsAction(REQUEST));
     const {
-        data: { listProjects, error = null }
-        // data: { listProjectClients, error = null }
-    } = await API.graphql(graphqlOperation(gQLListProjects));
-
-    console.log(listProjects);
-    // console.log(listProjectClients);
+        data: { listClients: { items = []} = {}, error = null }
+    } = await API.graphql(graphqlOperation(listProjectClients));
 
     if (!error) {
-        // dispatch(fetchProjectClientsAction(SUCCESS, listProjectClients));
-        dispatch(fetchProjectClientsAction(SUCCESS, listProjects));
+        dispatch(fetchProjectClientsAction(SUCCESS, items));
     } else {
         dispatch(fetchProjectClientsAction(FAIL));
     }

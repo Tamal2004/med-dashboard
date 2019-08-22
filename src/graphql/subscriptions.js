@@ -1,30 +1,6 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const onCreateTodo = `subscription OnCreateTodo {
-  onCreateTodo {
-    id
-    name
-    description
-  }
-}
-`;
-export const onUpdateTodo = `subscription OnUpdateTodo {
-  onUpdateTodo {
-    id
-    name
-    description
-  }
-}
-`;
-export const onDeleteTodo = `subscription OnDeleteTodo {
-  onDeleteTodo {
-    id
-    name
-    description
-  }
-}
-`;
 export const onCreateClient = `subscription OnCreateClient {
   onCreateClient {
     id
@@ -42,6 +18,7 @@ export const onCreateClient = `subscription OnCreateClient {
         purchaseOrderNumber
         manager
         testerFacilitator
+        clientFacilitator
         mainRecruiter
         facility
         screenerApproved
@@ -83,6 +60,7 @@ export const onUpdateClient = `subscription OnUpdateClient {
         purchaseOrderNumber
         manager
         testerFacilitator
+        clientFacilitator
         mainRecruiter
         facility
         screenerApproved
@@ -124,6 +102,7 @@ export const onDeleteClient = `subscription OnDeleteClient {
         purchaseOrderNumber
         manager
         testerFacilitator
+        clientFacilitator
         mainRecruiter
         facility
         screenerApproved
@@ -168,6 +147,7 @@ export const onCreateProject = `subscription OnCreateProject {
     purchaseOrderNumber
     manager
     testerFacilitator
+    clientFacilitator
     mainRecruiter
     facility
     screenerApproved
@@ -230,6 +210,7 @@ export const onUpdateProject = `subscription OnUpdateProject {
     purchaseOrderNumber
     manager
     testerFacilitator
+    clientFacilitator
     mainRecruiter
     facility
     screenerApproved
@@ -292,6 +273,7 @@ export const onDeleteProject = `subscription OnDeleteProject {
     purchaseOrderNumber
     manager
     testerFacilitator
+    clientFacilitator
     mainRecruiter
     facility
     screenerApproved
@@ -353,6 +335,7 @@ export const onCreateSession = `subscription OnCreateSession {
       purchaseOrderNumber
       manager
       testerFacilitator
+      clientFacilitator
       mainRecruiter
       facility
       screenerApproved
@@ -446,6 +429,7 @@ export const onUpdateSession = `subscription OnUpdateSession {
       purchaseOrderNumber
       manager
       testerFacilitator
+      clientFacilitator
       mainRecruiter
       facility
       screenerApproved
@@ -539,6 +523,7 @@ export const onDeleteSession = `subscription OnDeleteSession {
       purchaseOrderNumber
       manager
       testerFacilitator
+      clientFacilitator
       mainRecruiter
       facility
       screenerApproved
@@ -810,6 +795,7 @@ export const onCreateContactNote = `subscription OnCreateContactNote {
       purchaseOrderNumber
       manager
       testerFacilitator
+      clientFacilitator
       mainRecruiter
       facility
       screenerApproved
@@ -902,6 +888,7 @@ export const onUpdateContactNote = `subscription OnUpdateContactNote {
       purchaseOrderNumber
       manager
       testerFacilitator
+      clientFacilitator
       mainRecruiter
       facility
       screenerApproved
@@ -994,6 +981,7 @@ export const onDeleteContactNote = `subscription OnDeleteContactNote {
       purchaseOrderNumber
       manager
       testerFacilitator
+      clientFacilitator
       mainRecruiter
       facility
       screenerApproved

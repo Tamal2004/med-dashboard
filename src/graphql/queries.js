@@ -1,29 +1,6 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const getTodo = `query GetTodo($id: ID!) {
-  getTodo(id: $id) {
-    id
-    name
-    description
-  }
-}
-`;
-export const listTodos = `query ListTodos(
-  $filter: ModelTodoFilterInput
-  $limit: Int
-  $nextToken: String
-) {
-  listTodos(filter: $filter, limit: $limit, nextToken: $nextToken) {
-    items {
-      id
-      name
-      description
-    }
-    nextToken
-  }
-}
-`;
 export const getClient = `query GetClient($id: ID!) {
   getClient(id: $id) {
     id
@@ -41,6 +18,7 @@ export const getClient = `query GetClient($id: ID!) {
         purchaseOrderNumber
         manager
         testerFacilitator
+        clientFacilitator
         mainRecruiter
         facility
         screenerApproved
@@ -82,8 +60,8 @@ export const listClients = `query ListClients(
   }
 }
 `;
-export const getProject = `query GetProject($id: ID!, $createdAt: AWSDate!) {
-  getProject(id: $id, createdAt: $createdAt) {
+export const getProject = `query GetProject($id: ID!) {
+  getProject(id: $id) {
     id
     createdAt
     reference
@@ -102,6 +80,7 @@ export const getProject = `query GetProject($id: ID!, $createdAt: AWSDate!) {
     purchaseOrderNumber
     manager
     testerFacilitator
+    clientFacilitator
     mainRecruiter
     facility
     screenerApproved
@@ -145,21 +124,11 @@ export const getProject = `query GetProject($id: ID!, $createdAt: AWSDate!) {
 }
 `;
 export const listProjects = `query ListProjects(
-  $id: ID
-  $createdAt: ModelStringKeyConditionInput
   $filter: ModelProjectFilterInput
   $limit: Int
   $nextToken: String
-  $sortDirection: ModelSortDirection
 ) {
-  listProjects(
-    id: $id
-    createdAt: $createdAt
-    filter: $filter
-    limit: $limit
-    nextToken: $nextToken
-    sortDirection: $sortDirection
-  ) {
+  listProjects(filter: $filter, limit: $limit, nextToken: $nextToken) {
     items {
       id
       createdAt
@@ -176,6 +145,7 @@ export const listProjects = `query ListProjects(
       purchaseOrderNumber
       manager
       testerFacilitator
+      clientFacilitator
       mainRecruiter
       facility
       screenerApproved
@@ -205,8 +175,8 @@ export const listProjects = `query ListProjects(
   }
 }
 `;
-export const getSession = `query GetSession($id: ID!, $date: AWSDate!) {
-  getSession(id: $id, date: $date) {
+export const getSession = `query GetSession($id: ID!) {
+  getSession(id: $id) {
     id
     project {
       id
@@ -224,6 +194,7 @@ export const getSession = `query GetSession($id: ID!, $date: AWSDate!) {
       purchaseOrderNumber
       manager
       testerFacilitator
+      clientFacilitator
       mainRecruiter
       facility
       screenerApproved
@@ -299,21 +270,11 @@ export const getSession = `query GetSession($id: ID!, $date: AWSDate!) {
 }
 `;
 export const listSessions = `query ListSessions(
-  $id: ID
-  $date: ModelStringKeyConditionInput
   $filter: ModelSessionFilterInput
   $limit: Int
   $nextToken: String
-  $sortDirection: ModelSortDirection
 ) {
-  listSessions(
-    id: $id
-    date: $date
-    filter: $filter
-    limit: $limit
-    nextToken: $nextToken
-    sortDirection: $sortDirection
-  ) {
+  listSessions(filter: $filter, limit: $limit, nextToken: $nextToken) {
     items {
       id
       project {
@@ -328,6 +289,7 @@ export const listSessions = `query ListSessions(
         purchaseOrderNumber
         manager
         testerFacilitator
+        clientFacilitator
         mainRecruiter
         facility
         screenerApproved
@@ -502,8 +464,8 @@ export const listTesters = `query ListTesters(
   }
 }
 `;
-export const getContactNote = `query GetContactNote($id: ID!, $date: AWSDate!) {
-  getContactNote(id: $id, date: $date) {
+export const getContactNote = `query GetContactNote($id: ID!) {
+  getContactNote(id: $id) {
     id
     type
     project {
@@ -522,6 +484,7 @@ export const getContactNote = `query GetContactNote($id: ID!, $date: AWSDate!) {
       purchaseOrderNumber
       manager
       testerFacilitator
+      clientFacilitator
       mainRecruiter
       facility
       screenerApproved
@@ -595,21 +558,11 @@ export const getContactNote = `query GetContactNote($id: ID!, $date: AWSDate!) {
 }
 `;
 export const listContactNotes = `query ListContactNotes(
-  $id: ID
-  $date: ModelStringKeyConditionInput
   $filter: ModelContactNoteFilterInput
   $limit: Int
   $nextToken: String
-  $sortDirection: ModelSortDirection
 ) {
-  listContactNotes(
-    id: $id
-    date: $date
-    filter: $filter
-    limit: $limit
-    nextToken: $nextToken
-    sortDirection: $sortDirection
-  ) {
+  listContactNotes(filter: $filter, limit: $limit, nextToken: $nextToken) {
     items {
       id
       type
@@ -625,6 +578,7 @@ export const listContactNotes = `query ListContactNotes(
         purchaseOrderNumber
         manager
         testerFacilitator
+        clientFacilitator
         mainRecruiter
         facility
         screenerApproved

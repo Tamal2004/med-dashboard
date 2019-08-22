@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { reduxForm } from 'redux-form';
@@ -10,10 +10,12 @@ import { Paper, Typography, Grid, makeStyles } from '@material-ui/core';
 // Local
 import { validateRequired } from 'libs';
 import { Container, Select, Input, NavigateButton } from 'components';
-//import { createTask } from 'graphql/mutations';
 
 // Selectors
-import { selectProjectStatuses } from 'selectors';
+import { selectProjectStatuses, selectProjectClients } from 'selectors';
+
+// Actions
+import { createProject, fetchProjectClients } from 'actions';
 
 // Styles
 const useStyles = makeStyles(({ palette, spacing }) => ({
@@ -38,19 +40,15 @@ const useStyles = makeStyles(({ palette, spacing }) => ({
     }
 }));
 
-// async function createNewTask() {
-//     const task = {
-//         title: 'First Task',
-//         description: 'Realtime and Offline',
-//         status: 'testing'
-//     };
-//     const res = await API.graphql(
-//         graphqlOperation(createTask, { input: task })
-//     );
-//     console.log(res);
-// }
 
-const ProjectNew = ({ projectStatuses, clients, invalid, pristine, reset }) => {
+
+
+
+
+const ProjectNew = ({ projectStatuses, clients, invalid, pristine, reset, handleSubmit, submitting, fetchProjectClients }) => {
+    useEffect(() => {
+        fetchProjectClients()
+    });
     const c = useStyles();
 
     return (
@@ -66,7 +64,7 @@ const ProjectNew = ({ projectStatuses, clients, invalid, pristine, reset }) => {
                     data={projectStatuses}
                     name='status'
                 />
-                <Select label='Client' data={clients} name='client' required />
+                <Select label='Client' data={clients} name='projectClientId' required />
                 <Input
                     label='Principal Contact'
                     name='principalContact'
@@ -100,8 +98,8 @@ const ProjectNew = ({ projectStatuses, clients, invalid, pristine, reset }) => {
                         className={c.submit}
                         variant='contained'
                         color='primary'
-                        //onClick={createNewTask}
-                        disabled={invalid}
+                        onClick={handleSubmit}
+                        disabled={invalid || submitting}
                     >
                         Submit
                     </NavigateButton>
@@ -113,23 +111,28 @@ const ProjectNew = ({ projectStatuses, clients, invalid, pristine, reset }) => {
 
 const mapState = state => ({
     projectStatuses: selectProjectStatuses(state),
-    //clients: selectNationalities(state),
-    clients: []
+    clients: selectProjectClients(state)
 });
 
-const mapDispatch = {};
+const mapDispatch = { createProject, fetchProjectClients };
 
 const validate = values => {
     const required = [
         'reference',
         'title',
-        'client',
+        'projectClientId',
         'principalContact',
         'manager'
     ];
 
     return { ...validateRequired(values, required) };
 };
+
+const onSubmit = async (values, dispatch, { createProject }) => {
+    const project = { ...values, createdAt: new Date().toLocaleDateString('en-GB').split('/').reverse().join('-')};
+    return createProject(project);
+};
+
 
 const _ProjectNew = compose(
     connect(
@@ -138,7 +141,8 @@ const _ProjectNew = compose(
     ),
     reduxForm({
         form: 'ProjectNew',
-        validate
+        validate,
+        onSubmit
     })
 )(ProjectNew);
 

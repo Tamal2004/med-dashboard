@@ -1,30 +1,6 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const createTodo = `mutation CreateTodo($input: CreateTodoInput!) {
-  createTodo(input: $input) {
-    id
-    name
-    description
-  }
-}
-`;
-export const updateTodo = `mutation UpdateTodo($input: UpdateTodoInput!) {
-  updateTodo(input: $input) {
-    id
-    name
-    description
-  }
-}
-`;
-export const deleteTodo = `mutation DeleteTodo($input: DeleteTodoInput!) {
-  deleteTodo(input: $input) {
-    id
-    name
-    description
-  }
-}
-`;
 export const createClient = `mutation CreateClient($input: CreateClientInput!) {
   createClient(input: $input) {
     id
@@ -42,6 +18,7 @@ export const createClient = `mutation CreateClient($input: CreateClientInput!) {
         purchaseOrderNumber
         manager
         testerFacilitator
+        clientFacilitator
         mainRecruiter
         facility
         screenerApproved
@@ -83,6 +60,7 @@ export const updateClient = `mutation UpdateClient($input: UpdateClientInput!) {
         purchaseOrderNumber
         manager
         testerFacilitator
+        clientFacilitator
         mainRecruiter
         facility
         screenerApproved
@@ -124,6 +102,7 @@ export const deleteClient = `mutation DeleteClient($input: DeleteClientInput!) {
         purchaseOrderNumber
         manager
         testerFacilitator
+        clientFacilitator
         mainRecruiter
         facility
         screenerApproved
@@ -168,6 +147,7 @@ export const createProject = `mutation CreateProject($input: CreateProjectInput!
     purchaseOrderNumber
     manager
     testerFacilitator
+    clientFacilitator
     mainRecruiter
     facility
     screenerApproved
@@ -230,6 +210,7 @@ export const updateProject = `mutation UpdateProject($input: UpdateProjectInput!
     purchaseOrderNumber
     manager
     testerFacilitator
+    clientFacilitator
     mainRecruiter
     facility
     screenerApproved
@@ -292,6 +273,7 @@ export const deleteProject = `mutation DeleteProject($input: DeleteProjectInput!
     purchaseOrderNumber
     manager
     testerFacilitator
+    clientFacilitator
     mainRecruiter
     facility
     screenerApproved
@@ -353,6 +335,7 @@ export const createSession = `mutation CreateSession($input: CreateSessionInput!
       purchaseOrderNumber
       manager
       testerFacilitator
+      clientFacilitator
       mainRecruiter
       facility
       screenerApproved
@@ -446,6 +429,7 @@ export const updateSession = `mutation UpdateSession($input: UpdateSessionInput!
       purchaseOrderNumber
       manager
       testerFacilitator
+      clientFacilitator
       mainRecruiter
       facility
       screenerApproved
@@ -539,6 +523,7 @@ export const deleteSession = `mutation DeleteSession($input: DeleteSessionInput!
       purchaseOrderNumber
       manager
       testerFacilitator
+      clientFacilitator
       mainRecruiter
       facility
       screenerApproved
@@ -810,6 +795,7 @@ export const createContactNote = `mutation CreateContactNote($input: CreateConta
       purchaseOrderNumber
       manager
       testerFacilitator
+      clientFacilitator
       mainRecruiter
       facility
       screenerApproved
@@ -902,6 +888,7 @@ export const updateContactNote = `mutation UpdateContactNote($input: UpdateConta
       purchaseOrderNumber
       manager
       testerFacilitator
+      clientFacilitator
       mainRecruiter
       facility
       screenerApproved
@@ -994,6 +981,7 @@ export const deleteContactNote = `mutation DeleteContactNote($input: DeleteConta
       purchaseOrderNumber
       manager
       testerFacilitator
+      clientFacilitator
       mainRecruiter
       facility
       screenerApproved
