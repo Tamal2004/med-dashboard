@@ -49,6 +49,11 @@ class Table extends Component {
         styles: this.props.styles
     });
 
+    componentDidUpdate({ data: prevData = [] }, s, c) {
+        const { data = [] } = this.props;
+        if (prevData.length !== data.length)
+            this.setState({ data, initialData: data });
+    }
     handleSort = idx => {
         const {
             state: { sortIndex: prevSortIndex, initialData }
@@ -249,6 +254,8 @@ class Table extends Component {
             renderSortIcon,
             renderTable
         } = this;
+
+        console.log('state data', data);
 
         const headers = Object.keys(datum).map(value =>
             value === 'actions' ? ' ' : value

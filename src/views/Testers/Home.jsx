@@ -2,8 +2,8 @@ import React, { Fragment, useEffect } from 'react';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
-import API, { graphqlOperation } from '@aws-amplify/api';
 
+// Components
 import {
     GridContainer,
     GridItem,
@@ -18,6 +18,9 @@ import { selectCounties } from 'selectors';
 import { listBlogs } from 'graphql/queries';
 import { selectTesters } from 'selectors';
 import { TesterTableEdit } from 'views/Modals';
+
+// Actions
+import { fetchTesters } from 'actions';
 
 const useStyles = makeStyles(theme => ({
     gridDistance: {
@@ -46,16 +49,11 @@ const GridWrapper = ({ children }) => {
     );
 };
 
-async function getBlogs() {
-    const blogData = await API.graphql(graphqlOperation(listBlogs));
-    console.log('blogData', blogData);
-}
-
-const TesterHome = ({ testers, handleEditModal }) => {
+const TesterHome = ({ testers, handleEditModal, fetchTesters }) => {
     const c = useStyles();
     useEffect(() => {
-        getBlogs();
-    });
+        fetchTesters();
+    }, []);
 
     return (
         <Fragment>
@@ -95,10 +93,14 @@ const mapModal = {
     handleEditModal: TesterTableEdit
 };
 
+const mapDispatch = {
+    fetchTesters
+};
+
 const _TesterHome = compose(
     connect(
         mapState,
-        null
+        mapDispatch
     ),
     withModal(mapModal)
 )(TesterHome);

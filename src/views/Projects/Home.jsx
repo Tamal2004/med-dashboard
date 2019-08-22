@@ -1,94 +1,103 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 
 import {
-	GridContainer,
-	GridItem,
-	Link,
-	NavigateButton,
-	Table,
-	SearchInput
+    GridContainer,
+    GridItem,
+    Link,
+    NavigateButton,
+    Table,
+    SearchInput
 } from 'components';
 
+// Selectors
 import { selectCounties } from 'selectors';
 
+// Actions
+import { fetchProjects } from 'actions';
+
 const useStyles = makeStyles(theme => ({
-	buttonGridStyle: {
-		display: 'flex',
-		justifyContent: 'flex-end',
-		alignContent: 'flex-end'
-	}
+    buttonGridStyle: {
+        display: 'flex',
+        justifyContent: 'flex-end',
+        alignContent: 'flex-end'
+    }
 }));
 
 const MondayProjects = ({ data, weekday }) => {
-	return (
-		<Fragment>
-			<div>Table for Monday projects</div>
-			<Table data={data} page={1} />
-		</Fragment>
-	);
+    return (
+        <Fragment>
+            <div>Table for Monday projects</div>
+            <Table data={data} page={1} />
+        </Fragment>
+    );
 };
 
-const ProjectHome = ({ location, projects }) => {
-	const c = useStyles();
-	const params = new URLSearchParams(location.search);
-	const queryParam = params.get('weekday');
+const ProjectHome = ({ location, projects, fetchProjects }) => {
+    const c = useStyles();
+    useEffect(() => {
+        fetchProjects();
+    });
+    const params = new URLSearchParams(location.search);
+    const queryParam = params.get('weekday');
 
-	return (
-		<GridContainer alignItems='center'>
-			<GridItem md={4}></GridItem>
-			<GridItem md={4}>
-				<SearchInput placeholder='Search by name or project reference' />
-			</GridItem>
-			<GridItem md={4} className={c.buttonGridStyle}>
-				<Link to={{ pathname: '/project', search: '?weekday=monday' }}>
-					<NavigateButton variant='outlined'>
-						List projects for Monday morning
-					</NavigateButton>
-				</Link>
-			</GridItem>
-			<GridItem md={12}>
-				{queryParam ? (
-					<MondayProjects data={projects} weekday={queryParam} />
-				) : (
-					<Table data={projects} page={1} />
-				)}
-			</GridItem>
-		</GridContainer>
-	);
+    return (
+        <GridContainer alignItems='center'>
+            <GridItem md={4}></GridItem>
+            <GridItem md={4}>
+                <SearchInput placeholder='Search by name or project reference' />
+            </GridItem>
+            <GridItem md={4} className={c.buttonGridStyle}>
+                <Link to={{ pathname: '/project', search: '?weekday=monday' }}>
+                    <NavigateButton variant='outlined'>
+                        List projects for Monday morning
+                    </NavigateButton>
+                </Link>
+            </GridItem>
+            <GridItem md={12}>
+                {queryParam ? (
+                    <MondayProjects data={projects} weekday={queryParam} />
+                ) : (
+                    <Table data={projects} page={1} />
+                )}
+            </GridItem>
+        </GridContainer>
+    );
 };
 const generateProjects = (
-	client,
-	project,
-	date = '07/04/2018',
-	contactDate = '02/06/2019'
+    client,
+    project,
+    date = '07/04/2018',
+    contactDate = '02/06/2019'
 ) => ({
-	Client: {
-		Component: <Link to={`/client/${client}`}>{client}</Link>,
-		value: client
-	},
-	'Latest Project': {
-		Component: <Link to={`/project/${project}`}>{project}</Link>,
-		value: project
-	},
-	'Latest Project Date': date,
-	'Last Contact Date': contactDate
+    'Project Reference': {
+        Component: <Link to={`/project/${project}`}>{project}</Link>,
+        value: project
+    },
+    Client: {
+        Component: <Link to={`/client/${client}`}>{client}</Link>,
+        value: client
+    },
+    'Project Name': 'Aldi',
+    'Testing Date': contactDate
 });
 
 const mapState = state => ({
-	projects: Array.range(0, 3)
-		.map(() => [
-			generateProjects('Aldi', 'EM21'),
-			generateProjects('Wessex Water', 'GM33', '03/09/2018'),
-			generateProjects('Disney', 'JE24', '03/09/2018', '08/12/2018')
-		])
-		.flatMap(x => x)
+    projects: Array.range(0, 3)
+        .map(() => [
+            generateProjects('Aldi', 'EM21'),
+            generateProjects('Wessex Water', 'GM33', '03/09/2018'),
+            generateProjects('Disney', 'JE24', '03/09/2018', '08/12/2018')
+        ])
+        .flatMap(x => x)
 });
 
+const mapDispatch = { fetchProjects };
+
 const _ProjectHome = connect(
-	mapState,
-	null
+    mapState,
+    mapDispatch
 )(ProjectHome);
 
 export { _ProjectHome as default, _ProjectHome as ProjectHome };

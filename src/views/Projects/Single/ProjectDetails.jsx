@@ -81,6 +81,7 @@ const ProjectDetails = ({ projectStatuses, clients, invalid }) => {
                 name='manager'
                 isCard
                 active={isEditing}
+                required={isEditing}
             />
             <Input
                 label='Tester Facilitator'
@@ -122,7 +123,7 @@ const mapState = state => {
 const mapDispatch = {};
 
 const validate = values => {
-    const required = ['title', 'reference', 'client', 'principalContact'];
+    const required = ['title', 'reference', 'client', 'principalContact', 'manager'];
     return validateRequired(values, required);
 };
 

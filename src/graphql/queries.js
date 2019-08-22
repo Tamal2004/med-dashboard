@@ -1,30 +1,58 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const getBlog = `query GetBlog($id: ID!) {
-  getBlog(id: $id) {
+export const getClient = `query GetClient($id: ID!) {
+  getClient(id: $id) {
     id
     name
-    posts {
+    projects {
       items {
         id
+        createdAt
+        reference
         title
+        status
+        principalContact
+        otherContact
+        cost
+        purchaseOrderNumber
+        manager
+        testerFacilitator
+        clientFacilitator
+        mainRecruiter
+        facility
+        screenerApproved
+        facilitationGuideSent
+        testerProfilesSent
+        facilitationGuideApproved
+        testerProfilesApproved
+        sessionDetailsSent
+        attendees
+        reportSent
+        feedbackEntered
+        videosUploaded
+        invoiced
+        feedbackObtained
+        satisfactionScore
+        clientComments
+        wuComments
+        profiles
       }
       nextToken
     }
   }
 }
 `;
-export const listBlogs = `query ListBlogs(
-  $filter: ModelBlogFilterInput
+export const listClients = `query ListClients(
+  $filter: ModelClientFilterInput
   $limit: Int
   $nextToken: String
 ) {
-  listBlogs(filter: $filter, limit: $limit, nextToken: $nextToken) {
+  listClients(filter: $filter, limit: $limit, nextToken: $nextToken) {
     items {
       id
       name
-      posts {
+      projects {
         nextToken
       }
     }
@@ -32,41 +60,114 @@ export const listBlogs = `query ListBlogs(
   }
 }
 `;
-export const getPost = `query GetPost($id: ID!) {
-  getPost(id: $id) {
+export const getProject = `query GetProject($id: ID!) {
+  getProject(id: $id) {
     id
+    createdAt
+    reference
     title
-    blog {
+    status
+    client {
       id
       name
-      posts {
+      projects {
         nextToken
       }
     }
-    comments {
+    principalContact
+    otherContact
+    cost
+    purchaseOrderNumber
+    manager
+    testerFacilitator
+    clientFacilitator
+    mainRecruiter
+    facility
+    screenerApproved
+    facilitationGuideSent
+    testerProfilesSent
+    facilitationGuideApproved
+    testerProfilesApproved
+    sessionDetailsSent
+    attendees
+    reportSent
+    feedbackEntered
+    videosUploaded
+    invoiced
+    feedbackObtained
+    satisfactionScore
+    clientComments
+    wuComments
+    profiles
+    sessions {
       items {
         id
-        content
+        profile
+        location
+        date
+        time
+        notes
+      }
+      nextToken
+    }
+    contactNotes {
+      items {
+        id
+        type
+        date
+        contactedBy
+        note
       }
       nextToken
     }
   }
 }
 `;
-export const listPosts = `query ListPosts(
-  $filter: ModelPostFilterInput
+export const listProjects = `query ListProjects(
+  $filter: ModelProjectFilterInput
   $limit: Int
   $nextToken: String
 ) {
-  listPosts(filter: $filter, limit: $limit, nextToken: $nextToken) {
+  listProjects(filter: $filter, limit: $limit, nextToken: $nextToken) {
     items {
       id
+      createdAt
+      reference
       title
-      blog {
+      status
+      client {
         id
         name
       }
-      comments {
+      principalContact
+      otherContact
+      cost
+      purchaseOrderNumber
+      manager
+      testerFacilitator
+      clientFacilitator
+      mainRecruiter
+      facility
+      screenerApproved
+      facilitationGuideSent
+      testerProfilesSent
+      facilitationGuideApproved
+      testerProfilesApproved
+      sessionDetailsSent
+      attendees
+      reportSent
+      feedbackEntered
+      videosUploaded
+      invoiced
+      feedbackObtained
+      satisfactionScore
+      clientComments
+      wuComments
+      profiles
+      sessions {
+        nextToken
+      }
+      contactNotes {
         nextToken
       }
     }
@@ -74,37 +175,180 @@ export const listPosts = `query ListPosts(
   }
 }
 `;
-export const getComment = `query GetComment($id: ID!) {
-  getComment(id: $id) {
+export const getSession = `query GetSession($id: ID!) {
+  getSession(id: $id) {
     id
-    content
-    post {
+    project {
       id
+      createdAt
+      reference
       title
-      blog {
+      status
+      client {
         id
         name
       }
-      comments {
+      principalContact
+      otherContact
+      cost
+      purchaseOrderNumber
+      manager
+      testerFacilitator
+      clientFacilitator
+      mainRecruiter
+      facility
+      screenerApproved
+      facilitationGuideSent
+      testerProfilesSent
+      facilitationGuideApproved
+      testerProfilesApproved
+      sessionDetailsSent
+      attendees
+      reportSent
+      feedbackEntered
+      videosUploaded
+      invoiced
+      feedbackObtained
+      satisfactionScore
+      clientComments
+      wuComments
+      profiles
+      sessions {
+        nextToken
+      }
+      contactNotes {
         nextToken
       }
     }
+    tester {
+      id
+      title
+      firstName
+      surname
+      email
+      phone
+      address
+      house
+      street
+      town
+      county
+      postcode
+      country
+      gender
+      dob
+      maritalStatus
+      hasChildren
+      nationality
+      ethnicity
+      firstLanguage
+      otherLanguages
+      disability
+      about
+      employmentStatus
+      jobTitle
+      businessName
+      employmentSector
+      employeeCount
+      subject
+      educationStage
+      institution
+      clientNotes
+      facilitatorComments
+      contactNotes {
+        nextToken
+      }
+      sessions {
+        nextToken
+      }
+    }
+    profile
+    location
+    date
+    time
+    notes
   }
 }
 `;
-export const listComments = `query ListComments(
-  $filter: ModelCommentFilterInput
+export const listSessions = `query ListSessions(
+  $filter: ModelSessionFilterInput
   $limit: Int
   $nextToken: String
 ) {
-  listComments(filter: $filter, limit: $limit, nextToken: $nextToken) {
+  listSessions(filter: $filter, limit: $limit, nextToken: $nextToken) {
     items {
       id
-      content
-      post {
+      project {
+        id
+        createdAt
+        reference
+        title
+        status
+        principalContact
+        otherContact
+        cost
+        purchaseOrderNumber
+        manager
+        testerFacilitator
+        clientFacilitator
+        mainRecruiter
+        facility
+        screenerApproved
+        facilitationGuideSent
+        testerProfilesSent
+        facilitationGuideApproved
+        testerProfilesApproved
+        sessionDetailsSent
+        attendees
+        reportSent
+        feedbackEntered
+        videosUploaded
+        invoiced
+        feedbackObtained
+        satisfactionScore
+        clientComments
+        wuComments
+        profiles
+      }
+      tester {
         id
         title
+        firstName
+        surname
+        email
+        phone
+        address
+        house
+        street
+        town
+        county
+        postcode
+        country
+        gender
+        dob
+        maritalStatus
+        hasChildren
+        nationality
+        ethnicity
+        firstLanguage
+        otherLanguages
+        disability
+        about
+        employmentStatus
+        jobTitle
+        businessName
+        employmentSector
+        employeeCount
+        subject
+        educationStage
+        institution
+        clientNotes
+        facilitatorComments
       }
+      profile
+      location
+      date
+      time
+      notes
     }
     nextToken
   }
@@ -145,6 +389,27 @@ export const getTester = `query GetTester($id: ID!) {
     institution
     clientNotes
     facilitatorComments
+    contactNotes {
+      items {
+        id
+        type
+        date
+        contactedBy
+        note
+      }
+      nextToken
+    }
+    sessions {
+      items {
+        id
+        profile
+        location
+        date
+        time
+        notes
+      }
+      nextToken
+    }
   }
 }
 `;
@@ -188,6 +453,189 @@ export const listTesters = `query ListTesters(
       institution
       clientNotes
       facilitatorComments
+      contactNotes {
+        nextToken
+      }
+      sessions {
+        nextToken
+      }
+    }
+    nextToken
+  }
+}
+`;
+export const getContactNote = `query GetContactNote($id: ID!) {
+  getContactNote(id: $id) {
+    id
+    type
+    project {
+      id
+      createdAt
+      reference
+      title
+      status
+      client {
+        id
+        name
+      }
+      principalContact
+      otherContact
+      cost
+      purchaseOrderNumber
+      manager
+      testerFacilitator
+      clientFacilitator
+      mainRecruiter
+      facility
+      screenerApproved
+      facilitationGuideSent
+      testerProfilesSent
+      facilitationGuideApproved
+      testerProfilesApproved
+      sessionDetailsSent
+      attendees
+      reportSent
+      feedbackEntered
+      videosUploaded
+      invoiced
+      feedbackObtained
+      satisfactionScore
+      clientComments
+      wuComments
+      profiles
+      sessions {
+        nextToken
+      }
+      contactNotes {
+        nextToken
+      }
+    }
+    date
+    contactedBy
+    note
+    tester {
+      id
+      title
+      firstName
+      surname
+      email
+      phone
+      address
+      house
+      street
+      town
+      county
+      postcode
+      country
+      gender
+      dob
+      maritalStatus
+      hasChildren
+      nationality
+      ethnicity
+      firstLanguage
+      otherLanguages
+      disability
+      about
+      employmentStatus
+      jobTitle
+      businessName
+      employmentSector
+      employeeCount
+      subject
+      educationStage
+      institution
+      clientNotes
+      facilitatorComments
+      contactNotes {
+        nextToken
+      }
+      sessions {
+        nextToken
+      }
+    }
+  }
+}
+`;
+export const listContactNotes = `query ListContactNotes(
+  $filter: ModelContactNoteFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listContactNotes(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      type
+      project {
+        id
+        createdAt
+        reference
+        title
+        status
+        principalContact
+        otherContact
+        cost
+        purchaseOrderNumber
+        manager
+        testerFacilitator
+        clientFacilitator
+        mainRecruiter
+        facility
+        screenerApproved
+        facilitationGuideSent
+        testerProfilesSent
+        facilitationGuideApproved
+        testerProfilesApproved
+        sessionDetailsSent
+        attendees
+        reportSent
+        feedbackEntered
+        videosUploaded
+        invoiced
+        feedbackObtained
+        satisfactionScore
+        clientComments
+        wuComments
+        profiles
+      }
+      date
+      contactedBy
+      note
+      tester {
+        id
+        title
+        firstName
+        surname
+        email
+        phone
+        address
+        house
+        street
+        town
+        county
+        postcode
+        country
+        gender
+        dob
+        maritalStatus
+        hasChildren
+        nationality
+        ethnicity
+        firstLanguage
+        otherLanguages
+        disability
+        about
+        employmentStatus
+        jobTitle
+        businessName
+        employmentSector
+        employeeCount
+        subject
+        educationStage
+        institution
+        clientNotes
+        facilitatorComments
+      }
     }
     nextToken
   }

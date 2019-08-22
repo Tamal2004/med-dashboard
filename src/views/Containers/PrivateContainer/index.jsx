@@ -1,6 +1,4 @@
 import React, { Fragment } from 'react';
-import API, { graphqlOperation } from '@aws-amplify/api';
-import { listBlogs } from 'graphql/queries';
 import clsx from 'clsx';
 import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
@@ -19,10 +17,6 @@ import { Logo } from 'assets';
 import { history } from 'libs/history';
 
 const useStyles = styles;
-
-const callMe = async () => {
-    await API.graphql(graphqlOperation(listBlogs));
-};
 
 export default function Dashboard(props) {
     const c = useStyles();

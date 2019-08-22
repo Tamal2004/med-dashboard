@@ -31,7 +31,7 @@ const generateProjects = (
 	},
 	'Observed Date': date,
 	'Project Status': date,
-	'Principal Contact': date,
+	'Principal Contact': 'Nabil Ahmad',
 	'Last Contact Date': contactDate
 });
 

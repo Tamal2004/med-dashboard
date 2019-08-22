@@ -1,18 +1,55 @@
-type Blog @model {
+
+type Client @model {
   id: ID!
   name: String!
-  posts: [Post] @connection(name: "BlogPosts")
+  projects: [Project] @connection(name: "ClientProjects")
 }
-type Post @model {
+
+type Project @model {
   id: ID!
+  createdAt: AWSDate!
+  reference: String!
   title: String!
-  blog: Blog @connection(name: "BlogPosts")
-  comments: [Comment] @connection(name: "PostComments")
+  status: String
+  client: Client! @connection(name: "ClientProjects")
+  principalContact: String!
+  otherContact: String
+  cost: String
+  purchaseOrderNumber: String
+  manager: String!
+  testerFacilitator: String
+  clientFacilitator: String
+  mainRecruiter: String
+  facility: String
+  screenerApproved: AWSDate
+  facilitationGuideSent: AWSDate
+  testerProfilesSent: AWSDate
+  facilitationGuideApproved: AWSDate
+  testerProfilesApproved: AWSDate
+  sessionDetailsSent: AWSDate
+  attendees: String
+  reportSent: AWSDate
+  feedbackEntered: AWSDate
+  videosUploaded: AWSDate
+  invoiced: AWSDate
+  feedbackObtained: AWSDate
+  satisfactionScore: Float
+  clientComments: String
+  wuComments: String
+  profiles: [String]
+  sessions: [Session] @connection(name: "ProjectSessions")
+  contactNotes: [ContactNote] @connection(name: "ProjectContactNotes")
 }
-type Comment @model {
+
+type Session @model {
   id: ID!
-  content: String
-  post: Post @connection(name: "PostComments")
+  project: Project! @connection(name: "ProjectSessions")
+  tester: Tester! @connection(name: "TesterSessions")
+  profile: String!
+  location: String!
+  date: AWSDate!
+  time: AWSTime!
+  notes: String
 }
 
 type Tester @model {
@@ -20,7 +57,7 @@ type Tester @model {
   title: String!
   firstName: String!
   surname: String!
-  email: String!
+  email: AWSEmail!
   phone: String!
   address: String
   house: String
@@ -30,7 +67,7 @@ type Tester @model {
   postcode: String
   country: String
   gender: String!
-  dob: String!
+  dob: AWSDate!
   maritalStatus: String!
   hasChildren: Boolean
   nationality: String!
@@ -49,4 +86,16 @@ type Tester @model {
   institution: String
   clientNotes: String
   facilitatorComments: String
+  contactNotes: [ContactNote] @connection(name: "TesterContactNotes")
+  sessions: [Session] @connection(name: "TesterSessions")
+}
+
+type ContactNote @model {
+  id: ID!
+  type: String!
+  project: Project @connection(name: "ProjectContactNotes")
+  date: AWSDate!
+  contactedBy: String!
+  note: String!
+  tester: Tester @connection(name: "TesterContactNotes")
 }

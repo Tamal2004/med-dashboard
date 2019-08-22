@@ -3,9 +3,10 @@ import createCachedSelector from 're-reselect';
 // Local
 import { mapArray } from 'libs';
 import { selectDatasets } from './common';
-
 import React from 'react';
 import { Link } from 'components';
+
+const selectTesters1 = state => state.testers;
 
 // Contact Types
 export const selectContactTypes = createCachedSelector(
@@ -102,21 +103,36 @@ const generateProjects = (
     actions: {}
 });
 
+// Tester Home
 export const selectTesters = createCachedSelector(
-    selectDatasets,
-    ({ titles }) =>
-        Array.range(0, 3)
-            .map(() => [
-                generateProjects('Jill Test', 5234, 'GM33', '03/09/2018'),
-                generateProjects(
-                    'Adolf Test',
-                    4001,
-                    '03/09/2018',
-                    '08/12/2018'
-                ),
-                generateProjects('ADER Test', 4001, '03/09/2018', '08/12/2018')
-            ])
-            .flatMap(x => x)
+    state => state.testers,
+    ({ home = [] }) =>
+        home.map(
+            ({
+                testerName,
+                testerNumber,
+                lastContactDate,
+                lastProject = '',
+                lastTestingDate
+            }) => ({
+                'Tester Name': {
+                    Component: (
+                        <Link to={`/tester/${testerNumber}`}>{testerName}</Link>
+                    ),
+                    value: testerName
+                },
+                'Last Project': {
+                    Component: (
+                        <Link to={`/project/${lastProject}`}>
+                            {lastProject}
+                        </Link>
+                    ),
+                    value: lastProject
+                },
+                'Last Testing Date': lastTestingDate,
+                'Last Contact Date': lastContactDate
+            })
+        )
 )(() => 'placeholder');
 
 export const selectTester = createCachedSelector(

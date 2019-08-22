@@ -1,17 +1,22 @@
-import React, { Fragment } from 'react';
-import classNames from 'clsx';
+import React, { Fragment, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { reduxForm, formValueSelector } from 'redux-form';
 
 // Material
 import { Paper, Typography, Grid } from '@material-ui/core';
-import Link from '@material-ui/core/Link';
 
 // Local
 import useStyles from './styles';
-import { validateRequired } from 'libs';
+import onSubmit from './onSubmit';
+import validate from './validate';
+
+// Libs
+import { validateEmail, validateDate, validateNumber } from 'libs';
+
+// Components
 import {
+    SelectBase,
     Container,
     Select,
     Input,
@@ -35,15 +40,8 @@ import {
     selectTitles
 } from 'selectors';
 
-const InfoWrapper = ({ children }) => {
-    const c = useStyles();
-
-    return (
-        <Typography className={c.info} variant='subtitle1' gutterBottom>
-            {children}
-        </Typography>
-    );
-};
+// Actions
+import { createTester } from '../../../actions';
 
 const TesterApplication = ({
     counties,
@@ -61,39 +59,49 @@ const TesterApplication = ({
     isRetired,
     hasManualAddress,
     invalid,
-    noauth
+    handleSubmit,
+    submitting
 }) => {
     const c = useStyles();
-
+    useEffect(() => {
+     console.log('loaded');
+    })
     return (
-        <Paper className={classNames(c.root, noauth && c.noauthRoot)}>
-            <Typography className={c.header} variant='h4' gutterBottom>
+        <Paper className={c.root}>
+            <Typography className={c.header} variant='h2' gutterBottom>
                 Tester Application Form
             </Typography>
-            <InfoWrapper>
+            <Typography className={c.info} variant='h5' gutterBottom>
                 Thank you for your interest in becoming a website tester. So we
                 can match you with the most suitable testing opportunities
                 please fill out the form below with as much information as
                 possible.
-            </InfoWrapper>
-            <InfoWrapper>
-                If you have any queries, please contact Avril on&nbsp;
-                <Link href='mailto:avril@webusability.co.uk'>
-                    avril@webusability.co.uk
-                </Link>
-            </InfoWrapper>
-            <InfoWrapper>
+            </Typography>
+            <Typography className={c.info} variant='h5' gutterBottom>
+                If you have any queries, please contact Avril on
+                avril@webusability.co.uk.
+            </Typography>
+            <Typography className={c.info} variant='h5' gutterBottom>
                 Our database is maintained solely for our use in recruiting
-                testers. The information is not passed onto to any other
+                testers. The information is not passed on to  any other
                 organisation.
-            </InfoWrapper>
-
+            </Typography>
             <Container title='Contact Details'>
                 <Select label='Title' data={titles} name='title' required />
                 <Input label='First Name' name='firstName' required />
                 <Input label='Surname' name='surname' required />
-                <Input label='Email Address' name='email' required />
-                <Input label='Phone Number' name='phone' required />
+                <Input
+                    label='Email Address'
+                    name='email'
+                    validate={validateEmail}
+                    required
+                />
+                <Input
+                    label='Phone Number'
+                    name='phone'
+                    required
+                    validate={validateNumber}
+                />
                 {!hasManualAddress && (
                     <Input
                         label='Enter address or postcode'
@@ -109,7 +117,7 @@ const TesterApplication = ({
                         <Input label='Town' name='town' />
                         <Input label='County' name='county' />
                         <Input label='Postcode' name='postcode' />
-                        <Input label='Country' name='country' />
+                        <Input label='Country' name='country' required />
                     </Fragment>
                 )}
             </Container>
@@ -118,9 +126,10 @@ const TesterApplication = ({
                 <Select label='Gender' data={genders} name='gender' required />
                 <Input
                     label='Date of Birth'
-                    placeholder='01/01/1985'
+                    placeholder='31/12/1999'
                     name='dob'
                     required
+                    validate={validateDate}
                 />
                 <Select
                     label='Marital Status'
@@ -230,10 +239,7 @@ const TesterApplication = ({
                         <Grid item xs={10}>
                             <Typography>
                                 I confirm that I have read and accepted the
-                                Testers{' '}
-                                <Link href='#' target='_blank' rel='noreferrer'>
-                                    Terms & Conditions
-                                </Link>
+                                Testers Terms & Conditions
                             </Typography>
                         </Grid>
                     </Grid>
@@ -243,8 +249,8 @@ const TesterApplication = ({
                         className={c.submit}
                         variant='contained'
                         color='primary'
-                        onClick={() => console.log('submitted')}
-                        disabled={invalid}
+                        onClick={handleSubmit}
+                        disabled={invalid || submitting}
                     >
                         Submit
                     </NavigateButton>
@@ -268,45 +274,51 @@ const mapState = state => {
         genders: selectGenders(state),
         maritalStatuses: selectMaritalStatuses(state),
         titles: selectTitles(state),
-        isStudent: employmentStatus === 5,
+        isStudent: employmentStatus === 'Student',
         isEmployed:
-            employmentStatus === 2 ||
-            employmentStatus === 3 ||
-            employmentStatus === 4,
-        isRetired: employmentStatus === 4,
-        hasManualAddress: formSelector(state, 'manualAddress')
+            employmentStatus === 'Part-time employment' ||
+            employmentStatus === 'Full-time employment' ||
+            employmentStatus === 'Retired',
+        isRetired: employmentStatus === 'Retired',
+        hasManualAddress: formSelector(state, 'manualAddress'),
+        initialValues: {
+            manualAddress: true,
+            title: 'Mr',
+            firstName: 'Matt',
+            surname: 'Tamal',
+            email: 'matt@echotechsys.com',
+            phone: '01306568988',
+            address: 'Avenue Adolphe Buyl 12 1050 Ixelles',
+            house: '12',
+            street: 'Avenue Adolphe',
+            town: 'Brussels',
+            county: 'Yorkshire',
+            postcode: '1050',
+            country: 'Belgium',
+            gender: 'Male',
+            dob: '01/01/1999',
+            maritalStatus: 'Single',
+            hasChildren: true,
+            nationality: 'United Kingdom',
+            ethnicity: 'Arab',
+            firstLanguage: 'English',
+            otherLanguages: 'Bengali',
+            disability: 'None',
+            about: 'Software developer',
+            employmentStatus: 'Full-time employment',
+            jobTitle: 'Software Engineer',
+            businessName: 'Matt Tamal',
+            employmentSector: 'Computers & ICT',
+            employeeCount: '1 - 9',
+            subject: 'Medicine',
+            educationStage: 'University',
+            institution: 'Cambridge University',
+            termsChecked: true
+        }
     };
 };
 
-const mapDispatch = {};
-
-const validate = (values, { isStudent, isEmployed, hasManualAddress }) => {
-    const required = [
-        'title',
-        'firstName',
-        'surname',
-        'email',
-        'phone',
-        'gender',
-        'age',
-        'dob',
-        'maritalStatus',
-        'nationality',
-        'ethnicity',
-        'about',
-        'employmentStatus'
-    ];
-
-    if (isStudent) {
-        required.push('subject');
-        required.push('educationStage');
-        required.push('institution');
-    }
-    if (isEmployed) required.push('employeeCount');
-    if (!hasManualAddress) required.push('address');
-
-    return { ...validateRequired(values, required) };
-};
+const mapDispatch = { createTester };
 
 const _TesterApplication = compose(
     connect(
@@ -315,11 +327,9 @@ const _TesterApplication = compose(
     ),
     reduxForm({
         form: 'TesterApplication',
-        validate
+        validate,
+        onSubmit
     })
 )(TesterApplication);
 
-export {
-    _TesterApplication as default,
-    _TesterApplication as TesterApplication
-};
+export { _TesterApplication as default, _TesterApplication as TesterApplication };
