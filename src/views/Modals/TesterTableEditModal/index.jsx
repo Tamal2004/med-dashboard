@@ -8,7 +8,6 @@ import { Divider } from '@material-ui/core';
 
 // Local
 import useStyles from './styles';
-import { validateRequired } from 'libs';
 import {
 	ModalHeader,
 	ModalFooter,
@@ -19,31 +18,15 @@ import {
 
 import { selectTester } from 'selectors';
 
-const map = () => console.log('map');
-
-const TesterTableEdit = ({ tester, onClose, initialValues }) => {
+const TesterTableEdit = ({ formData, onClose }) => {
 	const c = useStyles();
-
-	const name = value => value.split(' ').join('');
 	const rows = [];
 
-	console.log('tester', tester);
-	// initialValues(mappedObj);
-
-	Object.keys(tester).forEach((key, index) =>
+	formData.map((segment, index) =>
 		rows.push(
-			<Input
-				key={index}
-				label={key}
-				name={name(key)}
-				value={tester[key]}
-			/>
+			<Input key={index} label={segment.label} name={segment.key} />
 		)
 	);
-
-	useEffect(() => {
-		map();
-	});
 
 	return (
 		<Fragment>
@@ -62,7 +45,7 @@ const TesterTableEdit = ({ tester, onClose, initialValues }) => {
 					Cancel
 				</Button>
 				<Button variant='contained' color='primary' size='large'>
-					Add Session
+					Update
 				</Button>
 			</ModalFooter>
 		</Fragment>
@@ -74,13 +57,20 @@ TesterTableEdit.defaultProps = {};
 TesterTableEdit.propTypes = {};
 
 const mapState = (state, { editiIndex }) => {
-	const tester = selectTester(state, editiIndex);
+	//initial method and variables
 	const name = value => value.split(' ').join('');
 	const mappedObj = {};
-	Object.keys(tester).forEach(key => (mappedObj[name(key)] = tester[key]));
+	const formData = [];
+
+	//selector and mapping
+	const tester = selectTester(state, editiIndex);
+	Object.keys(tester).forEach(key => {
+		mappedObj[name(key)] = tester[key];
+		formData.push({ key: name(key), label: key });
+	});
 
 	return {
-		tester,
+		formData,
 		initialValues: mappedObj
 	};
 };
