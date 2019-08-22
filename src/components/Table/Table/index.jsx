@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from 'react';
+import { reduxForm, formValueSelector } from 'redux-form';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 
@@ -18,31 +19,23 @@ import DropdownIcon from '@material-ui/icons/KeyboardArrowDown';
 import styles from './styles';
 import { composeClasses } from 'libs';
 import { Tooltip } from '../../Tooltips';
+import { Input } from '../../FormComponents';
 
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import CheckFillIcon from '@material-ui/icons/CheckBox';
 import CheckEmptyIcon from '@material-ui/icons/CheckBoxOutlineBlankSharp';
 
-// '': {
+// 'actions': {
 //         checkAction: () => console.log('Check Meh'),
-//         editAction: () => console.log('Edit Meh'),
 //         deleteAction: () => console.log('Delete Meh')
 //     }
 
-const capitalize = value => (value ? value.toUpperCase() : value);
-
-const isActionColumn = value => {
-    let actionHandlers = ['checkAction', 'editAction', 'deleteAction'];
-    let isExists = elem => value.hasOwnProperty(elem);
-    return actionHandlers.some(isExists); // if one exists
-};
+const isActionColumn = value => value && value === 'actions';
 
 const ref = React.createRef();
 
 class Table extends Component {
-    HAS_ACTIONS = Object.keys(this.props.data[0]).includes('actions');
-
     state = {
         sortIndex: null,
         initialData: this.props.data,
@@ -97,6 +90,8 @@ class Table extends Component {
     };
 
     isChecked = id => this.state.checked.includes(id);
+
+    setEditIndex = index => this.setState({ rowEditIndex: index });
 
     checkIndex = id => {
         const { checked } = this.state;
@@ -161,11 +156,16 @@ class Table extends Component {
                 if (isExists('Component')) {
                     return value.Component;
                 } else {
+                    const editModal = this.props.handleEditModal;
                     const actions = [];
                     if (isExists('checkAction'))
                         actions.push(this.CheckAction(value.checkAction, idx));
-                    if (isExists('editAction'))
-                        actions.push(this.EditAction(value.editAction));
+                    if (editModal && editModal !== void 0)
+                        actions.push(
+                            this.EditAction(() =>
+                                editModal({ editiIndex: idx })
+                            )
+                        );
                     if (isExists('deleteAction'))
                         actions.push(this.DeleteAction(value.deleteAction));
 
@@ -194,7 +194,7 @@ class Table extends Component {
         Object.entries(row).map(([category, value]) => (
             <TableCell
                 className={this.c.cell}
-                align={isActionColumn(value) ? 'right' : 'inherit'}
+                align={isActionColumn(category) ? 'right' : 'inherit'}
                 key={category}
             >
                 {this.renderCell(value, index)}
@@ -242,10 +242,9 @@ class Table extends Component {
 
     render() {
         const {
-            props: { data: [datum = {}] = [], action, itemsPerPage },
+            props: { data: [datum = {}] = [], itemsPerPage, handleEditModal },
             state: { data },
             c,
-            HAS_ACTIONS,
             handleSort,
             renderSortIcon,
             renderTable
@@ -259,7 +258,11 @@ class Table extends Component {
             Math.floor(data.length / itemsPerPage) +
                 !!(data.length % itemsPerPage) || 1;
 
-        const actionDecrement = HAS_ACTIONS ? 1 : 0;
+        const actionDecrement =
+            isActionColumn || (handleEditModal && handleEditModal !== void 0)
+                ? 1
+                : 0;
+
         return (
             <Fragment>
                 <MuiTable className={c.root}>
@@ -280,10 +283,7 @@ class Table extends Component {
                                             minWidth: headerWidth
                                         }}
                                         key={index}
-                                        onClick={() =>
-                                            index < len - actionDecrement &&
-                                            handleSort(index)
-                                        }
+                                        onClick={() => handleEditModal()}
                                     >
                                         {header}
                                         {index < len - actionDecrement &&

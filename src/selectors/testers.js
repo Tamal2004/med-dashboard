@@ -4,6 +4,9 @@ import createCachedSelector from 're-reselect';
 import { mapArray } from 'libs';
 import { selectDatasets } from './common';
 
+import React from 'react';
+import { Link } from 'components';
+
 // Contact Types
 export const selectContactTypes = createCachedSelector(
     selectDatasets,
@@ -73,4 +76,64 @@ export const selectNationalities = createCachedSelector(
 // Titles
 export const selectTitles = createCachedSelector(selectDatasets, ({ titles }) =>
     mapArray(titles)
+)(() => 'placeholder');
+
+// todo: TEMP
+
+const generateProjects = (
+    tester,
+    number,
+    project,
+    date = '07/04/2018',
+    contactDate = '02/06/2019'
+) => ({
+    'Tester Name': {
+        Component: <Link to={`/tester/${tester}`}>{tester}</Link>,
+        value: tester,
+        editable: true
+    },
+    'Tester Number': { Component: number, editable: true },
+    'Last Project': {
+        Component: <Link to={`/project/${project}`}>{project}</Link>,
+        value: project
+    },
+    'Last Testing Date': date,
+    'Last Contact Date': contactDate,
+    actions: {}
+});
+
+export const selectTesters = createCachedSelector(
+    selectDatasets,
+    ({ titles }) =>
+        Array.range(0, 3)
+            .map(() => [
+                generateProjects('Jill Test', 5234, 'GM33', '03/09/2018'),
+                generateProjects(
+                    'Adolf Test',
+                    4001,
+                    '03/09/2018',
+                    '08/12/2018'
+                ),
+                generateProjects('ADER Test', 4001, '03/09/2018', '08/12/2018')
+            ])
+            .flatMap(x => x)
+)(() => 'placeholder');
+
+export const selectTester = createCachedSelector(
+    selectTesters,
+    (state, index) => index,
+    (state, index) => {
+        const newObj = {};
+        const rowData = state[index];
+        const isEditable = value =>
+            Object.prototype.hasOwnProperty.call(value, 'editable');
+        if (rowData && typeof rowData === 'object') {
+            Object.keys(rowData).forEach(key => {
+                if (isEditable(rowData[key]))
+                    newObj[key] = rowData[key].value || rowData[key].Component;
+            });
+        }
+
+        return newObj;
+    }
 )(() => 'placeholder');
