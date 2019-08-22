@@ -37,10 +37,11 @@ const ProjectHome = ({ location, projects }) => {
 
 	return (
 		<GridContainer alignItems='center'>
-			<GridItem md={6}>
+			<GridItem md={4}></GridItem>
+			<GridItem md={4}>
 				<SearchInput placeholder='Search by name or project reference' />
 			</GridItem>
-			<GridItem md={6} className={c.buttonGridStyle}>
+			<GridItem md={4} className={c.buttonGridStyle}>
 				<Link to={{ pathname: '/project', search: '?weekday=monday' }}>
 					<NavigateButton variant='outlined'>
 						List projects for Monday morning
@@ -57,7 +58,12 @@ const ProjectHome = ({ location, projects }) => {
 		</GridContainer>
 	);
 };
-const generateProjects = (client, project, date = '07/04/2018', contactDate = '02/06/2019') => ({
+const generateProjects = (
+	client,
+	project,
+	date = '07/04/2018',
+	contactDate = '02/06/2019'
+) => ({
 	Client: {
 		Component: <Link to={`/client/${client}`}>{client}</Link>,
 		value: client
@@ -74,8 +80,8 @@ const mapState = state => ({
 	projects: Array.range(0, 3)
 		.map(() => [
 			generateProjects('Aldi', 'EM21'),
-			generateProjects('Wessex Water', 'GM33','03/09/2018'),
-			generateProjects('Disney', 'JE24','03/09/2018', '08/12/2018'),
+			generateProjects('Wessex Water', 'GM33', '03/09/2018'),
+			generateProjects('Disney', 'JE24', '03/09/2018', '08/12/2018')
 		])
 		.flatMap(x => x)
 });

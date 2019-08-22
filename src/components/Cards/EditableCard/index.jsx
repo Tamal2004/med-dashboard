@@ -15,7 +15,7 @@ const EditableCard = ({ title, actionTitle, onEdit, color, children }) => {
         <Card className={c.root}>
             <Grid container className={c.header}>
                 <Grid item xs={6}>
-                    <Typography variant='h5' className={c.title}>
+                    <Typography variant='h6' className={c.title}>
                         {title}
                     </Typography>
                 </Grid>

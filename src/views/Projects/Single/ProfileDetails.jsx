@@ -16,13 +16,18 @@ import {
     EditableCard,
     Link,
     withModal,
-    SearchInput
+    SearchInput,
+    NavigateButton
 } from 'components';
 
 const useStyles = makeStyles(({ palette, spacing, typography }) => ({
     root: {
         paddingLeft: spacing(2),
         paddingRight: spacing(2)
+    },
+    addButton: {
+        float: 'right',
+        marginBottom: 10
     },
     label: {
         fontWeight: typography.fontWeightHeavy
@@ -40,22 +45,34 @@ const useStyles = makeStyles(({ palette, spacing, typography }) => ({
 const ProfileDetails = ({ data }) => {
     const [page, setPage] = useState(1);
     const [input, setInput] = useState('');
+    const [newProfile, openNewProfileForm] = useState(false);
     const c = useStyles();
+
+    const toggleNewProfileForm = () => openNewProfileForm(!newProfile);
 
     const totalPages = Math.floor(data.length / 5) + !!(data.length % 5) || 1;
     return (
         <EditableCard title='Profile Details'>
             <div className={c.root}>
-                <Typography variant='h6' className={c.label} gutterBottom>
-                    Add Profile
-                </Typography>
-                <SearchInput
-                    Adornment={AddIcon}
-                    placeholder='Profile...'
+                <NavigateButton
+                    className={c.addButton}
+                    onClick={() => toggleNewProfileForm()}
+                    variant='outlined'
                     color='secondary'
-                    handleText={({ target: { value } }) => setInput(value)}
-                    value={input}
-                />
+                >
+                    {newProfile ? 'Cancel' : 'Add New'}
+                </NavigateButton>
+
+                {newProfile && (
+                    <SearchInput
+                        Adornment={AddIcon}
+                        placeholder='Profile...'
+                        color='secondary'
+                        handleText={({ target: { value } }) => setInput(value)}
+                        value={input}
+                    />
+                )}
+
                 <Table
                     data={data}
                     page={page}
