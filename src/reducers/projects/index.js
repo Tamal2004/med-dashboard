@@ -2,8 +2,7 @@
 import initialState from './initialState';
 
 // Action Types
-import { SUCCESS, FETCH_PROJECT_CLIENTS } from "../../store/actionTypes";
-
+import { SUCCESS, FETCH_PROJECT_CLIENTS } from '../../store/actionTypes';
 
 const projectsReducer = (
     state = initialState,
@@ -11,8 +10,7 @@ const projectsReducer = (
 ) => {
     switch (type) {
         case FETCH_PROJECT_CLIENTS: {
-            if (async === SUCCESS)
-                return { ...state, clients: payload };
+            if (async === SUCCESS) return { ...state, clients: payload };
             return state;
         }
 

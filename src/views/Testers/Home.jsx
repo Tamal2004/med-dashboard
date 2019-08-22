@@ -17,7 +17,7 @@ import { selectCounties } from 'selectors';
 import { listTesters } from 'graphql/queries';
 
 // Actions
-import { fetchTesters } from 'actions';
+import { fetchTestersHome } from 'actions';
 
 const useStyles = makeStyles(theme => ({
     gridDistance: {
@@ -51,11 +51,11 @@ async function getBlogs() {
     console.log('blogData', blogData);
 }
 
-const TesterHome = ({ testers, fetchTesters}) => {
+const TesterHome = ({ testers, fetchTestersHome }) => {
     const c = useStyles();
     useEffect(() => {
-        fetchTesters();
-    });
+        fetchTestersHome();
+    }, []);
     return (
         <Fragment>
             <GridWrapper>
@@ -113,7 +113,7 @@ const mapState = state => ({
 });
 
 const mapDispatch = {
-    fetchTesters
+    fetchTestersHome
 };
 
 const _TesterHome = connect(

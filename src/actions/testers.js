@@ -3,9 +3,12 @@ import API, { graphqlOperation } from '@aws-amplify/api';
 // Local
 import { history } from 'libs';
 
+// Normalizers
+import { normalizeTestersHome } from 'normalizers';
+
 // Graph QL
 import { createTester as gQLCreateTester } from 'graphql/mutations';
-import { listTesters as gQLListTesters } from 'graphql/queries';
+import { listTestersHome } from 'graphql/tester';
 
 // Action Types
 import {
@@ -13,7 +16,7 @@ import {
     SUCCESS,
     FAIL,
     CREATE_TESTER,
-    FETCH_TESTERS
+    FETCH_TESTERS_HOME
 } from 'store/actionTypes';
 
 const createTesterAction = async => ({
@@ -36,23 +39,23 @@ export const createTester = tester => async dispatch => {
     }
 };
 
-const fetchTestersAction = (async, payload = []) => ({
-    type: FETCH_TESTERS,
+const fetchTestersHomeAction = (async, payload = []) => ({
+    type: FETCH_TESTERS_HOME,
     async,
     payload
 });
 
-export const fetchTesters = () => async dispatch => {
-    dispatch(fetchTestersAction(REQUEST));
+export const fetchTestersHome = () => async dispatch => {
+    dispatch(fetchTestersHomeAction(REQUEST));
     const {
         data: { listTesters, error = null }
-    } = await API.graphql(graphqlOperation(gQLListTesters));
-
-    console.log(listTesters);
+    } = await API.graphql(graphqlOperation(listTestersHome));
 
     if (!error) {
-        dispatch(fetchTestersAction(SUCCESS, listTesters));
+        dispatch(
+            fetchTestersHomeAction(SUCCESS, normalizeTestersHome(listTesters))
+        );
     } else {
-        dispatch(fetchTestersAction(FAIL));
+        dispatch(fetchTestersHomeAction(FAIL));
     }
 };

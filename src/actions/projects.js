@@ -6,7 +6,7 @@ import { history } from 'libs';
 // Graph QL
 
 import { listProjects as gQLListProjects } from 'graphql/queries';
-import { createProject as gQLCreateProject, } from 'graphql/mutations';
+import { createProject as gQLCreateProject } from 'graphql/mutations';
 import { listProjectClients } from 'graphql/project';
 
 // Action Types
@@ -19,8 +19,6 @@ import {
     FETCH_PROJECT_CLIENTS
 } from 'store/actionTypes';
 
-
-
 const createProjectAction = async => ({
     type: CREATE_PROJECT,
     async
@@ -32,7 +30,7 @@ export const createProject = project => async dispatch => {
         graphqlOperation(gQLCreateProject, { input: project })
     );
 
-    console.log(res)
+    console.log(res);
 
     if (!res.error) {
         dispatch(createProjectAction(SUCCESS));
@@ -41,10 +39,6 @@ export const createProject = project => async dispatch => {
         dispatch(createProjectAction(FAIL));
     }
 };
-
-
-
-
 
 const fetchProjectsAction = (async, payload = []) => ({
     type: FETCH_PROJECTS,
@@ -73,13 +67,10 @@ const fetchProjectClientsAction = (async, payload = []) => ({
     payload
 });
 
-
-
-
 export const fetchProjectClients = () => async dispatch => {
     dispatch(fetchProjectClientsAction(REQUEST));
     const {
-        data: { listClients: { items = []} = {}, error = null }
+        data: { listClients: { items = [] } = {}, error = null }
     } = await API.graphql(graphqlOperation(listProjectClients));
 
     if (!error) {

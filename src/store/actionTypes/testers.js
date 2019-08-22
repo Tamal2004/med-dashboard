@@ -1,6 +1,6 @@
 export const CREATE_TESTER = '@@GQL__create-tester';
 
-export const FETCH_TESTERS = '@@GQL__fetch-testers';
+export const FETCH_TESTERS_HOME = '@@GQL__fetch-testers-home';
 
 export const UPDATE_TESTER_REQUEST = '@@GQL__update-tester_request';
 export const UPDATE_TESTER_SUCCESS = '@@GQL__update-tester_success';

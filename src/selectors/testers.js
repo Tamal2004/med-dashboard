@@ -3,6 +3,10 @@ import createCachedSelector from 're-reselect';
 // Local
 import { mapArray } from 'libs';
 import { selectDatasets } from './common';
+import React from 'react';
+import { Link } from 'components';
+
+const selectTesters = state => state.testers;
 
 // Contact Types
 export const selectContactTypes = createCachedSelector(
@@ -73,4 +77,43 @@ export const selectNationalities = createCachedSelector(
 // Titles
 export const selectTitles = createCachedSelector(selectDatasets, ({ titles }) =>
     mapArray(titles)
+)(() => 'placeholder');
+
+// Tester Home
+export const selectTestersHome = createCachedSelector(
+    selectTesters,
+    ({ home = [{}] }) => {
+        const sss = home.map(
+            ({
+                testerName,
+                testerNumber,
+                lastProject,
+                lastTestingDate,
+                lastContactDate
+            }) => ({
+                'Tester Name': {
+                    Component: (
+                        <Link to={`/tester/${testerNumber}`}>{testerName}</Link>
+                    ),
+                    value: testerName
+                },
+                'Tester Number': testerNumber,
+                'Last Project': {
+                    Component: (
+                        <Link to={`/project/${lastProject}`}>
+                            {lastProject}
+                        </Link>
+                    ),
+                    value: lastProject
+                },
+                'Last Testing Date': lastTestingDate,
+                'Last Contact Date': lastContactDate
+            })
+        );
+
+        console.log(sss);
+
+        console.log(home.length > 0);
+        return home.length > 0 ? home : [{}];
+    }
 )(() => 'placeholder');
