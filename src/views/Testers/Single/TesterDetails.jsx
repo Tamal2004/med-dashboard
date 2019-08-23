@@ -17,7 +17,8 @@ import {
     MultiInput,
     Switch,
     IconedButton,
-    EditableCard,CardDivider
+    EditableCard,
+    CardDivider
 } from 'components';
 
 // Selectors
@@ -113,14 +114,7 @@ const TesterDetails = ({
                 active={isEditing}
                 required={isEditing}
             />
-            <Input
-                label='Age'
-                name='age'
-                type='number'
-                isCard
-                active={isEditing}
-                required={isEditing}
-            />
+            <Input label='Age' name='age' isCard active={false} />
             <Input
                 label='Date of Birth'
                 name='dob'
@@ -202,7 +196,7 @@ const TesterDetails = ({
                 label='Last Updated'
                 name='lastUpdated'
                 isCard
-                active={isEditing}
+                active={false}
             />
             <CardDivider />
             <div className={c.footer}>
@@ -240,6 +234,9 @@ TesterDetails.defaultProps = {
     surname: 'Smith'
 };
 
+const calculateAge = (dob = '01/01/1989') =>
+    Math.floor((new Date() - new Date(dob)) / 60 / 60 / 24 / 365 / 1000);
+
 const mapState = state => {
     const formSelector = formValueSelector('TesterDetails');
     const titles = selectTitles(state);
@@ -249,12 +246,6 @@ const mapState = state => {
         martitalStatuses: selectMaritalStatuses(state),
         nationalities: selectNationalities(state),
         ethnicities: selectEthnicities(state),
-        initialValues: {
-            hasChildren: false,
-            title: 1,
-            firstName: 'Matt',
-            surname: 'Tamal'
-        },
         title: mapFromValue(titles, formSelector(state, 'title')),
         firstName: formSelector(state, 'firstName'),
         surname: formSelector(state, 'surname')
@@ -269,7 +260,6 @@ const validate = values => {
         'firstName',
         'surname',
         'gender',
-        'age',
         'dob',
         'maritalStatus',
         'hasChildren',
@@ -288,6 +278,8 @@ const _TesterDetails = compose(
     ),
     reduxForm({
         form: 'TesterDetails',
+        enableReinitialize: true,
+        keepDirtyOnReinitialize: true,
         validate
     })
 )(TesterDetails);

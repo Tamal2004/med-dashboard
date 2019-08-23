@@ -23,7 +23,7 @@ import {
 import { selectProjectStatuses, selectProjectClients } from 'selectors';
 
 // Actions
-import { createProject, fetchProjectClients } from 'actions';
+import { createProject, listProjectClients } from 'actions';
 
 const ProjectNew = ({
     projectStatuses,
@@ -33,10 +33,10 @@ const ProjectNew = ({
     reset,
     handleSubmit,
     submitting,
-    fetchProjectClients
+    listProjectClients
 }) => {
     useEffect(() => {
-        fetchProjectClients();
+        listProjectClients();
     }, []);
     const c = useStyles();
 
@@ -113,7 +113,7 @@ const mapState = state => ({
     clients: selectProjectClients(state)
 });
 
-const mapDispatch = { fetchProjectClients };
+const mapDispatch = { listProjectClients };
 
 const _ProjectNew = compose(
     connect(

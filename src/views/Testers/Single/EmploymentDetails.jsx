@@ -122,12 +122,12 @@ const mapState = state => {
         employeeCounts: selectEmployeeCounts(state),
         employmentSectors: selectEmploymentSectors(state),
         employmentStatuses: selectEmploymentStatuses(state),
-        isStudent: employmentStatus === 5,
+        isStudent: employmentStatus === 'Student',
         isEmployed:
-            employmentStatus === 2 ||
-            employmentStatus === 3 ||
-            employmentStatus === 4,
-        isRetired: employmentStatus === 4
+            employmentStatus === 'Part-time employment' ||
+            employmentStatus === 'Full-time employment' ||
+            employmentStatus === 'Retired',
+        isRetired: employmentStatus === 'Retired'
     };
 };
 
