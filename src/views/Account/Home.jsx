@@ -33,6 +33,13 @@ const useStyles = makeStyles(theme => ({
 	form: {
 		width: '100%', // Fix IE 11 issue.
 		marginTop: theme.spacing(1)
+	},
+	deleteBtn: {
+		backgroundColor: '#d43c31',
+		marginTop: 20,
+		'&:hover': {
+			backgroundColor: '#af332a'
+		}
 	}
 }));
 
@@ -46,7 +53,7 @@ const ProfileHome = props => {
 	};
 
 	const {
-		auth: { email, name },
+		auth: { email, name, isTester },
 		updateAuthUserPassword
 	} = props;
 
@@ -120,6 +127,16 @@ const ProfileHome = props => {
 								: 'Change Password'}
 						</NavigateButton>
 					</ListItem>
+					{isTester && !values.showPasswordField && (
+						<ListItem>
+							<NavigateButton
+								className={c.deleteBtn}
+								color='secondary'
+							>
+								DELETE ACCOUNT
+							</NavigateButton>
+						</ListItem>
+					)}
 
 					{values.showPasswordField && (
 						<Fragment>
