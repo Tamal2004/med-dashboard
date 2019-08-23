@@ -1,5 +1,4 @@
 import React, { Suspense } from 'react';
-import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { CircularLoader } from 'components';
 
@@ -9,7 +8,6 @@ import { AuthPiece } from 'aws-amplify-react';
 // Local
 import { withModalProvider } from 'components';
 import Routes from 'routes';
-import { setAuthUserInfo } from 'actions';
 
 const loaderWrapper = {
     display: 'flex',
@@ -28,7 +26,6 @@ class App extends AuthPiece {
     constructor(props) {
         super(props);
         this._validAuthStates = ['signedIn'];
-        !props.auth.email && props.setAuthUserInfo();
     }
 
     showComponent(theme) {
@@ -40,15 +37,4 @@ class App extends AuthPiece {
     }
 }
 
-const mapStateToProps = ({ auth }) => ({ auth });
-const mapDispatch = {
-    setAuthUserInfo
-};
-
-export default compose(
-    connect(
-        mapStateToProps,
-        mapDispatch
-    ),
-    withModalProvider
-)(App);
+export default compose(withModalProvider)(App);

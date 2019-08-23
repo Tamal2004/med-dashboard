@@ -16,13 +16,10 @@ import ArrowRightIcon from '@material-ui/icons/ArrowRight';
 import { ListItems } from './listItems';
 import styles from './styles';
 import { Logo } from 'assets';
+import { Link } from 'components';
 import { history } from 'libs/history';
 
 const useStyles = styles;
-
-const callMe = async () => {
-    await API.graphql(graphqlOperation(listBlogs));
-};
 
 export default function Dashboard(props) {
     const c = useStyles();
@@ -93,7 +90,9 @@ export default function Dashboard(props) {
                 open={open}
             >
                 <div className={c.toolbarIcon}>
-                    <img className={c.logo} src={Logo} alt='WUP' />
+                    <Link to='/'>
+                        <img className={c.logo} src={Logo} alt='WUP' />
+                    </Link>
                     <IconButton size='small' onClick={handleDrawerClose}>
                         <CloseIcon />
                     </IconButton>

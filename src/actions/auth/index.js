@@ -2,6 +2,9 @@ import { Auth } from 'aws-amplify';
 
 import { SET_AUTH_USER_INFO } from 'actionTypes';
 
+/***********
+ * API CALL *
+ ************/
 const getUser = () => {
 	return Auth.currentAuthenticatedUser({
 		bypassCache: false // Optional, By default is false. If set to true, this call will send a request to Cognito to get the latest user data
@@ -9,12 +12,11 @@ const getUser = () => {
 		.then(({ attributes }) => ({
 			attributes
 		}))
-		.catch(err => console.log(err));
+		.catch(err => err);
 };
 
 const signUp = () => {
-	console.log('SIGN UP');
-	Auth.signUp({
+	return Auth.signUp({
 		username: 'report.nabil@gmail.com',
 		password: 'password',
 		attributes: {
@@ -27,13 +29,38 @@ const signUp = () => {
 		.catch(err => console.log(err));
 };
 
+const changePassword = ({ oldPassword, newPassword }) => {
+	console.log('changePassword');
+
+	return Auth.currentAuthenticatedUser()
+		.then(user => Auth.changePassword(user, oldPassword, newPassword))
+		.then(data => data)
+		.catch(err => err);
+};
+
+/**********
+ * ACTIONS *
+ ***********/
+
 export const setAuthUserInfo = () => {
 	return async dispatch => {
-		const info = await getUser();
-		Object.prototype.hasOwnProperty.call(info, 'attributes') &&
+		const res = await getUser();
+		Object.prototype.hasOwnProperty.call(res, 'attributes') &&
 			dispatch({
 				type: SET_AUTH_USER_INFO,
-				payload: info.attributes
+				payload: res.attributes
 			});
+	};
+};
+
+export const updateAuthUserPassword = payload => {
+	return async dispatch => {
+		const res = await changePassword(payload);
+		if (res === 'SUCCESS') {
+			return 200;
+		} else {
+			//show snack-bar error
+			console.log('password change error', res, res.message, res.code);
+		}
 	};
 };
