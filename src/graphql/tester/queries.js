@@ -1,4 +1,4 @@
-export const listTestersHome = `query fetchTestersHome {
+export const ListTesters = `query fetchTestersHome {
   listTesters {
     items {
       id
@@ -19,4 +19,14 @@ export const listTestersHome = `query fetchTestersHome {
       }
     }
   }
+}`;
+
+export const CheckTesterEmail = `query CheckTesterEmail(
+    $filter: ModelTesterFilterInput
+) {
+    listTesters(filter: $filter limit: 1) {
+        items {
+            email
+        }
+    }
 }`;

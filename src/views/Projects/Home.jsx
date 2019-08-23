@@ -38,7 +38,7 @@ const ProjectHome = ({ location, projects, fetchProjects }) => {
     const c = useStyles();
     useEffect(() => {
         fetchProjects();
-    });
+    }, []);
     const params = new URLSearchParams(location.search);
     const queryParam = params.get('weekday');
 

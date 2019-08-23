@@ -1,6 +1,12 @@
-import { validateRequired } from 'libs';
+import API, { graphqlOperation } from '@aws-amplify/api';
 
-export default (values, { isStudent, isEmployed, hasManualAddress }) => {
+import { validateRequired } from 'libs';
+import { CheckTesterEmail } from 'graphql/tester';
+
+export const validate = (
+    values,
+    { isStudent, isEmployed, hasManualAddress }
+) => {
     const required = [
         'title',
         'firstName',
@@ -30,3 +36,17 @@ export default (values, { isStudent, isEmployed, hasManualAddress }) => {
 
     return { ...validateRequired(values, required) };
 };
+
+export const asyncValidate = ({ email }) =>
+    API.graphql(
+        graphqlOperation(CheckTesterEmail, {
+            filter: { email: { eq: email } }
+        })
+    ).then(
+        ({
+            data: { listTesters: { items: existingTesters = [] } = {} } = {}
+        }) => {
+            if (existingTesters.length)
+                throw { email: 'This email already exists' };
+        }
+    );

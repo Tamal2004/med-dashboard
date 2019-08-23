@@ -1,10 +1,9 @@
 import { serializeDate, deserializeDate } from 'libs';
 
-export default async (
-    values,
-    dispatch,
-    { isStudent, isEmployed, createTester }
-) => {
+// Actions
+import { createTester } from 'actions';
+
+export default async (values, dispatch, { isStudent, isEmployed }) => {
     const { manualAddress, termsChecked, dob, ...pruned } = values;
 
     let address = {};
@@ -45,8 +44,6 @@ export default async (
         employment = { ...studentEmployment };
     }
 
-
-
     const tester = {
         ...pruned,
         ...address,
@@ -55,5 +52,5 @@ export default async (
         lastUpdated: serializeDate(deserializeDate(new Date())) // Today
     };
 
-    return createTester(tester);
+    return dispatch(createTester(tester));
 };

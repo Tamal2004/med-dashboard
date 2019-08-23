@@ -2,7 +2,7 @@
 import initialState from './initialState';
 
 // Action Types
-import { SUCCESS, FETCH_PROJECT_CLIENTS } from '../../store/actionTypes';
+import { SUCCESS, FETCH_PROJECT_CLIENTS } from 'actionTypes';
 
 const projectsReducer = (
     state = initialState,

@@ -8,7 +8,7 @@ import { normalizeTesters } from 'normalizers';
 
 // Graph QL
 import { createTester as gQLCreateTester } from 'graphql/mutations';
-import { listTestersHome } from 'graphql/tester';
+import { ListTesters } from 'graphql/tester';
 
 // Action Types
 import {
@@ -16,9 +16,9 @@ import {
     SUCCESS,
     FAIL,
     CREATE_TESTER,
-    FETCH_TESTERS,
+    LIST_TESTERS,
     FETCH_TESTER
-} from 'store/actionTypes';
+} from 'actionTypes';
 
 const createTesterAction = async => ({
     type: CREATE_TESTER,
@@ -40,22 +40,22 @@ export const createTester = tester => async dispatch => {
     }
 };
 
-const fetchTestersAction = (async, payload = []) => ({
-    type: FETCH_TESTERS,
+const listTestersAction = (async, payload = []) => ({
+    type: LIST_TESTERS,
     async,
     payload
 });
 
-export const fetchTesters = () => async dispatch => {
-    dispatch(fetchTestersAction(REQUEST));
+export const listTesters = () => async dispatch => {
+    dispatch(listTestersAction(REQUEST));
     const {
         data: { listTesters, error = null }
-    } = await API.graphql(graphqlOperation(listTestersHome));
+    } = await API.graphql(graphqlOperation(ListTesters));
 
     if (!error) {
-        dispatch(fetchTestersAction(SUCCESS, normalizeTesters(listTesters)));
+        dispatch(listTestersAction(SUCCESS, normalizeTesters(listTesters)));
     } else {
-        dispatch(fetchTestersAction(FAIL));
+        dispatch(listTestersAction(FAIL));
     }
 };
 

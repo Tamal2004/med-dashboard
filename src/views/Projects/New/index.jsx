@@ -2,14 +2,22 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { reduxForm } from 'redux-form';
-import API, { graphqlOperation } from '@aws-amplify/api';
 
 // Material
-import { Paper, Typography, Grid, makeStyles } from '@material-ui/core';
+import { Paper, Typography, Grid } from '@material-ui/core';
 
 // Local
-import { validateRequired } from 'libs';
-import { Container, Select, Input, NavigateButton } from 'components';
+import useStyles from './styles';
+import { validate, asyncValidate } from './validate';
+
+// Components
+import {
+    Container,
+    Select,
+    Input,
+    NavigateButton,
+    DateInput
+} from 'components';
 
 // Selectors
 import { selectProjectStatuses, selectProjectClients } from 'selectors';
@@ -17,40 +25,19 @@ import { selectProjectStatuses, selectProjectClients } from 'selectors';
 // Actions
 import { createProject, fetchProjectClients } from 'actions';
 
-// Styles
-const useStyles = makeStyles(({ palette, spacing }) => ({
-    root: {
-        margin: spacing(4),
-        padding: spacing(4),
-        textAlign: 'justify',
-        width: 'auto'
-    },
-    header: {
-        textAlign: 'center',
-        fontWeight: 700,
-        paddingTop: spacing(2),
-        paddingBottom: spacing(4)
-    },
-    footer: {
-        padding: spacing(3)
-    },
-    submit: {
-        width: `calc(100% - ${spacing(6)}px)`,
-        height: spacing(6),
-        marginLeft: spacing(3),
-        marginRight: spacing(3)
-    }
-}));
-
-
-
-
-
-
-const ProjectNew = ({ projectStatuses, clients, invalid, pristine, reset, handleSubmit, submitting, fetchProjectClients }) => {
+const ProjectNew = ({
+    projectStatuses,
+    clients,
+    invalid,
+    pristine,
+    reset,
+    handleSubmit,
+    submitting,
+    fetchProjectClients
+}) => {
     useEffect(() => {
-        fetchProjectClients()
-    });
+        fetchProjectClients();
+    }, []);
     const c = useStyles();
 
     return (
@@ -66,13 +53,23 @@ const ProjectNew = ({ projectStatuses, clients, invalid, pristine, reset, handle
                     data={projectStatuses}
                     name='status'
                 />
-                <Select label='Client' data={clients} name='projectClientId' required />
+                <Select
+                    label='Client'
+                    data={clients}
+                    name='projectClientId'
+                    required
+                />
                 <Input
                     label='Principal Contact'
                     name='principalContact'
                     required
                 />
                 <Input label='Other Contact' name='otherContact' />
+                <DateInput
+                    label='Observed Testing Date'
+                    name='testingDate'
+                    required
+                />
                 <Input label='Project Cost' name='cost' />
                 <Input
                     label='Purchase Order Number'
@@ -116,25 +113,7 @@ const mapState = state => ({
     clients: selectProjectClients(state)
 });
 
-const mapDispatch = { createProject, fetchProjectClients };
-
-const validate = values => {
-    const required = [
-        'reference',
-        'title',
-        'projectClientId',
-        'principalContact',
-        'manager'
-    ];
-
-    return { ...validateRequired(values, required) };
-};
-
-const onSubmit = async (values, dispatch, { createProject }) => {
-    const project = { ...values, createdAt: new Date().toLocaleDateString('en-GB').split('/').reverse().join('-')};
-    return createProject(project);
-};
-
+const mapDispatch = { fetchProjectClients };
 
 const _ProjectNew = compose(
     connect(
@@ -144,7 +123,9 @@ const _ProjectNew = compose(
     reduxForm({
         form: 'ProjectNew',
         validate,
-        onSubmit
+        asyncValidate,
+        asyncBlurFields: ['reference'],
+        onSubmit: async (values, dispatch) => dispatch(createProject(values))
     })
 )(ProjectNew);
 

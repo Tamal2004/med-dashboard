@@ -21,7 +21,8 @@ export default ({ spacing, palette, shape }) => ({
         }
     },
     input: {
-        padding: 0
+        padding: 0,
+        textAlign: 'center'
     },
     adornment: {
         color: palette.grey[400],

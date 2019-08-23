@@ -9,7 +9,7 @@ import { Paper, Typography, Grid } from '@material-ui/core';
 // Local
 import useStyles from './styles';
 import onSubmit from './onSubmit';
-import validate from './validate';
+import { validate, asyncValidate } from './validate';
 
 // Libs
 import { validateEmail, validateDate, validateNumber } from 'libs';
@@ -80,7 +80,7 @@ const TesterApplication = ({
             </Typography>
             <Typography className={c.info} variant='h5' gutterBottom>
                 Our database is maintained solely for our use in recruiting
-                testers. The information is not passed on to  any other
+                testers. The information is not passed on to any other
                 organisation.
             </Typography>
             <Container title='Contact Details'>
@@ -146,7 +146,7 @@ const TesterApplication = ({
                     required
                 />
                 <Select
-                    label='Ethnicity'
+                    label='Ethnic Background'
                     data={ethnicities}
                     name='ethnicity'
                     required
@@ -315,18 +315,21 @@ const mapState = state => {
     };
 };
 
-const mapDispatch = { createTester };
 
 const _TesterApplication = compose(
     connect(
-        mapState,
-        mapDispatch
+        mapState
     ),
     reduxForm({
         form: 'TesterApplication',
         validate,
+        asyncValidate,
+        asyncBlurFields: ['email'],
         onSubmit
     })
 )(TesterApplication);
 
-export { _TesterApplication as default, _TesterApplication as TesterApplication };
+export {
+    _TesterApplication as default,
+    _TesterApplication as TesterApplication
+};

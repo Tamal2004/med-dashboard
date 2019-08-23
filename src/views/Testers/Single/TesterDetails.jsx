@@ -152,7 +152,7 @@ const TesterDetails = ({
                 required={isEditing}
             />
             <Select
-                label='Ethnicity'
+                label='Ethnic Background'
                 name='ethnicity'
                 data={ethnicities}
                 isCard

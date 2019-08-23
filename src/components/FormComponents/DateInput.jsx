@@ -33,6 +33,9 @@ const useStyles = makeStyles(({ palette, spacing, typography }) => ({
         border: 'unset',
         pointerEvents: 'none'
     },
+    cardInput: {
+        textAlign: 'left'
+    },
     buttonGroup: {
         height: spacing(4),
         width: spacing(8)
@@ -69,11 +72,12 @@ const DateInput = ({
     ...restProps
 }) => {
     const [form, setForm] = useState(undefined);
-    const { cardRoot, inactiveRoot, ...c } = useStyles();
+    const { cardRoot, inactiveRoot, cardInput, ...c } = useStyles();
 
     const dateInputStyles = {
         ...c,
-        root: clsx(c.root, isCard && cardRoot, !active && inactiveRoot)
+        root: clsx(c.root, isCard && cardRoot, !active && inactiveRoot),
+        input: isCard && cardInput
     };
     const controlProps = { required, label, isCard };
 

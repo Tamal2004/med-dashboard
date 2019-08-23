@@ -7,3 +7,13 @@ export const listProjectClients = `query ListProjectClients {
   }
 }
 `;
+
+export const CheckProjectReference = `query CheckProjectReference(
+    $filter: ModelProjectFilterInput
+) {
+    listProjects(filter: $filter limit: 1) {
+        items {
+            reference
+        }
+    }
+}`;

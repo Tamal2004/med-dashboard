@@ -1,27 +1,6 @@
-import { createStore, applyMiddleware, compose } from 'redux';
-import thunk from 'redux-thunk';
-
+import { createStore } from 'redux';
 // Local
 import reducers from 'reducers';
+import enhancers from './enhancers';
 
-//check for dev environment
-const ENV = process.env;
-const isDevEnv = () => ENV.NODE_ENV === 'development';
-
-
-let enhancers = compose(
-    applyMiddleware(thunk)
-);
-
-// For dev, enable redux dev tool
-if (isDevEnv()) {
-    enhancers = compose(
-        applyMiddleware(thunk),
-        window.__REDUX_DEVTOOLS_EXTENSION__
-            ? window.__REDUX_DEVTOOLS_EXTENSION__()
-            : f => f
-    );
-}
-
-export default createStore(reducers,{}, enhancers);
-
+export default createStore(reducers, {}, enhancers);

@@ -1,3 +1,5 @@
 export default {
-    home: []
+    single: {},
+    list: [],
+    search: []
 };

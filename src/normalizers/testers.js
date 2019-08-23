@@ -9,8 +9,6 @@ export const normalizeTesters = ({ items = [] }) =>
             sessions: { items: sessions = [] },
             contactNotes: { items: contactNotes = [] }
         }) => {
-
-
             const lastContactDate = contactNotes.reduce((acm, { date }) => {
                 if (!acm) return new Date(date);
 
@@ -19,7 +17,7 @@ export const normalizeTesters = ({ items = [] }) =>
             }, null);
 
             const { date: lastTestingDate, reference } = sessions.reduce(
-                (acm, { date, project: { reference = null } = {}}) => {
+                (acm, { date, project: { reference = null } = {} }) => {
                     if (!acm.date) return { date: new Date(date), reference };
                     const formattedDate = new Date(date);
                     return acm.date < formattedDate

@@ -17,7 +17,7 @@ import {
     CREATE_PROJECT,
     FETCH_PROJECTS,
     FETCH_PROJECT_CLIENTS
-} from 'store/actionTypes';
+} from 'actionTypes';
 
 const createProjectAction = async => ({
     type: CREATE_PROJECT,

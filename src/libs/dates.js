@@ -5,11 +5,13 @@ export const normalizeDate = date => {
 };
 
 export const deserializeDate = dateString =>
-    dateString ? new Date(dateString).toLocaleString('en-GB', {
-        year: 'numeric',
-        month: 'numeric',
-        day: 'numeric'
-    }) : null;
+    dateString
+        ? new Date(dateString).toLocaleString('en-GB', {
+              year: 'numeric',
+              month: 'numeric',
+              day: 'numeric'
+          })
+        : null;
 
 export const serializeDate = date =>
     date

@@ -104,10 +104,10 @@ const generateProjects = (
 });
 
 // Tester Home
-export const selectTesters = createCachedSelector(
+export const selectTestersList = createCachedSelector(
     state => state.testers,
-    ({ home = [] }) =>
-        home.map(
+    ({ list = [] }) =>
+        list.map(
             ({
                 testerName,
                 testerNumber,
@@ -123,7 +123,13 @@ export const selectTesters = createCachedSelector(
                 },
                 'Last Project': {
                     Component: (
-                        <Link to={lastProject ? `/project/${lastProject}` : '/tester'}>
+                        <Link
+                            to={
+                                lastProject
+                                    ? `/project/${lastProject}`
+                                    : '/tester'
+                            }
+                        >
                             {lastProject || 'No Projects'}
                         </Link>
                     ),
@@ -136,7 +142,6 @@ export const selectTesters = createCachedSelector(
 )(() => 'placeholder');
 
 export const selectTester = createCachedSelector(
-    selectTesters,
     (state, index) => index,
     (state, index) => {
         const newObj = {};

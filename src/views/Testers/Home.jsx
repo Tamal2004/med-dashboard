@@ -16,11 +16,11 @@ import {
 // Selectors
 import { selectCounties } from 'selectors';
 import { listBlogs } from 'graphql/queries';
-import { selectTesters } from 'selectors';
+import { selectTestersList } from 'selectors';
 import { TesterTableEdit } from 'views/Modals';
 
 // Actions
-import { fetchTesters } from 'actions';
+import { listTesters } from 'actions';
 
 const useStyles = makeStyles(theme => ({
     gridDistance: {
@@ -49,10 +49,10 @@ const GridWrapper = ({ children }) => {
     );
 };
 
-const TesterHome = ({ testers, handleEditModal, fetchTesters }) => {
+const TesterHome = ({ testers, handleEditModal, listTesters }) => {
     const c = useStyles();
     useEffect(() => {
-        fetchTesters();
+        listTesters();
     }, []);
 
     return (
@@ -86,7 +86,7 @@ const TesterHome = ({ testers, handleEditModal, fetchTesters }) => {
 };
 
 const mapState = (state, ownProps) => ({
-    testers: selectTesters(state)
+    testers: selectTestersList(state)
 });
 
 const mapModal = {
@@ -94,7 +94,7 @@ const mapModal = {
 };
 
 const mapDispatch = {
-    fetchTesters
+    listTesters
 };
 
 const _TesterHome = compose(

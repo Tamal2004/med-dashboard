@@ -7,7 +7,7 @@ import { history } from 'libs';
 import { listClients as gQLListClients } from 'graphql/queries';
 
 // Action Types
-import { REQUEST, SUCCESS, FAIL, FETCH_CLIENTS } from 'store/actionTypes';
+import { REQUEST, SUCCESS, FAIL, FETCH_CLIENTS } from 'actionTypes';
 
 const fetchClientsAction = (async, payload = []) => ({
     type: FETCH_CLIENTS,

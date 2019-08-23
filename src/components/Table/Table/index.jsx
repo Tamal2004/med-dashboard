@@ -255,7 +255,6 @@ class Table extends Component {
             renderTable
         } = this;
 
-        console.log('state data', data);
 
         const headers = Object.keys(datum).map(value =>
             value === 'actions' ? ' ' : value
