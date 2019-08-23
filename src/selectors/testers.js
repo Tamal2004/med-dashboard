@@ -112,7 +112,7 @@ export const selectTesters = createCachedSelector(
                 testerName,
                 testerNumber,
                 lastContactDate,
-                lastProject = '',
+                lastProject,
                 lastTestingDate
             }) => ({
                 'Tester Name': {
@@ -123,14 +123,14 @@ export const selectTesters = createCachedSelector(
                 },
                 'Last Project': {
                     Component: (
-                        <Link to={`/project/${lastProject}`}>
-                            {lastProject}
+                        <Link to={lastProject ? `/project/${lastProject}` : '/tester'}>
+                            {lastProject || 'No Projects'}
                         </Link>
                     ),
-                    value: lastProject
+                    value: lastProject || 'No Projects'
                 },
-                'Last Testing Date': lastTestingDate,
-                'Last Contact Date': lastContactDate
+                'Last Testing Date': lastTestingDate || 'No Sessions',
+                'Last Contact Date': lastContactDate || 'No Contacts'
             })
         )
 )(() => 'placeholder');

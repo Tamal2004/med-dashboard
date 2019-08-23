@@ -7,20 +7,20 @@ type Client @model {
 
 type Project @model {
   id: ID!
-  createdAt: AWSDate!
   reference: String!
   title: String!
   status: String
   client: Client! @connection(name: "ClientProjects")
   principalContact: String!
   otherContact: String
+  testingDate: AWSDate!
   cost: String
   purchaseOrderNumber: String
   manager: String!
   testerFacilitator: String
   clientFacilitator: String
   mainRecruiter: String
-  facility: String
+  facilities: [String!]
   screenerApproved: AWSDate
   facilitationGuideSent: AWSDate
   testerProfilesSent: AWSDate
@@ -32,8 +32,7 @@ type Project @model {
   feedbackEntered: AWSDate
   videosUploaded: AWSDate
   invoiced: AWSDate
-  feedbackObtained: AWSDate
-  satisfactionScore: Float
+  invoiceNumber: String
   clientComments: String
   wuComments: String
   profiles: [String]
@@ -86,6 +85,7 @@ type Tester @model {
   institution: String
   clientNotes: String
   facilitatorComments: String
+  lastUpdated: AWSDate!
   contactNotes: [ContactNote] @connection(name: "TesterContactNotes")
   sessions: [Session] @connection(name: "TesterSessions")
 }

@@ -8,19 +8,19 @@ export const createClient = `mutation CreateClient($input: CreateClientInput!) {
     projects {
       items {
         id
-        createdAt
         reference
         title
         status
         principalContact
         otherContact
+        testingDate
         cost
         purchaseOrderNumber
         manager
         testerFacilitator
         clientFacilitator
         mainRecruiter
-        facility
+        facilities
         screenerApproved
         facilitationGuideSent
         testerProfilesSent
@@ -32,8 +32,7 @@ export const createClient = `mutation CreateClient($input: CreateClientInput!) {
         feedbackEntered
         videosUploaded
         invoiced
-        feedbackObtained
-        satisfactionScore
+        invoiceNumber
         clientComments
         wuComments
         profiles
@@ -50,19 +49,19 @@ export const updateClient = `mutation UpdateClient($input: UpdateClientInput!) {
     projects {
       items {
         id
-        createdAt
         reference
         title
         status
         principalContact
         otherContact
+        testingDate
         cost
         purchaseOrderNumber
         manager
         testerFacilitator
         clientFacilitator
         mainRecruiter
-        facility
+        facilities
         screenerApproved
         facilitationGuideSent
         testerProfilesSent
@@ -74,8 +73,7 @@ export const updateClient = `mutation UpdateClient($input: UpdateClientInput!) {
         feedbackEntered
         videosUploaded
         invoiced
-        feedbackObtained
-        satisfactionScore
+        invoiceNumber
         clientComments
         wuComments
         profiles
@@ -92,19 +90,19 @@ export const deleteClient = `mutation DeleteClient($input: DeleteClientInput!) {
     projects {
       items {
         id
-        createdAt
         reference
         title
         status
         principalContact
         otherContact
+        testingDate
         cost
         purchaseOrderNumber
         manager
         testerFacilitator
         clientFacilitator
         mainRecruiter
-        facility
+        facilities
         screenerApproved
         facilitationGuideSent
         testerProfilesSent
@@ -116,8 +114,7 @@ export const deleteClient = `mutation DeleteClient($input: DeleteClientInput!) {
         feedbackEntered
         videosUploaded
         invoiced
-        feedbackObtained
-        satisfactionScore
+        invoiceNumber
         clientComments
         wuComments
         profiles
@@ -130,7 +127,6 @@ export const deleteClient = `mutation DeleteClient($input: DeleteClientInput!) {
 export const createProject = `mutation CreateProject($input: CreateProjectInput!) {
   createProject(input: $input) {
     id
-    createdAt
     reference
     title
     status
@@ -143,13 +139,14 @@ export const createProject = `mutation CreateProject($input: CreateProjectInput!
     }
     principalContact
     otherContact
+    testingDate
     cost
     purchaseOrderNumber
     manager
     testerFacilitator
     clientFacilitator
     mainRecruiter
-    facility
+    facilities
     screenerApproved
     facilitationGuideSent
     testerProfilesSent
@@ -161,8 +158,7 @@ export const createProject = `mutation CreateProject($input: CreateProjectInput!
     feedbackEntered
     videosUploaded
     invoiced
-    feedbackObtained
-    satisfactionScore
+    invoiceNumber
     clientComments
     wuComments
     profiles
@@ -193,7 +189,6 @@ export const createProject = `mutation CreateProject($input: CreateProjectInput!
 export const updateProject = `mutation UpdateProject($input: UpdateProjectInput!) {
   updateProject(input: $input) {
     id
-    createdAt
     reference
     title
     status
@@ -206,13 +201,14 @@ export const updateProject = `mutation UpdateProject($input: UpdateProjectInput!
     }
     principalContact
     otherContact
+    testingDate
     cost
     purchaseOrderNumber
     manager
     testerFacilitator
     clientFacilitator
     mainRecruiter
-    facility
+    facilities
     screenerApproved
     facilitationGuideSent
     testerProfilesSent
@@ -224,8 +220,7 @@ export const updateProject = `mutation UpdateProject($input: UpdateProjectInput!
     feedbackEntered
     videosUploaded
     invoiced
-    feedbackObtained
-    satisfactionScore
+    invoiceNumber
     clientComments
     wuComments
     profiles
@@ -256,7 +251,6 @@ export const updateProject = `mutation UpdateProject($input: UpdateProjectInput!
 export const deleteProject = `mutation DeleteProject($input: DeleteProjectInput!) {
   deleteProject(input: $input) {
     id
-    createdAt
     reference
     title
     status
@@ -269,13 +263,14 @@ export const deleteProject = `mutation DeleteProject($input: DeleteProjectInput!
     }
     principalContact
     otherContact
+    testingDate
     cost
     purchaseOrderNumber
     manager
     testerFacilitator
     clientFacilitator
     mainRecruiter
-    facility
+    facilities
     screenerApproved
     facilitationGuideSent
     testerProfilesSent
@@ -287,8 +282,7 @@ export const deleteProject = `mutation DeleteProject($input: DeleteProjectInput!
     feedbackEntered
     videosUploaded
     invoiced
-    feedbackObtained
-    satisfactionScore
+    invoiceNumber
     clientComments
     wuComments
     profiles
@@ -321,7 +315,6 @@ export const createSession = `mutation CreateSession($input: CreateSessionInput!
     id
     project {
       id
-      createdAt
       reference
       title
       status
@@ -331,13 +324,14 @@ export const createSession = `mutation CreateSession($input: CreateSessionInput!
       }
       principalContact
       otherContact
+      testingDate
       cost
       purchaseOrderNumber
       manager
       testerFacilitator
       clientFacilitator
       mainRecruiter
-      facility
+      facilities
       screenerApproved
       facilitationGuideSent
       testerProfilesSent
@@ -349,8 +343,7 @@ export const createSession = `mutation CreateSession($input: CreateSessionInput!
       feedbackEntered
       videosUploaded
       invoiced
-      feedbackObtained
-      satisfactionScore
+      invoiceNumber
       clientComments
       wuComments
       profiles
@@ -395,6 +388,7 @@ export const createSession = `mutation CreateSession($input: CreateSessionInput!
       institution
       clientNotes
       facilitatorComments
+      lastUpdated
       contactNotes {
         nextToken
       }
@@ -415,7 +409,6 @@ export const updateSession = `mutation UpdateSession($input: UpdateSessionInput!
     id
     project {
       id
-      createdAt
       reference
       title
       status
@@ -425,13 +418,14 @@ export const updateSession = `mutation UpdateSession($input: UpdateSessionInput!
       }
       principalContact
       otherContact
+      testingDate
       cost
       purchaseOrderNumber
       manager
       testerFacilitator
       clientFacilitator
       mainRecruiter
-      facility
+      facilities
       screenerApproved
       facilitationGuideSent
       testerProfilesSent
@@ -443,8 +437,7 @@ export const updateSession = `mutation UpdateSession($input: UpdateSessionInput!
       feedbackEntered
       videosUploaded
       invoiced
-      feedbackObtained
-      satisfactionScore
+      invoiceNumber
       clientComments
       wuComments
       profiles
@@ -489,6 +482,7 @@ export const updateSession = `mutation UpdateSession($input: UpdateSessionInput!
       institution
       clientNotes
       facilitatorComments
+      lastUpdated
       contactNotes {
         nextToken
       }
@@ -509,7 +503,6 @@ export const deleteSession = `mutation DeleteSession($input: DeleteSessionInput!
     id
     project {
       id
-      createdAt
       reference
       title
       status
@@ -519,13 +512,14 @@ export const deleteSession = `mutation DeleteSession($input: DeleteSessionInput!
       }
       principalContact
       otherContact
+      testingDate
       cost
       purchaseOrderNumber
       manager
       testerFacilitator
       clientFacilitator
       mainRecruiter
-      facility
+      facilities
       screenerApproved
       facilitationGuideSent
       testerProfilesSent
@@ -537,8 +531,7 @@ export const deleteSession = `mutation DeleteSession($input: DeleteSessionInput!
       feedbackEntered
       videosUploaded
       invoiced
-      feedbackObtained
-      satisfactionScore
+      invoiceNumber
       clientComments
       wuComments
       profiles
@@ -583,6 +576,7 @@ export const deleteSession = `mutation DeleteSession($input: DeleteSessionInput!
       institution
       clientNotes
       facilitatorComments
+      lastUpdated
       contactNotes {
         nextToken
       }
@@ -633,6 +627,7 @@ export const createTester = `mutation CreateTester($input: CreateTesterInput!) {
     institution
     clientNotes
     facilitatorComments
+    lastUpdated
     contactNotes {
       items {
         id
@@ -692,6 +687,7 @@ export const updateTester = `mutation UpdateTester($input: UpdateTesterInput!) {
     institution
     clientNotes
     facilitatorComments
+    lastUpdated
     contactNotes {
       items {
         id
@@ -751,6 +747,7 @@ export const deleteTester = `mutation DeleteTester($input: DeleteTesterInput!) {
     institution
     clientNotes
     facilitatorComments
+    lastUpdated
     contactNotes {
       items {
         id
@@ -781,7 +778,6 @@ export const createContactNote = `mutation CreateContactNote($input: CreateConta
     type
     project {
       id
-      createdAt
       reference
       title
       status
@@ -791,13 +787,14 @@ export const createContactNote = `mutation CreateContactNote($input: CreateConta
       }
       principalContact
       otherContact
+      testingDate
       cost
       purchaseOrderNumber
       manager
       testerFacilitator
       clientFacilitator
       mainRecruiter
-      facility
+      facilities
       screenerApproved
       facilitationGuideSent
       testerProfilesSent
@@ -809,8 +806,7 @@ export const createContactNote = `mutation CreateContactNote($input: CreateConta
       feedbackEntered
       videosUploaded
       invoiced
-      feedbackObtained
-      satisfactionScore
+      invoiceNumber
       clientComments
       wuComments
       profiles
@@ -858,6 +854,7 @@ export const createContactNote = `mutation CreateContactNote($input: CreateConta
       institution
       clientNotes
       facilitatorComments
+      lastUpdated
       contactNotes {
         nextToken
       }
@@ -874,7 +871,6 @@ export const updateContactNote = `mutation UpdateContactNote($input: UpdateConta
     type
     project {
       id
-      createdAt
       reference
       title
       status
@@ -884,13 +880,14 @@ export const updateContactNote = `mutation UpdateContactNote($input: UpdateConta
       }
       principalContact
       otherContact
+      testingDate
       cost
       purchaseOrderNumber
       manager
       testerFacilitator
       clientFacilitator
       mainRecruiter
-      facility
+      facilities
       screenerApproved
       facilitationGuideSent
       testerProfilesSent
@@ -902,8 +899,7 @@ export const updateContactNote = `mutation UpdateContactNote($input: UpdateConta
       feedbackEntered
       videosUploaded
       invoiced
-      feedbackObtained
-      satisfactionScore
+      invoiceNumber
       clientComments
       wuComments
       profiles
@@ -951,6 +947,7 @@ export const updateContactNote = `mutation UpdateContactNote($input: UpdateConta
       institution
       clientNotes
       facilitatorComments
+      lastUpdated
       contactNotes {
         nextToken
       }
@@ -967,7 +964,6 @@ export const deleteContactNote = `mutation DeleteContactNote($input: DeleteConta
     type
     project {
       id
-      createdAt
       reference
       title
       status
@@ -977,13 +973,14 @@ export const deleteContactNote = `mutation DeleteContactNote($input: DeleteConta
       }
       principalContact
       otherContact
+      testingDate
       cost
       purchaseOrderNumber
       manager
       testerFacilitator
       clientFacilitator
       mainRecruiter
-      facility
+      facilities
       screenerApproved
       facilitationGuideSent
       testerProfilesSent
@@ -995,8 +992,7 @@ export const deleteContactNote = `mutation DeleteContactNote($input: DeleteConta
       feedbackEntered
       videosUploaded
       invoiced
-      feedbackObtained
-      satisfactionScore
+      invoiceNumber
       clientComments
       wuComments
       profiles
@@ -1044,6 +1040,7 @@ export const deleteContactNote = `mutation DeleteContactNote($input: DeleteConta
       institution
       clientNotes
       facilitatorComments
+      lastUpdated
       contactNotes {
         nextToken
       }

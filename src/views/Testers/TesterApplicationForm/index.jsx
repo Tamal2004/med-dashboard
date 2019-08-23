@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from 'react';
+import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { reduxForm, formValueSelector } from 'redux-form';
@@ -63,9 +63,6 @@ const TesterApplication = ({
     submitting
 }) => {
     const c = useStyles();
-    useEffect(() => {
-     console.log('loaded');
-    })
     return (
         <Paper className={c.root}>
             <Typography className={c.header} variant='h2' gutterBottom>

@@ -1,3 +1,5 @@
+import { serializeDate, deserializeDate } from 'libs';
+
 export default async (
     values,
     dispatch,
@@ -43,17 +45,15 @@ export default async (
         employment = { ...studentEmployment };
     }
 
-    const serializeDate = date =>
-        date
-            .split('/')
-            .reverse()
-            .join('-');
+
 
     const tester = {
         ...pruned,
         ...address,
         ...employment,
-        dob: serializeDate(dob)
+        dob: serializeDate(dob),
+        lastUpdated: serializeDate(deserializeDate(new Date())) // Today
     };
+
     return createTester(tester);
 };

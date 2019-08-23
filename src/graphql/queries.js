@@ -8,19 +8,19 @@ export const getClient = `query GetClient($id: ID!) {
     projects {
       items {
         id
-        createdAt
         reference
         title
         status
         principalContact
         otherContact
+        testingDate
         cost
         purchaseOrderNumber
         manager
         testerFacilitator
         clientFacilitator
         mainRecruiter
-        facility
+        facilities
         screenerApproved
         facilitationGuideSent
         testerProfilesSent
@@ -32,8 +32,7 @@ export const getClient = `query GetClient($id: ID!) {
         feedbackEntered
         videosUploaded
         invoiced
-        feedbackObtained
-        satisfactionScore
+        invoiceNumber
         clientComments
         wuComments
         profiles
@@ -63,7 +62,6 @@ export const listClients = `query ListClients(
 export const getProject = `query GetProject($id: ID!) {
   getProject(id: $id) {
     id
-    createdAt
     reference
     title
     status
@@ -76,13 +74,14 @@ export const getProject = `query GetProject($id: ID!) {
     }
     principalContact
     otherContact
+    testingDate
     cost
     purchaseOrderNumber
     manager
     testerFacilitator
     clientFacilitator
     mainRecruiter
-    facility
+    facilities
     screenerApproved
     facilitationGuideSent
     testerProfilesSent
@@ -94,8 +93,7 @@ export const getProject = `query GetProject($id: ID!) {
     feedbackEntered
     videosUploaded
     invoiced
-    feedbackObtained
-    satisfactionScore
+    invoiceNumber
     clientComments
     wuComments
     profiles
@@ -131,7 +129,6 @@ export const listProjects = `query ListProjects(
   listProjects(filter: $filter, limit: $limit, nextToken: $nextToken) {
     items {
       id
-      createdAt
       reference
       title
       status
@@ -141,13 +138,14 @@ export const listProjects = `query ListProjects(
       }
       principalContact
       otherContact
+      testingDate
       cost
       purchaseOrderNumber
       manager
       testerFacilitator
       clientFacilitator
       mainRecruiter
-      facility
+      facilities
       screenerApproved
       facilitationGuideSent
       testerProfilesSent
@@ -159,8 +157,7 @@ export const listProjects = `query ListProjects(
       feedbackEntered
       videosUploaded
       invoiced
-      feedbackObtained
-      satisfactionScore
+      invoiceNumber
       clientComments
       wuComments
       profiles
@@ -180,7 +177,6 @@ export const getSession = `query GetSession($id: ID!) {
     id
     project {
       id
-      createdAt
       reference
       title
       status
@@ -190,13 +186,14 @@ export const getSession = `query GetSession($id: ID!) {
       }
       principalContact
       otherContact
+      testingDate
       cost
       purchaseOrderNumber
       manager
       testerFacilitator
       clientFacilitator
       mainRecruiter
-      facility
+      facilities
       screenerApproved
       facilitationGuideSent
       testerProfilesSent
@@ -208,8 +205,7 @@ export const getSession = `query GetSession($id: ID!) {
       feedbackEntered
       videosUploaded
       invoiced
-      feedbackObtained
-      satisfactionScore
+      invoiceNumber
       clientComments
       wuComments
       profiles
@@ -254,6 +250,7 @@ export const getSession = `query GetSession($id: ID!) {
       institution
       clientNotes
       facilitatorComments
+      lastUpdated
       contactNotes {
         nextToken
       }
@@ -279,19 +276,19 @@ export const listSessions = `query ListSessions(
       id
       project {
         id
-        createdAt
         reference
         title
         status
         principalContact
         otherContact
+        testingDate
         cost
         purchaseOrderNumber
         manager
         testerFacilitator
         clientFacilitator
         mainRecruiter
-        facility
+        facilities
         screenerApproved
         facilitationGuideSent
         testerProfilesSent
@@ -303,8 +300,7 @@ export const listSessions = `query ListSessions(
         feedbackEntered
         videosUploaded
         invoiced
-        feedbackObtained
-        satisfactionScore
+        invoiceNumber
         clientComments
         wuComments
         profiles
@@ -343,6 +339,7 @@ export const listSessions = `query ListSessions(
         institution
         clientNotes
         facilitatorComments
+        lastUpdated
       }
       profile
       location
@@ -389,6 +386,7 @@ export const getTester = `query GetTester($id: ID!) {
     institution
     clientNotes
     facilitatorComments
+    lastUpdated
     contactNotes {
       items {
         id
@@ -453,6 +451,7 @@ export const listTesters = `query ListTesters(
       institution
       clientNotes
       facilitatorComments
+      lastUpdated
       contactNotes {
         nextToken
       }
@@ -470,7 +469,6 @@ export const getContactNote = `query GetContactNote($id: ID!) {
     type
     project {
       id
-      createdAt
       reference
       title
       status
@@ -480,13 +478,14 @@ export const getContactNote = `query GetContactNote($id: ID!) {
       }
       principalContact
       otherContact
+      testingDate
       cost
       purchaseOrderNumber
       manager
       testerFacilitator
       clientFacilitator
       mainRecruiter
-      facility
+      facilities
       screenerApproved
       facilitationGuideSent
       testerProfilesSent
@@ -498,8 +497,7 @@ export const getContactNote = `query GetContactNote($id: ID!) {
       feedbackEntered
       videosUploaded
       invoiced
-      feedbackObtained
-      satisfactionScore
+      invoiceNumber
       clientComments
       wuComments
       profiles
@@ -547,6 +545,7 @@ export const getContactNote = `query GetContactNote($id: ID!) {
       institution
       clientNotes
       facilitatorComments
+      lastUpdated
       contactNotes {
         nextToken
       }
@@ -568,19 +567,19 @@ export const listContactNotes = `query ListContactNotes(
       type
       project {
         id
-        createdAt
         reference
         title
         status
         principalContact
         otherContact
+        testingDate
         cost
         purchaseOrderNumber
         manager
         testerFacilitator
         clientFacilitator
         mainRecruiter
-        facility
+        facilities
         screenerApproved
         facilitationGuideSent
         testerProfilesSent
@@ -592,8 +591,7 @@ export const listContactNotes = `query ListContactNotes(
         feedbackEntered
         videosUploaded
         invoiced
-        feedbackObtained
-        satisfactionScore
+        invoiceNumber
         clientComments
         wuComments
         profiles
@@ -635,6 +633,7 @@ export const listContactNotes = `query ListContactNotes(
         institution
         clientNotes
         facilitatorComments
+        lastUpdated
       }
     }
     nextToken

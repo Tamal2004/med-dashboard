@@ -8,19 +8,19 @@ export const onCreateClient = `subscription OnCreateClient {
     projects {
       items {
         id
-        createdAt
         reference
         title
         status
         principalContact
         otherContact
+        testingDate
         cost
         purchaseOrderNumber
         manager
         testerFacilitator
         clientFacilitator
         mainRecruiter
-        facility
+        facilities
         screenerApproved
         facilitationGuideSent
         testerProfilesSent
@@ -32,8 +32,7 @@ export const onCreateClient = `subscription OnCreateClient {
         feedbackEntered
         videosUploaded
         invoiced
-        feedbackObtained
-        satisfactionScore
+        invoiceNumber
         clientComments
         wuComments
         profiles
@@ -50,19 +49,19 @@ export const onUpdateClient = `subscription OnUpdateClient {
     projects {
       items {
         id
-        createdAt
         reference
         title
         status
         principalContact
         otherContact
+        testingDate
         cost
         purchaseOrderNumber
         manager
         testerFacilitator
         clientFacilitator
         mainRecruiter
-        facility
+        facilities
         screenerApproved
         facilitationGuideSent
         testerProfilesSent
@@ -74,8 +73,7 @@ export const onUpdateClient = `subscription OnUpdateClient {
         feedbackEntered
         videosUploaded
         invoiced
-        feedbackObtained
-        satisfactionScore
+        invoiceNumber
         clientComments
         wuComments
         profiles
@@ -92,19 +90,19 @@ export const onDeleteClient = `subscription OnDeleteClient {
     projects {
       items {
         id
-        createdAt
         reference
         title
         status
         principalContact
         otherContact
+        testingDate
         cost
         purchaseOrderNumber
         manager
         testerFacilitator
         clientFacilitator
         mainRecruiter
-        facility
+        facilities
         screenerApproved
         facilitationGuideSent
         testerProfilesSent
@@ -116,8 +114,7 @@ export const onDeleteClient = `subscription OnDeleteClient {
         feedbackEntered
         videosUploaded
         invoiced
-        feedbackObtained
-        satisfactionScore
+        invoiceNumber
         clientComments
         wuComments
         profiles
@@ -130,7 +127,6 @@ export const onDeleteClient = `subscription OnDeleteClient {
 export const onCreateProject = `subscription OnCreateProject {
   onCreateProject {
     id
-    createdAt
     reference
     title
     status
@@ -143,13 +139,14 @@ export const onCreateProject = `subscription OnCreateProject {
     }
     principalContact
     otherContact
+    testingDate
     cost
     purchaseOrderNumber
     manager
     testerFacilitator
     clientFacilitator
     mainRecruiter
-    facility
+    facilities
     screenerApproved
     facilitationGuideSent
     testerProfilesSent
@@ -161,8 +158,7 @@ export const onCreateProject = `subscription OnCreateProject {
     feedbackEntered
     videosUploaded
     invoiced
-    feedbackObtained
-    satisfactionScore
+    invoiceNumber
     clientComments
     wuComments
     profiles
@@ -193,7 +189,6 @@ export const onCreateProject = `subscription OnCreateProject {
 export const onUpdateProject = `subscription OnUpdateProject {
   onUpdateProject {
     id
-    createdAt
     reference
     title
     status
@@ -206,13 +201,14 @@ export const onUpdateProject = `subscription OnUpdateProject {
     }
     principalContact
     otherContact
+    testingDate
     cost
     purchaseOrderNumber
     manager
     testerFacilitator
     clientFacilitator
     mainRecruiter
-    facility
+    facilities
     screenerApproved
     facilitationGuideSent
     testerProfilesSent
@@ -224,8 +220,7 @@ export const onUpdateProject = `subscription OnUpdateProject {
     feedbackEntered
     videosUploaded
     invoiced
-    feedbackObtained
-    satisfactionScore
+    invoiceNumber
     clientComments
     wuComments
     profiles
@@ -256,7 +251,6 @@ export const onUpdateProject = `subscription OnUpdateProject {
 export const onDeleteProject = `subscription OnDeleteProject {
   onDeleteProject {
     id
-    createdAt
     reference
     title
     status
@@ -269,13 +263,14 @@ export const onDeleteProject = `subscription OnDeleteProject {
     }
     principalContact
     otherContact
+    testingDate
     cost
     purchaseOrderNumber
     manager
     testerFacilitator
     clientFacilitator
     mainRecruiter
-    facility
+    facilities
     screenerApproved
     facilitationGuideSent
     testerProfilesSent
@@ -287,8 +282,7 @@ export const onDeleteProject = `subscription OnDeleteProject {
     feedbackEntered
     videosUploaded
     invoiced
-    feedbackObtained
-    satisfactionScore
+    invoiceNumber
     clientComments
     wuComments
     profiles
@@ -321,7 +315,6 @@ export const onCreateSession = `subscription OnCreateSession {
     id
     project {
       id
-      createdAt
       reference
       title
       status
@@ -331,13 +324,14 @@ export const onCreateSession = `subscription OnCreateSession {
       }
       principalContact
       otherContact
+      testingDate
       cost
       purchaseOrderNumber
       manager
       testerFacilitator
       clientFacilitator
       mainRecruiter
-      facility
+      facilities
       screenerApproved
       facilitationGuideSent
       testerProfilesSent
@@ -349,8 +343,7 @@ export const onCreateSession = `subscription OnCreateSession {
       feedbackEntered
       videosUploaded
       invoiced
-      feedbackObtained
-      satisfactionScore
+      invoiceNumber
       clientComments
       wuComments
       profiles
@@ -395,6 +388,7 @@ export const onCreateSession = `subscription OnCreateSession {
       institution
       clientNotes
       facilitatorComments
+      lastUpdated
       contactNotes {
         nextToken
       }
@@ -415,7 +409,6 @@ export const onUpdateSession = `subscription OnUpdateSession {
     id
     project {
       id
-      createdAt
       reference
       title
       status
@@ -425,13 +418,14 @@ export const onUpdateSession = `subscription OnUpdateSession {
       }
       principalContact
       otherContact
+      testingDate
       cost
       purchaseOrderNumber
       manager
       testerFacilitator
       clientFacilitator
       mainRecruiter
-      facility
+      facilities
       screenerApproved
       facilitationGuideSent
       testerProfilesSent
@@ -443,8 +437,7 @@ export const onUpdateSession = `subscription OnUpdateSession {
       feedbackEntered
       videosUploaded
       invoiced
-      feedbackObtained
-      satisfactionScore
+      invoiceNumber
       clientComments
       wuComments
       profiles
@@ -489,6 +482,7 @@ export const onUpdateSession = `subscription OnUpdateSession {
       institution
       clientNotes
       facilitatorComments
+      lastUpdated
       contactNotes {
         nextToken
       }
@@ -509,7 +503,6 @@ export const onDeleteSession = `subscription OnDeleteSession {
     id
     project {
       id
-      createdAt
       reference
       title
       status
@@ -519,13 +512,14 @@ export const onDeleteSession = `subscription OnDeleteSession {
       }
       principalContact
       otherContact
+      testingDate
       cost
       purchaseOrderNumber
       manager
       testerFacilitator
       clientFacilitator
       mainRecruiter
-      facility
+      facilities
       screenerApproved
       facilitationGuideSent
       testerProfilesSent
@@ -537,8 +531,7 @@ export const onDeleteSession = `subscription OnDeleteSession {
       feedbackEntered
       videosUploaded
       invoiced
-      feedbackObtained
-      satisfactionScore
+      invoiceNumber
       clientComments
       wuComments
       profiles
@@ -583,6 +576,7 @@ export const onDeleteSession = `subscription OnDeleteSession {
       institution
       clientNotes
       facilitatorComments
+      lastUpdated
       contactNotes {
         nextToken
       }
@@ -633,6 +627,7 @@ export const onCreateTester = `subscription OnCreateTester {
     institution
     clientNotes
     facilitatorComments
+    lastUpdated
     contactNotes {
       items {
         id
@@ -692,6 +687,7 @@ export const onUpdateTester = `subscription OnUpdateTester {
     institution
     clientNotes
     facilitatorComments
+    lastUpdated
     contactNotes {
       items {
         id
@@ -751,6 +747,7 @@ export const onDeleteTester = `subscription OnDeleteTester {
     institution
     clientNotes
     facilitatorComments
+    lastUpdated
     contactNotes {
       items {
         id
@@ -781,7 +778,6 @@ export const onCreateContactNote = `subscription OnCreateContactNote {
     type
     project {
       id
-      createdAt
       reference
       title
       status
@@ -791,13 +787,14 @@ export const onCreateContactNote = `subscription OnCreateContactNote {
       }
       principalContact
       otherContact
+      testingDate
       cost
       purchaseOrderNumber
       manager
       testerFacilitator
       clientFacilitator
       mainRecruiter
-      facility
+      facilities
       screenerApproved
       facilitationGuideSent
       testerProfilesSent
@@ -809,8 +806,7 @@ export const onCreateContactNote = `subscription OnCreateContactNote {
       feedbackEntered
       videosUploaded
       invoiced
-      feedbackObtained
-      satisfactionScore
+      invoiceNumber
       clientComments
       wuComments
       profiles
@@ -858,6 +854,7 @@ export const onCreateContactNote = `subscription OnCreateContactNote {
       institution
       clientNotes
       facilitatorComments
+      lastUpdated
       contactNotes {
         nextToken
       }
@@ -874,7 +871,6 @@ export const onUpdateContactNote = `subscription OnUpdateContactNote {
     type
     project {
       id
-      createdAt
       reference
       title
       status
@@ -884,13 +880,14 @@ export const onUpdateContactNote = `subscription OnUpdateContactNote {
       }
       principalContact
       otherContact
+      testingDate
       cost
       purchaseOrderNumber
       manager
       testerFacilitator
       clientFacilitator
       mainRecruiter
-      facility
+      facilities
       screenerApproved
       facilitationGuideSent
       testerProfilesSent
@@ -902,8 +899,7 @@ export const onUpdateContactNote = `subscription OnUpdateContactNote {
       feedbackEntered
       videosUploaded
       invoiced
-      feedbackObtained
-      satisfactionScore
+      invoiceNumber
       clientComments
       wuComments
       profiles
@@ -951,6 +947,7 @@ export const onUpdateContactNote = `subscription OnUpdateContactNote {
       institution
       clientNotes
       facilitatorComments
+      lastUpdated
       contactNotes {
         nextToken
       }
@@ -967,7 +964,6 @@ export const onDeleteContactNote = `subscription OnDeleteContactNote {
     type
     project {
       id
-      createdAt
       reference
       title
       status
@@ -977,13 +973,14 @@ export const onDeleteContactNote = `subscription OnDeleteContactNote {
       }
       principalContact
       otherContact
+      testingDate
       cost
       purchaseOrderNumber
       manager
       testerFacilitator
       clientFacilitator
       mainRecruiter
-      facility
+      facilities
       screenerApproved
       facilitationGuideSent
       testerProfilesSent
@@ -995,8 +992,7 @@ export const onDeleteContactNote = `subscription OnDeleteContactNote {
       feedbackEntered
       videosUploaded
       invoiced
-      feedbackObtained
-      satisfactionScore
+      invoiceNumber
       clientComments
       wuComments
       profiles
@@ -1044,6 +1040,7 @@ export const onDeleteContactNote = `subscription OnDeleteContactNote {
       institution
       clientNotes
       facilitatorComments
+      lastUpdated
       contactNotes {
         nextToken
       }
