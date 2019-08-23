@@ -4,7 +4,7 @@ import { compose } from 'redux';
 import { reduxForm, formValueSelector } from 'redux-form';
 
 // Material
-import { Paper, Typography, Grid } from '@material-ui/core';
+import { Paper, Typography, Grid, Link } from '@material-ui/core';
 
 // Local
 import useStyles from './styles';
@@ -65,20 +65,20 @@ const TesterApplication = ({
     const c = useStyles();
     return (
         <Paper className={c.root}>
-            <Typography className={c.header} variant='h2' gutterBottom>
+            <Typography className={c.header} variant='h4' gutterBottom>
                 Tester Application Form
             </Typography>
-            <Typography className={c.info} variant='h5' gutterBottom>
+            <Typography className={c.info} variant='subtitle1' gutterBottom>
                 Thank you for your interest in becoming a website tester. So we
                 can match you with the most suitable testing opportunities
                 please fill out the form below with as much information as
                 possible.
             </Typography>
-            <Typography className={c.info} variant='h5' gutterBottom>
+            <Typography className={c.info} variant='subtitle1' gutterBottom>
                 If you have any queries, please contact Avril on
                 avril@webusability.co.uk.
             </Typography>
-            <Typography className={c.info} variant='h5' gutterBottom>
+            <Typography className={c.info} variant='subtitle1' gutterBottom>
                 Our database is maintained solely for our use in recruiting
                 testers. The information is not passed on to any other
                 organisation.
@@ -236,7 +236,7 @@ const TesterApplication = ({
                         <Grid item xs={10}>
                             <Typography>
                                 I confirm that I have read and accepted the
-                                Testers Terms & Conditions
+                                Testers <Link href='#'>Terms & Conditions</Link>
                             </Typography>
                         </Grid>
                     </Grid>
@@ -315,11 +315,8 @@ const mapState = state => {
     };
 };
 
-
 const _TesterApplication = compose(
-    connect(
-        mapState
-    ),
+    connect(mapState),
     reduxForm({
         form: 'TesterApplication',
         validate,
