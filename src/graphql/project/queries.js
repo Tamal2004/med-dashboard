@@ -1,4 +1,4 @@
-export const listProjectClients = `query ListProjectClients {
+export const ListProjectClients = `query ListProjectClients {
   listClients {
     items {
       id
@@ -14,6 +14,23 @@ export const CheckProjectReference = `query CheckProjectReference(
     listProjects(filter: $filter limit: 1) {
         items {
             reference
+        }
+    }
+}`;
+
+export const ListProjects = `query ListProjects {
+    listProjects {
+        items {
+            id
+            client {
+                id
+                name
+            }
+            reference
+            title
+            testingDate
+            status
+            manager
         }
     }
 }`;

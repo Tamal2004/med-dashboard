@@ -1,6 +1,6 @@
 import { deserializeDate } from 'libs';
 
-export const normalizeTesters = ({ items = [] }) =>
+export const normalizeTestersList = ({ items = [] }) =>
     items.map(
         ({
             id,
@@ -36,3 +36,147 @@ export const normalizeTesters = ({ items = [] }) =>
             };
         }
     );
+
+export const normalizeTester = (
+    data = {
+        id: '3a8cf4b5-433a-4ab9-b706-5b153c97d0cb',
+        title: 'Mr',
+        firstName: 'Matt',
+        surname: 'Tamal',
+        email: 'matt@echotechsys.com',
+        phone: '01306568988',
+        address: null,
+        house: '12',
+        street: 'Avenue Adolphe',
+        town: 'Brussels',
+        county: 'Yorkshire',
+        postcode: '1050',
+        country: 'Belgium',
+        gender: 'Male',
+        dob: '1999-01-01',
+        maritalStatus: 'Single',
+        hasChildren: true,
+        nationality: 'United Kingdom',
+        ethnicity: 'Arab',
+        firstLanguage: 'English',
+        otherLanguages: 'Bengali',
+        disability: 'None',
+        about: 'Software developer',
+        employmentStatus: 'Full-time employment',
+        jobTitle: 'Software Engineer',
+        businessName: 'Matt Tamal',
+        employmentSector: 'Computers & ICT',
+        employeeCount: '1 - 9',
+        subject: null,
+        educationStage: null,
+        institution: null,
+        clientNotes: null,
+        facilitatorComments: null,
+        lastUpdated: '2019-08-23',
+        contactNotes: {
+            items: [
+                {
+                    id: '2c363a6e-b5b0-43f0-879c-bdf8dfd07361',
+                    date: '2019-08-18',
+                    project: {
+                        id: '8916b36d-3db2-4c94-8786-81ad3c0518e7',
+                        reference: 'EU26'
+                    },
+                    type: 'Attended',
+                    contactedBy: 'Avril',
+                    note: 'Good work'
+                },
+                {
+                    id: '313026e9-17f1-4850-a879-dde14abf1220',
+                    date: '2019-08-08',
+                    project: {
+                        id: '8916b36d-3db2-4c94-8786-81ad3c0518e7',
+                        reference: 'EU26'
+                    },
+                    type: 'Confirmed',
+                    contactedBy: 'Lucy',
+                    note: 'Decent'
+                }
+            ]
+        },
+        sessions: {
+            items: [
+                {
+                    id: '8914f4c3-cd78-4cfd-aaca-ed6d54098733',
+                    date: '2019-08-11',
+                    time: '16:30',
+                    project: {
+                        id: '8916b36d-3db2-4c94-8786-81ad3c0518e7',
+                        reference: 'EU26',
+                        client: {
+                            id: 'cecea1c8-f178-46cd-9a4e-4b6f1508c987',
+                            name: 'Disney'
+                        }
+                    },
+                    notes: 'This one has a note too'
+                }
+            ]
+        }
+    }
+) => {
+    const { dob, address, ...testerData } = data;
+
+    const calculateAge = dob =>
+        Math.floor((new Date() - new Date(dob)) / 60 / 60 / 24 / 365 / 1000);
+
+    const testerDetails = {
+        dob: deserializeDate(dob),
+        age: calculateAge(dob),
+        ...Object.splice(testerData, [
+            'title',
+            'firstName',
+            'surname',
+            'gender',
+            'maritalStatus',
+            'hasChildren',
+            'nationality',
+            'ethnicity',
+            'firstLanguage',
+            'otherLanguages',
+            'disability',
+            'about',
+            'clientNotes',
+            'facilitatorComments',
+            'lastUpdated'
+        ])
+    };
+
+    let addressDetails = {};
+    if (address) addressDetails = { manualAddress: false, address };
+    else {
+        addressDetails = {
+            manualAddress: true,
+            ...Object.splice(testerData, [
+                'house',
+                'street',
+                'town',
+                'county',
+                'postcode',
+                'country'
+            ])
+        };
+    }
+
+    const contactDetails = {
+        ...Object.splice(testerData, ['email', 'phone']),
+        ...addressDetails
+    };
+
+    const employmentDetails = Object.splice(testerData, [
+        'employmentStatus',
+        'jobTitle',
+        'businessName',
+        'employmentSector',
+        'employeeCount',
+        'subject',
+        'educationStage',
+        'institution'
+    ]);
+
+    return { testerDetails, contactDetails, employmentDetails };
+};

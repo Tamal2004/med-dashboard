@@ -18,3 +18,8 @@ export const serializeDate = date =>
         .split('/')
         .reverse()
         .join('-');
+
+export const calculateAge = dob =>
+    dob
+        ? Math.floor((new Date() - new Date(dob)) / 60 / 60 / 24 / 365 / 1000)
+        : '';

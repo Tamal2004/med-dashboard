@@ -255,17 +255,16 @@ class Table extends Component {
             renderTable
         } = this;
 
+        const headerKeys = Object.keys(datum);
 
-        const headers = Object.keys(datum).map(value =>
+        const headers = headerKeys.map(value =>
             value === 'actions' ? ' ' : value
         );
 
-        const totalPages =
-            Math.floor(data.length / itemsPerPage) +
-                !!(data.length % itemsPerPage) || 1;
+        const hasActions = headerKeys.includes('actions');
 
         const actionDecrement =
-            isActionColumn || (handleEditModal && handleEditModal !== void 0)
+            hasActions || (handleEditModal && handleEditModal !== void 0)
                 ? 1
                 : 0;
 
