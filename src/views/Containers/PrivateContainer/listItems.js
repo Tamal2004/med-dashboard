@@ -105,7 +105,7 @@ const ListItems = ({ auth: { isTester, name } }) => (
     <Fragment>
         {/*Client and Project and Tester*/}
         {isTester ? (
-            <LinkItem to={`/tester/${name}`} title={'Home'}>
+            <LinkItem to={`/`} title={'Home'}>
                 <LinkListMenu text='Home' />
             </LinkItem>
         ) : (
