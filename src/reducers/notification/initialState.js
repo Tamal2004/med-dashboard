@@ -1,4 +1,4 @@
 export default {
-	type: null,
-	message: ''
+    type: null,
+    message: ''
 };

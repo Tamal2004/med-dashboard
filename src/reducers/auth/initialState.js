@@ -1,5 +1,5 @@
 export default {
-	email: null,
-	name: '',
-	isTester: false
+    email: null,
+    name: '',
+    isTester: false
 };

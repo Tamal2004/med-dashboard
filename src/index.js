@@ -19,9 +19,9 @@ enhanceProtypes();
 startServices();
 
 const AppDom = () => (
-	<Provider store={store}>
-		<App />
-	</Provider>
+    <Provider store={store}>
+        <App />
+    </Provider>
 );
 
 ReactDOM.render(<AppDom />, document.getElementById('root'));
