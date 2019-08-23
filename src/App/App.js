@@ -1,5 +1,4 @@
 import React, { Suspense } from 'react';
-import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { CircularLoader } from 'components';
 
@@ -38,9 +37,4 @@ class App extends AuthPiece {
     }
 }
 
-const mapStateToProps = ({ auth }) => ({ auth });
-
-export default compose(
-    connect(mapStateToProps),
-    withModalProvider
-)(App);
+export default compose(withModalProvider)(App);

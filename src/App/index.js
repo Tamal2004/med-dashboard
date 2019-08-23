@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Provider } from 'react-redux';
+import { connect } from 'react-redux';
 import { Router } from 'react-router-dom';
 
 // AWS
@@ -9,7 +9,6 @@ import {
     Greetings,
     ConfirmSignIn,
     SignUp,
-    ConfirmSignUp,
     TOTPSetup,
     Loading
 } from 'aws-amplify-react';
@@ -22,7 +21,8 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 
 // Local
 import theme from 'components/theme';
-import store from 'store';
+import { Notification } from 'components';
+import { setAuthUserInfo } from 'actions';
 import { history } from 'libs/history';
 import App from './App';
 
@@ -31,37 +31,47 @@ class IndexApp extends Component {
         super(props);
         this._validAuthStates = ['signIn'];
     }
+
     render() {
         return (
-            <Provider store={store}>
-                <Router history={history}>
-                    <MuiThemeProvider theme={theme}>
-                        <CssBaseline />
-                        <Authenticator
-                            amplifyConfig={config}
-                            authState={
-                                history.location.pathname.trim() ===
-                                '/tester-application-form'
-                                    ? 'signUp'
-                                    : 'signIn'
-                            }
-                            hide={[
-                                Greetings,
-                                ConfirmSignIn,
-                                SignUp,
-                                ConfirmSignUp,
-                                TOTPSetup,
-                                Loading
-                            ]}
-                        >
-                            <OpenTesterForm override={'SignUp'} />
-                            <App />
-                        </Authenticator>
-                    </MuiThemeProvider>
-                </Router>
-            </Provider>
+            <Router history={history}>
+                <MuiThemeProvider theme={theme}>
+                    <CssBaseline />
+                    <Authenticator
+                        amplifyConfig={config}
+                        authState={
+                            history.location.pathname.trim() ===
+                            '/tester-application-form'
+                                ? 'signUp'
+                                : 'signIn'
+                        }
+                        onStateChange={authState =>
+                            authState === 'signedIn' &&
+                            this.props.setAuthUserInfo()
+                        }
+                        hide={[
+                            Greetings,
+                            ConfirmSignIn,
+                            SignUp,
+                            Loading,
+                            TOTPSetup
+                        ]}
+                    >
+                        <OpenTesterForm override={'SignUp'} />
+                        <App />
+                    </Authenticator>
+                    <Notification />
+                </MuiThemeProvider>
+            </Router>
         );
     }
 }
 
-export default IndexApp;
+const mapDispatch = {
+    setAuthUserInfo
+};
+
+export default connect(
+    null,
+    mapDispatch
+)(IndexApp);

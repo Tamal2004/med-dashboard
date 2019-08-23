@@ -1,1 +1,5 @@
-export default {};
+export default {
+	email: null,
+	name: '',
+	isTester: false
+};

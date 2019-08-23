@@ -6,6 +6,7 @@ import auth from './auth';
 import datasets from './datasets';
 import testers from './testers';
 import projects from './projects';
+import notification from './notification';
 import utils from './utils';
 
 const rootReducer = combineReducers({
@@ -14,6 +15,7 @@ const rootReducer = combineReducers({
     form,
     testers,
     projects,
+    notification,
     utils
 });
 
