@@ -21,6 +21,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 
 // Local
 import theme from 'components/theme';
+import { Notification } from 'components';
 import { setAuthUserInfo } from 'actions';
 import { history } from 'libs/history';
 import App from './App';
@@ -59,6 +60,7 @@ class IndexApp extends Component {
                         <OpenTesterForm override={'SignUp'} />
                         <App />
                     </Authenticator>
+                    <Notification />
                 </MuiThemeProvider>
             </Router>
         );

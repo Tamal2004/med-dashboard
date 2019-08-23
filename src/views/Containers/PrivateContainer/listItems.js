@@ -1,17 +1,26 @@
 import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
-import { SvgIcon } from '@material-ui/core';
-import Divider from '@material-ui/core/Divider';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import AccountIcon from '@material-ui/icons/AccountBox';
-import TesterIcon from '@material-ui/icons/People';
-import ClientIcon from '@material-ui/icons/NaturePeople';
-import ProjectIcon from '@material-ui/icons/BarChart';
-import ListIcon from '@material-ui/icons/ChevronRight';
-import { makeStyles } from '@material-ui/core/styles';
+import {
+    SvgIcon,
+    Divider,
+    Link,
+    Typography,
+    ListItem,
+    ListItemIcon,
+    ListItemText,
+    makeStyles
+} from '@material-ui/core';
+
+import {
+    AccountBox as AccountIcon,
+    People as TesterIcon,
+    NaturePeople as ClientIcon,
+    BarChart as ProjectIcon,
+    ChevronRight as ListIcon,
+    PhoneOutlined as PhoneIcon,
+    EmailOutlined as EmailIcon
+} from '@material-ui/icons';
 
 import { Accordion, AccordionPanel } from 'components';
 
@@ -33,6 +42,19 @@ const useStyles = makeStyles(theme => ({
     },
     activeColor: {
         color: theme.palette.primary.main
+    },
+
+    contactWrapper: {
+        position: 'fixed',
+        bottom: 0,
+        padding: 10
+    },
+    textContainer: {
+        display: 'flex',
+        marginBottom: 10
+    },
+    text: {
+        paddingLeft: theme.spacing()
     }
 }));
 
@@ -83,6 +105,32 @@ const LinkListMenu = ({ text }) => {
                 {text}
             </ListItemText>
         </ListItem>
+    );
+};
+
+const ContactUs = () => {
+    const c = useStyles();
+    return (
+        <div className={c.contactWrapper}>
+            <div className={c.textContainer}>
+                <SvgIcon fontSize='small' color='action'>
+                    <PhoneIcon />
+                </SvgIcon>
+                <Typography className={c.text}>
+                    <Link href='tel:01249-444-757'>01249-444-757</Link>
+                </Typography>
+            </div>
+            <div className={c.textContainer}>
+                <SvgIcon fontSize='small' color='action'>
+                    <EmailIcon />
+                </SvgIcon>
+                <Typography className={c.text}>
+                    <Link href='mailto:avril@webusability.co.uk'>
+                        avril@webusability.co.uk
+                    </Link>
+                </Typography>
+            </div>
+        </div>
     );
 };
 
@@ -179,6 +227,8 @@ const ListItems = ({ auth: { isTester, name } }) => (
                 </LinkItem>
             </MenuItem>
         </Menu>
+
+        {isTester && <ContactUs />}
     </Fragment>
 );
 

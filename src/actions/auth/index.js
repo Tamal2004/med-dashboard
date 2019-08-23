@@ -1,6 +1,7 @@
 import Amplify, { Auth } from 'aws-amplify';
 
 import { SET_AUTH_USER_INFO } from 'actionTypes';
+import { showNotification } from 'actions';
 
 /**************
  * SET CONFIG *
@@ -73,7 +74,7 @@ export const setAuthUserInfo = () => {
 				payload: res.attributes
 			});
 
-		getSession();
+		// getSession();
 	};
 };
 
@@ -85,6 +86,7 @@ export const updateAuthUserPassword = payload => {
 		} else {
 			//show snack-bar error
 			console.log('password change error', res, res.message, res.code);
+			dispatch(showNotification({ type: 'error', message: res.message }));
 		}
 	};
 };
