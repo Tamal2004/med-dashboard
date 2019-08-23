@@ -1,6 +1,4 @@
 import React, { Fragment } from 'react';
-import API, { graphqlOperation } from '@aws-amplify/api';
-import { listBlogs } from 'graphql/queries';
 import clsx from 'clsx';
 import Drawer from '@material-ui/core/Drawer';
 import Divider from '@material-ui/core/Divider';

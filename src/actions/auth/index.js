@@ -1,6 +1,19 @@
-import { Auth } from 'aws-amplify';
+import Amplify, { Auth } from 'aws-amplify';
 
 import { SET_AUTH_USER_INFO } from 'actionTypes';
+
+/**************
+ * SET CONFIG *
+ **************/
+const setConfig = token => {
+	Amplify.configure({
+		API: {
+			graphql_headers: async () => ({
+				'My-Custom-Header': 'my value'
+			})
+		}
+	});
+};
 
 /***********
  * API CALL *
@@ -13,6 +26,15 @@ const getUser = () => {
 			attributes
 		}))
 		.catch(err => err);
+};
+
+const getSession = () => {
+	return Auth.currentSession()
+		.then(data => {
+			console.log(data);
+			setConfig();
+		})
+		.catch(err => console.log(err));
 };
 
 const signUp = () => {
@@ -50,6 +72,8 @@ export const setAuthUserInfo = () => {
 				type: SET_AUTH_USER_INFO,
 				payload: res.attributes
 			});
+
+		getSession();
 	};
 };
 

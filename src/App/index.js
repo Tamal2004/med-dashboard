@@ -52,8 +52,8 @@ class IndexApp extends Component {
                             Greetings,
                             ConfirmSignIn,
                             SignUp,
-                            TOTPSetup,
-                            Loading
+                            Loading,
+                            TOTPSetup
                         ]}
                     >
                         <OpenTesterForm override={'SignUp'} />
