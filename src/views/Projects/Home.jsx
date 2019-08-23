@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -13,6 +13,7 @@ import {
 
 // Selectors
 import { selectCounties } from 'selectors';
+import { CheckFilterBar } from 'components/FilterComponents';
 
 // Actions
 import { fetchProjects } from 'actions';
@@ -25,42 +26,44 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-const MondayProjects = ({ data, weekday }) => {
-    return (
-        <Fragment>
-            <div>Table for Monday projects</div>
-            <Table data={data} page={1} />
-        </Fragment>
-    );
-};
-
 const ProjectHome = ({ location, projects, fetchProjects }) => {
     const c = useStyles();
+    const [checkFilter, setCheckFilter] = useState([]);
+
+    const setFilterValue = e => {
+        const temp = [...checkFilter];
+        const value = e.target.value;
+        const valueIndex = temp.indexOf(value);
+        valueIndex === -1 && temp.push(value);
+        valueIndex !== -1 && temp.splice(valueIndex, 1);
+        setCheckFilter(temp);
+    };
+
     useEffect(() => {
         fetchProjects();
-    }, []);
-    const params = new URLSearchParams(location.search);
-    const queryParam = params.get('weekday');
+    });
 
     return (
         <GridContainer alignItems='center'>
-            <GridItem md={4}></GridItem>
+            <GridItem md={4}>
+                <CheckFilterBar
+                    data={['Complete', 'Incomplete']}
+                    onChange={e => setFilterValue(e)}
+                    checked={checkFilter}
+                />
+            </GridItem>
             <GridItem md={4}>
                 <SearchInput placeholder='Search by name or project reference' />
             </GridItem>
             <GridItem md={4} className={c.buttonGridStyle}>
-                <Link to={{ pathname: '/project', search: '?weekday=monday' }}>
+                <Link to={'/project/new'}>
                     <NavigateButton variant='outlined'>
-                        List projects for Monday morning
+                        Add New Project
                     </NavigateButton>
                 </Link>
             </GridItem>
             <GridItem md={12}>
-                {queryParam ? (
-                    <MondayProjects data={projects} weekday={queryParam} />
-                ) : (
-                    <Table data={projects} page={1} />
-                )}
+                <Table data={projects} page={1} />
             </GridItem>
         </GridContainer>
     );

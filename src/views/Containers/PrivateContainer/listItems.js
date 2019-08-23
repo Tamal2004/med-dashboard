@@ -92,14 +92,12 @@ const LinkListItem = ({ text }) => {
     );
 };
 
-const LinkListMenu = ({ text }) => {
+const LinkListMenu = ({ text, icon: Icon }) => {
     const c = useStyles();
     return (
         <ListItem button>
             <ListItemIcon classes={{ root: c.menuListRoot }}>
-                <SvgIcon fontSize='small'>
-                    <ClientIcon />
-                </SvgIcon>
+                <SvgIcon fontSize='small'>{Icon}</SvgIcon>
             </ListItemIcon>
             <ListItemText classes={{ primary: c.textStyle }}>
                 {text}
@@ -153,25 +151,14 @@ const ListItems = ({ auth: { isTester, name } }) => (
     <Fragment>
         {/*Client and Project and Tester*/}
         {isTester ? (
-            <LinkItem to={`/`} title={'Home'}>
-                <LinkListMenu text='Home' />
+            <LinkItem to={'/'} title={'Home'}>
+                <LinkListMenu text='Home' icon={<ClientIcon />} />
             </LinkItem>
         ) : (
             <Fragment>
-                <Menu>
-                    <MenuItem
-                        icon={<ClientIcon />}
-                        tag='clients-1'
-                        title='Clients'
-                    >
-                        <LinkItem to={'/client'} title={'Clients'}>
-                            <LinkListItem text='Clients' />
-                        </LinkItem>
-                        <LinkItem to={'/client/search'} title={'Search Client'}>
-                            <LinkListItem text='Search Client' />
-                        </LinkItem>
-                    </MenuItem>
-                </Menu>
+                <LinkItem to={'/client'} title={'Clients'}>
+                    <LinkListMenu text='Clients' icon={<ClientIcon />} />
+                </LinkItem>
                 <Menu>
                     <MenuItem
                         icon={<ProjectIcon />}
@@ -183,12 +170,6 @@ const ListItems = ({ auth: { isTester, name } }) => (
                         </LinkItem>
                         <LinkItem to={'/project/new'} title={'Add New Project'}>
                             <LinkListItem text='Add New Project' />
-                        </LinkItem>
-                        <LinkItem
-                            to={'/project/search'}
-                            title={'Search Project'}
-                        >
-                            <LinkListItem text='Search Project' />
                         </LinkItem>
                     </MenuItem>
                 </Menu>
