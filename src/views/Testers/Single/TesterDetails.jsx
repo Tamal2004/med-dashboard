@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { Fragment, useState } from 'react';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { reduxForm, formValueSelector } from 'redux-form';
@@ -10,7 +10,7 @@ import RequestIcon from '@material-ui/icons/Autorenew';
 import EditIcon from '@material-ui/icons/Edit';
 
 // Local
-import { validateRequired, mapFromValue } from 'libs';
+import { validateRequired, mapFromValue, serializeDate } from 'libs';
 import {
     Select,
     Input,
@@ -23,6 +23,8 @@ import {
 
 // Selectors
 import {
+    selectTesterId,
+    selectIsTester,
     selectEthnicities,
     selectGenders,
     selectMaritalStatuses,
@@ -30,7 +32,10 @@ import {
     selectTitles
 } from 'selectors';
 
-const useStyles = makeStyles(({ palette, spacing, typography }) => ({
+// Actions
+import { updateTester } from 'actions';
+
+const useStyles = makeStyles(({ spacing, typography }) => ({
     name: {
         paddingLeft: spacing(2),
         paddingRight: spacing(2),
@@ -51,7 +56,6 @@ const useStyles = makeStyles(({ palette, spacing, typography }) => ({
 }));
 
 const TesterDetails = ({
-    match,
     titles,
     genders,
     martitalStatuses,
@@ -60,7 +64,10 @@ const TesterDetails = ({
     invalid,
     title,
     firstName,
-    surname
+    surname,
+    reset,
+    handleSubmit,
+    isTester
 }) => {
     const [isEditing, setEditing] = useState(false);
     const c = useStyles();
@@ -68,7 +75,10 @@ const TesterDetails = ({
     return (
         <EditableCard
             title='Tester Details'
-            onEdit={() => setEditing(!isEditing)}
+            onEdit={() => {
+                if (isEditing) reset();
+                setEditing(!isEditing);
+            }}
             color={isEditing ? 'primary' : 'secondary'}
         >
             {isEditing ? (
@@ -180,18 +190,22 @@ const TesterDetails = ({
                 required={isEditing}
             />
             <CardDivider />
-            <MultiInput
-                label='Notes for Clients'
-                name='clientNotes'
-                isCard
-                active={isEditing}
-            />
-            <MultiInput
-                label="Facilitators' Comments"
-                name='facilitatorComments'
-                isCard
-                active={isEditing}
-            />
+            {!isTester && (
+                <Fragment>
+                    <MultiInput
+                        label='Notes for Clients'
+                        name='clientNotes'
+                        isCard
+                        active={isEditing}
+                    />
+                    <MultiInput
+                        label="Facilitators' Comments"
+                        name='facilitatorComments'
+                        isCard
+                        active={isEditing}
+                    />
+                </Fragment>
+            )}
             <Input
                 label='Last Updated'
                 name='lastUpdated'
@@ -210,37 +224,36 @@ const TesterDetails = ({
                 {isEditing ? (
                     <IconedButton
                         Icon={EditIcon}
-                        onClick={() => setEditing(!isEditing)}
+                        onClick={() => {
+                            handleSubmit();
+                            setEditing(!isEditing);
+                        }}
                         disabled={invalid}
                     >
                         Save Edits
                     </IconedButton>
                 ) : (
-                    <IconedButton
-                        onClick={() => console.log('arstarst')}
-                        Icon={DeleteIcon}
-                    >
-                        Delete Tester
-                    </IconedButton>
+                    !isTester && (
+                        <IconedButton
+                            onClick={() => console.log('arstarst')}
+                            Icon={DeleteIcon}
+                        >
+                            Delete Tester
+                        </IconedButton>
+                    )
                 )}
             </div>
         </EditableCard>
     );
 };
 
-TesterDetails.defaultProps = {
-    title: 'Dr.',
-    firstName: 'John',
-    surname: 'Smith'
-};
-
-const calculateAge = (dob = '01/01/1989') =>
-    Math.floor((new Date() - new Date(dob)) / 60 / 60 / 24 / 365 / 1000);
-
 const mapState = state => {
     const formSelector = formValueSelector('TesterDetails');
     const titles = selectTitles(state);
     return {
+        id: selectTesterId(state),
+        isTester: selectIsTester(state),
+        // isTester: true,
         titles,
         genders: selectGenders(state),
         martitalStatuses: selectMaritalStatuses(state),
@@ -251,8 +264,6 @@ const mapState = state => {
         surname: formSelector(state, 'surname')
     };
 };
-
-const mapDispatch = {};
 
 const validate = values => {
     const required = [
@@ -271,16 +282,23 @@ const validate = values => {
     return { ...validateRequired(values, required) };
 };
 
+const onSubmit = ({ age, dob, ...values }, dispatch, { id }) => {
+    const tester = {
+        id,
+        dob: serializeDate(dob),
+        ...values
+    };
+    return dispatch(updateTester(tester));
+};
+
 const _TesterDetails = compose(
-    connect(
-        mapState,
-        mapDispatch
-    ),
+    connect(mapState),
     reduxForm({
         form: 'TesterDetails',
         enableReinitialize: true,
         keepDirtyOnReinitialize: true,
-        validate
+        validate,
+        onSubmit
     })
 )(TesterDetails);
 

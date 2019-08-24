@@ -2,12 +2,12 @@ import createCachedSelector from 're-reselect';
 
 const selectAuth = state => state.auth;
 
-export const selectTesterId = createCachedSelector(
+export const selectAuthTesterId = createCachedSelector(
     selectAuth,
     ({ testerId }) => testerId || null
 )(() => 'placeholder');
 
 export const selectIsTester = createCachedSelector(
-    selectTesterId,
+    selectAuthTesterId,
     testerId => !!testerId
 )(() => 'placeholder');

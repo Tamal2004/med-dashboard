@@ -1,11 +1,10 @@
-import React, { Fragment, useEffect } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 
 // Material
-import { makeStyles, Typography } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
 
 // Local
-import { validateRequired } from 'libs';
 import TesterDetails from './TesterDetails';
 import ContactDetails from './ContactDetails';
 import EmploymentDetails from './EmploymentDetails';
@@ -13,13 +12,13 @@ import TestSessions from './TestSessions';
 import ContactNotes from './ContactNotes';
 
 // Components
-import { GridContainer, GridItem } from 'components';
+import { GridContainer, GridItem, BarLoader } from 'components';
 
 // Selectors
-import { selectIsTester, selectTesterId } from 'selectors';
+import { selectIsTester, selectAuthTesterId } from 'selectors';
 
 // Actions
-import { fetchTester } from 'actions';
+import { fetchTester, fetchPublicTester } from 'actions';
 
 const useStyles = makeStyles(() => ({
     root: {
@@ -29,45 +28,57 @@ const useStyles = makeStyles(() => ({
 
 const TesterSingle = ({
     match: { params: { id = null } = {} } = {},
-                          fetchTester,
+    fetchTester,
+    fetchPublicTester,
     isTester,
     testerId
 }) => {
     const c = useStyles();
-
+    const [isLoading, setLoading] = useState(true);
     useEffect(() => {
-        console.log('arstast')
-        fetchTester(id)
-    })
+        if (isTester) fetchPublicTester(testerId).then(() => setLoading(false));
+        else fetchTester(id).then(() => setLoading(false));
+    });
 
-    console.log(id);
     return (
         <Fragment>
-            <GridContainer className={c.root} alignItems='flex-start'>
-                <GridItem md={6}>
-                    <TesterDetails />
-                </GridItem>
-                <GridItem md={6}>
-                    <GridItem md={12}>
-                        <ContactDetails />
-                    </GridItem>
-                    <GridItem md={12}>
-                        <EmploymentDetails />
-                    </GridItem>
-                </GridItem>
-            </GridContainer>
-            {!isTester && (
+            {isLoading ? (
+                <BarLoader fullScreen />
+            ) : (
                 <Fragment>
-                    <GridContainer className={c.root} alignItems='center'>
-                        <GridItem md={12}>
-                            <TestSessions />
+                    <GridContainer className={c.root} alignItems='flex-start'>
+                        <GridItem md={6}>
+                            <TesterDetails />
+                        </GridItem>
+                        <GridItem md={6}>
+                            <GridItem md={12}>
+                                <ContactDetails />
+                            </GridItem>
+                            <GridItem md={12}>
+                                <EmploymentDetails />
+                            </GridItem>
                         </GridItem>
                     </GridContainer>
-                    <GridContainer className={c.root} alignItems='center'>
-                        <GridItem md={12}>
-                            <ContactNotes />
-                        </GridItem>
-                    </GridContainer>
+                    {!isTester && (
+                        <Fragment>
+                            <GridContainer
+                                className={c.root}
+                                alignItems='center'
+                            >
+                                <GridItem md={12}>
+                                    <TestSessions />
+                                </GridItem>
+                            </GridContainer>
+                            <GridContainer
+                                className={c.root}
+                                alignItems='center'
+                            >
+                                <GridItem md={12}>
+                                    <ContactNotes />
+                                </GridItem>
+                            </GridContainer>
+                        </Fragment>
+                    )}
                 </Fragment>
             )}
         </Fragment>
@@ -75,13 +86,16 @@ const TesterSingle = ({
 };
 
 const mapState = state => ({
-    // isTester: selectIsTester(state),
-    isTester: false,
-    testerId: selectTesterId(state)
+    isTester: selectIsTester(state),
+    // isTester: true,
+    testerId: selectAuthTesterId(state)
 });
 
-const mapDispatch = { fetchTester };
+const mapDispatch = { fetchTester, fetchPublicTester };
 
-const _TesterSingle = connect(mapState, mapDispatch)(TesterSingle);
+const _TesterSingle = connect(
+    mapState,
+    mapDispatch
+)(TesterSingle);
 
 export { _TesterSingle as default, _TesterSingle as TesterSingle };

@@ -11,24 +11,30 @@ const useStyles = makeStyles(({ spacing }) => ({
         alignItems: 'center',
         justifyContent: 'center',
         height: spacing(28)
+    },
+    screenHeight: {
+        height: `calc(100vh - ${spacing(16)}px)`
     }
 }));
 
-const BarLoader = ({ className, color, ...restProps }) => {
+const BarLoader = ({ className, color, fullScreen, size, ...restProps }) => {
+    const c = useStyles();
     const primaryColor = useTheme().palette.primary.light;
     const props = {
         color: color || primaryColor,
+        size: fullScreen ? 24 : size,
         ...restProps
     };
     return (
-        <div className={clsx(useStyles().root, className)}>
+        <div className={clsx(c.root, fullScreen && c.screenHeight, className)}>
             <CSSBarLoader {...props} />
         </div>
     );
 };
 
 BarLoader.defaultProps = {
-    size: 16
+    size: 16,
+    fullScreen: false
 };
 
 export { BarLoader as default, BarLoader };

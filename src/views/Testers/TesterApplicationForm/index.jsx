@@ -40,11 +40,8 @@ import {
     selectTitles
 } from 'selectors';
 
-// Actions
-import { createTester } from '../../../actions';
 
 const TesterApplication = ({
-    counties,
     nationalities,
     educationStages,
     employeeCounts,

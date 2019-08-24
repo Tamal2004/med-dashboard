@@ -70,13 +70,12 @@ const TesterMail = props => {
 					{/*conditionally disabled if has data*/}
 					<Select label='To' name='to' data={[]} required />
 
-					{/*
 					<MultiSelect
 						label='To'
 						data={names}
 						value={props.to}
 						onChange={handleChange}
-					/>*/}
+					/>
 
 					<Input
 						label='Subject'

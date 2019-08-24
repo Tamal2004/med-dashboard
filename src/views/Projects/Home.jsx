@@ -26,7 +26,7 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-const ProjectHome = ({ location, projects, listProjects }) => {
+const ProjectHome = ({ projects, listProjects }) => {
     const c = useStyles();
 
     const [isLoading, setLoading] = useState(true);

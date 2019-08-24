@@ -99,3 +99,41 @@ export const FetchTester = `query FetchTester($id: ID!) {
     }
 }
 `;
+
+export const FetchPublicTester = `query FetchPublicTester($id: ID!) {
+    getTester(id: $id) {
+        id
+        title
+        firstName
+        surname
+        email
+        phone
+        address
+        house
+        street
+        town
+        county
+        postcode
+        country
+        gender
+        dob
+        maritalStatus
+        hasChildren
+        nationality
+        ethnicity
+        firstLanguage
+        otherLanguages
+        disability
+        about
+        employmentStatus
+        jobTitle
+        businessName
+        employmentSector
+        employeeCount
+        subject
+        educationStage
+        institution
+        lastUpdated
+    }
+}
+`;

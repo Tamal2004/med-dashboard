@@ -11,7 +11,7 @@ import { DatePicker } from '@material-ui/pickers';
 // Local
 import styles from './styles';
 import withDateProvider from './withDateProvider';
-import { composeClasses } from 'libs';
+import { composeClasses, deserializeDate, serializeDate } from 'libs';
 
 const DateInputBase = ({
     classes,
@@ -45,7 +45,7 @@ const DateInputBase = ({
         id,
         minDate,
         maxDate,
-        format: 'yyyy-MM-dd',
+        format: 'dd/MM/yyyy',
         value: value || null,
         InputProps: {
             disableUnderline: true,
@@ -72,8 +72,23 @@ const _DateInputBase = compose(
     withStyles(styles)
 )(DateInputBase);
 
+// Very crude fix
+const normalizeDate = value => {
+    if (!isNaN(Number(value.toString().split('')[0])))
+        return value
+            .split('/')
+            .reverse()
+            .join('-');
+    return value ? new Date(value) : null;
+};
+
 const __DateInputBase = props => (
-    <Field {...props} component={_DateInputBase} fieldName={props.name} />
+    <Field
+        {...props}
+        component={_DateInputBase}
+        fieldName={props.name}
+        normalize={normalizeDate}
+    />
 );
 
 export { __DateInputBase as default, __DateInputBase as DateInputBase };
