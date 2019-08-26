@@ -40,7 +40,8 @@ class Table extends Component {
         sortIndex: null,
         initialData: this.props.data,
         data: this.props.data,
-        checked: []
+        checked: [],
+        selectAll: false
     };
 
     // Classes
@@ -54,6 +55,7 @@ class Table extends Component {
         if (prevData.length !== data.length)
             this.setState({ data, initialData: data });
     }
+
     handleSort = idx => {
         const {
             state: { sortIndex: prevSortIndex, initialData }
@@ -98,7 +100,21 @@ class Table extends Component {
 
     setEditIndex = index => this.setState({ rowEditIndex: index });
 
-    checkIndex = id => {
+    setIndexArray = (length, onClick) => {
+        const { selectAll } = this.state;
+        const indexContainer = [];
+        if (!selectAll) {
+            for (let i = 0, len = length; i < len; i++) {
+                indexContainer.push(i);
+            }
+        }
+        this.setState(
+            { checked: [...indexContainer], selectAll: !selectAll },
+            () => onClick(this.state.checked)
+        );
+    };
+
+    checkIndex = (id, onClick) => {
         const { checked } = this.state;
         let newChecked = [];
         if (this.isChecked(id)) {
@@ -108,7 +124,24 @@ class Table extends Component {
             newChecked = [...checked, id];
         }
 
-        this.setState({ checked: newChecked });
+        this.setState({ checked: newChecked }, () =>
+            onClick(this.state.checked)
+        );
+    };
+
+    CheckAllAction = ({ onClick = () => {}, dataLength }) => {
+        return (
+            <IconButton
+                className={this.c.action}
+                size='small'
+                color='secondary'
+                aria-label='Check'
+                fontSize='small'
+                onClick={() => this.setIndexArray(dataLength, onClick)}
+            >
+                {this.state.selectAll ? <CheckFillIcon /> : <CheckEmptyIcon />}
+            </IconButton>
+        );
     };
 
     CheckAction = (onClick = () => {}, idx) => (
@@ -119,8 +152,7 @@ class Table extends Component {
             aria-label='Check'
             fontSize='small'
             onClick={() => {
-                this.checkIndex(idx);
-                return onClick();
+                this.checkIndex(idx, onClick);
             }}
         >
             {this.isChecked(idx) ? <CheckFillIcon /> : <CheckEmptyIcon />}
@@ -247,12 +279,19 @@ class Table extends Component {
 
     render() {
         const {
-            props: { data: [datum = {}] = [], itemsPerPage, handleEditModal },
+            props: {
+                data: [datum = {}] = [],
+                data: datas,
+                itemsPerPage,
+                handleEditModal,
+                checkAll
+            },
             state: { data },
             c,
             handleSort,
             renderSortIcon,
-            renderTable
+            renderTable,
+            CheckAllAction
         } = this;
 
         const headerKeys = Object.keys(datum);
@@ -262,6 +301,13 @@ class Table extends Component {
         );
 
         const hasActions = headerKeys.includes('actions');
+
+        const hasCheckAction = hasActions
+            ? !!Object.prototype.hasOwnProperty.call(
+                  datum.actions,
+                  'checkAction'
+              )
+            : false;
 
         const actionDecrement =
             hasActions || (handleEditModal && handleEditModal !== void 0)
@@ -282,17 +328,32 @@ class Table extends Component {
 
                                 return (
                                     <TableCell
-                                        className={clsx(c.cell, c.cellHeader)}
+                                        className={clsx(
+                                            index === len - actionDecrement
+                                                ? c.actionCellHeader
+                                                : c.cellHeader,
+                                            c.cell
+                                        )}
                                         style={{
                                             maxWidth: headerWidth,
                                             minWidth: headerWidth
                                         }}
                                         key={index}
-                                        onClick={() => handleSort(index)}
+                                        onClick={() =>
+                                            index < len - actionDecrement &&
+                                            handleSort(index)
+                                        }
                                     >
                                         {header}
                                         {index < len - actionDecrement &&
                                             renderSortIcon(index)}
+                                        {index === len - actionDecrement &&
+                                            hasCheckAction && (
+                                                <CheckAllAction
+                                                    onClick={checkAll}
+                                                    dataLength={datas.length}
+                                                />
+                                            )}
                                     </TableCell>
                                 );
                             })}

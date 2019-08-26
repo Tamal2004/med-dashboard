@@ -59,5 +59,10 @@ export default ({ palette, spacing, transitions, typography }) => ({
     reverseIcon: {
         transform: 'rotate(180deg)'
     },
+    actionCellHeader: {
+        backgroundColor: palette.grey[50],
+        textAlign: 'right',
+        paddingRight: 16
+    },
     ripple: { color: 'yellow' }
 });

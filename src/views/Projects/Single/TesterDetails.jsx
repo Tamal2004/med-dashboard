@@ -49,7 +49,12 @@ const TesterDetails = ({
 
     return (
         <EditableCard title='Tester Details'>
-            <Table data={testerDetails} action page={page} itemsPerPage={5} />
+            <Table
+                data={testerDetails}
+                page={page}
+                checkAll={value => console.log('selected all', value)}
+                itemsPerPage={5}
+            />
             <div className={c.footer}>
                 <div>
                     <ButtonGroup color='secondary'>
@@ -98,7 +103,10 @@ const generateData = (reference, client, project, notes) => ({
     Profile: client,
     'Testing Date': '01/01/2000',
     'Testing Time': '2:30PM',
-    Notes: notes
+    Notes: notes,
+    actions: {
+        checkAction: value => console.log('check meh', value)
+    }
 });
 
 TesterDetails.propTypes = {
