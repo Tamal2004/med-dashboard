@@ -1,24 +1,32 @@
 import React, { Fragment, useState } from 'react';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
-import { reduxForm, formValueSelector } from 'redux-form';
+import { change, reduxForm, formValueSelector } from 'redux-form';
+import Link from '@material-ui/core/Link';
+import { makeStyles } from '@material-ui/core/styles';
 
 // Local
 import { validateRequired } from 'libs';
-import {
-    Input,
-    Switch,
-    IconedButton,
-    EditableCard,
-    EditableFooter
-} from 'components';
+import { GridItem, Input, EditableCard, EditableFooter } from 'components';
 
-const ContactDetails = ({ hasManualAddress, invalid }) => {
+const useStyles = makeStyles(theme => ({
+    manualGrid: {
+        textAlign: 'right',
+        padding: theme.spacing(2)
+    },
+    manualLink: {
+        paddingLeft: theme.spacing(2)
+    }
+}));
+
+const ContactDetails = ({ hasManualAddress, invalid, change }) => {
+    const c = useStyles();
     const [isEditing, setEditing] = useState(false);
     return (
         <EditableCard
             title='Contact Details'
             onEdit={() => setEditing(!isEditing)}
+            isEditing={isEditing}
             color={isEditing ? 'primary' : 'secondary'}
         >
             <Input
@@ -44,12 +52,20 @@ const ContactDetails = ({ hasManualAddress, invalid }) => {
                     required={isEditing}
                 />
             )}
-            <Switch
-                label='Enter address manually?'
-                name='manualAddress'
-                isCard
-                active={isEditing}
-            />
+            {isEditing && (
+                <GridItem md={12} className={c.manualGrid}>
+                    <Link
+                        className={c.manualLink}
+                        href='#'
+                        onClick={() =>
+                            change('manualAddress', !hasManualAddress)
+                        }
+                    >
+                        {hasManualAddress ? 'Close' : 'Enter address manually?'}
+                    </Link>
+                </GridItem>
+            )}
+
             {hasManualAddress && (
                 <Fragment>
                     <Input
@@ -103,7 +119,7 @@ const mapState = state => ({
     )
 });
 
-const mapDispatch = {};
+const mapDispatch = { change };
 
 const validate = (values, { hasManualAddress }) => {
     const required = ['email', 'phone'];

@@ -1,3 +1,21 @@
+/*
+IMPLEMENTATION: 
+
+const names = [
+	'Oliver Hansen',
+	'Van Henry',
+	'April Tucker',
+];
+const handleChange = value => props.change('to', value);
+
+
+<MultiSelect
+	label='To' // redux-form field
+	data={names}
+	value={props.to}
+	onChange={handleChange}
+/>
+*/
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';

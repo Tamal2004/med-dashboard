@@ -5,9 +5,11 @@ import { reduxForm, formValueSelector } from 'redux-form';
 
 // Material
 import { Grid, Typography, makeStyles } from '@material-ui/core';
+import { ButtonGroup } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/DeleteOutlined';
 import RequestIcon from '@material-ui/icons/Autorenew';
 import EditIcon from '@material-ui/icons/Edit';
+import MailIcon from '@material-ui/icons/Email';
 
 // Local
 import { validateRequired, mapFromValue } from 'libs';
@@ -18,8 +20,10 @@ import {
     Switch,
     IconedButton,
     EditableCard,
-    CardDivider
+    CardDivider,
+    withModal
 } from 'components';
+import { TesterMailModal } from 'views/Modals';
 
 // Selectors
 import {
@@ -60,7 +64,8 @@ const TesterDetails = ({
     invalid,
     title,
     firstName,
-    surname
+    surname,
+    handleMailModal
 }) => {
     const [isEditing, setEditing] = useState(false);
     const c = useStyles();
@@ -69,6 +74,7 @@ const TesterDetails = ({
         <EditableCard
             title='Tester Details'
             onEdit={() => setEditing(!isEditing)}
+            isEditing={isEditing}
             color={isEditing ? 'primary' : 'secondary'}
         >
             {isEditing ? (
@@ -200,13 +206,24 @@ const TesterDetails = ({
             />
             <CardDivider />
             <div className={c.footer}>
-                <IconedButton
-                    color='secondary'
-                    onClick={() => console.log('arstarst')}
-                    Icon={RequestIcon}
-                >
-                    Request Update
-                </IconedButton>
+                <ButtonGroup color='secondary'>
+                    <IconedButton
+                        color='secondary'
+                        onClick={() => handleMailModal()}
+                        Icon={RequestIcon}
+                        size='small'
+                    >
+                        Request Update
+                    </IconedButton>
+                    <IconedButton
+                        color='secondary'
+                        onClick={() => handleMailModal()}
+                        Icon={MailIcon}
+                        size='small'
+                    >
+                        Email Tester
+                    </IconedButton>
+                </ButtonGroup>
                 {isEditing ? (
                     <IconedButton
                         Icon={EditIcon}
@@ -254,6 +271,10 @@ const mapState = state => {
 
 const mapDispatch = {};
 
+const mapModal = {
+    handleMailModal: TesterMailModal
+};
+
 const validate = values => {
     const required = [
         'title',
@@ -276,6 +297,7 @@ const _TesterDetails = compose(
         mapState,
         mapDispatch
     ),
+    withModal(mapModal),
     reduxForm({
         form: 'TesterDetails',
         enableReinitialize: true,

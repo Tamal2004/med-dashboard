@@ -31,8 +31,6 @@ export const createProject = project => async dispatch => {
         graphqlOperation(gQLCreateProject, { input: project })
     );
 
-    console.log(res);
-
     if (!res.error) {
         dispatch(createProjectAction(SUCCESS));
         history.push('/project');

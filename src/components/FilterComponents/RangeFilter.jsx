@@ -10,7 +10,7 @@ IMPLEMENTATION
 />
 ********************************************************/
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
@@ -26,13 +26,24 @@ const useStyles = makeStyles(theme => ({
 		margin: 0,
 		padding: 9,
 		width: '100%'
+	},
+	textCenter: {
+		textAlign: 'center'
 	}
 }));
 
 const RangeFilter = ({ value, onChange, title, step, min, max }) => {
 	const c = useStyles();
 
-	const handleChange = e => onChange(e, e.target.value);
+	const [rangeValue, setValue] = useState([min, max]);
+
+	const handleChange = (e, newValue) => setValue(newValue);
+
+	const valuetext = value => value;
+
+	useEffect(() => {
+		onChange(null, rangeValue);
+	}, [rangeValue]);
 
 	return (
 		<AccordionFilterContainer title={title}>
@@ -42,32 +53,21 @@ const RangeFilter = ({ value, onChange, title, step, min, max }) => {
 				className={c.gridContainer}
 				alignItems='center'
 			>
-				<Grid md={9} item>
+				<Grid md={2} item className={c.textCenter}>
+					{rangeValue[0]}
+				</Grid>
+				<Grid md={8} item>
 					<Slider
+						value={rangeValue}
+						onChange={handleChange}
 						valueLabelDisplay='auto'
-						value={Number(value)}
-						onChange={onChange}
 						aria-labelledby={title}
-						getAriaValueText={() => value}
-						step={step}
-						min={min}
-						max={max}
 						marks
+						getAriaValueText={valuetext}
 					/>
 				</Grid>
-				<Grid md={3} item>
-					<Input
-						value={Number(value)}
-						margin='dense'
-						onChange={handleChange}
-						inputProps={{
-							step: step,
-							min: min,
-							max: max,
-							type: 'number',
-							'aria-labelledby': title
-						}}
-					/>
+				<Grid md={2} item className={c.textCenter}>
+					{rangeValue[1]}
 				</Grid>
 			</Grid>
 		</AccordionFilterContainer>
