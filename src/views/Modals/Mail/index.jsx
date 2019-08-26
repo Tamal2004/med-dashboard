@@ -3,98 +3,63 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { change, formValueSelector, reduxForm } from 'redux-form';
 import { makeStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
 import { validateRequired } from 'libs';
 import {
-	GridContainer,
-	GridItem,
+	ModalHeader,
+	ModalFooter,
+	ModalContent,
+	Divider,
 	Button,
 	Select,
 	Input,
-	MultiInput,
-	MultiSelect
+	MultiInput
 } from 'components';
 
 const useStyles = makeStyles(theme => ({
+	root: {
+		width: theme.breakpoints.values.sm,
+		paddingLeft: theme.spacing(2),
+		paddingRight: theme.spacing(2)
+	},
 	gridContainer: {
 		padding: 16
 	},
-	buttonPosition: {
-		marginRight: 16,
-		float: 'right'
+	footer: {
+		padding: theme.spacing(4),
+		paddingBottom: theme.spacing(2),
+		paddingTop: theme.spacing(2),
+		display: 'flex',
+		justifyContent: 'flex-end'
 	}
 }));
 
-const GridWrapper = ({ children, ...restProps }) => {
+const TesterMailModal = ({ change, onClose }) => {
 	const c = useStyles();
-	return (
-		<GridContainer
-			className={c.gridContainer}
-			alignItems='flex-end'
-			{...restProps}
-		>
-			{children}
-		</GridContainer>
-	);
-};
-
-const names = [
-	'Oliver Hansen',
-	'Van Henry',
-	'April Tucker',
-	'Ralph Hubbard',
-	'Omar Alexander',
-	'Carlos Abbott',
-	'Miriam Wagner',
-	'Bradley Wilkerson',
-	'Virginia Andrews',
-	'Kelly Snyder'
-];
-
-const TesterMailModal = props => {
-	const c = useStyles();
-
-	const handleChange = value => props.change('to', value);
 
 	return (
 		<Fragment>
-			<GridWrapper>
-				<Typography align='center' variant='h6'>
-					Mail Testers
-				</Typography>
-			</GridWrapper>
-			<GridWrapper>
-				<GridItem md={8} xs={12}>
-					{/*conditionally disabled if has data*/}
-					<Select label='From' name='from' data={[]} required />
-					{/*conditionally disabled if has data*/}
-					<Select label='To' name='to' data={[]} required />
+			<ModalHeader onClose={onClose}>Mail Tester(s)</ModalHeader>
+			<ModalContent className={c.root}>
+				{/*conditionally disabled if has data*/}
+				<Select label='From' name='from' data={[]} required />
+				{/*conditionally disabled if has data*/}
+				<Select label='To' name='to' data={[]} required />
 
-					{/*
-					<MultiSelect
-						label='To'
-						data={names}
-						value={props.to}
-						onChange={handleChange}
-					/>*/}
+				<Input
+					label='Subject'
+					name='subject'
+					placeholder='Subject'
+					required
+				/>
 
-					<Input
-						label='Subject'
-						name='subject'
-						placeholder='Subject'
-						required
-					/>
-
-					<Select label='Project' name='project' data={[]} />
-					<Select label='Contact type' name='contactType' data={[]} />
-					<MultiInput name='body' placeholder='Write something....' />
-				</GridItem>
-				<GridItem md={8} xs={12}>
-					<Button className={c.buttonPosition} size='large'>
-						Send Mail
-					</Button>
-				</GridItem>
-			</GridWrapper>
+				<Select label='Project' name='project' data={[]} />
+				<Select label='Contact type' name='contactType' data={[]} />
+				<MultiInput name='body' placeholder='Write something....' />
+			</ModalContent>
+			<Divider />
+			<ModalFooter className={c.footer}>
+				<Button size='large'>Send Mail</Button>
+			</ModalFooter>
 		</Fragment>
 	);
 };

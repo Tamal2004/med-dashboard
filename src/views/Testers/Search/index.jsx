@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react';
+import { compose } from 'redux';
 import { connect } from 'react-redux';
 import classNames from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
@@ -10,8 +11,10 @@ import {
 	Link,
 	NavigateButton,
 	Table,
-	SearchInput
+	SearchInput,
+	withModal
 } from 'components';
+import { TesterMailModal } from 'views/Modals';
 import { selectCounties } from 'selectors';
 
 const useStyles = makeStyles(theme => ({
@@ -44,7 +47,7 @@ const GridWrapper = ({ className, children }) => {
 	);
 };
 
-const TesterSearch = ({ testers }) => {
+const TesterSearch = ({ testers, handleMailModal }) => {
 	const c = useStyles();
 	return (
 		<Fragment>
@@ -59,9 +62,9 @@ const TesterSearch = ({ testers }) => {
 				</GridItem>
 				<GridItem md={3}>
 					<div className={c.filterButtonWrapper}>
-						<Link to={'/tester/mail'}>
-							<NavigateButton>Email Testers</NavigateButton>
-						</Link>
+						<NavigateButton onClick={() => handleMailModal()}>
+							Email Testers
+						</NavigateButton>
 					</div>
 				</GridItem>
 			</GridWrapper>
@@ -110,9 +113,16 @@ const mapState = state => ({
 		.flatMap(x => x)
 });
 
-const _TesterSearch = connect(
-	mapState,
-	null
+const mapModal = {
+	handleMailModal: TesterMailModal
+};
+
+const _TesterSearch = compose(
+	connect(
+		mapState,
+		null
+	),
+	withModal(mapModal)
 )(TesterSearch);
 
 export { _TesterSearch as default, _TesterSearch as TesterSearch };

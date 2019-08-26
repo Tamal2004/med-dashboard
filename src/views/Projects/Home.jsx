@@ -57,9 +57,7 @@ const ProjectHome = ({ location, projects, fetchProjects }) => {
             </GridItem>
             <GridItem md={4} className={c.buttonGridStyle}>
                 <Link to={'/project/new'}>
-                    <NavigateButton variant='outlined'>
-                        Add New Project
-                    </NavigateButton>
+                    <NavigateButton>Add New Project</NavigateButton>
                 </Link>
             </GridItem>
             <GridItem md={12}>

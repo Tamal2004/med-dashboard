@@ -30,8 +30,6 @@ export const createProject = project => async dispatch => {
         graphqlOperation(gQLCreateProject, { input: project })
     );
 
-    console.log(res);
-
     if (!res.error) {
         dispatch(createProjectAction(SUCCESS));
         history.push('/project');
@@ -51,8 +49,6 @@ export const fetchProjects = () => async dispatch => {
     const {
         data: { listProjects, error = null }
     } = await API.graphql(graphqlOperation(gQLListProjects));
-
-    console.log(listProjects);
 
     if (!error) {
         dispatch(fetchProjectsAction(SUCCESS, listProjects));
