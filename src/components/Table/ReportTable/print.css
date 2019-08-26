@@ -1,0 +1,17 @@
+@media print {
+  @page {
+    size: A4;
+  }
+  body * {
+    visibility: hidden;
+    width: 100%;
+  }
+  .section-to-print, .section-to-print * {
+    visibility: visible;
+  }
+  .section-to-print {
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+}

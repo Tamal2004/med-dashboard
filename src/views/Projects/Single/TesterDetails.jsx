@@ -1,11 +1,11 @@
-import React, { Fragment, useState } from 'react';
+import React, { useState } from 'react';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { formValueSelector } from 'redux-form';
 import PropTypes from 'prop-types';
 
 // Material
-import { makeStyles, Typography, ButtonGroup } from '@material-ui/core';
+import { makeStyles, ButtonGroup } from '@material-ui/core';
 import NamedIcon from '@material-ui/icons/Person';
 import AnonymousIcon from '@material-ui/icons/PersonOutline';
 
@@ -18,13 +18,8 @@ import {
     IconedButton,
     EditableCard,
     withModal,
-    SearchInput,
-    GridContainer,
-    GridItem,
-    Link,
-    Control
+    Link
 } from 'components';
-import List from '../Report';
 
 const useStyles = makeStyles(({ palette, spacing }) => ({
     root: {

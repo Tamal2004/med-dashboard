@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react';
+import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
@@ -8,6 +9,9 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
+import IconButton from '@material-ui/core/IconButton';
+import PrintIcon from '@material-ui/icons/Print';
+import print from './print.css';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -24,6 +28,12 @@ const useStyles = makeStyles(theme => ({
         fontSize: '1rem',
         color: theme.palette.common.black,
         fontWeight: 700
+    },
+    textAlign: {
+        textAlign: 'right'
+    },
+    sectionToPrint: {
+        padding: 20
     }
 }));
 
@@ -43,74 +53,84 @@ const ReportTable = ({ data, type }) => {
 
     return (
         <Fragment>
-            <Typography variant='h6' align='center'>
-                Web Usability tester profiles for [session reference], [session
-                name]
-            </Typography>
-            {data.map((row, idx) => (
-                <Paper key={row.title + idx}>
-                    <Table className={c.table}>
-                        <TableHead>
-                            <TableRow>
-                                <CellPrimary>
-                                    {row.title} {idx + 1}
-                                </CellPrimary>
-                                <CellPrimary />
-                                <CellPrimary />
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            <TableRow>
-                                <CellData title='Date' value={row.date} />
-                                <CellData title='Time' value={row.time} />
-                                <CellData
-                                    title='Location'
-                                    value={row.location}
-                                />
-                            </TableRow>
+            <div className={c.textAlign}>
+                <IconButton title='Print' onClick={() => window.print()}>
+                    <PrintIcon />
+                </IconButton>
+            </div>
+            <div className={clsx(c.sectionToPrint, 'section-to-print')}>
+                <Typography variant='h6' align='center'>
+                    Web Usability tester profiles for [session reference],
+                    [session name]
+                </Typography>
+                {data.map((row, idx) => (
+                    <Paper key={row.title + idx}>
+                        <Table className={c.table}>
+                            <TableHead>
+                                <TableRow>
+                                    <CellPrimary>
+                                        {row.title} {idx + 1}
+                                    </CellPrimary>
+                                    <CellPrimary />
+                                    <CellPrimary />
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                <TableRow>
+                                    <CellData title='Date' value={row.date} />
+                                    <CellData title='Time' value={row.time} />
+                                    <CellData
+                                        title='Location'
+                                        value={row.location}
+                                    />
+                                </TableRow>
 
-                            <TableRow>
-                                <CellData title='Profile' value={row.profile} />
-                                {type === 'named' ? (
-                                    <Fragment>
-                                        <CellData
-                                            title='Name'
-                                            value={row.name}
-                                        />
-                                        <CellData
-                                            title='Phone numbers'
-                                            value={row.phoneNumber}
-                                        />
-                                    </Fragment>
-                                ) : (
-                                    <Fragment>
-                                        <CellPrimary />
-                                        <CellPrimary />
-                                    </Fragment>
-                                )}
-                            </TableRow>
+                                <TableRow>
+                                    <CellData
+                                        title='Profile'
+                                        value={row.profile}
+                                    />
+                                    {type === 'named' ? (
+                                        <Fragment>
+                                            <CellData
+                                                title='Name'
+                                                value={row.name}
+                                            />
+                                            <CellData
+                                                title='Phone numbers'
+                                                value={row.phoneNumber}
+                                            />
+                                        </Fragment>
+                                    ) : (
+                                        <Fragment>
+                                            <CellPrimary />
+                                            <CellPrimary />
+                                        </Fragment>
+                                    )}
+                                </TableRow>
 
-                            <TableRow>
-                                <CellData title='Age' value={row.age} />
-                                <CellData title='Sex' value={row.sex} />
-                                <CellData
-                                    title='Ethnicity'
-                                    value={row.ethnicity}
-                                />
-                            </TableRow>
+                                <TableRow>
+                                    <CellData title='Age' value={row.age} />
+                                    <CellData title='Sex' value={row.sex} />
+                                    <CellData
+                                        title='Ethnicity'
+                                        value={row.ethnicity}
+                                    />
+                                </TableRow>
 
-                            <TableRow>
-                                <CellData
-                                    title='Job Title'
-                                    value={row.jobTitle}
-                                />
-                                <CellData title='Notes' value={row.notes} />
-                                <CellPrimary />
-                            </TableRow>
-                        </TableBody>
-                    </Table>
-                </Paper>
-            ))}
+                                <TableRow>
+                                    <CellData
+                                        title='Job Title'
+                                        value={row.jobTitle}
+                                    />
+                                    <CellData title='Notes' value={row.notes} />
+                                    <CellPrimary />
+                                </TableRow>
+                            </TableBody>
+                        </Table>
+                    </Paper>
+                ))}
+            </div>
         </Fragment>
     );
 };
