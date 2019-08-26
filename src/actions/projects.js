@@ -1,13 +1,14 @@
 import API, { graphqlOperation } from '@aws-amplify/api';
 
-// Local
+// Libs
 import { history } from 'libs';
 
 // Graph QL
-
-import { listProjects as gQLListProjects } from 'graphql/queries';
 import { createProject as gQLCreateProject } from 'graphql/mutations';
-import { listProjectClients } from 'graphql/project';
+import { ListProjects, ListProjectClients } from 'graphql/project';
+
+// Normalizers
+import { normalizeProjects } from 'normalizers';
 
 // Action Types
 import {
@@ -15,8 +16,8 @@ import {
     SUCCESS,
     FAIL,
     CREATE_PROJECT,
-    FETCH_PROJECTS,
-    FETCH_PROJECT_CLIENTS
+    LIST_PROJECTS,
+    LIST_PROJECT_CLIENTS
 } from 'actionTypes';
 
 const createProjectAction = async => ({
@@ -40,42 +41,40 @@ export const createProject = project => async dispatch => {
     }
 };
 
-const fetchProjectsAction = (async, payload = []) => ({
-    type: FETCH_PROJECTS,
+const listProjectsAction = (async, payload = []) => ({
+    type: LIST_PROJECTS,
     async,
     payload
 });
 
-export const fetchProjects = () => async dispatch => {
-    dispatch(fetchProjectsAction(REQUEST));
+export const listProjects = () => async dispatch => {
+    dispatch(listProjectsAction(REQUEST));
     const {
         data: { listProjects, error = null }
-    } = await API.graphql(graphqlOperation(gQLListProjects));
-
-    console.log(listProjects);
+    } = await API.graphql(graphqlOperation(ListProjects));
 
     if (!error) {
-        dispatch(fetchProjectsAction(SUCCESS, listProjects));
+        dispatch(listProjectsAction(SUCCESS, normalizeProjects(listProjects)));
     } else {
-        dispatch(fetchProjectsAction(FAIL));
+        dispatch(listProjectsAction(FAIL));
     }
 };
 
-const fetchProjectClientsAction = (async, payload = []) => ({
-    type: FETCH_PROJECT_CLIENTS,
+const listProjectClientsAction = (async, payload = []) => ({
+    type: LIST_PROJECT_CLIENTS,
     async,
     payload
 });
 
-export const fetchProjectClients = () => async dispatch => {
-    dispatch(fetchProjectClientsAction(REQUEST));
+export const listProjectClients = () => async dispatch => {
+    dispatch(listProjectClientsAction(REQUEST));
     const {
         data: { listClients: { items = [] } = {}, error = null }
-    } = await API.graphql(graphqlOperation(listProjectClients));
+    } = await API.graphql(graphqlOperation(ListProjectClients));
 
     if (!error) {
-        dispatch(fetchProjectClientsAction(SUCCESS, items));
+        dispatch(listProjectClientsAction(SUCCESS, items));
     } else {
-        dispatch(fetchProjectClientsAction(FAIL));
+        dispatch(listProjectClientsAction(FAIL));
     }
 };

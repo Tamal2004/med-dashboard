@@ -20,11 +20,14 @@ import { AddNewClient } from 'views/Modals';
 // Actions
 import { fetchClients } from 'actions';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles(({ spacing}) => ({
     buttonGridStyle: {
         display: 'flex',
         justifyContent: 'flex-end',
         alignContent: 'flex-end'
+    },
+    projectButton: {
+        marginRight: spacing()
     }
 }));
 
@@ -32,17 +35,22 @@ const ClientHome = ({ projects, handleAddNewClient }) => {
     const c = useStyles();
     return (
         <GridContainer alignItems='center'>
-            <GridItem md={3}></GridItem>
-            <GridItem md={6}>
+            <GridItem md={4}></GridItem>
+            <GridItem md={4}>
                 <SearchInput placeholder='Search by name or project reference' />
             </GridItem>
-            <GridItem md={3} className={c.buttonGridStyle}>
+            <GridItem md={4} className={c.buttonGridStyle}>
+                <Link to={'/project/new'}>
+                    <NavigateButton variant='outlined' className={c.projectButton}>
+                        Add new project
+                    </NavigateButton>
+                </Link>
                 <NavigateButton
                     onClick={() => handleAddNewClient()}
                     variant='outlined'
                     color='secondary'
                 >
-                    Add a new client
+                    Add new client
                 </NavigateButton>
             </GridItem>
             <GridItem md={12}>

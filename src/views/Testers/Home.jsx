@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
@@ -10,13 +10,14 @@ import {
     Link,
     NavigateButton,
     Table,
-    withModal
+    withModal,
+    BarLoader
 } from 'components';
 
 // Selectors
 import { selectCounties } from 'selectors';
 import { listBlogs } from 'graphql/queries';
-import { selectTestersList } from 'selectors';
+import { selectTesterList } from 'selectors';
 import { TesterTableEdit } from 'views/Modals';
 
 // Actions
@@ -51,8 +52,10 @@ const GridWrapper = ({ children }) => {
 
 const TesterHome = ({ testers, handleEditModal, listTesters }) => {
     const c = useStyles();
+    const [isLoading, setLoading] = useState(true);
+
     useEffect(() => {
-        listTesters();
+        listTesters().then(() => setLoading(false));
     }, []);
 
     return (
@@ -74,11 +77,15 @@ const TesterHome = ({ testers, handleEditModal, listTesters }) => {
 
             <GridWrapper>
                 <GridItem md={12}>
-                    <Table
-                        data={testers}
-                        page={1}
-                        handleEditModal={handleEditModal}
-                    />
+                    {isLoading ? (
+                        <BarLoader />
+                    ) : (
+                        <Table
+                            data={testers}
+                            page={1}
+                            handleEditModal={handleEditModal}
+                        />
+                    )}
                 </GridItem>
             </GridWrapper>
         </Fragment>
@@ -86,7 +93,7 @@ const TesterHome = ({ testers, handleEditModal, listTesters }) => {
 };
 
 const mapState = (state, ownProps) => ({
-    testers: selectTestersList(state)
+    testers: selectTesterList(state)
 });
 
 const mapModal = {

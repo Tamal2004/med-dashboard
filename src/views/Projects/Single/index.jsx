@@ -32,7 +32,7 @@ const useStyles = makeStyles(() => ({
     }
 }));
 
-const ProjectSingle = ({ match }) => {
+const ProjectSingle = ({ match}) => {
     const c = useStyles();
     return (
         <Fragment>
