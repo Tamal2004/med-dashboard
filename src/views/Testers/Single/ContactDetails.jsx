@@ -26,6 +26,7 @@ const ContactDetails = ({ hasManualAddress, invalid, change }) => {
         <EditableCard
             title='Contact Details'
             onEdit={() => setEditing(!isEditing)}
+            isEditing={isEditing}
             color={isEditing ? 'primary' : 'secondary'}
         >
             <Input

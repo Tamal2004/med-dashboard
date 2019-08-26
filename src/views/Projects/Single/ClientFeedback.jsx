@@ -23,9 +23,15 @@ const ClientFeedback = ({ invalid }) => {
         <EditableCard
             title='Client Feedback'
             onEdit={() => setEditing(!isEditing)}
+            isEditing={isEditing}
             color={isEditing ? 'primary' : 'secondary'}
         >
-            <DateInput label='Feedback obtained' name='feedbackObtained' isCard active={isEditing} />
+            <DateInput
+                label='Feedback obtained'
+                name='feedbackObtained'
+                isCard
+                active={isEditing}
+            />
             <Input
                 label='Satisfaction Score'
                 name='satisfactionScore'

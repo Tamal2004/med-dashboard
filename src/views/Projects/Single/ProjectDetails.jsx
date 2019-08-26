@@ -24,6 +24,7 @@ const ProjectDetails = ({ projectStatuses, clients, invalid }) => {
         <EditableCard
             title='Project Details'
             onEdit={() => setEditing(!isEditing)}
+            isEditing={isEditing}
             color={isEditing ? 'primary' : 'secondary'}
         >
             <Input
@@ -123,7 +124,13 @@ const mapState = state => {
 const mapDispatch = {};
 
 const validate = values => {
-    const required = ['title', 'reference', 'client', 'principalContact', 'manager'];
+    const required = [
+        'title',
+        'reference',
+        'client',
+        'principalContact',
+        'manager'
+    ];
     return validateRequired(values, required);
 };
 

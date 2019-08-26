@@ -21,6 +21,7 @@ const ProjectManagement = () => {
         <EditableCard
             title='Project Management'
             onEdit={() => setEditing(!isEditing)}
+            isEditing={isEditing}
             color={isEditing ? 'primary' : 'secondary'}
         >
             <Select

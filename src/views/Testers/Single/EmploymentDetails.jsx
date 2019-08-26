@@ -3,15 +3,9 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { reduxForm, formValueSelector } from 'redux-form';
 
-
 // Local
 import { validateRequired } from 'libs';
-import {
-    Select,
-    Input,
-    EditableCard,
-    EditableFooter
-} from 'components';
+import { Select, Input, EditableCard, EditableFooter } from 'components';
 
 // Selectors
 import {
@@ -36,6 +30,7 @@ const EmploymentDetails = ({
         <EditableCard
             title='Employment Details'
             onEdit={() => setEditing(!isEditing)}
+            isEditing={isEditing}
             color={isEditing ? 'primary' : 'secondary'}
         >
             <Select
@@ -106,7 +101,10 @@ const EmploymentDetails = ({
                 </Fragment>
             )}
             {isEditing && (
-                <EditableFooter onClick={() => setEditing(!isEditing)} disabled={invalid}/>
+                <EditableFooter
+                    onClick={() => setEditing(!isEditing)}
+                    disabled={invalid}
+                />
             )}
         </EditableCard>
     );
@@ -134,9 +132,7 @@ const mapState = state => {
 const mapDispatch = {};
 
 const validate = (values, { isStudent, isEmployed }) => {
-    const required = [
-        'employmentStatus'
-    ];
+    const required = ['employmentStatus'];
 
     if (isStudent) {
         required.push('subject');

@@ -74,6 +74,7 @@ const TesterDetails = ({
         <EditableCard
             title='Tester Details'
             onEdit={() => setEditing(!isEditing)}
+            isEditing={isEditing}
             color={isEditing ? 'primary' : 'secondary'}
         >
             {isEditing ? (

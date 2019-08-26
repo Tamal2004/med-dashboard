@@ -4,12 +4,20 @@ import PropTypes from 'prop-types';
 // Material
 import { Card, Grid, Typography, Divider } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/EditOutlined';
+import CloseIcon from '@material-ui/icons/Close';
 
 // Local
 import useStyles from './styles';
 import { TooltipIcon } from 'components';
 
-const EditableCard = ({ title, actionTitle, onEdit, color, children }) => {
+const EditableCard = ({
+    title,
+    actionTitle,
+    onEdit,
+    color,
+    children,
+    isEditing
+}) => {
     const c = useStyles();
     return (
         <Card className={c.root}>
@@ -22,8 +30,8 @@ const EditableCard = ({ title, actionTitle, onEdit, color, children }) => {
                 <Grid item xs={6} className={c.actionContainer}>
                     {onEdit && (
                         <TooltipIcon
-                            title={actionTitle}
-                            Icon={EditIcon}
+                            title={isEditing ? 'Close' : actionTitle}
+                            Icon={isEditing ? CloseIcon : EditIcon}
                             onClick={onEdit}
                             color={color}
                         />
@@ -38,12 +46,14 @@ const EditableCard = ({ title, actionTitle, onEdit, color, children }) => {
 
 EditableCard.defaultProps = {
     actionTitle: 'Edit',
-    color: 'secondary'
+    color: 'secondary',
+    isEditing: false
 };
 
 EditableCard.propTypes = {
     title: PropTypes.string.isRequired,
     onEdit: PropTypes.func,
+    isEditing: PropTypes.bool,
     actionTitle: PropTypes.string
 };
 
