@@ -77,7 +77,7 @@ const SearchFilter = () => {
 		const theKey = storeKey(key);
 		let keyValue = {};
 		let initValue;
-		let eventValue = e.target.value;
+		let eventValue = e ? e.target.value : null;
 		const filterValue = getFilterValues(theKey);
 
 		//checkbox, radio, range
@@ -136,8 +136,8 @@ const SearchFilter = () => {
 							onChange={(e, value) =>
 								onChange(e, FILTER_KEY['age'], 'range', value)
 							}
-							value={getFilterValues(FILTER_KEY['age'])}
-							step={10}
+							value={[0, 80]}
+							step={1}
 						/>
 
 						<CheckFilter
