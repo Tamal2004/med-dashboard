@@ -1,13 +1,7 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
-import {
-    TesterHome,
-    TesterNew,
-    TesterSearch,
-    TesterSingle,
-    TesterMail
-} from 'views';
+import { TesterHome, TesterNew, TesterSearch, TesterSingle } from 'views';
 
 const TesterRoutes = ({ match }) => {
     return (
@@ -19,7 +13,6 @@ const TesterRoutes = ({ match }) => {
             />
             <Route path={`${match.path}/new`} component={TesterNew} />
             <Route path={`${match.path}/search`} component={TesterSearch} />
-            <Route path={`${match.path}/mail`} component={TesterMail} />
             <Route path={`${match.path}/:id`} component={TesterSingle} />
             <Route path={'*'} component={TesterHome} />
         </Switch>

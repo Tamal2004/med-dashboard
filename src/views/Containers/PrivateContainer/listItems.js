@@ -185,9 +185,6 @@ const ListItems = ({ auth: { isTester, name } }) => (
                         <LinkItem to={'/tester/new'} title={'Add New Tester'}>
                             <LinkListItem text='Add New Tester' />
                         </LinkItem>
-                        <LinkItem to={'/tester/mail'} title={'Mail'}>
-                            <LinkListItem text='Mail' />
-                        </LinkItem>
                         <LinkItem to={'/tester/search'} title={'Search Tester'}>
                             <LinkListItem text='Search Tester' />
                         </LinkItem>

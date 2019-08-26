@@ -25,6 +25,10 @@ const useStyles = makeStyles(theme => ({
         display: 'flex',
         justifyContent: 'flex-end',
         alignContent: 'flex-end'
+    },
+    linkGap: {
+        marginRight: 5,
+        textDecoration: 'none'
     }
 }));
 
@@ -32,11 +36,14 @@ const ClientHome = ({ projects, handleAddNewClient }) => {
     const c = useStyles();
     return (
         <GridContainer alignItems='center'>
-            <GridItem md={3}></GridItem>
+            <GridItem md={2}></GridItem>
             <GridItem md={6}>
                 <SearchInput placeholder='Search by name or project reference' />
             </GridItem>
-            <GridItem md={3} className={c.buttonGridStyle}>
+            <GridItem md={4} className={c.buttonGridStyle}>
+                <Link to='/project/new' className={c.linkGap}>
+                    <NavigateButton>Add a new project</NavigateButton>
+                </Link>
                 <NavigateButton
                     onClick={() => handleAddNewClient()}
                     variant='outlined'

@@ -51,7 +51,7 @@ const names = [
 	'Kelly Snyder'
 ];
 
-const TesterMail = props => {
+const TesterMailModal = props => {
 	const c = useStyles();
 
 	const handleChange = value => props.change('to', value);
@@ -106,7 +106,7 @@ const validate = values => {
 };
 
 const mapState = state => {
-	const selector = formValueSelector('TesterMail');
+	const selector = formValueSelector('TesterMailModal');
 	const to = selector(state, 'to');
 
 	return {
@@ -118,18 +118,18 @@ const mapDispatch = {
 	change
 };
 
-const _TesterMail = compose(
+const _TesterMailModal = compose(
 	connect(
 		mapState,
 		mapDispatch
 	),
 	reduxForm({
-		form: 'TesterMail',
+		form: 'TesterMailModal',
 		validate,
 		initialValues: {
 			to: []
 		}
 	})
-)(TesterMail);
+)(TesterMailModal);
 
-export { _TesterMail as default, _TesterMail as TesterMail };
+export { _TesterMailModal as default, _TesterMailModal as TesterMailModal };
