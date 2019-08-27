@@ -20,7 +20,7 @@ import {
 } from 'components';
 
 // Selectors
-import { selectProjectStatuses, selectProjectClients } from 'selectors';
+import { selectNewProjectStatuses, selectProjectClients } from 'selectors';
 
 // Actions
 import { createProject, listProjectClients } from 'actions';
@@ -109,7 +109,7 @@ const ProjectNew = ({
 };
 
 const mapState = state => ({
-    projectStatuses: selectProjectStatuses(state),
+    projectStatuses: selectNewProjectStatuses(state),
     clients: selectProjectClients(state)
 });
 

@@ -46,12 +46,6 @@ export const selectEthnicities = createCachedSelector(
     ({ ethnicities }) => mapArray(ethnicities)
 )(() => 'placeholder');
 
-// Facilities
-export const selectFacilities = createCachedSelector(
-    selectDatasets,
-    ({ facilities }) => mapArray(facilities)
-)(() => 'placeholder');
-
 // Genders
 export const selectGenders = createCachedSelector(
     selectDatasets,

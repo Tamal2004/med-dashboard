@@ -9,7 +9,7 @@ import {
     Select,
     FormControl,
     MenuItem,
-    ClickAwayListener
+    Typography
 } from '@material-ui/core';
 import DropdownIcon from '@material-ui/icons/KeyboardArrowDown';
 
@@ -18,6 +18,7 @@ import useStyles from './styles';
 
 // Libs
 import { composeClasses } from 'libs';
+import { Tooltip } from 'components';
 
 const MultiSelectBase = ({
     styles,
@@ -56,15 +57,18 @@ const MultiSelectBase = ({
     };
 
     return (
-        <FormControl fullWidth className={clsx(c.control, value.length && c.success)}>
+        <FormControl
+            fullWidth
+            className={clsx(c.control, value.length && c.success)}
+        >
             <Select
                 {...input}
                 disableUnderline
                 multiple
                 classes={{
-					root: c.select,
-					icon: c.icon
-				}}
+                    root: c.select,
+                    icon: c.icon
+                }}
                 value={value}
                 onChange={handleChange}
                 renderValue={selected => (
@@ -83,7 +87,11 @@ const MultiSelectBase = ({
             >
                 {data.map(name => (
                     <MenuItem key={name} value={name}>
-                        {name}
+                        <Tooltip title={name} dark>
+                            <Typography className={c.menuText}>
+                                {name}
+                            </Typography>
+                        </Tooltip>
                     </MenuItem>
                 ))}
             </Select>

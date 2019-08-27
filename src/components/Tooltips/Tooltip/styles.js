@@ -17,18 +17,18 @@ export default theme => ({
             borderStyle: 'solid'
         }
     },
-    popperLight: arrowGenerator(theme.palette.common.white),
-    popperDark: arrowGenerator(theme.palette.common.black),
+    popperLight: arrowGenerator(theme.palette.common.offWhite),
+    popperDark: arrowGenerator(theme.palette.secondary.main),
     tooltipLight: {
         boxShadow: '0px 0px 7px 0px rgba(0, 2, 53, 0.29)',
-        color: theme.palette.common.black,
+        color: theme.palette.secondary.main,
         borderRadius: 0,
-        backgroundColor: theme.palette.common.white,
+        backgroundColor: theme.palette.common.offWhite,
         padding: '6px 10px',
         fontSize: '.9rem'
     },
     tooltipDark: {
-        color: theme.palette.common.white,
-        backgroundColor: theme.palette.common.black
+        color: theme.palette.common.offWhite,
+        backgroundColor: theme.palette.secondary.main
     }
 });

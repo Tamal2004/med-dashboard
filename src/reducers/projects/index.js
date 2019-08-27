@@ -2,7 +2,13 @@
 import initialState from './initialState';
 
 // Action Types
-import { SUCCESS, LIST_PROJECTS, LIST_PROJECT_CLIENTS } from 'actionTypes';
+import {
+    SUCCESS,
+    FETCH_PROJECT,
+    UPDATE_PROJECT,
+    LIST_PROJECTS,
+    LIST_PROJECT_CLIENTS
+} from 'actionTypes';
 
 const projectsReducer = (
     state = initialState,
@@ -10,6 +16,16 @@ const projectsReducer = (
 ) => {
     const isSuccess = async === SUCCESS;
     switch (type) {
+        case FETCH_PROJECT: {
+            return isSuccess ? { ...state, individual: payload } : state;
+        }
+
+        case UPDATE_PROJECT: {
+            return isSuccess
+                ? { ...state, individual: { ...state.individual, payload } }
+                : state;
+        }
+
         case LIST_PROJECT_CLIENTS: {
             return isSuccess ? { ...state, clients: payload } : state;
         }

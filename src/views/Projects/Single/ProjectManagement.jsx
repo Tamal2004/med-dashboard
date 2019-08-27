@@ -18,6 +18,9 @@ import {
     Control
 } from 'components';
 
+// Selectors
+import { selectFacilities } from 'selectors';
+
 const ProjectManagement = ({ facilities }) => {
     const [isEditing, setEditing] = useState(false);
     return (
@@ -110,18 +113,7 @@ const ProjectManagement = ({ facilities }) => {
 };
 
 const mapState = state => ({
-    facilities: [
-        'Oliver Hansen',
-        'Van Henry',
-        'April Tucker',
-        'Ralph Hubbard',
-        'Omar Alexander',
-        'Carlos Abbott',
-        'Miriam Wagner',
-        'Bradley Wilkerson',
-        'Virginia Andrews',
-        'Kelly Snyder'
-    ]
+    facilities: selectFacilities(state)
 });
 
 const mapDispatch = {};

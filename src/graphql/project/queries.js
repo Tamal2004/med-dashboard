@@ -18,23 +18,6 @@ export const CheckProjectReference = `query CheckProjectReference(
     }
 }`;
 
-export const ListProjects = `query ListProjects {
-    listProjects {
-        items {
-            id
-            client {
-                id
-                name
-            }
-            reference
-            title
-            testingDate
-            status
-            manager
-        }
-    }
-}`;
-
 export const FetchProject = `query FetchProject($id: ID!) {
     getProject(id: $id) {
         id
@@ -42,7 +25,7 @@ export const FetchProject = `query FetchProject($id: ID!) {
         title
         status
         client {
-            name
+            id
         }
         principalContact
         otherContact
@@ -82,6 +65,23 @@ export const FetchProject = `query FetchProject($id: ID!) {
                     surname
                 }
             }
+        }
+    }
+}`;
+
+export const ListProjects = `query ListProjects {
+    listProjects {
+        items {
+            id
+            client {
+                id
+                name
+            }
+            reference
+            title
+            testingDate
+            status
+            manager
         }
     }
 }`;

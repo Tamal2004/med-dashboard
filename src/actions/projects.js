@@ -1,14 +1,24 @@
 import API, { graphqlOperation } from '@aws-amplify/api';
+import { initialize } from 'redux-form';
 
 // Libs
 import { history } from 'libs';
 
 // Graph QL
 import { createProject as gQLCreateProject } from 'graphql/mutations';
-import { ListProjects, ListProjectClients } from 'graphql/project';
+import {
+    FetchProject,
+    UpdateProject,
+    ListProjects,
+    ListProjectClients
+} from 'graphql/project';
 
 // Normalizers
-import { normalizeProjects } from 'normalizers';
+import {
+    normalizeProjects,
+    normalizeProject,
+    normalizeUpdatedProject
+} from 'normalizers';
 
 // Action Types
 import {
@@ -17,6 +27,7 @@ import {
     FAIL,
     CREATE_PROJECT,
     FETCH_PROJECT,
+    UPDATE_PROJECT,
     LIST_PROJECTS,
     LIST_PROJECT_CLIENTS
 } from 'actionTypes';
@@ -40,21 +51,61 @@ export const createProject = project => async dispatch => {
     }
 };
 
-const fetchProjectAction = async => ({
+const fetchProjectAction = (async, payload) => ({
     type: FETCH_PROJECT,
-    async
+    async,
+    payload
 });
 
 export const fetchProject = id => async dispatch => {
     dispatch(fetchProjectAction(REQUEST));
-    const res = await API.graphql(graphqlOperation(gQLCreateProject, { id }));
+    const {
+        data: { getProject, error = null }
+    } = await API.graphql(graphqlOperation(FetchProject, { id }));
 
-    console.log(res);
+    if (!error) {
+        const {
+            projectDetails,
+            projectManagement,
+            clientFeedback,
+            projectData
+        } = normalizeProject(getProject);
 
-    if (!res.error) {
-        dispatch(fetchProjectAction(SUCCESS));
+        dispatch(initialize('ProjectDetails', projectDetails));
+        dispatch(initialize('ProjectManagement', projectManagement));
+        dispatch(initialize('ClientFeedback', clientFeedback));
+        dispatch(fetchProjectAction(SUCCESS, projectData));
     } else {
         dispatch(fetchProjectAction(FAIL));
+    }
+};
+
+const updateProjectAction = (async, payload) => ({
+    type: UPDATE_PROJECT,
+    async,
+    payload
+});
+
+export const updateProject = project => async dispatch => {
+    dispatch(updateProjectAction(REQUEST));
+    const {
+        data: { updateProject, error = null }
+    } = await API.graphql(graphqlOperation(UpdateProject, { input: project }));
+
+    if (!error) {
+        const {
+            projectDetails,
+            projectManagement,
+            clientFeedback,
+            projectData
+        } = normalizeUpdatedProject(updateProject);
+
+        dispatch(initialize('ProjectDetails', projectDetails));
+        dispatch(initialize('ProjectManagement', projectManagement));
+        dispatch(initialize('ClientFeedback', clientFeedback));
+        dispatch(updateProjectAction(SUCCESS, projectData));
+    } else {
+        dispatch(updateProjectAction(FAIL));
     }
 };
 

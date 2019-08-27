@@ -42,7 +42,10 @@ const ProjectHome = ({ projects, listProjects }) => {
     };
 
     useEffect(() => {
-        listProjects().then(() => setLoading(false));
+        let shouldCancel = false;
+        listProjects().then(() => !shouldCancel && setLoading(false));
+
+        return () => shouldCancel = true;
     }, []);
 
     return (

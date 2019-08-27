@@ -20,6 +20,11 @@ import {
     NavigateButton
 } from 'components';
 
+
+
+// Selectors
+import { selectProjectProfiles} from 'selectors'
+
 const useStyles = makeStyles(({ palette, spacing, typography }) => ({
     root: {
         paddingLeft: spacing(2),
@@ -50,7 +55,7 @@ const ProfileDetails = ({ data }) => {
 
     const toggleNewProfileForm = () => openNewProfileForm(!newProfile);
 
-    const totalPages = Math.floor(data.length / 5) + !!(data.length % 5) || 1;
+    const totalPages = Math.floor(data.length / 3) + !!(data.length % 3) || 1;
     return (
         <EditableCard title='Profile Details'>
             <div className={c.root}>
@@ -95,12 +100,6 @@ const ProfileDetails = ({ data }) => {
     );
 };
 
-const generateData = (reference, project, contactType, contactedBy) => ({
-    Profile: { editable: true, Component: reference },
-    actions: {
-        deleteAction: idx => console.log('delete', idx)
-    }
-});
 
 ProfileDetails.defaultProps = {
     data: []
@@ -110,13 +109,8 @@ ProfileDetails.propTypes = {
     data: PropTypes.array.isRequired
 };
 
-const mapState = () => ({
-    data: Array.range(0, 3)
-        .map(() => [
-            generateData('ETCBR-644', 'EM21', 'Approached', 'Gavin'),
-            generateData('ETCBR-666', 'JE24', 'Ad', 'Avril Swift')
-        ])
-        .flatMap(x => x)
+const mapState = (state) => ({
+    data: selectProjectProfiles(state)
 });
 
 const mapDispatch = {};

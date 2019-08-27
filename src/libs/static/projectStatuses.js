@@ -1,1 +1,1 @@
-export default ['Completed', 'In Progress', 'Pending'];
+export default ['Completed', 'In Progress', 'Pending', 'Cancelled'];

@@ -87,7 +87,6 @@ const TesterSingle = ({
 
 const mapState = state => ({
     isTester: selectIsTester(state),
-    // isTester: true,
     testerId: selectAuthTesterId(state)
 });
 

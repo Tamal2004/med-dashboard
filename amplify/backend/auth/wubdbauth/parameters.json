@@ -1,8 +1,8 @@
 {
-    "identityPoolName": "wupdbb41e8645_identitypool_b41e8645",
-    "allowUnauthenticatedIdentities": false,
-    "resourceNameTruncated": "wupdbb41e8645",
-    "userPoolName": "wupdbb41e8645_userpool_b41e8645",
+    "identityPoolName": "wubdpauthpool",
+    "allowUnauthenticatedIdentities": true,
+    "resourceNameTruncated": "wubdbaff6588c4",
+    "userPoolName": "wupdbuserpool",
     "autoVerifiedAttributes": [
         "email"
     ],
@@ -12,27 +12,44 @@
     ],
     "smsAuthenticationMessage": "Your authentication code is {####}",
     "smsVerificationMessage": "Your verification code is {####}",
-    "emailVerificationSubject": "Your verification code",
+    "emailVerificationSubject": "Web Usability - Verify Account",
     "emailVerificationMessage": "Your verification code is {####}",
-    "defaultPasswordPolicy": false,
-    "passwordPolicyMinLength": 8,
-    "passwordPolicyCharacters": [],
+    "defaultPasswordPolicy": true,
+    "passwordPolicyMinLength": "6",
+    "passwordPolicyCharacters": [
+        "Requires Lowercase"
+    ],
     "requiredAttributes": [
         "email",
+        "family_name",
+        "given_name",
         "name"
     ],
     "userpoolClientGenerateSecret": true,
     "userpoolClientRefreshTokenValidity": 30,
     "userpoolClientWriteAttributes": [
-        "email"
+        "email",
+        "family_name",
+        "given_name",
+        "name"
     ],
     "userpoolClientReadAttributes": [
+        "email",
+        "family_name",
+        "given_name",
+        "name"
+    ],
+    "userpoolClientLambdaRole": "wubdbaff6588c4_userpoolclient_lambda_role",
+    "userpoolClientSetAttributes": true,
+    "useDefault": "manual",
+    "authSelections": "identityPoolAndUserPool",
+    "resourceName": "wubdbauth",
+    "thirdPartyAuth": false,
+    "usernameAttributes": [
         "email"
     ],
-    "userpoolClientLambdaRole": "wupdbbb41e8645_userpoolclient_lambda_role",
-    "userpoolClientSetAttributes": false,
-    "resourceName": "wupdbb41e8645",
-    "authSelections": "identityPoolAndUserPool",
+    "triggers": "{}",
+    "hostedUI": false,
     "authRoleArn": {
         "Fn::GetAtt": [
             "AuthRole",
@@ -45,11 +62,6 @@
             "Arn"
         ]
     },
-    "useDefault": "default",
-    "usernameAttributes": [
-        "email"
-    ],
-    "triggers": "{}",
     "parentStack": {
         "Ref": "AWS::StackId"
     },

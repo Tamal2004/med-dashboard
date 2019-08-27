@@ -31,3 +31,28 @@ export const generateProjectList = projectList =>
             'Project Manager': manager
         })
     );
+
+export const generateProjectSessions = projectSessions =>
+    projectSessions.map(
+        ({ id, testerId, testerName, profile, date, time, notes }) => ({
+            'Tester Name': {
+                Component: <Link to={`/tester/${testerId}`}>{testerName}</Link>,
+                value: testerName
+            },
+            Profile: profile,
+            'Testing Date': date,
+            'Testing Time': time,
+            Notes: notes,
+            actions: {
+                checkAction: value => console.log('check meh', value)
+            }
+        })
+    );
+
+export const generateProjectProfiles = projectProfiles =>
+    projectProfiles.map(({ profile }) => ({
+        Profile: { editable: true, Component: profile },
+        actions: {
+            deleteAction: idx => console.log('delete', idx)
+        }
+    }));

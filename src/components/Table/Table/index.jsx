@@ -217,6 +217,7 @@ class Table extends Component {
             <Tooltip
                 placement='bottom-start'
                 title={this.rawValue(value || '')}
+                dark
             >
                 <div className={this.c.titleWrapper} ref={ref}>
                     {composeValue()}

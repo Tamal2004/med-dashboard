@@ -32,7 +32,7 @@ import App from './App';
 
 Amplify.configure(config);
 Auth.configure(config);
-Auth.configure({ ...config });
+Auth.configure(config);
 API.configure(config);
 PubSub.configure(config);
 

@@ -21,6 +21,9 @@ import {
     Link
 } from 'components';
 
+// Selectors
+import {selectProjectSessions } from 'selectors';
+
 const useStyles = makeStyles(({ palette, spacing }) => ({
     root: {
         backgroundColor: 'unset',
@@ -91,41 +94,13 @@ const TesterDetails = ({
     );
 };
 
-const generateData = (reference, client, project, notes) => ({
-    'Tester Number': {
-        Component: <Link to={'/project/' + project}>{project}</Link>,
-        value: reference
-    },
-    'Tester Name': {
-        Component: <Link to={'/project/' + project}>{project}</Link>,
-        value: reference
-    },
-    Profile: client,
-    'Testing Date': '01/01/2000',
-    'Testing Time': '2:30PM',
-    Notes: notes,
-    actions: {
-        checkAction: value => console.log('check meh', value)
-    }
-});
-
 TesterDetails.propTypes = {
     testerDetails: PropTypes.array.isRequired
 };
 
 const mapState = state => ({
     projectReference: formValueSelector('ProjectDetails')(state, 'reference'),
-    testerDetails: Array.range(0, 50)
-        .map(() => [
-            generateData(
-                'ETCBR-644',
-                'Disney',
-                'EM21',
-                'i-view, confirmed, 11/06'
-            ),
-            generateData('ETCBR-644', 'CITB', 'JE28', 'Chippenham')
-        ])
-        .flatMap(x => x)
+    testerDetails: selectProjectSessions(state)
 });
 
 const mapDispatch = {};

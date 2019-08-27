@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { reduxForm, formValueSelector } from 'redux-form';
@@ -15,15 +15,36 @@ import {
 } from 'components';
 
 // Selectors
-import { selectProjectStatuses } from 'selectors';
+import {
+    selecProjectId,
+    selectProjectStatuses,
+    selectProjectClients
+} from 'selectors';
 
-const ProjectDetails = ({ projectStatuses, clients, invalid }) => {
+// Actions
+import { listProjectClients, updateProject } from 'actions';
+
+const ProjectDetails = ({
+    projectStatuses,
+    clients,
+    invalid,
+    listProjectClients,
+    handleSubmit,
+    reset
+}) => {
     const [isEditing, setEditing] = useState(false);
+
+    useEffect(() => {
+        listProjectClients();
+    }, []);
 
     return (
         <EditableCard
             title='Project Details'
-            onEdit={() => setEditing(!isEditing)}
+            onEdit={() => {
+                reset();
+                setEditing(!isEditing);
+            }}
             isEditing={isEditing}
             color={isEditing ? 'primary' : 'secondary'}
         >
@@ -104,7 +125,10 @@ const ProjectDetails = ({ projectStatuses, clients, invalid }) => {
             />
             {isEditing && (
                 <EditableFooter
-                    onClick={() => setEditing(!isEditing)}
+                    onClick={() => {
+                        handleSubmit();
+                        setEditing(!isEditing);
+                    }}
                     disabled={invalid}
                 />
             )}
@@ -114,14 +138,14 @@ const ProjectDetails = ({ projectStatuses, clients, invalid }) => {
 
 const mapState = state => {
     return {
-        // clients: selectClients(state),
-        clients: selectProjectStatuses(state),
+        id: selecProjectId(state),
+        clients: selectProjectClients(state),
         projectStatuses: selectProjectStatuses(state),
         initialValues: { reference: 'astarst' }
     };
 };
 
-const mapDispatch = {};
+const mapDispatch = { listProjectClients };
 
 const validate = values => {
     const required = [
@@ -134,6 +158,16 @@ const validate = values => {
     return validateRequired(values, required);
 };
 
+const onSubmit = ({ client, ...values }, dispatch, { id }) => {
+    const project = {
+        id,
+        projectClientId: client,
+        ...values
+    };
+
+    return dispatch(updateProject(project));
+};
+
 const _ProjectDetails = compose(
     connect(
         mapState,
@@ -141,7 +175,8 @@ const _ProjectDetails = compose(
     ),
     reduxForm({
         form: 'ProjectDetails',
-        validate
+        validate,
+        onSubmit
     })
 )(ProjectDetails);
 

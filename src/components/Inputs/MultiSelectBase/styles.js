@@ -53,6 +53,12 @@ export default makeStyles(({ spacing, palette, shape, typography }) => {
                 paddingBottom: menuItemPadding
             }
         },
+        menuText: {
+            lineHeight: `${menuItemHeight}px`,
+            textOverflow: 'ellipsis',
+            overflow: 'hidden',
+            whiteSpace: 'nowrap'
+        },
         select: {
             '&:focus': {
                 backgroundColor: 'unset'
