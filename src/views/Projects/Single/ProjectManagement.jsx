@@ -1,7 +1,7 @@
 import React, { Fragment, useState } from 'react';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
-import { reduxForm, formValueSelector } from 'redux-form';
+import { reduxForm, formValueSelector, Field } from 'redux-form';
 
 // Local
 import { validateRequired } from 'libs';
@@ -12,8 +12,35 @@ import {
     EditableFooter,
     DateInput,
     CardDivider,
-    MultiInput
+    MultiInput,
+    MultiSelect,
+    Control
 } from 'components';
+
+const renderMultiSelect = ({ input: {
+    onChange, value = []
+}}) => {
+
+    const fixed = typeof value === 'string' ? [] : value
+    return (
+        <MultiSelect
+            data={[
+                'Oliver Hansen',
+                'Van Henry',
+                'April Tucker',
+                'Ralph Hubbard',
+                'Omar Alexander',
+                'Carlos Abbott',
+                'Miriam Wagner',
+                'Bradley Wilkerson',
+                'Virginia Andrews',
+                'Kelly Snyder'
+            ]}
+            onChange={onChange}
+            value={fixed}
+        />
+    );
+};
 
 const ProjectManagement = () => {
     const [isEditing, setEditing] = useState(false);
@@ -24,6 +51,7 @@ const ProjectManagement = () => {
             isEditing={isEditing}
             color={isEditing ? 'primary' : 'secondary'}
         >
+            <Control label='facilities booked'><Field name='arst' component={renderMultiSelect} defaultValue={[]} /></Control>
             <Select
                 label='Facilities booked'
                 name='facility'

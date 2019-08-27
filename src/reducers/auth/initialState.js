@@ -1,6 +1,5 @@
 export default {
     email: null,
     name: '',
-    isTester: false,
-    testerId: '3a8cf4b5-433a-4ab9-b706-5b153c97d0cb'
+    isTester: false
 };

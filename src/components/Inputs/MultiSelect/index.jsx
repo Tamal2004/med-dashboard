@@ -36,7 +36,7 @@ const MenuProps = {
 	}
 };
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles(({ spacing, palette, shape }) => ({
 	gridContainer: {
 		padding: 16
 	},
@@ -45,17 +45,21 @@ const useStyles = makeStyles(theme => ({
 		float: 'right'
 	},
 	formControl: {
-		minWidth: 120
+		minWidth: 120,
+		border: '1px solid',
+		borderColor: palette.grey[500]
 	},
 	chips: {
 		display: 'flex',
 		flexWrap: 'wrap'
 	},
 	chip: {
-		margin: 2
+		margin: 2,
+		width: '100%',
+		borderRadius: shape.borderRadius
 	},
 	noLabel: {
-		marginTop: theme.spacing(3)
+		marginTop: spacing(3)
 	},
 	temp: {
 		background: 'tomato',
@@ -64,9 +68,9 @@ const useStyles = makeStyles(theme => ({
 		}
 	},
 	selectRoot: {
-		border: '1px solid',
-		borderColor: '#e0e0e0',
-		borderRadius: 4
+		'&:focus': {
+			backgroundColor: 'unset'
+		}
 	}
 }));
 
@@ -89,6 +93,8 @@ const MultiSelect = ({ data, onChange, value }) => {
 		<Fragment>
 			<FormControl fullWidth className={c.formControl}>
 				<Select
+					placeholder='Please select...'
+					disableUnderline
 					multiple
 					classes={{ root: c.selectRoot }}
 					value={value || []}

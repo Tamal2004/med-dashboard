@@ -9,6 +9,13 @@ import { makeStyles } from '@material-ui/core/styles';
 import { validateRequired } from 'libs';
 import { GridItem, Input, EditableCard, EditableFooter } from 'components';
 
+// Selectors
+import { selectTesterId } from 'selectors';
+
+// Actions
+import { updateTester } from 'actions';
+
+
 const useStyles = makeStyles(theme => ({
     manualGrid: {
         textAlign: 'right',
@@ -19,21 +26,30 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-const ContactDetails = ({ hasManualAddress, invalid, change }) => {
+const ContactDetails = ({
+    hasManualAddress,
+    invalid,
+    change,
+    reset,
+    handleSubmit
+}) => {
     const c = useStyles();
     const [isEditing, setEditing] = useState(false);
     return (
         <EditableCard
             title='Contact Details'
-            onEdit={() => setEditing(!isEditing)}
             isEditing={isEditing}
+            onEdit={() => {
+                if (isEditing) reset();
+                setEditing(!isEditing);
+            }}
             color={isEditing ? 'primary' : 'secondary'}
         >
             <Input
                 label='Email address'
                 name='email'
                 isCard
-                active={isEditing}
+                active={false}
                 required={isEditing}
             />
             <Input
@@ -104,7 +120,10 @@ const ContactDetails = ({ hasManualAddress, invalid, change }) => {
             )}
             {isEditing && (
                 <EditableFooter
-                    onClick={() => setEditing(!isEditing)}
+                    onClick={() => {
+                        if (isEditing) handleSubmit();
+                        setEditing(!isEditing);
+                    }}
                     disabled={invalid}
                 />
             )}
@@ -113,6 +132,7 @@ const ContactDetails = ({ hasManualAddress, invalid, change }) => {
 };
 
 const mapState = state => ({
+    id: selectTesterId(state),
     hasManualAddress: formValueSelector('ContactDetails')(
         state,
         'manualAddress'
@@ -130,6 +150,46 @@ const validate = (values, { hasManualAddress }) => {
     return { ...validateRequired(values, required) };
 };
 
+const onSubmit = (
+    { email, manualAddress, phone, address, ...values },
+    dispatch,
+    { id }
+) => {
+    let addressDetails = {};
+
+    if (manualAddress) {
+        addressDetails = {
+            address: null,
+            ...Object.splice(values, [
+                'house',
+                'street',
+                'town',
+                'county',
+                'country',
+                'postcode'
+            ])
+        };
+    } else {
+        addressDetails = {
+            address,
+            house: null,
+            street: null,
+            town: null,
+            county: null,
+            country: null,
+            postcode: null
+        };
+    }
+
+    const tester = {
+        id,
+        phone,
+        ...addressDetails
+    };
+
+    return dispatch(updateTester(tester));
+};
+
 const _ContactDetails = compose(
     connect(
         mapState,
@@ -137,7 +197,9 @@ const _ContactDetails = compose(
     ),
     reduxForm({
         form: 'ContactDetails',
-        validate
+        validate,
+        onSubmit,
+        enableReinitialize: true,
     })
 )(ContactDetails);
 

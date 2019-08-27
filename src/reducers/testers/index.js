@@ -2,16 +2,20 @@
 import initialState from './initialState';
 
 // Action Types
-import { SUCCESS, LIST_TESTERS } from 'actionTypes';
+import { SUCCESS, FETCH_TESTER, LIST_TESTERS } from 'actionTypes';
 
 const testersReducer = (
     state = initialState,
     { type, payload, async, ...action }
 ) => {
+    const isSuccess = async === SUCCESS;
     switch (type) {
+        case FETCH_TESTER: {
+            return isSuccess ? { ...state, individual: payload } : state;
+        }
+
         case LIST_TESTERS: {
-            if (async === SUCCESS) return { ...state, list: payload };
-            return state;
+            return isSuccess ? { ...state, list: payload } : state;
         }
 
         default: {

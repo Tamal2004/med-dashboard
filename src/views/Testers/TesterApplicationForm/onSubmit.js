@@ -8,29 +8,29 @@ export default async (values, dispatch, { isStudent, isEmployed }) => {
 
     let address = {};
     if (manualAddress) {
-        address = { address: undefined };
+        address = { address: null };
     } else {
         address = {
-            house: undefined,
-            street: undefined,
-            town: undefined,
-            county: undefined,
-            postcode: undefined,
-            country: undefined
+            house: null,
+            street: null,
+            town: null,
+            county: null,
+            postcode: null,
+            country: null
         };
     }
 
     const regularEmployment = {
-        jobTitle: undefined,
-        businessName: undefined,
-        employmentSector: undefined,
-        employeeCount: undefined
+        jobTitle: null,
+        businessName: null,
+        employmentSector: null,
+        employeeCount: null
     };
 
     const studentEmployment = {
-        subject: undefined,
-        educationStage: undefined,
-        institution: undefined
+        subject: null,
+        educationStage: null,
+        institution: null
     };
 
     // Unemployed
@@ -38,11 +38,8 @@ export default async (values, dispatch, { isStudent, isEmployed }) => {
         ...regularEmployment,
         ...studentEmployment
     };
-    if (isStudent) {
-        employment = { ...regularEmployment };
-    } else if (isEmployed) {
-        employment = { ...studentEmployment };
-    }
+    if (isStudent) employment = { ...regularEmployment };
+    else if (isEmployed) employment = { ...studentEmployment };
 
     const tester = {
         ...pruned,

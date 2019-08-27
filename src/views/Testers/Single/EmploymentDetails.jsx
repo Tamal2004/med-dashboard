@@ -9,11 +9,15 @@ import { Select, Input, EditableCard, EditableFooter } from 'components';
 
 // Selectors
 import {
+    selectTesterId,
     selectEducationStages,
     selectEmployeeCounts,
     selectEmploymentSectors,
     selectEmploymentStatuses
 } from 'selectors';
+
+// Actions
+import { updateTester } from 'actions';
 
 const EmploymentDetails = ({
     educationStages,
@@ -23,13 +27,18 @@ const EmploymentDetails = ({
     isStudent,
     isEmployed,
     isRetired,
-    invalid
+    invalid,
+    reset,
+    handleSubmit
 }) => {
     const [isEditing, setEditing] = useState(false);
     return (
         <EditableCard
             title='Employment Details'
-            onEdit={() => setEditing(!isEditing)}
+            onEdit={() => {
+                if (isEditing) reset();
+                setEditing(!isEditing);
+            }}
             isEditing={isEditing}
             color={isEditing ? 'primary' : 'secondary'}
         >
@@ -102,7 +111,10 @@ const EmploymentDetails = ({
             )}
             {isEditing && (
                 <EditableFooter
-                    onClick={() => setEditing(!isEditing)}
+                    onClick={() => {
+                        if (isEditing) handleSubmit();
+                        setEditing(!isEditing);
+                    }}
                     disabled={invalid}
                 />
             )}
@@ -116,6 +128,7 @@ const mapState = state => {
         'employmentStatus'
     );
     return {
+        id: selectTesterId(state),
         educationStages: selectEducationStages(state),
         employeeCounts: selectEmployeeCounts(state),
         employmentSectors: selectEmploymentSectors(state),
@@ -144,6 +157,36 @@ const validate = (values, { isStudent, isEmployed }) => {
     return { ...validateRequired(values, required) };
 };
 
+const onSubmit = ({ ...values }, dispatch, { id, isStudent, isEmployed }) => {
+    const regularEmployment = {
+        jobTitle: null,
+        businessName: null,
+        employmentSector: null,
+        employeeCount: null
+    };
+
+    const studentEmployment = {
+        subject: null,
+        educationStage: null,
+        institution: null
+    };
+
+    // Unemployed
+    let employment = {
+        ...regularEmployment,
+        ...studentEmployment
+    };
+    if (isStudent) employment = { ...regularEmployment };
+    else if (isEmployed) employment = { ...studentEmployment };
+
+    const tester = {
+        id,
+        ...values,
+        ...employment
+    };
+    return dispatch(updateTester(tester));
+};
+
 const _EmploymentDetails = compose(
     connect(
         mapState,
@@ -151,7 +194,8 @@ const _EmploymentDetails = compose(
     ),
     reduxForm({
         form: 'EmploymentDetails',
-        validate
+        validate,
+        onSubmit
     })
 )(EmploymentDetails);
 

@@ -31,3 +31,46 @@ export const generateTesterList = testerList =>
             'Last Contact Date': lastContactDate || 'No Contacts'
         })
     );
+
+export const generateTesterSessions = testerSessions =>
+    testerSessions.map(
+        ({
+            date,
+            time,
+            clientId,
+            clientName,
+            projectId,
+            projectReference,
+            notes
+        }) => ({
+            Date: date,
+            Time: time,
+            Client: {
+                Component: <Link to={`/client/${clientId}`}>{clientName}</Link>,
+                value: clientName
+            },
+            Project: {
+                Component: (
+                    <Link to={`/project/${projectId}`}>{projectReference}</Link>
+                ),
+                value: projectReference
+            },
+            Notes: notes
+        })
+    );
+
+export const generateTesterContactNotes = testerContactNotes =>
+    testerContactNotes.map(
+        ({ date, projectId, projectReference, type, contactedBy, note }) => ({
+            Date: date,
+            Project: {
+                Component: (
+                    <Link to={`/project/${projectId}`}>{projectReference}</Link>
+                ),
+                value: projectReference
+            },
+            'Contact Type': type,
+            'Contacted By': contactedBy,
+            Details: note
+        })
+    );

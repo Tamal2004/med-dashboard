@@ -2,14 +2,23 @@ import API, { graphqlOperation } from '@aws-amplify/api';
 import { initialize } from 'redux-form';
 
 // Local
-import { history } from 'libs';
+import { history, today } from 'libs';
 
 // Normalizers
-import { normalizeTestersList, normalizeTester } from 'normalizers';
+import {
+    normalizeTestersList,
+    normalizeTester,
+    normalizeTesterForm
+} from 'normalizers';
 
 // Graph QL
 import { createTester as gQLCreateTester } from 'graphql/mutations';
-import { ListTesters, FetchTester } from 'graphql/tester';
+import {
+    FetchTester,
+    FetchPublicTester,
+    ListTesters,
+    UpdateTester
+} from 'graphql/tester';
 
 // Action Types
 import {
@@ -18,9 +27,11 @@ import {
     FAIL,
     CREATE_TESTER,
     LIST_TESTERS,
-    FETCH_TESTER
+    FETCH_TESTER,
+    UPDATE_TESTER
 } from 'actionTypes';
 
+// Create Tester
 const createTesterAction = async => ({
     type: CREATE_TESTER,
     async
@@ -41,6 +52,7 @@ export const createTester = tester => async dispatch => {
     }
 };
 
+// List Tester
 const listTestersAction = (async, payload = []) => ({
     type: LIST_TESTERS,
     async,
@@ -60,6 +72,7 @@ export const listTesters = () => async dispatch => {
     }
 };
 
+// Fetch Tester
 const fetchTesterAction = (async, payload = []) => ({
     type: FETCH_TESTER,
     async,
@@ -68,23 +81,76 @@ const fetchTesterAction = (async, payload = []) => ({
 
 export const fetchTester = id => async dispatch => {
     dispatch(fetchTesterAction(REQUEST));
+
+    const {
+        data: { getTester, error = null }
+    } = await API.graphql(graphqlOperation(FetchTester, { id }));
+
+    const {
+        testerDetails,
+        contactDetails,
+        employmentDetails,
+        testerData
+    } = normalizeTester(getTester);
+
+    if (!error) {
+        dispatch(initialize('TesterDetails', testerDetails));
+        dispatch(initialize('ContactDetails', contactDetails));
+        dispatch(initialize('EmploymentDetails', employmentDetails));
+
+        dispatch(fetchTesterAction(SUCCESS, testerData));
+    } else {
+        dispatch(fetchTesterAction(FAIL));
+    }
+};
+
+export const fetchPublicTester = id => async dispatch => {
+    dispatch(fetchTesterAction());
+
+    const {
+        data: { getTester, error = null }
+    } = await API.graphql(graphqlOperation(FetchPublicTester, { id }));
+
     const {
         testerDetails,
         contactDetails,
         employmentDetails
-    } = normalizeTester();
-    dispatch(initialize('TesterDetails', testerDetails, true));
-    dispatch(initialize('ContactDetails', contactDetails));
-    dispatch(initialize('EmploymentDetails', employmentDetails));
-    // const {
-    //     data: { getTester, error = null }
-    // } = await API.graphql(graphqlOperation(FetchTester, { id }));
-    //
-    // console.log(getTester);
-    //
-    // if (!error) {
-    //     dispatch(fetchTesterAction(SUCCESS, normalizeTester(getTester)));
-    // } else {
-    //     dispatch(fetchTesterAction(FAIL));
-    // }
+    } = normalizeTesterForm(getTester);
+
+    if (!error) {
+        dispatch(initialize('TesterDetails', testerDetails));
+        dispatch(initialize('ContactDetails', contactDetails));
+        dispatch(initialize('EmploymentDetails', employmentDetails));
+    }
+};
+
+// Update Tester
+const updateTesterAction = async => ({
+    type: UPDATE_TESTER,
+    async
+});
+
+export const updateTester = ({ lastUpdated, ...tester }) => async dispatch => {
+    const datedTester = {
+        lastUpdated: today(),
+        ...tester
+    };
+    dispatch(updateTesterAction(REQUEST));
+    const {
+        data: { updateTester, error = null }
+    } = await API.graphql(
+        graphqlOperation(UpdateTester, { input: datedTester })
+    );
+
+    if (!error) {
+        const {
+            testerDetails,
+            contactDetails,
+            employmentDetails
+        } = normalizeTesterForm(updateTester, false);
+
+        dispatch(initialize('TesterDetails', testerDetails));
+        dispatch(initialize('ContactDetails', contactDetails));
+        dispatch(initialize('EmploymentDetails', employmentDetails));
+    }
 };

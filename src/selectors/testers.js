@@ -1,9 +1,34 @@
 import createCachedSelector from 're-reselect';
 
 // Local
-import { mapArray, generateTesterList } from 'libs';
+import {
+    mapArray,
+    generateTesterList,
+    generateTesterSessions,
+    generateTesterContactNotes
+} from 'libs';
 
 const selectTesters = state => state.testers;
+const selectIndividual = createCachedSelector(
+    selectTesters,
+    ({ individual }) => individual
+)(() => 'placeholder');
+
+// Tester Individual
+export const selectTesterId = createCachedSelector(
+    selectIndividual,
+    ({ id }) => id
+)(() => 'placeholder');
+
+export const selectTesterSessions = createCachedSelector(
+    selectIndividual,
+    ({ sessions }) => generateTesterSessions(sessions)
+)(() => 'placeholder');
+
+export const selectTesterContactNotes = createCachedSelector(
+    selectIndividual,
+    ({ contactNotes }) => generateTesterContactNotes(contactNotes)
+)(() => 'placeholder');
 
 // Tester List
 export const selectTesterList = createCachedSelector(
