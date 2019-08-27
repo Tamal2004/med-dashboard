@@ -37,7 +37,6 @@ export const normalizeTestersList = ({ items = [] }) =>
         }
     );
 
-
 export const normalizeTesterForm = (
     { dob, lastUpdated, address, ...testerForm },
     isPublic = true
@@ -66,12 +65,12 @@ export const normalizeTesterForm = (
     const testerDetails = isPublic
         ? publicTesterDetails
         : {
-            ...publicTesterDetails,
-            ...Object.splice(testerForm, [
-                'clientNotes',
-                'facilitatorComments'
-            ])
-        };
+              ...publicTesterDetails,
+              ...Object.splice(testerForm, [
+                  'clientNotes',
+                  'facilitatorComments'
+              ])
+          };
 
     let addressDetails = {};
     if (address) addressDetails = { manualAddress: false, address };
@@ -107,10 +106,6 @@ export const normalizeTesterForm = (
 
     return { testerDetails, contactDetails, employmentDetails };
 };
-
-
-
-
 
 export const normalizeTester = (
     data = {

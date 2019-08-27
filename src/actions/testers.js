@@ -5,11 +5,20 @@ import { initialize } from 'redux-form';
 import { history, today } from 'libs';
 
 // Normalizers
-import { normalizeTestersList, normalizeTester, normalizeTesterForm } from 'normalizers';
+import {
+    normalizeTestersList,
+    normalizeTester,
+    normalizeTesterForm
+} from 'normalizers';
 
 // Graph QL
 import { createTester as gQLCreateTester } from 'graphql/mutations';
-import { FetchTester, FetchPublicTester, ListTesters, UpdateTester } from 'graphql/tester';
+import {
+    FetchTester,
+    FetchPublicTester,
+    ListTesters,
+    UpdateTester
+} from 'graphql/tester';
 
 // Action Types
 import {
@@ -84,7 +93,6 @@ export const fetchTester = id => async dispatch => {
         testerData
     } = normalizeTester(getTester);
 
-
     if (!error) {
         dispatch(initialize('TesterDetails', testerDetails));
         dispatch(initialize('ContactDetails', contactDetails));
@@ -106,9 +114,8 @@ export const fetchPublicTester = id => async dispatch => {
     const {
         testerDetails,
         contactDetails,
-        employmentDetails,
+        employmentDetails
     } = normalizeTesterForm(getTester);
-
 
     if (!error) {
         dispatch(initialize('TesterDetails', testerDetails));
@@ -116,7 +123,6 @@ export const fetchPublicTester = id => async dispatch => {
         dispatch(initialize('EmploymentDetails', employmentDetails));
     }
 };
-
 
 // Update Tester
 const updateTesterAction = async => ({
@@ -130,16 +136,17 @@ export const updateTester = ({ lastUpdated, ...tester }) => async dispatch => {
         ...tester
     };
     dispatch(updateTesterAction(REQUEST));
-    const { data: { updateTester, error = null}} = await API.graphql(
+    const {
+        data: { updateTester, error = null }
+    } = await API.graphql(
         graphqlOperation(UpdateTester, { input: datedTester })
     );
-
 
     if (!error) {
         const {
             testerDetails,
             contactDetails,
-            employmentDetails,
+            employmentDetails
         } = normalizeTesterForm(updateTester, false);
 
         dispatch(initialize('TesterDetails', testerDetails));
