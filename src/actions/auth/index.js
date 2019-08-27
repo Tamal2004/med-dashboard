@@ -1,20 +1,7 @@
-import Amplify, { Auth } from 'aws-amplify';
+import { Auth } from 'aws-amplify';
 
 import { SET_AUTH_USER_INFO } from 'actionTypes';
 import { showNotification } from 'actions';
-
-/**************
- * SET CONFIG *
- **************/
-const setConfig = token => {
-    Amplify.configure({
-        API: {
-            graphql_headers: async () => ({
-                'My-Custom-Header': 'my value'
-            })
-        }
-    });
-};
 
 /***********
  * API CALL *
@@ -33,18 +20,19 @@ const getSession = () => {
     return Auth.currentSession()
         .then(data => {
             console.log(data);
-            setConfig();
         })
         .catch(err => console.log(err));
 };
 
-const signUp = () => {
+export const signUp = () => {
     return Auth.signUp({
         username: 'report.nabil@gmail.com',
         password: 'password',
         attributes: {
             name: 'report.nabil@gmail.com',
             email: 'report.nabil@gmail.com',
+            family_name: 'Nabil',
+            given_name: 'Ahmad',
             'custom:testerId': '123'
         }
     })

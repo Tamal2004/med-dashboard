@@ -1,4 +1,6 @@
 import API, { graphqlOperation } from '@aws-amplify/api';
+import Auth from '@aws-amplify/auth';
+import AWS from 'aws-sdk';
 
 // Local
 import { history } from 'libs';
@@ -28,4 +30,24 @@ export const fetchClients = () => async dispatch => {
     } else {
         dispatch(fetchClientsAction(FAIL));
     }
+};
+
+export const fetchPublicClients = () => async dispatch => {
+    console.log('fetchPublicClients', AWS);
+    window.LOG_LEVEL = 'DEBUG';
+    dispatch(fetchClientsAction(REQUEST));
+    const res = await API.graphql({
+        query: gQLListClients,
+        auth: {
+            credentials: Auth.currentCredentials()
+        }
+    });
+
+    console.log('listClients', res);
+
+    // if (!error) {
+    //     dispatch(fetchClientsAction(SUCCESS, listClients));
+    // } else {
+    //     dispatch(fetchClientsAction(FAIL));
+    // }
 };

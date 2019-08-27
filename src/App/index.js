@@ -32,7 +32,6 @@ import App from './App';
 
 Amplify.configure(config);
 Auth.configure(config);
-Auth.configure({ ...config });
 API.configure(config);
 PubSub.configure(config);
 
@@ -48,13 +47,14 @@ class IndexApp extends Component {
                 <MuiThemeProvider theme={theme}>
                     <CssBaseline />
                     <Authenticator
+                        authState='signUp'
                         amplifyConfig={config}
-                        authState={
-                            history.location.pathname.trim() ===
-                            '/tester-application-form'
-                                ? 'signUp'
-                                : 'signIn'
-                        }
+                        // authState={
+                        //     history.location.pathname.trim() ===
+                        //     '/tester-application-form'
+                        //         ? 'signUp'
+                        //         : 'signIn'
+                        // }
                         onStateChange={authState =>
                             authState === 'signedIn' &&
                             this.props.setAuthUserInfo()
