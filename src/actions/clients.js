@@ -39,6 +39,7 @@ export const fetchPublicClients = () => async dispatch => {
     const res = await API.graphql({
         query: gQLListClients,
         auth: {
+            type: 'AWS_IAM',
             credentials: Auth.currentCredentials()
         }
     });
