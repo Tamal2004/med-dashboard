@@ -5,4 +5,5 @@ export * from './Input';
 export * from './MultiInput';
 export * from './Switch';
 export * from './Select';
+export * from './MultiSelect';
 export * from './DateInput';

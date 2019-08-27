@@ -159,13 +159,13 @@ class Table extends Component {
         </IconButton>
     );
 
-    DeleteAction = (onClick = () => {}) => (
+    DeleteAction = (onClick = () => {}, idx) => (
         <IconButton
             className={this.c.action}
             size='small'
             color='primary'
             aria-label='Delete'
-            onClick={onClick}
+            onClick={() => onClick(idx)}
         >
             <DeleteIcon />
         </IconButton>
@@ -204,7 +204,7 @@ class Table extends Component {
                             )
                         );
                     if (isExists('deleteAction'))
-                        actions.push(this.DeleteAction(value.deleteAction));
+                        actions.push(this.DeleteAction(value.deleteAction, idx));
 
                     return actions.map((action, key) => (
                         <Fragment key={key}>{action}</Fragment>

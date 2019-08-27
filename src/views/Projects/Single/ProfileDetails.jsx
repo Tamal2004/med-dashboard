@@ -77,14 +77,16 @@ const ProfileDetails = ({ data }) => {
                     data={data}
                     page={page}
                     action
-                    itemsPerPage={5}
+                    itemsPerPage={3}
                     styles={{ root: c.table }}
+                    handleEditModal={(idx) => console.log('arst', idx)}
                 />
                 {totalPages > 1 && (
                     <div className={c.footer}>
                         <PaginationBase
                             handlePage={page => setPage(page)}
                             totalPages={totalPages}
+                            pageStep={3}
                         />
                     </div>
                 )}
@@ -94,10 +96,9 @@ const ProfileDetails = ({ data }) => {
 };
 
 const generateData = (reference, project, contactType, contactedBy) => ({
-    Profile: reference,
+    Profile: { editable: true, Component: reference },
     actions: {
-        editAction: () => console.log('edit'),
-        deleteAction: () => console.log('delete')
+        deleteAction: idx => console.log('delete', idx)
     }
 });
 

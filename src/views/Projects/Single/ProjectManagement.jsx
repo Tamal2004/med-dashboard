@@ -1,7 +1,7 @@
-import React, { Fragment, useState } from 'react';
+import React, { useState } from 'react';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
-import { reduxForm, formValueSelector, Field } from 'redux-form';
+import { reduxForm, formValueSelector } from 'redux-form';
 
 // Local
 import { validateRequired } from 'libs';
@@ -10,6 +10,7 @@ import {
     IconedButton,
     EditableCard,
     EditableFooter,
+    Input,
     DateInput,
     CardDivider,
     MultiInput,
@@ -17,32 +18,7 @@ import {
     Control
 } from 'components';
 
-const renderMultiSelect = ({ input: {
-    onChange, value = []
-}}) => {
-
-    const fixed = typeof value === 'string' ? [] : value
-    return (
-        <MultiSelect
-            data={[
-                'Oliver Hansen',
-                'Van Henry',
-                'April Tucker',
-                'Ralph Hubbard',
-                'Omar Alexander',
-                'Carlos Abbott',
-                'Miriam Wagner',
-                'Bradley Wilkerson',
-                'Virginia Andrews',
-                'Kelly Snyder'
-            ]}
-            onChange={onChange}
-            value={fixed}
-        />
-    );
-};
-
-const ProjectManagement = () => {
+const ProjectManagement = ({ facilities }) => {
     const [isEditing, setEditing] = useState(false);
     return (
         <EditableCard
@@ -51,11 +27,10 @@ const ProjectManagement = () => {
             isEditing={isEditing}
             color={isEditing ? 'primary' : 'secondary'}
         >
-            <Control label='facilities booked'><Field name='arst' component={renderMultiSelect} defaultValue={[]} /></Control>
-            <Select
+            <MultiSelect
+                data={facilities}
+                name='facilities'
                 label='Facilities booked'
-                name='facility'
-                data={[]}
                 isCard
                 active={isEditing}
             />
@@ -126,6 +101,7 @@ const ProjectManagement = () => {
                 isCard
                 active={isEditing}
             />
+            <Input label='Invoice number' name='invoiceNumber' isCard active={isEditing} />
             {isEditing && (
                 <EditableFooter onClick={() => setEditing(!isEditing)} />
             )}
@@ -133,18 +109,22 @@ const ProjectManagement = () => {
     );
 };
 
-const mapState = state => ({});
+const mapState = state => ({
+    facilities: [
+        'Oliver Hansen',
+        'Van Henry',
+        'April Tucker',
+        'Ralph Hubbard',
+        'Omar Alexander',
+        'Carlos Abbott',
+        'Miriam Wagner',
+        'Bradley Wilkerson',
+        'Virginia Andrews',
+        'Kelly Snyder'
+    ]
+});
 
 const mapDispatch = {};
-
-const validate = (values, { hasManualAddress }) => {
-    const required = ['email', 'phone'];
-
-    if (!hasManualAddress) required.push('address');
-    else required.push('country');
-
-    return { ...validateRequired(values, required) };
-};
 
 const _ProjectManagement = compose(
     connect(
@@ -152,8 +132,7 @@ const _ProjectManagement = compose(
         mapDispatch
     ),
     reduxForm({
-        form: 'ProjectManagement',
-        validate
+        form: 'ProjectManagement'
     })
 )(ProjectManagement);
 

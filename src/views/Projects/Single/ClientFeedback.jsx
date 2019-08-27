@@ -9,7 +9,6 @@ import {
     Input,
     EditableCard,
     EditableFooter,
-    DateInput,
     Control,
     MultiInput
 } from 'components';
@@ -26,19 +25,6 @@ const ClientFeedback = ({ invalid }) => {
             isEditing={isEditing}
             color={isEditing ? 'primary' : 'secondary'}
         >
-            <DateInput
-                label='Feedback obtained'
-                name='feedbackObtained'
-                isCard
-                active={isEditing}
-            />
-            <Input
-                label='Satisfaction Score'
-                name='satisfactionScore'
-                isCard
-                active={isEditing}
-                type='number'
-            />
             <Control label='Client Comments' isCard />
             <MultiInput name='clientComments' isCard active={isEditing} />
             <Control label='Web Usability Comments' isCard />

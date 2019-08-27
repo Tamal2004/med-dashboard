@@ -34,3 +34,54 @@ export const ListProjects = `query ListProjects {
         }
     }
 }`;
+
+export const FetchProject = `query FetchProject($id: ID!) {
+    getProject(id: $id) {
+        id
+        reference
+        title
+        status
+        client {
+            name
+        }
+        principalContact
+        otherContact
+        testingDate
+        cost
+        purchaseOrderNumber
+        manager
+        testerFacilitator
+        clientFacilitator
+        mainRecruiter
+        facilities
+        screenerApproved
+        facilitationGuideSent
+        testerProfilesSent
+        facilitationGuideApproved
+        testerProfilesApproved
+        sessionDetailsSent
+        attendees
+        reportSent
+        feedbackEntered
+        videosUploaded
+        invoiced
+        invoiceNumber
+        clientComments
+        wuComments
+        profiles
+        sessions {
+            items {
+                id
+                profile
+                date
+                time
+                notes
+                tester {
+                    id
+                    firstName
+                    surname
+                }
+            }
+        }
+    }
+}`;

@@ -16,6 +16,7 @@ import {
     SUCCESS,
     FAIL,
     CREATE_PROJECT,
+    FETCH_PROJECT,
     LIST_PROJECTS,
     LIST_PROJECT_CLIENTS
 } from 'actionTypes';
@@ -36,6 +37,24 @@ export const createProject = project => async dispatch => {
         history.push('/project');
     } else {
         dispatch(createProjectAction(FAIL));
+    }
+};
+
+const fetchProjectAction = async => ({
+    type: FETCH_PROJECT,
+    async
+});
+
+export const fetchProject = id => async dispatch => {
+    dispatch(fetchProjectAction(REQUEST));
+    const res = await API.graphql(graphqlOperation(gQLCreateProject, { id }));
+
+    console.log(res);
+
+    if (!res.error) {
+        dispatch(fetchProjectAction(SUCCESS));
+    } else {
+        dispatch(fetchProjectAction(FAIL));
     }
 };
 
