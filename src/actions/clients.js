@@ -1,6 +1,5 @@
 import API, { graphqlOperation } from '@aws-amplify/api';
 import Auth from '@aws-amplify/auth';
-import AWS from 'aws-sdk';
 
 // Local
 import { history } from 'libs';
@@ -33,16 +32,21 @@ export const fetchClients = () => async dispatch => {
 };
 
 export const fetchPublicClients = () => async dispatch => {
-    console.log('fetchPublicClients', AWS);
+    console.log('fetchPublicClients');
     window.LOG_LEVEL = 'DEBUG';
+
     dispatch(fetchClientsAction(REQUEST));
-    const res = await API.graphql({
-        query: gQLListClients,
-        auth: {
-            type: 'AWS_IAM',
-            credentials: Auth.currentCredentials()
-        }
+    console.log('fetchClientsAction');
+
+    const res = await Auth.currentCredentials().then(data => {
+        console.log('currentCredentials', data);
+        return API.graphql({
+            authMode: 'AWS_IAM',
+            query: gQLListClients,
+            credentials: data
+        }).then(data => console.log('API DATA', data));
     });
+    // const res =
 
     console.log('listClients', res);
 

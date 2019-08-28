@@ -28,9 +28,9 @@ import theme from 'components/theme';
 import { Notification } from 'components';
 import { setAuthUserInfo } from 'actions';
 import { history } from 'libs/history';
+import AWS from 'aws-sdk';
 import App from './App';
 
-Amplify.configure(config);
 Auth.configure(config);
 API.configure(config);
 PubSub.configure(config);

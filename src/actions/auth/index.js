@@ -1,4 +1,5 @@
 import { Auth } from 'aws-amplify';
+import { history } from 'libs/history';
 
 import { SET_AUTH_USER_INFO } from 'actionTypes';
 import { showNotification } from 'actions';
@@ -8,7 +9,7 @@ import { showNotification } from 'actions';
  ************/
 const getUser = () => {
     return Auth.currentAuthenticatedUser({
-        bypassCache: false // Optional, By default is false. If set to true, this call will send a request to Cognito to get the latest user data
+        bypassCache: true // Optional, By default is false. If set to true, this call will send a request to Cognito to get the latest user data
     })
         .then(({ attributes }) => ({
             attributes
@@ -38,6 +39,19 @@ export const signUp = () => {
     })
         .then(data => console.log(data))
         .catch(err => console.log(err));
+};
+
+export const signIn = () => {
+    return async dispatch => {
+        const res = await Auth.signIn({
+            username: 'ahmad.nabil@echotechsys.com',
+            password: 'password'
+        })
+            .then(data => console.log('After signIn: ', data))
+            .catch(err => console.log(err));
+
+        console.log('res', res);
+    };
 };
 
 const changePassword = ({ oldPassword, newPassword }) => {
@@ -76,5 +90,17 @@ export const updateAuthUserPassword = payload => {
             console.log('password change error', res, res.message, res.code);
             dispatch(showNotification({ type: 'error', message: res.message }));
         }
+    };
+};
+
+export const logoutUser = () => {
+    console.log('LOG OUT USER');
+    return async dispatch => {
+        Auth.signOut()
+            .then(data => {
+                console.log(data);
+                history.push('/');
+            })
+            .catch(err => console.log(err));
     };
 };
