@@ -5,6 +5,7 @@ export const onCreateClient = `subscription OnCreateClient {
   onCreateClient {
     id
     name
+    createdBy
     projects {
       items {
         id
@@ -46,6 +47,7 @@ export const onUpdateClient = `subscription OnUpdateClient {
   onUpdateClient {
     id
     name
+    createdBy
     projects {
       items {
         id
@@ -87,6 +89,7 @@ export const onDeleteClient = `subscription OnDeleteClient {
   onDeleteClient {
     id
     name
+    createdBy
     projects {
       items {
         id
@@ -133,6 +136,7 @@ export const onCreateProject = `subscription OnCreateProject {
     client {
       id
       name
+      createdBy
       projects {
         nextToken
       }
@@ -195,6 +199,7 @@ export const onUpdateProject = `subscription OnUpdateProject {
     client {
       id
       name
+      createdBy
       projects {
         nextToken
       }
@@ -257,6 +262,7 @@ export const onDeleteProject = `subscription OnDeleteProject {
     client {
       id
       name
+      createdBy
       projects {
         nextToken
       }
@@ -321,6 +327,7 @@ export const onCreateSession = `subscription OnCreateSession {
       client {
         id
         name
+        createdBy
       }
       principalContact
       otherContact
@@ -415,6 +422,7 @@ export const onUpdateSession = `subscription OnUpdateSession {
       client {
         id
         name
+        createdBy
       }
       principalContact
       otherContact
@@ -509,6 +517,7 @@ export const onDeleteSession = `subscription OnDeleteSession {
       client {
         id
         name
+        createdBy
       }
       principalContact
       otherContact
@@ -784,6 +793,7 @@ export const onCreateContactNote = `subscription OnCreateContactNote {
       client {
         id
         name
+        createdBy
       }
       principalContact
       otherContact
@@ -877,6 +887,7 @@ export const onUpdateContactNote = `subscription OnUpdateContactNote {
       client {
         id
         name
+        createdBy
       }
       principalContact
       otherContact
@@ -970,6 +981,7 @@ export const onDeleteContactNote = `subscription OnDeleteContactNote {
       client {
         id
         name
+        createdBy
       }
       principalContact
       otherContact

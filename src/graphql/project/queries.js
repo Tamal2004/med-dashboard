@@ -69,8 +69,8 @@ export const FetchProject = `query FetchProject($id: ID!) {
     }
 }`;
 
-export const ListProjects = `query ListProjects {
-    listProjects {
+export const ListProjects = `query ListProjects($filter: ModelProjectFilterInput) {
+    listProjects(filter: $filter) {
         items {
             id
             client {
@@ -82,6 +82,20 @@ export const ListProjects = `query ListProjects {
             testingDate
             status
             manager
+        }
+    }
+}`;
+export const ListIncompleteProjects = `query ListIncompleteProjects {
+    listProjects(filter: {
+        or: [
+            { status: { contains: "In Progress" } }   
+            { status: { contains: "Pending" } }   
+        ]
+    }) {
+        items {
+            id
+            reference
+            profiles
         }
     }
 }`;

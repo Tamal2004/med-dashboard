@@ -7,7 +7,8 @@ import {
     FETCH_PROJECT,
     UPDATE_PROJECT,
     LIST_PROJECTS,
-    LIST_PROJECT_CLIENTS
+    LIST_PROJECT_CLIENTS,
+    REMOVE_SESSION
 } from 'actionTypes';
 
 const projectsReducer = (
@@ -22,7 +23,13 @@ const projectsReducer = (
 
         case UPDATE_PROJECT: {
             return isSuccess
-                ? { ...state, individual: { ...state.individual, profiles: payload.profiles } }
+                ? {
+                      ...state,
+                      individual: {
+                          ...state.individual,
+                          profiles: payload.profiles
+                      }
+                  }
                 : state;
         }
 
@@ -32,6 +39,20 @@ const projectsReducer = (
 
         case LIST_PROJECTS: {
             return isSuccess ? { ...state, list: payload } : state;
+        }
+
+        case REMOVE_SESSION: {
+            return isSuccess
+                ? {
+                      ...state,
+                      individual: {
+                          ...state.individual,
+                          sessions: state.individual.sessions.filter(
+                              ({ id }) => id !== payload
+                          )
+                      }
+                  }
+                : state;
         }
 
         default: {

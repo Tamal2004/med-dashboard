@@ -1,6 +1,7 @@
 type Client @model {
   id: ID!
   name: String!
+  createdBy: String
   projects: [Project] @connection(name: "ClientProjects")
 }
 

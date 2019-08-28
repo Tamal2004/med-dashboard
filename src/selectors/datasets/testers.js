@@ -68,3 +68,9 @@ export const selectNationalities = createCachedSelector(
 export const selectTitles = createCachedSelector(selectDatasets, ({ titles }) =>
     mapArray(titles)
 )(() => 'placeholder');
+
+// Testing Locations
+export const selectTestingLocations = createCachedSelector(
+    selectDatasets,
+    ({ facilities }) => mapArray(facilities)
+)(() => 'placeholder');

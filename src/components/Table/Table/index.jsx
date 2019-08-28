@@ -81,7 +81,7 @@ class Table extends Component {
 
         indexedData.sort(({ datum: a }, { datum: b }) => {
             const composeValue = value => {
-                if (typeof value === 'object') {
+                if (value !== null && typeof value === 'object') {
                     if (!Object.keys(value).includes('value')) {
                         return composeValue(value.Component);
                     } else return value.value;
@@ -219,10 +219,6 @@ class Table extends Component {
                 } else {
                     const editModal = this.props.handleEditModal;
                     const actions = [];
-                    if (isExists('checkAction'))
-                        actions.push(
-                            this.CheckAction(value.checkAction, calibratedIdx)
-                        );
                     if (editModal && editModal !== void 0)
                         actions.push(
                             this.EditAction(() =>
@@ -234,6 +230,10 @@ class Table extends Component {
                             this.DeleteAction(value.deleteAction, calibratedIdx)
                         );
 
+                    if (isExists('checkAction'))
+                        actions.push(
+                            this.CheckAction(value.checkAction, calibratedIdx)
+                        );
                     return actions.map((action, key) => (
                         <Fragment key={key}>{action}</Fragment>
                     ));

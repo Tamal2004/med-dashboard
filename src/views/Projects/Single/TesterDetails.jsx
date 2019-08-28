@@ -22,7 +22,10 @@ import {
 } from 'components';
 
 // Selectors
-import {selectProjectSessions } from 'selectors';
+import { selectProjectSessions } from 'selectors';
+
+// Actions
+import { removeSession } from 'actions';
 
 const useStyles = makeStyles(({ palette, spacing }) => ({
     root: {
@@ -42,7 +45,8 @@ const useStyles = makeStyles(({ palette, spacing }) => ({
 const TesterDetails = ({
     testerDetails,
     handleSessionsModal,
-    projectReference
+    projectReference,
+    removeSession
 }) => {
     const [page, setPage] = useState(1);
     const c = useStyles();
@@ -50,10 +54,18 @@ const TesterDetails = ({
         Math.floor(testerDetails.length / 5) + !!(testerDetails.length % 5) ||
         1;
 
+    // Inject removeProfile
+    const composedTesterDetails = testerDetails.map(
+        ({ id, actions, ...rest }) => ({
+            ...rest,
+            actions: { ...actions, deleteAction: () => removeSession(id) }
+        })
+    );
+
     return (
         <EditableCard title='Tester Details'>
             <Table
-                data={testerDetails}
+                data={composedTesterDetails}
                 page={page}
                 checkAll={value => console.log('selected all', value)}
                 itemsPerPage={5}
@@ -103,7 +115,7 @@ const mapState = state => ({
     testerDetails: selectProjectSessions(state)
 });
 
-const mapDispatch = {};
+const mapDispatch = { removeSession };
 
 const mapModal = {
     handleSessionsModal: SessionsModal

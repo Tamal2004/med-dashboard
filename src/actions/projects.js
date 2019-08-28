@@ -115,11 +115,51 @@ const listProjectsAction = (async, payload = []) => ({
     payload
 });
 
-export const listProjects = () => async dispatch => {
+export const listProjects = (
+    statuses = [],
+    search = null
+) => async dispatch => {
+    const searchFilter = search
+        ? [
+              {
+                  or: [
+                      { reference: { contains: search } },
+                      { title: { contains: search } }
+                  ]
+              }
+          ]
+        : [];
+
+    const statusFilter = statuses.length
+        ? [
+              {
+                  or: [
+                      ...statuses
+                          .map(status => {
+                              if (status === 'Incomplete')
+                                  return ['Pending', 'In Progress'];
+                              if (status === 'Complete') return ['Completed'];
+                          })
+                          .flatMap(x => x)
+                          .map(statusFilter => ({
+                              status: { contains: statusFilter }
+                          }))
+                  ]
+              }
+          ]
+        : [];
+
+    // Compose filters
+    const filter = {
+        and: [...statusFilter, ...searchFilter]
+    };
+
+    const variables = statuses.length || search ? { filter } : {};
+
     dispatch(listProjectsAction(REQUEST));
     const {
         data: { listProjects, error = null }
-    } = await API.graphql(graphqlOperation(ListProjects));
+    } = await API.graphql(graphqlOperation(ListProjects, variables));
 
     if (!error) {
         dispatch(listProjectsAction(SUCCESS, normalizeProjects(listProjects)));

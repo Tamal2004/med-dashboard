@@ -62,7 +62,9 @@ export default ({ palette, spacing, transitions, typography }) => ({
     actionCellHeader: {
         backgroundColor: palette.grey[50],
         textAlign: 'right',
-        paddingRight: 16
+        paddingRight: 16,
+        minWidth: 'unset !important',
+        width: spacing()
     },
     ripple: { color: 'yellow' }
 });

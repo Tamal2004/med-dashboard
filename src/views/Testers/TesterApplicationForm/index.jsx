@@ -28,6 +28,7 @@ import {
 
 // Selectors
 import {
+    selectIsTester,
     selectCounties,
     selectEducationStages,
     selectEmployeeCounts,
@@ -40,6 +41,8 @@ import {
     selectTitles
 } from 'selectors';
 
+// Normalizers
+import { normalizeDob } from 'normalizers';
 
 const TesterApplication = ({
     nationalities,
@@ -57,29 +60,46 @@ const TesterApplication = ({
     hasManualAddress,
     invalid,
     handleSubmit,
-    submitting
+    submitting,
+    isTester
 }) => {
     const c = useStyles();
     return (
         <Paper className={c.root}>
-            <Typography className={c.header} variant='h4' gutterBottom>
-                Tester Application Form
-            </Typography>
-            <Typography className={c.info} variant='subtitle1' gutterBottom>
-                Thank you for your interest in becoming a website tester. So we
-                can match you with the most suitable testing opportunities
-                please fill out the form below with as much information as
-                possible.
-            </Typography>
-            <Typography className={c.info} variant='subtitle1' gutterBottom>
-                If you have any queries, please contact Avril on
-                avril@webusability.co.uk.
-            </Typography>
-            <Typography className={c.info} variant='subtitle1' gutterBottom>
-                Our database is maintained solely for our use in recruiting
-                testers. The information is not passed on to any other
-                organisation.
-            </Typography>
+            {isTester && (
+                <Fragment>
+                    <Typography className={c.header} variant='h4' gutterBottom>
+                        Tester Application Form
+                    </Typography>
+                    <Typography
+                        className={c.info}
+                        variant='subtitle1'
+                        gutterBottom
+                    >
+                        Thank you for your interest in becoming a website
+                        tester. So we can match you with the most suitable
+                        testing opportunities please fill out the form below
+                        with as much information as possible.
+                    </Typography>
+                    <Typography
+                        className={c.info}
+                        variant='subtitle1'
+                        gutterBottom
+                    >
+                        If you have any queries, please contact Avril on
+                        avril@webusability.co.uk.
+                    </Typography>
+                    <Typography
+                        className={c.info}
+                        variant='subtitle1'
+                        gutterBottom
+                    >
+                        Our database is maintained solely for our use in
+                        recruiting testers. The information is not passed on to
+                        any other organisation.
+                    </Typography>
+                </Fragment>
+            )}
             <Container title='Contact Details'>
                 <Select label='Title' data={titles} name='title' required />
                 <Input label='First Name' name='firstName' required />
@@ -124,6 +144,7 @@ const TesterApplication = ({
                     name='dob'
                     required
                     validate={validateDate}
+                    normalize={normalizeDob}
                 />
                 <Select
                     label='Marital Status'
@@ -225,18 +246,24 @@ const TesterApplication = ({
             </Container>
             <Grid container className={c.footer}>
                 <Grid item xs={6}>
-                    <Grid container>
-                        <Grid item xs={2}>
-                            <CheckboxBase name='termsChecked' color='primary' />
-                        </Grid>
+                    {isTester && (
+                        <Grid container>
+                            <Grid item xs={2}>
+                                <CheckboxBase
+                                    name='termsChecked'
+                                    color='primary'
+                                />
+                            </Grid>
 
-                        <Grid item xs={10}>
-                            <Typography>
-                                I confirm that I have read and accepted the
-                                Testers <Link href='#'>Terms & Conditions</Link>
-                            </Typography>
+                            <Grid item xs={10}>
+                                <Typography>
+                                    I confirm that I have read and accepted the
+                                    Testers{' '}
+                                    <Link href='#'>Terms & Conditions</Link>
+                                </Typography>
+                            </Grid>
                         </Grid>
-                    </Grid>
+                    )}
                 </Grid>
                 <Grid item xs={6}>
                     <NavigateButton
@@ -258,6 +285,7 @@ const mapState = state => {
     const formSelector = formValueSelector('TesterApplication');
     const employmentStatus = formSelector(state, 'employmentStatus');
     return {
+        isTester: selectIsTester(state),
         counties: selectCounties(state),
         nationalities: selectNationalities(state),
         educationStages: selectEducationStages(state),

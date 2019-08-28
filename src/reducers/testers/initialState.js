@@ -1,5 +1,5 @@
 export default {
-    individual: { sessions: [], contactNotes: [] },
+    individual: { sessions: [], contactNotes: [], projects: [] },
     list: [],
     search: []
 };

@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { Link } from 'components';
+import { normalizeTime } from 'normalizers';
 
 export const generateTesterList = testerList =>
     testerList.map(
@@ -43,8 +44,12 @@ export const generateTesterSessions = testerSessions =>
             projectReference,
             notes
         }) => ({
-            Date: date,
-            Time: time,
+            Date: { editable: true, Component: date, type: 'DateInput' },
+            Time: {
+                editable: true,
+                Component: time,
+                props: { normalize: normalizeTime }
+            },
             Client: {
                 Component: <Link to={`/client/${clientId}`}>{clientName}</Link>,
                 value: clientName
@@ -55,7 +60,8 @@ export const generateTesterSessions = testerSessions =>
                 ),
                 value: projectReference
             },
-            Notes: notes
+            Notes: { editable: true, Component: notes, type: 'MultiInput' },
+            actions: {}
         })
     );
 

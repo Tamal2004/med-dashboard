@@ -54,13 +54,19 @@ export const normalizeProjectForm = ({
     return { projectDetails, projectManagement, clientFeedback };
 };
 
-export const normalizeUpdatedProject = ({ id, profiles = [], ...projectData }) => ({
+export const normalizeUpdatedProject = ({
+    id,
+    profiles = [],
+    ...projectData
+}) => ({
     ...normalizeProjectForm(projectData),
     projectData: {
         id,
-        profiles: profiles ? profiles.map(profile => ({
-            profile
-        })): []
+        profiles: profiles
+            ? profiles.map(profile => ({
+                  profile
+              }))
+            : []
     }
 });
 
@@ -87,9 +93,11 @@ export const normalizeProject = ({
         ...normalizeProjectForm(projectData),
         projectData: {
             id,
-            profiles: profiles ? profiles.map((profile = '') => ({
-                profile
-            })) : [],
+            profiles: profiles
+                ? profiles.map((profile = '') => ({
+                      profile
+                  }))
+                : [],
             sessions
         }
     };

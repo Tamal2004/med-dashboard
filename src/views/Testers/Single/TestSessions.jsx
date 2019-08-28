@@ -7,7 +7,7 @@ import { makeStyles } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/AddBox';
 
 // Local
-import { SessionsModal } from 'views/Modals';
+import { SessionsModal, SessionsEditModal } from 'views/Modals';
 import {
     Table,
     PaginationBase,
@@ -28,7 +28,7 @@ const useStyles = makeStyles(({ palette, spacing }) => ({
     }
 }));
 
-const TestSessions = ({ sessions, handleSessionsModal }) => {
+const TestSessions = ({ sessions, handleSessionsModal, handleSessionsEditModal }) => {
     const [page, setPage] = useState(1);
     const c = useStyles();
     const totalPages =
@@ -36,7 +36,13 @@ const TestSessions = ({ sessions, handleSessionsModal }) => {
 
     return (
         <EditableCard title='Test Sessions'>
-            <Table data={sessions} action page={page} itemsPerPage={5} />
+            <Table
+                data={sessions}
+                action
+                page={page}
+                itemsPerPage={5}
+                handleEditModal={handleSessionsEditModal}
+            />
             <div className={c.footer}>
                 <IconedButton
                     Icon={AddIcon}
@@ -61,7 +67,8 @@ const mapState = state => ({
 const mapDispatch = {};
 
 const mapModal = {
-    handleSessionsModal: SessionsModal
+    handleSessionsModal: SessionsModal,
+    handleSessionsEditModal: SessionsEditModal
 };
 
 const _TestSessions = compose(

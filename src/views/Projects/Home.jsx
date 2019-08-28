@@ -29,23 +29,32 @@ const useStyles = makeStyles(theme => ({
 
 const ProjectHome = ({ projects, listProjects }) => {
     const c = useStyles();
+    const [searchInput, setSearchInput] = useState('');
     const [checkFilter, setCheckFilter] = useState([]);
     const [isLoading, setLoading] = useState(true);
 
     const setFilterValue = e => {
-        const temp = [...checkFilter];
+        const filters = [...checkFilter];
         const value = e.target.value;
-        const valueIndex = temp.indexOf(value);
-        valueIndex === -1 && temp.push(value);
-        valueIndex !== -1 && temp.splice(valueIndex, 1);
-        setCheckFilter(temp);
+        const valueIndex = filters.indexOf(value);
+        valueIndex === -1 && filters.push(value);
+        valueIndex !== -1 && filters.splice(valueIndex, 1);
+        setCheckFilter(filters);
+        setLoading(true);
+        listProjects(filters, searchInput).then(() => setLoading(false));
     };
+
+    const handleSearch = () => {
+        setLoading(true);
+        listProjects(checkFilter, searchInput).then(() => setLoading(false));
+    };
+
 
     useEffect(() => {
         let shouldCancel = false;
         listProjects().then(() => !shouldCancel && setLoading(false));
 
-        return () => shouldCancel = true;
+        return () => (shouldCancel = true);
     }, []);
 
     return (
@@ -58,7 +67,14 @@ const ProjectHome = ({ projects, listProjects }) => {
                 />
             </GridItem>
             <GridItem md={4}>
-                <SearchInput placeholder='Search by name or project reference' />
+                <SearchInput
+                    placeholder='Search by name or project reference'
+                    handleText={({ target: { value } }) =>
+                        setSearchInput(value)
+                    }
+                    value={searchInput}
+                    handleClick={handleSearch}
+                />
             </GridItem>
             <GridItem md={4} className={c.buttonGridStyle}>
                 <Link to={'/project/new'}>

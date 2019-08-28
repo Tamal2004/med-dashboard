@@ -134,7 +134,7 @@ const _ProjectManagement = compose(
     connect(mapState),
     reduxForm({
         form: 'ProjectManagement',
-        onSubmit: ({ facilities, ...values }, dispatch, { id }) =>
+        onSubmit: (values, dispatch, { id }) =>
             dispatch(updateProject({ id, ...values }))
     })
 )(ProjectManagement);

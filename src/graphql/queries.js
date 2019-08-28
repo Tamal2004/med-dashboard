@@ -5,6 +5,7 @@ export const getClient = `query GetClient($id: ID!) {
   getClient(id: $id) {
     id
     name
+    createdBy
     projects {
       items {
         id
@@ -51,6 +52,7 @@ export const listClients = `query ListClients(
     items {
       id
       name
+      createdBy
       projects {
         nextToken
       }
@@ -68,6 +70,7 @@ export const getProject = `query GetProject($id: ID!) {
     client {
       id
       name
+      createdBy
       projects {
         nextToken
       }
@@ -135,6 +138,7 @@ export const listProjects = `query ListProjects(
       client {
         id
         name
+        createdBy
       }
       principalContact
       otherContact
@@ -183,6 +187,7 @@ export const getSession = `query GetSession($id: ID!) {
       client {
         id
         name
+        createdBy
       }
       principalContact
       otherContact
@@ -475,6 +480,7 @@ export const getContactNote = `query GetContactNote($id: ID!) {
       client {
         id
         name
+        createdBy
       }
       principalContact
       otherContact

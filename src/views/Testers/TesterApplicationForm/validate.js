@@ -5,7 +5,7 @@ import { CheckTesterEmail } from 'graphql/tester';
 
 export const validate = (
     values,
-    { isStudent, isEmployed, hasManualAddress }
+    { isStudent, isEmployed, hasManualAddress, isTester }
 ) => {
     const required = [
         'title',
@@ -20,15 +20,13 @@ export const validate = (
         'nationality',
         'ethnicity',
         'about',
-        'employmentStatus',
-        'termsChecked'
+        'employmentStatus'
     ];
 
-    if (isStudent) {
-        required.push('subject');
-        required.push('educationStage');
-        required.push('institution');
-    }
+    if (isTester) required.push('termsChecked');
+
+    if (isStudent) required.push('subject', 'educationStage', 'institution');
+
     if (isEmployed) required.push('employeeCount');
 
     if (hasManualAddress) required.push('country');

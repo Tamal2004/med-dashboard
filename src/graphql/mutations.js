@@ -5,6 +5,7 @@ export const createClient = `mutation CreateClient($input: CreateClientInput!) {
   createClient(input: $input) {
     id
     name
+    createdBy
     projects {
       items {
         id
@@ -46,6 +47,7 @@ export const updateClient = `mutation UpdateClient($input: UpdateClientInput!) {
   updateClient(input: $input) {
     id
     name
+    createdBy
     projects {
       items {
         id
@@ -87,6 +89,7 @@ export const deleteClient = `mutation DeleteClient($input: DeleteClientInput!) {
   deleteClient(input: $input) {
     id
     name
+    createdBy
     projects {
       items {
         id
@@ -133,6 +136,7 @@ export const createProject = `mutation CreateProject($input: CreateProjectInput!
     client {
       id
       name
+      createdBy
       projects {
         nextToken
       }
@@ -195,6 +199,7 @@ export const updateProject = `mutation UpdateProject($input: UpdateProjectInput!
     client {
       id
       name
+      createdBy
       projects {
         nextToken
       }
@@ -257,6 +262,7 @@ export const deleteProject = `mutation DeleteProject($input: DeleteProjectInput!
     client {
       id
       name
+      createdBy
       projects {
         nextToken
       }
@@ -321,6 +327,7 @@ export const createSession = `mutation CreateSession($input: CreateSessionInput!
       client {
         id
         name
+        createdBy
       }
       principalContact
       otherContact
@@ -415,6 +422,7 @@ export const updateSession = `mutation UpdateSession($input: UpdateSessionInput!
       client {
         id
         name
+        createdBy
       }
       principalContact
       otherContact
@@ -509,6 +517,7 @@ export const deleteSession = `mutation DeleteSession($input: DeleteSessionInput!
       client {
         id
         name
+        createdBy
       }
       principalContact
       otherContact
@@ -784,6 +793,7 @@ export const createContactNote = `mutation CreateContactNote($input: CreateConta
       client {
         id
         name
+        createdBy
       }
       principalContact
       otherContact
@@ -877,6 +887,7 @@ export const updateContactNote = `mutation UpdateContactNote($input: UpdateConta
       client {
         id
         name
+        createdBy
       }
       principalContact
       otherContact
@@ -970,6 +981,7 @@ export const deleteContactNote = `mutation DeleteContactNote($input: DeleteConta
       client {
         id
         name
+        createdBy
       }
       principalContact
       otherContact

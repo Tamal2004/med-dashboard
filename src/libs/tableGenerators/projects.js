@@ -35,6 +35,7 @@ export const generateProjectList = projectList =>
 export const generateProjectSessions = projectSessions =>
     projectSessions.map(
         ({ id, testerId, testerName, profile, date, time, notes }) => ({
+            id,
             'Tester Name': {
                 Component: <Link to={`/tester/${testerId}`}>{testerName}</Link>,
                 value: testerName
