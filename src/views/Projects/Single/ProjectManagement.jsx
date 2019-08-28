@@ -4,29 +4,32 @@ import { connect } from 'react-redux';
 import { reduxForm, formValueSelector } from 'redux-form';
 
 // Local
-import { validateRequired } from 'libs';
+import { deserializeDate } from 'libs';
 import {
-    Select,
-    IconedButton,
     EditableCard,
     EditableFooter,
     Input,
     DateInput,
     CardDivider,
     MultiInput,
-    MultiSelect,
-    Control
+    MultiSelect
 } from 'components';
 
 // Selectors
-import { selectFacilities } from 'selectors';
+import { selectProjectId, selectFacilities } from 'selectors';
 
-const ProjectManagement = ({ facilities }) => {
+// Actions
+import { updateProject } from 'actions';
+
+const ProjectManagement = ({ facilities, handleSubmit, reset, dirty }) => {
     const [isEditing, setEditing] = useState(false);
     return (
         <EditableCard
             title='Project Management'
-            onEdit={() => setEditing(!isEditing)}
+            onEdit={() => {
+                if (isEditing) reset();
+                setEditing(!isEditing);
+            }}
             isEditing={isEditing}
             color={isEditing ? 'primary' : 'secondary'}
         >
@@ -104,27 +107,35 @@ const ProjectManagement = ({ facilities }) => {
                 isCard
                 active={isEditing}
             />
-            <Input label='Invoice number' name='invoiceNumber' isCard active={isEditing} />
+            <Input
+                label='Invoice number'
+                name='invoiceNumber'
+                isCard
+                active={isEditing}
+            />
             {isEditing && (
-                <EditableFooter onClick={() => setEditing(!isEditing)} />
+                <EditableFooter
+                    onClick={() => {
+                        if (isEditing && dirty) handleSubmit();
+                        setEditing(!isEditing);
+                    }}
+                />
             )}
         </EditableCard>
     );
 };
 
 const mapState = state => ({
+    id: selectProjectId(state),
     facilities: selectFacilities(state)
 });
 
-const mapDispatch = {};
-
 const _ProjectManagement = compose(
-    connect(
-        mapState,
-        mapDispatch
-    ),
+    connect(mapState),
     reduxForm({
-        form: 'ProjectManagement'
+        form: 'ProjectManagement',
+        onSubmit: ({ facilities, ...values }, dispatch, { id }) =>
+            dispatch(updateProject({ id, ...values }))
     })
 )(ProjectManagement);
 

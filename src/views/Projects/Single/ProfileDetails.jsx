@@ -8,7 +8,7 @@ import { makeStyles, Typography } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/AddBox';
 
 // Local
-import { ContactsModal } from 'views/Modals';
+import { ProfileEditModal } from 'views/Modals';
 import {
     Table,
     PaginationBase,
@@ -20,10 +20,11 @@ import {
     NavigateButton
 } from 'components';
 
-
-
 // Selectors
-import { selectProjectProfiles} from 'selectors'
+import { selectProjectId, selectProjectProfiles } from 'selectors';
+
+// Actions
+import { updateProject } from 'actions';
 
 const useStyles = makeStyles(({ palette, spacing, typography }) => ({
     root: {
@@ -47,15 +48,46 @@ const useStyles = makeStyles(({ palette, spacing, typography }) => ({
     }
 }));
 
-const ProfileDetails = ({ data }) => {
+const ProfileDetails = ({ data, updateProject, id, handleProfileEditModal }) => {
     const [page, setPage] = useState(1);
     const [input, setInput] = useState('');
     const [newProfile, openNewProfileForm] = useState(false);
     const c = useStyles();
 
-    const toggleNewProfileForm = () => openNewProfileForm(!newProfile);
+    const addProfile = () => {
+        const profiles = {
+            id,
+            profiles: [
+                ...data.map(({ Profile: { Component } }) => Component),
+                input
+            ]
+        };
+        updateProject(profiles);
+        setInput('');
+    };
 
-    const totalPages = Math.floor(data.length / 3) + !!(data.length % 3) || 1;
+    const removeProfile = idx => {
+        const profiles = data.map(({ Profile: { Component } }) => Component);
+        profiles.splice(idx, 1);
+        updateProject({
+            id,
+            profiles
+        });
+    };
+
+    // Inject removeProfile
+    const profileTable = data.map(({ actions, ...rest }) => ({
+        ...rest,
+        actions: { ...actions, deleteAction: removeProfile }
+    }));
+
+    const toggleNewProfileForm = () => {
+        openNewProfileForm(!newProfile);
+    };
+
+    const pageStep = data.length === 4 ? 4 : 3;
+    const totalPages =
+        Math.floor(data.length / pageStep) + !!(data.length % pageStep) || 1;
     return (
         <EditableCard title='Profile Details'>
             <div className={c.root}>
@@ -75,18 +107,19 @@ const ProfileDetails = ({ data }) => {
                         color='secondary'
                         handleText={({ target: { value } }) => setInput(value)}
                         value={input}
+                        handleClick={addProfile}
                     />
                 )}
 
                 <Table
-                    data={data}
+                    data={profileTable}
                     page={page}
                     action
-                    itemsPerPage={3}
+                    itemsPerPage={pageStep}
                     styles={{ root: c.table }}
-                    handleEditModal={(idx) => console.log('arst', idx)}
+                    handleEditModal={handleProfileEditModal}
                 />
-                {totalPages > 1 && (
+                {data.length > 4 && totalPages > 1 && (
                     <div className={c.footer}>
                         <PaginationBase
                             handlePage={page => setPage(page)}
@@ -100,7 +133,6 @@ const ProfileDetails = ({ data }) => {
     );
 };
 
-
 ProfileDetails.defaultProps = {
     data: []
 };
@@ -109,17 +141,21 @@ ProfileDetails.propTypes = {
     data: PropTypes.array.isRequired
 };
 
-const mapState = (state) => ({
+const mapState = (state, props) => ({
+    id: selectProjectId(state),
     data: selectProjectProfiles(state)
 });
 
-const mapDispatch = {};
+const mapDispatch = { updateProject };
+
+const mapModals = {handleProfileEditModal: ProfileEditModal};
 
 const _ProfileDetails = compose(
     connect(
         mapState,
         mapDispatch
-    )
+    ),
+    withModal(mapModals)
 )(ProfileDetails);
 
 export { _ProfileDetails as default, _ProfileDetails as ProfileDetails };

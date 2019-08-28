@@ -15,10 +15,7 @@ import {
 } from 'components';
 
 // Selectors
-import { selectCounties } from 'selectors';
-import { listBlogs } from 'graphql/queries';
 import { selectTesterList } from 'selectors';
-import { TesterTableEdit } from 'views/Modals';
 
 // Actions
 import { listTesters } from 'actions';
@@ -50,7 +47,7 @@ const GridWrapper = ({ children }) => {
     );
 };
 
-const TesterHome = ({ testers, handleEditModal, listTesters }) => {
+const TesterHome = ({ testers, listTesters }) => {
     const c = useStyles();
     const [isLoading, setLoading] = useState(true);
 
@@ -83,7 +80,6 @@ const TesterHome = ({ testers, handleEditModal, listTesters }) => {
                         <Table
                             data={testers}
                             page={1}
-                            handleEditModal={handleEditModal}
                         />
                     )}
                 </GridItem>
@@ -92,13 +88,11 @@ const TesterHome = ({ testers, handleEditModal, listTesters }) => {
     );
 };
 
-const mapState = (state, ownProps) => ({
+const mapState = (state) => ({
     testers: selectTesterList(state)
 });
 
-const mapModal = {
-    handleEditModal: TesterTableEdit
-};
+
 
 const mapDispatch = {
     listTesters
@@ -109,7 +103,6 @@ const _TesterHome = compose(
         mapState,
         mapDispatch
     ),
-    withModal(mapModal)
 )(TesterHome);
 
 export { _TesterHome as default, _TesterHome as TesterHome };

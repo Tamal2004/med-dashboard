@@ -74,7 +74,7 @@ const TesterSearch = ({ testers, handleMailModal }) => {
 					<SearchFilter />
 				</GridItem>
 				<GridItem md={9}>
-					<Table data={testers} page={1} />
+					<Table data={testers} page={1} handleEditModal={(idx) => console.log('modal', idx)} />
 				</GridItem>
 			</GridWrapper>
 		</Fragment>
@@ -99,13 +99,13 @@ const generateProjects = (
 	Details,
 	'Client Notes': notes,
 	actions: {
-		checkAction: () => console.log('checked')
+		checkAction: (id) => console.log('checked', id)
 	}
 });
 
 const mapState = state => ({
 	testers: Array.range(0, 3)
-		.map(() => [
+		.map((v, index) => [
 			generateProjects('John Test', 44, 'Male', 'john@test.com'),
 			generateProjects('Jill Test', 24, 'Female', 'jill@test.com'),
 			generateProjects('Jake Test', 46, 'Non-binary', 'jake@test.com')

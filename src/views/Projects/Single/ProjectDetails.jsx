@@ -8,7 +8,7 @@ import { validateRequired, mapFromValue } from 'libs';
 import {
     Select,
     Input,
-    IconedButton,
+    DateInput,
     EditableCard,
     EditableFooter,
     CardDivider
@@ -16,7 +16,7 @@ import {
 
 // Selectors
 import {
-    selecProjectId,
+    selectProjectId,
     selectProjectStatuses,
     selectProjectClients
 } from 'selectors';
@@ -90,6 +90,14 @@ const ProjectDetails = ({
                 isCard
                 active={isEditing}
             />
+            <DateInput
+                label='Observed Testing Date'
+                name='testingDate'
+                isCard
+                isRegular
+                active={isEditing}
+                required={isEditing}
+            />
             <Input label='Project Cost' name='cost' isCard active={isEditing} />
             <Input
                 label='Purchase Order Number'
@@ -138,7 +146,7 @@ const ProjectDetails = ({
 
 const mapState = state => {
     return {
-        id: selecProjectId(state),
+        id: selectProjectId(state),
         clients: selectProjectClients(state),
         projectStatuses: selectProjectStatuses(state),
         initialValues: { reference: 'astarst' }

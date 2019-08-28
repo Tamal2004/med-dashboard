@@ -40,6 +40,7 @@ class Table extends Component {
         sortIndex: null,
         initialData: this.props.data,
         data: this.props.data,
+        sortIndices: Array.range(0, this.props.data.length - 1),
         checked: [],
         selectAll: false
     };
@@ -52,8 +53,12 @@ class Table extends Component {
 
     componentDidUpdate({ data: prevData = [] }, s, c) {
         const { data = [] } = this.props;
-        if (prevData.length !== data.length)
-            this.setState({ data, initialData: data });
+        if (prevData !== data)
+            this.setState({
+                data,
+                initialData: data,
+                sortIndices: Array.range(0, data.length - 1)
+            });
     }
 
     handleSort = idx => {
@@ -68,19 +73,26 @@ class Table extends Component {
         this.setState({
             sortIndex
         });
-        const data = [...initialData];
 
-        data.sort((a, b) => {
-            let aValue = Object.values(a)[idx];
-            let bValue = Object.values(b)[idx];
+        const indexedData = initialData.map((datum, index) => ({
+            datum,
+            index
+        }));
 
-            aValue = typeof aValue === 'object' ? aValue.value : aValue;
-            bValue = typeof bValue === 'object' ? bValue.value : bValue;
+        indexedData.sort(({ datum: a }, { datum: b }) => {
+            const composeValue = value => {
+                if (typeof value === 'object') {
+                    if (!Object.keys(value).includes('value')) {
+                        return composeValue(value.Component);
+                    } else return value.value;
+                } else return value;
+            };
 
-            let aParsed = aValue.toLowerCase();
-            const bParsed = bValue.toLowerCase();
+            const aValue = composeValue(Object.values(a)[idx]);
+            const bValue = composeValue(Object.values(b)[idx]);
 
-            if (!isNaN(aParsed)) aParsed = Number(aParsed);
+            let aParsed = isNaN(aValue) ? aValue.toLowerCase() : Number(aValue);
+            let bParsed = isNaN(bValue) ? bValue.toLowerCase() : Number(bValue);
 
             if (aParsed < bParsed) {
                 return -1;
@@ -91,9 +103,19 @@ class Table extends Component {
             return 0;
         });
 
-        if (sortIndex < 0) data.reverse();
+        if (sortIndex < 0) {
+            indexedData.reverse();
+        }
 
-        this.setState({ data });
+        const [data, sortIndices] = indexedData.reduce(
+            ([data, sortIndices], { datum, index }) => [
+                [...data, datum],
+                [...sortIndices, index]
+            ],
+            [[], []]
+        );
+        console.log(sortIndices);
+        this.setState({ data, sortIndices });
     };
 
     isChecked = id => this.state.checked.includes(id);
@@ -188,6 +210,8 @@ class Table extends Component {
         const isExists = key =>
             Object.prototype.hasOwnProperty.call(value, key);
 
+        const calibratedIdx = this.state.sortIndices[idx];
+
         const composeValue = () => {
             if (value && typeof value === 'object') {
                 if (isExists('Component')) {
@@ -196,15 +220,19 @@ class Table extends Component {
                     const editModal = this.props.handleEditModal;
                     const actions = [];
                     if (isExists('checkAction'))
-                        actions.push(this.CheckAction(value.checkAction, idx));
+                        actions.push(
+                            this.CheckAction(value.checkAction, calibratedIdx)
+                        );
                     if (editModal && editModal !== void 0)
                         actions.push(
                             this.EditAction(() =>
-                                editModal({ editiIndex: idx })
+                                editModal({ editIndex: calibratedIdx })
                             )
                         );
                     if (isExists('deleteAction'))
-                        actions.push(this.DeleteAction(value.deleteAction, idx));
+                        actions.push(
+                            this.DeleteAction(value.deleteAction, calibratedIdx)
+                        );
 
                     return actions.map((action, key) => (
                         <Fragment key={key}>{action}</Fragment>

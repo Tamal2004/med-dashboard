@@ -24,6 +24,7 @@ function SearchInput({ ...props }) {
         textArea,
         rows,
         Adornment,
+        handleClick,
         color
     } = props;
 
@@ -49,7 +50,7 @@ function SearchInput({ ...props }) {
                     className: textArea ? classes.textArea : ''
                 },
                 endAdornment: (
-                    <InputAdornment position='end'>
+                    <InputAdornment position='end' onClick={handleClick}>
                         <IconButton color={color} edge='end'>
                             <Adornment color={color} />
                         </IconButton>

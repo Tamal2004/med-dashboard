@@ -16,10 +16,11 @@ import TodayIcon from '@material-ui/icons/Today';
 import RemoveIcon from '@material-ui/icons/Delete';
 
 // Local
+import { serializeDate, deserializeDate } from 'libs';
 import { DateInputBase, IconedButton } from 'components';
 import { Control } from './Control';
 
-const useStyles = makeStyles(({ palette, spacing, typography }) => ({
+const useStyles = makeStyles(({ palette, spacing, typography, shape }) => ({
     root: {
         height: spacing(6)
     },
@@ -28,6 +29,10 @@ const useStyles = makeStyles(({ palette, spacing, typography }) => ({
         fontSize: typography['subtitle2'].fontSize,
         borderTopRightRadius: 0,
         borderBottomRightRadius: 0
+    },
+    regularRoot: {
+        borderTopRightRadius: shape.borderRadius,
+        borderBottomRightRadius: shape.borderRadius
     },
     inactiveRoot: {
         border: 'unset',
@@ -67,16 +72,28 @@ const DateInput = ({
     label,
     isCard,
     active,
+    isRegular,
     name,
     change,
     ...restProps
 }) => {
     const [form, setForm] = useState(undefined);
-    const { cardRoot, inactiveRoot, cardInput, ...c } = useStyles();
+    const {
+        cardRoot,
+        inactiveRoot,
+        cardInput,
+        regularRoot,
+        ...c
+    } = useStyles();
 
     const dateInputStyles = {
         ...c,
-        root: clsx(c.root, isCard && cardRoot, !active && inactiveRoot),
+        root: clsx(
+            c.root,
+            isCard && cardRoot,
+            isRegular && regularRoot,
+            !active && inactiveRoot
+        ),
         input: isCard && cardInput
     };
     const controlProps = { required, label, isCard };
@@ -84,7 +101,7 @@ const DateInput = ({
     return (
         <Control {...controlProps}>
             <Grid container>
-                <Grid item xs={isCard ? 8 : 12}>
+                <Grid item xs={!isRegular && isCard ? 8 : 12}>
                     <DateInputBase
                         handleForm={form => setForm(form)}
                         styles={dateInputStyles}
@@ -92,7 +109,7 @@ const DateInput = ({
                         {...restProps}
                     />
                 </Grid>
-                {isCard && active && (
+                {!isRegular && isCard && active && (
                     <Grid item xs={4}>
                         <ButtonGroup
                             classes={{
@@ -104,11 +121,11 @@ const DateInput = ({
                             <IconedButton
                                 Icon={TodayIcon}
                                 styles={{ icon: c.icon }}
-                                onClick={() => change(form, name, new Date())}
+                                onClick={() => change(form, name, serializeDate(deserializeDate(new Date())))}
                             />
                             <IconedButton
                                 Icon={RemoveIcon}
-                                styles={{ icon: clsx(c.icon, c.iconRemove )}}
+                                styles={{ icon: clsx(c.icon, c.iconRemove) }}
                                 onClick={() => change(form, name, '')}
                             />
                         </ButtonGroup>
@@ -121,12 +138,14 @@ const DateInput = ({
 
 DateInput.defaultProps = {
     isCard: false,
-    active: true
+    active: true,
+    isRegular: false
 };
 
 DateInput.propTypes = {
     isCard: PropTypes.bool,
-    active: PropTypes.bool
+    active: PropTypes.bool,
+    isRegular: PropTypes.bool
 };
 
 const mapDispatch = { change };

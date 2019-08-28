@@ -23,7 +23,7 @@ export const selectProjectClients = createCachedSelector(
 )(() => 'placeholder');
 
 // Project Individual
-export const selecProjectId = createCachedSelector(
+export const selectProjectId = createCachedSelector(
     selectIndividual,
     ({ id }) => id
 )(() => 'placeholder');

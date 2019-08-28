@@ -14,14 +14,20 @@ import {
 } from 'components';
 
 // Selectors
-import {} from 'selectors';
+import { selectProjectId } from 'selectors';
 
-const ClientFeedback = ({ invalid }) => {
+// Actions
+import { updateProject } from 'actions';
+
+const ClientFeedback = ({ invalid, handleSubmit, reset }) => {
     const [isEditing, setEditing] = useState(false);
     return (
         <EditableCard
             title='Client Feedback'
-            onEdit={() => setEditing(!isEditing)}
+            onEdit={() => {
+                reset();
+                setEditing(!isEditing);
+            }}
             isEditing={isEditing}
             color={isEditing ? 'primary' : 'secondary'}
         >
@@ -31,7 +37,10 @@ const ClientFeedback = ({ invalid }) => {
             <MultiInput name='wuComments' isCard active={isEditing} />
             {isEditing && (
                 <EditableFooter
-                    onClick={() => setEditing(!isEditing)}
+                    onClick={() => {
+                        handleSubmit();
+                        setEditing(!isEditing);
+                    }}
                     disabled={invalid}
                 />
             )}
@@ -39,22 +48,12 @@ const ClientFeedback = ({ invalid }) => {
     );
 };
 
-const mapState = state => ({});
+const mapState = state => ({ id: selectProjectId(state) });
 
 const mapDispatch = {};
 
-const validate = (values, { isStudent, isEmployed }) => {
-    const required = ['employmentStatus'];
-
-    if (isStudent) {
-        required.push('subject');
-        required.push('educationStage');
-        required.push('institution');
-    }
-    if (isEmployed) required.push('employeeCount');
-
-    return { ...validateRequired(values, required) };
-};
+const onSubmit = (values, dispatch, { id }) =>
+    dispatch(updateProject({ id, ...values }));
 
 const _ClientFeedback = compose(
     connect(
@@ -63,7 +62,7 @@ const _ClientFeedback = compose(
     ),
     reduxForm({
         form: 'ClientFeedback',
-        validate
+        onSubmit
     })
 )(ClientFeedback);
 

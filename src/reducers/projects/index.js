@@ -22,7 +22,7 @@ const projectsReducer = (
 
         case UPDATE_PROJECT: {
             return isSuccess
-                ? { ...state, individual: { ...state.individual, payload } }
+                ? { ...state, individual: { ...state.individual, profiles: payload.profiles } }
                 : state;
         }
 
