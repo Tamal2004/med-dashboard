@@ -17,10 +17,6 @@ export const onCreateClient = `subscription OnCreateClient {
         testingDate
         cost
         purchaseOrderNumber
-        manager
-        testerFacilitator
-        clientFacilitator
-        mainRecruiter
         facilities
         screenerApproved
         facilitationGuideSent
@@ -59,10 +55,6 @@ export const onUpdateClient = `subscription OnUpdateClient {
         testingDate
         cost
         purchaseOrderNumber
-        manager
-        testerFacilitator
-        clientFacilitator
-        mainRecruiter
         facilities
         screenerApproved
         facilitationGuideSent
@@ -101,10 +93,6 @@ export const onDeleteClient = `subscription OnDeleteClient {
         testingDate
         cost
         purchaseOrderNumber
-        manager
-        testerFacilitator
-        clientFacilitator
-        mainRecruiter
         facilities
         screenerApproved
         facilitationGuideSent
@@ -146,10 +134,30 @@ export const onCreateProject = `subscription OnCreateProject {
     testingDate
     cost
     purchaseOrderNumber
-    manager
-    testerFacilitator
-    clientFacilitator
-    mainRecruiter
+    manager {
+      id
+      email
+      firstName
+      lastName
+    }
+    testerFacilitator {
+      id
+      email
+      firstName
+      lastName
+    }
+    clientFacilitator {
+      id
+      email
+      firstName
+      lastName
+    }
+    mainRecruiter {
+      id
+      email
+      firstName
+      lastName
+    }
     facilities
     screenerApproved
     facilitationGuideSent
@@ -182,7 +190,6 @@ export const onCreateProject = `subscription OnCreateProject {
         id
         type
         date
-        contactedBy
         note
       }
       nextToken
@@ -209,10 +216,30 @@ export const onUpdateProject = `subscription OnUpdateProject {
     testingDate
     cost
     purchaseOrderNumber
-    manager
-    testerFacilitator
-    clientFacilitator
-    mainRecruiter
+    manager {
+      id
+      email
+      firstName
+      lastName
+    }
+    testerFacilitator {
+      id
+      email
+      firstName
+      lastName
+    }
+    clientFacilitator {
+      id
+      email
+      firstName
+      lastName
+    }
+    mainRecruiter {
+      id
+      email
+      firstName
+      lastName
+    }
     facilities
     screenerApproved
     facilitationGuideSent
@@ -245,7 +272,6 @@ export const onUpdateProject = `subscription OnUpdateProject {
         id
         type
         date
-        contactedBy
         note
       }
       nextToken
@@ -272,10 +298,30 @@ export const onDeleteProject = `subscription OnDeleteProject {
     testingDate
     cost
     purchaseOrderNumber
-    manager
-    testerFacilitator
-    clientFacilitator
-    mainRecruiter
+    manager {
+      id
+      email
+      firstName
+      lastName
+    }
+    testerFacilitator {
+      id
+      email
+      firstName
+      lastName
+    }
+    clientFacilitator {
+      id
+      email
+      firstName
+      lastName
+    }
+    mainRecruiter {
+      id
+      email
+      firstName
+      lastName
+    }
     facilities
     screenerApproved
     facilitationGuideSent
@@ -308,7 +354,6 @@ export const onDeleteProject = `subscription OnDeleteProject {
         id
         type
         date
-        contactedBy
         note
       }
       nextToken
@@ -334,10 +379,30 @@ export const onCreateSession = `subscription OnCreateSession {
       testingDate
       cost
       purchaseOrderNumber
-      manager
-      testerFacilitator
-      clientFacilitator
-      mainRecruiter
+      manager {
+        id
+        email
+        firstName
+        lastName
+      }
+      testerFacilitator {
+        id
+        email
+        firstName
+        lastName
+      }
+      clientFacilitator {
+        id
+        email
+        firstName
+        lastName
+      }
+      mainRecruiter {
+        id
+        email
+        firstName
+        lastName
+      }
       facilities
       screenerApproved
       facilitationGuideSent
@@ -429,10 +494,30 @@ export const onUpdateSession = `subscription OnUpdateSession {
       testingDate
       cost
       purchaseOrderNumber
-      manager
-      testerFacilitator
-      clientFacilitator
-      mainRecruiter
+      manager {
+        id
+        email
+        firstName
+        lastName
+      }
+      testerFacilitator {
+        id
+        email
+        firstName
+        lastName
+      }
+      clientFacilitator {
+        id
+        email
+        firstName
+        lastName
+      }
+      mainRecruiter {
+        id
+        email
+        firstName
+        lastName
+      }
       facilities
       screenerApproved
       facilitationGuideSent
@@ -524,10 +609,30 @@ export const onDeleteSession = `subscription OnDeleteSession {
       testingDate
       cost
       purchaseOrderNumber
-      manager
-      testerFacilitator
-      clientFacilitator
-      mainRecruiter
+      manager {
+        id
+        email
+        firstName
+        lastName
+      }
+      testerFacilitator {
+        id
+        email
+        firstName
+        lastName
+      }
+      clientFacilitator {
+        id
+        email
+        firstName
+        lastName
+      }
+      mainRecruiter {
+        id
+        email
+        firstName
+        lastName
+      }
       facilities
       screenerApproved
       facilitationGuideSent
@@ -642,7 +747,6 @@ export const onCreateTester = `subscription OnCreateTester {
         id
         type
         date
-        contactedBy
         note
       }
       nextToken
@@ -702,7 +806,6 @@ export const onUpdateTester = `subscription OnUpdateTester {
         id
         type
         date
-        contactedBy
         note
       }
       nextToken
@@ -762,7 +865,6 @@ export const onDeleteTester = `subscription OnDeleteTester {
         id
         type
         date
-        contactedBy
         note
       }
       nextToken
@@ -800,10 +902,30 @@ export const onCreateContactNote = `subscription OnCreateContactNote {
       testingDate
       cost
       purchaseOrderNumber
-      manager
-      testerFacilitator
-      clientFacilitator
-      mainRecruiter
+      manager {
+        id
+        email
+        firstName
+        lastName
+      }
+      testerFacilitator {
+        id
+        email
+        firstName
+        lastName
+      }
+      clientFacilitator {
+        id
+        email
+        firstName
+        lastName
+      }
+      mainRecruiter {
+        id
+        email
+        firstName
+        lastName
+      }
       facilities
       screenerApproved
       facilitationGuideSent
@@ -828,7 +950,12 @@ export const onCreateContactNote = `subscription OnCreateContactNote {
       }
     }
     date
-    contactedBy
+    contactedBy {
+      id
+      email
+      firstName
+      lastName
+    }
     note
     tester {
       id
@@ -894,10 +1021,30 @@ export const onUpdateContactNote = `subscription OnUpdateContactNote {
       testingDate
       cost
       purchaseOrderNumber
-      manager
-      testerFacilitator
-      clientFacilitator
-      mainRecruiter
+      manager {
+        id
+        email
+        firstName
+        lastName
+      }
+      testerFacilitator {
+        id
+        email
+        firstName
+        lastName
+      }
+      clientFacilitator {
+        id
+        email
+        firstName
+        lastName
+      }
+      mainRecruiter {
+        id
+        email
+        firstName
+        lastName
+      }
       facilities
       screenerApproved
       facilitationGuideSent
@@ -922,7 +1069,12 @@ export const onUpdateContactNote = `subscription OnUpdateContactNote {
       }
     }
     date
-    contactedBy
+    contactedBy {
+      id
+      email
+      firstName
+      lastName
+    }
     note
     tester {
       id
@@ -988,10 +1140,30 @@ export const onDeleteContactNote = `subscription OnDeleteContactNote {
       testingDate
       cost
       purchaseOrderNumber
-      manager
-      testerFacilitator
-      clientFacilitator
-      mainRecruiter
+      manager {
+        id
+        email
+        firstName
+        lastName
+      }
+      testerFacilitator {
+        id
+        email
+        firstName
+        lastName
+      }
+      clientFacilitator {
+        id
+        email
+        firstName
+        lastName
+      }
+      mainRecruiter {
+        id
+        email
+        firstName
+        lastName
+      }
       facilities
       screenerApproved
       facilitationGuideSent
@@ -1016,7 +1188,12 @@ export const onDeleteContactNote = `subscription OnDeleteContactNote {
       }
     }
     date
-    contactedBy
+    contactedBy {
+      id
+      email
+      firstName
+      lastName
+    }
     note
     tester {
       id
@@ -1060,6 +1237,33 @@ export const onDeleteContactNote = `subscription OnDeleteContactNote {
         nextToken
       }
     }
+  }
+}
+`;
+export const onCreateUser = `subscription OnCreateUser {
+  onCreateUser {
+    id
+    email
+    firstName
+    lastName
+  }
+}
+`;
+export const onUpdateUser = `subscription OnUpdateUser {
+  onUpdateUser {
+    id
+    email
+    firstName
+    lastName
+  }
+}
+`;
+export const onDeleteUser = `subscription OnDeleteUser {
+  onDeleteUser {
+    id
+    email
+    firstName
+    lastName
   }
 }
 `;

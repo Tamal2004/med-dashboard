@@ -5,6 +5,7 @@ const signOut = () =>
 	Auth.signOut()
 		.then(data => {
 			history.push('/');
+			window.location.reload(false);
 		})
 		.catch(err => console.log(err));
 

@@ -34,6 +34,12 @@ const ContactsModal = ({ contactTypes, data, onClose }) => {
                     data={contactTypes}
                     required
                 />
+                <Select
+                    label='Project'
+                    name='project'
+                    data={[]}
+                    required
+                />
                 <MultiInput name='notes' placeholder='Message details' />
             </ModalContent>
             <Divider />

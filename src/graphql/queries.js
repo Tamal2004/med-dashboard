@@ -17,10 +17,6 @@ export const getClient = `query GetClient($id: ID!) {
         testingDate
         cost
         purchaseOrderNumber
-        manager
-        testerFacilitator
-        clientFacilitator
-        mainRecruiter
         facilities
         screenerApproved
         facilitationGuideSent
@@ -80,10 +76,30 @@ export const getProject = `query GetProject($id: ID!) {
     testingDate
     cost
     purchaseOrderNumber
-    manager
-    testerFacilitator
-    clientFacilitator
-    mainRecruiter
+    manager {
+      id
+      email
+      firstName
+      lastName
+    }
+    testerFacilitator {
+      id
+      email
+      firstName
+      lastName
+    }
+    clientFacilitator {
+      id
+      email
+      firstName
+      lastName
+    }
+    mainRecruiter {
+      id
+      email
+      firstName
+      lastName
+    }
     facilities
     screenerApproved
     facilitationGuideSent
@@ -116,7 +132,6 @@ export const getProject = `query GetProject($id: ID!) {
         id
         type
         date
-        contactedBy
         note
       }
       nextToken
@@ -145,10 +160,30 @@ export const listProjects = `query ListProjects(
       testingDate
       cost
       purchaseOrderNumber
-      manager
-      testerFacilitator
-      clientFacilitator
-      mainRecruiter
+      manager {
+        id
+        email
+        firstName
+        lastName
+      }
+      testerFacilitator {
+        id
+        email
+        firstName
+        lastName
+      }
+      clientFacilitator {
+        id
+        email
+        firstName
+        lastName
+      }
+      mainRecruiter {
+        id
+        email
+        firstName
+        lastName
+      }
       facilities
       screenerApproved
       facilitationGuideSent
@@ -194,10 +229,30 @@ export const getSession = `query GetSession($id: ID!) {
       testingDate
       cost
       purchaseOrderNumber
-      manager
-      testerFacilitator
-      clientFacilitator
-      mainRecruiter
+      manager {
+        id
+        email
+        firstName
+        lastName
+      }
+      testerFacilitator {
+        id
+        email
+        firstName
+        lastName
+      }
+      clientFacilitator {
+        id
+        email
+        firstName
+        lastName
+      }
+      mainRecruiter {
+        id
+        email
+        firstName
+        lastName
+      }
       facilities
       screenerApproved
       facilitationGuideSent
@@ -289,10 +344,6 @@ export const listSessions = `query ListSessions(
         testingDate
         cost
         purchaseOrderNumber
-        manager
-        testerFacilitator
-        clientFacilitator
-        mainRecruiter
         facilities
         screenerApproved
         facilitationGuideSent
@@ -397,7 +448,6 @@ export const getTester = `query GetTester($id: ID!) {
         id
         type
         date
-        contactedBy
         note
       }
       nextToken
@@ -487,10 +537,30 @@ export const getContactNote = `query GetContactNote($id: ID!) {
       testingDate
       cost
       purchaseOrderNumber
-      manager
-      testerFacilitator
-      clientFacilitator
-      mainRecruiter
+      manager {
+        id
+        email
+        firstName
+        lastName
+      }
+      testerFacilitator {
+        id
+        email
+        firstName
+        lastName
+      }
+      clientFacilitator {
+        id
+        email
+        firstName
+        lastName
+      }
+      mainRecruiter {
+        id
+        email
+        firstName
+        lastName
+      }
       facilities
       screenerApproved
       facilitationGuideSent
@@ -515,7 +585,12 @@ export const getContactNote = `query GetContactNote($id: ID!) {
       }
     }
     date
-    contactedBy
+    contactedBy {
+      id
+      email
+      firstName
+      lastName
+    }
     note
     tester {
       id
@@ -581,10 +656,6 @@ export const listContactNotes = `query ListContactNotes(
         testingDate
         cost
         purchaseOrderNumber
-        manager
-        testerFacilitator
-        clientFacilitator
-        mainRecruiter
         facilities
         screenerApproved
         facilitationGuideSent
@@ -603,7 +674,12 @@ export const listContactNotes = `query ListContactNotes(
         profiles
       }
       date
-      contactedBy
+      contactedBy {
+        id
+        email
+        firstName
+        lastName
+      }
       note
       tester {
         id
@@ -641,6 +717,31 @@ export const listContactNotes = `query ListContactNotes(
         facilitatorComments
         lastUpdated
       }
+    }
+    nextToken
+  }
+}
+`;
+export const getUser = `query GetUser($id: ID!) {
+  getUser(id: $id) {
+    id
+    email
+    firstName
+    lastName
+  }
+}
+`;
+export const listUsers = `query ListUsers(
+  $filter: ModelUserFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listUsers(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      email
+      firstName
+      lastName
     }
     nextToken
   }

@@ -16,10 +16,10 @@ type Project @model {
   testingDate: AWSDate!
   cost: String
   purchaseOrderNumber: String
-  manager: String!
-  testerFacilitator: String
-  clientFacilitator: String
-  mainRecruiter: String
+  manager: User!
+  testerFacilitator: User
+  clientFacilitator: User
+  mainRecruiter: User
   facilities: [String!]
   screenerApproved: AWSDate
   facilitationGuideSent: AWSDate
@@ -95,7 +95,14 @@ type ContactNote @model {
   type: String!
   project: Project @connection(name: "ProjectContactNotes")
   date: AWSDate!
-  contactedBy: String!
+  contactedBy: User!
   note: String!
   tester: Tester @connection(name: "TesterContactNotes")
+}
+
+type User @model {
+  id: ID!
+  email: AWSEmail!
+  firstName: String!
+  lastName: String!
 }
