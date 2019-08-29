@@ -22,7 +22,8 @@ const mapState = (state, { editIndex }) => {
     return {
         id: selectProjectId(state),
         profiles: profiles.map(({ Profile: { Component } }) => Component),
-        ...composeEditData(profiles, editIndex)
+        ...composeEditData(profiles, editIndex),
+        title: 'Profile Edit'
     };
 };
 

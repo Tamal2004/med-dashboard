@@ -3,6 +3,7 @@ import { reducer as form } from 'redux-form';
 
 // Reducers
 import auth from './auth';
+import clients from './clients';
 import datasets from './datasets';
 import testers from './testers';
 import projects from './projects';
@@ -11,6 +12,7 @@ import utils from './utils';
 
 const rootReducer = combineReducers({
     auth,
+    clients,
     datasets,
     form,
     testers,

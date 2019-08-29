@@ -1,4 +1,5 @@
 export * from './auth';
+export * from './clients';
 export * from './datasets';
 export * from './projects';
 export * from './contactNotes';

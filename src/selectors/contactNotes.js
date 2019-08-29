@@ -8,6 +8,8 @@ export const selectContactNoteId = createCachedSelector(
     selectTesterIndividual,
     (state, contactNoteIndex) => contactNoteIndex,
     ({ contactNotes = [] }, contactNoteIndex) => {
-        return contactNotes[contactNoteIndex] && contactNotes[contactNoteIndex].id;
+        return (
+            contactNotes[contactNoteIndex] && contactNotes[contactNoteIndex].id
+        );
     }
 )(() => 'placeholder');

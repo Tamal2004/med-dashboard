@@ -4,7 +4,11 @@ import API, { graphqlOperation } from '@aws-amplify/api';
 import { normalizeContactNote } from 'normalizers';
 
 // Graph QL
-import { CreateContactNote, UpdateContactNote, RemoveContactNote } from 'graphql/contactNotes';
+import {
+    CreateContactNote,
+    UpdateContactNote,
+    RemoveContactNote
+} from 'graphql/contactNotes';
 
 // Action Types
 import {
@@ -15,7 +19,6 @@ import {
     UPDATE_CONTACT_NOTE,
     REMOVE_CONTACT_NOTE
 } from 'actionTypes';
-
 
 const createContactNoteAction = (async, payload = []) => ({
     type: CREATE_CONTACT_NOTE,
@@ -31,13 +34,15 @@ export const createContactNote = input => async dispatch => {
 
     if (!error) {
         dispatch(
-            createContactNoteAction(SUCCESS, normalizeContactNote(createContactNote))
+            createContactNoteAction(
+                SUCCESS,
+                normalizeContactNote(createContactNote)
+            )
         );
     } else {
         dispatch(createContactNoteAction(FAIL));
     }
 };
-
 
 const updateContactNoteAction = (async, payload = []) => ({
     type: UPDATE_CONTACT_NOTE,
@@ -53,7 +58,10 @@ export const updateContactNote = input => async dispatch => {
 
     if (!error) {
         dispatch(
-            updateContactNoteAction(SUCCESS, normalizeContactNote(updateContactNote))
+            updateContactNoteAction(
+                SUCCESS,
+                normalizeContactNote(updateContactNote)
+            )
         );
     } else {
         dispatch(updateContactNoteAction(FAIL));
@@ -70,7 +78,9 @@ export const removeContactNote = id => async dispatch => {
     dispatch(removeContactNoteAction(REQUEST));
     const {
         data: { deleteContactNote: { id: contactNoteId } = {}, error = null }
-    } = await API.graphql(graphqlOperation(RemoveContactNote, { input: { id } }));
+    } = await API.graphql(
+        graphqlOperation(RemoveContactNote, { input: { id } })
+    );
 
     if (!error) {
         dispatch(removeContactNoteAction(SUCCESS, contactNoteId));

@@ -13,7 +13,6 @@ export const CreateContactNote = `mutation CreateContactNote($input: CreateConta
 }
 `;
 
-
 export const RemoveContactNote = `mutation RemoveContactNote($input: DeleteContactNoteInput!) {
     deleteContactNote(input: $input) {
         id

@@ -114,7 +114,7 @@ class Table extends Component {
             ],
             [[], []]
         );
-        console.log(sortIndices);
+
         this.setState({ data, sortIndices });
     };
 

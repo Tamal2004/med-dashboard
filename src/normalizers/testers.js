@@ -111,7 +111,6 @@ export const normalizeTesterForm = (
     return { testerDetails, contactDetails, employmentDetails };
 };
 
-
 export const normalizeTester = ({
     id,
     sessions: { items: sessionsData = [] } = {},

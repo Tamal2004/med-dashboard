@@ -1,8 +1,10 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 
+// Local
+import { AddNewClient, ClientEditModal } from 'views/Modals';
 import {
     GridContainer,
     GridItem,
@@ -14,11 +16,10 @@ import {
 } from 'components';
 
 // Selectors
-import { selectCounties } from 'selectors';
-import { AddNewClient } from 'views/Modals';
+import { selectCounties, selectClientList } from 'selectors';
 
 // Actions
-import { fetchClients } from 'actions';
+import { listClients } from 'actions';
 
 const useStyles = makeStyles(({ spacing }) => ({
     buttonGridStyle: {
@@ -35,8 +36,22 @@ const useStyles = makeStyles(({ spacing }) => ({
     }
 }));
 
-const ClientHome = ({ projects, handleAddNewClient }) => {
+const ClientHome = ({
+    clients,
+    handleAddNewClient,
+    handleClientEditModal,
+    listClients
+}) => {
     const c = useStyles();
+    const [isLoading, setLoading] = useState(true);
+
+    useEffect(() => {
+        let shouldCancel = false;
+        listClients().then(() => !shouldCancel && setLoading(false));
+
+        return () => (shouldCancel = true);
+    }, []);
+
     return (
         <GridContainer alignItems='center'>
             <GridItem md={2}></GridItem>
@@ -56,47 +71,32 @@ const ClientHome = ({ projects, handleAddNewClient }) => {
                 </NavigateButton>
             </GridItem>
             <GridItem md={12}>
-                <Table action={true} data={projects} page={1} />
+                <Table
+                    action
+                    data={clients}
+                    page={1}
+                    handleEditModal={handleClientEditModal}
+                />
             </GridItem>
         </GridContainer>
     );
 };
-const generateProjects = (
-    client,
-    project,
-    date = '07/04/2018',
-    contactDate = '02/06/2019'
-) => ({
-    Client: {
-        Component: <Link to={`/client/${client}`}>{client}</Link>,
-        value: client
-    },
-    'Latest Project': {
-        Component: <Link to={`/project/${project}`}>{project}</Link>,
-        value: project
-    },
-    'Latest Project Date': date,
-    'Last Contact Date': contactDate
-});
 
 const mapState = state => ({
-    projects: Array.range(0, 3)
-        .map(() => [
-            generateProjects('Aldi', 'EM21'),
-            generateProjects('Wessex Water', 'GM33', '03/09/2018'),
-            generateProjects('Disney', 'JE24', '03/09/2018', '08/12/2018')
-        ])
-        .flatMap(x => x)
+    clients: selectClientList(state)
 });
 
+const mapDispatch = { listClients };
+
 const mapModal = {
-    handleAddNewClient: AddNewClient
+    handleAddNewClient: AddNewClient,
+    handleClientEditModal: ClientEditModal
 };
 
 const _ClientHome = compose(
     connect(
         mapState,
-        null
+        mapDispatch
     ),
     withModal(mapModal)
 )(ClientHome);
