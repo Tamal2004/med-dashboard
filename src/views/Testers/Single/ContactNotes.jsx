@@ -60,6 +60,7 @@ const ContactNotes = ({
                 page={page}
                 itemsPerPage={5}
                 handleEditModal={handleContactNotesEditModal}
+                noResultsText='No Contact Notes'
             />
             <div className={c.footer}>
                 <IconedButton

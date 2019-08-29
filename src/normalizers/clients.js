@@ -1,5 +1,27 @@
 import { deserializeDate, calculateAge } from 'libs';
 
+export const normalizeClientSingle = (
+    client = {
+        name: 'Aldi',
+        projects: {
+            items: [
+                {
+                    id: '8916b36d-3db2-4c94-8786-81ad3c0518e7',
+                    reference: 'EU26',
+                    title: 'Old Vamp',
+                    testingDate: '2019-08-22',
+                    status: 'In Progress',
+                    principalContact: 'Matt'
+                }
+            ]
+        }
+    }
+) => {
+    const { name, projects: { items: projects = [] } = {} } = client;
+
+    return { name, projects };
+};
+
 export const normalizeClient = client => {
     const { projects: { items: projects = [] } = {}, ...rest } = client;
 

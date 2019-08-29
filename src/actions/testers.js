@@ -135,6 +135,9 @@ export const updateTester = ({ lastUpdated, ...tester }) => async dispatch => {
         lastUpdated: today(),
         ...tester
     };
+
+    console.log('arstars', datedTester);
+
     dispatch(updateTesterAction(REQUEST));
     const {
         data: { updateTester, error = null }

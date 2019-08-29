@@ -1,13 +1,18 @@
 import API, { graphqlOperation } from '@aws-amplify/api';
 
 // Normalizers
-import { normalizeClient, normalizeClients } from 'normalizers';
+import {
+    normalizeClientSingle,
+    normalizeClient,
+    normalizeClients
+} from 'normalizers';
 
 // Graph QL
 import {
     CreateClient,
     UpdateClient,
     RemoveClient,
+    FetchClient,
     ListClients
 } from 'graphql/clients';
 
@@ -16,10 +21,30 @@ import {
     REQUEST,
     SUCCESS,
     FAIL,
+    FETCH_CLIENT,
     LIST_CLIENTS,
     CREATE_CLIENT,
     UPDATE_CLIENT
 } from 'actionTypes';
+
+const fetchClientAction = (async, payload = []) => ({
+    type: FETCH_CLIENT,
+    async,
+    payload
+});
+
+export const fetchClient = id => async dispatch => {
+    dispatch(fetchClientAction(REQUEST));
+    const {
+        data: { getClient, error = null }
+    } = await API.graphql(graphqlOperation(FetchClient, { id }));
+
+    if (!error) {
+        dispatch(fetchClientAction(SUCCESS, normalizeClientSingle(getClient)));
+    } else {
+        dispatch(fetchClientAction(FAIL));
+    }
+};
 
 const listClientsAction = (async, payload = []) => ({
     type: LIST_CLIENTS,

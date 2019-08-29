@@ -1,6 +1,16 @@
 export default ({ palette, spacing, transitions, typography }) => ({
     root: {
-        borderTop: '1px solid #eeeeee'
+        borderTop: '1px solid',
+        borderColor: palette.grey[200]
+    },
+    nullRoot: {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderTop: '1px solid',
+        borderColor: palette.grey[200],
+        height: spacing(6),
+        backgroundColor: palette.grey[50]
     },
     action: {
         cursor: 'pointer'

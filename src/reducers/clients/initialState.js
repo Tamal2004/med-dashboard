@@ -1,4 +1,4 @@
 export default {
-    individual: {},
+    individual: { projects: [] },
     list: []
 };

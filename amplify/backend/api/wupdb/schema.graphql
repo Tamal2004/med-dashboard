@@ -5,7 +5,7 @@ type Client @model {
   projects: [Project] @connection(name: "ClientProjects")
 }
 
-type Project @model {
+type Project @model @key {
   id: ID!
   reference: String!
   title: String!

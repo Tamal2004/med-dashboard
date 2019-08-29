@@ -80,6 +80,7 @@ const TesterHome = ({ testers, listTesters }) => {
                         <Table
                             data={testers}
                             page={1}
+                            noResultsText='No Testers'
                         />
                     )}
                 </GridItem>

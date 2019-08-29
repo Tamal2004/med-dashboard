@@ -29,10 +29,6 @@ const useStyles = makeStyles(({ spacing }) => ({
     },
     projectButton: {
         marginRight: spacing()
-    },
-    linkGap: {
-        marginRight: 5,
-        textDecoration: 'none'
     }
 }));
 
@@ -59,9 +55,6 @@ const ClientHome = ({
                 <SearchInput placeholder='Search by name or project reference' />
             </GridItem>
             <GridItem md={4} className={c.buttonGridStyle}>
-                <Link to='/project/new' className={c.linkGap}>
-                    <NavigateButton>Add a new project</NavigateButton>
-                </Link>
                 <NavigateButton
                     onClick={() => handleAddNewClient()}
                     variant='outlined'
@@ -76,6 +69,7 @@ const ClientHome = ({
                     data={clients}
                     page={1}
                     handleEditModal={handleClientEditModal}
+                    noResultsText='No Clients'
                 />
             </GridItem>
         </GridContainer>

@@ -11,7 +11,8 @@ import {
     TableRow,
     TableCell,
     TableBody,
-    IconButton
+    IconButton,
+    Typography
 } from '@material-ui/core';
 import DropdownIcon from '@material-ui/icons/KeyboardArrowDown';
 
@@ -310,10 +311,10 @@ class Table extends Component {
         const {
             props: {
                 data: [datum = {}] = [],
-                data: datas,
                 itemsPerPage,
                 handleEditModal,
-                checkAll
+                checkAll,
+                noResultsText
             },
             state: { data },
             c,
@@ -345,58 +346,71 @@ class Table extends Component {
 
         return (
             <Fragment>
-                <MuiTable className={c.root}>
-                    <TableHead>
-                        <TableRow className={clsx(c.row, c.header)}>
-                            {headers.map((header, index) => {
-                                const unitWidth = 8 * 8;
-                                const headerWidth = header.includes('Reference')
-                                    ? unitWidth * 1.5
-                                    : unitWidth * 2;
-                                const len = headers.length;
+                {!data.length ? (
+                    <div className={c.nullRoot}>
+                        <Typography variant='h6'>{noResultsText}</Typography>
+                    </div>
+                ) : (
+                    <MuiTable className={c.root}>
+                        <TableHead>
+                            <TableRow className={clsx(c.row, c.header)}>
+                                {headers.map((header, index) => {
+                                    const unitWidth = 8 * 8;
+                                    const headerWidth = header.includes(
+                                        'Reference'
+                                    )
+                                        ? unitWidth * 1.5
+                                        : unitWidth * 2;
+                                    const len = headers.length;
 
-                                return (
-                                    <TableCell
-                                        className={clsx(
-                                            index === len - actionDecrement
-                                                ? c.actionCellHeader
-                                                : c.cellHeader,
-                                            c.cell
-                                        )}
-                                        style={{
-                                            maxWidth: headerWidth,
-                                            minWidth: headerWidth
-                                        }}
-                                        key={index}
-                                        onClick={() =>
-                                            index < len - actionDecrement &&
-                                            handleSort(index)
-                                        }
-                                    >
-                                        {header}
-                                        {index < len - actionDecrement &&
-                                            renderSortIcon(index)}
-                                        {index === len - actionDecrement &&
-                                            hasCheckAction && (
-                                                <CheckAllAction
-                                                    onClick={checkAll}
-                                                    dataLength={datas.length}
-                                                />
+                                    return (
+                                        <TableCell
+                                            className={clsx(
+                                                index === len - actionDecrement
+                                                    ? c.actionCellHeader
+                                                    : c.cellHeader,
+                                                c.cell
                                             )}
-                                    </TableCell>
-                                );
-                            })}
-                        </TableRow>
-                    </TableHead>
-                    <TableBody className={c.body}>{renderTable(c)}</TableBody>
-                </MuiTable>
+                                            style={{
+                                                maxWidth: headerWidth,
+                                                minWidth: headerWidth
+                                            }}
+                                            key={index}
+                                            onClick={() =>
+                                                index < len - actionDecrement &&
+                                                handleSort(index)
+                                            }
+                                        >
+                                            {header}
+                                            {index < len - actionDecrement &&
+                                                renderSortIcon(index)}
+                                            {index === len - actionDecrement &&
+                                                hasCheckAction && (
+                                                    <CheckAllAction
+                                                        onClick={checkAll}
+                                                        dataLength={
+                                                            data.length
+                                                        }
+                                                    />
+                                                )}
+                                        </TableCell>
+                                    );
+                                })}
+                            </TableRow>
+                        </TableHead>
+                        <TableBody className={c.body}>
+                            {renderTable(c)}
+                        </TableBody>
+                    </MuiTable>
+                )}
             </Fragment>
         );
     }
 }
 
 Table.defaultProps = {
-    itemsPerPage: 10
+    itemsPerPage: 10,
+    noResultsText: 'No results'
 };
 
 Table.propTypes = {

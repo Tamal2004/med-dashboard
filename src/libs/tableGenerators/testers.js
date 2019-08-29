@@ -9,7 +9,8 @@ export const generateTesterList = testerList =>
             testerName,
             testerNumber,
             lastContactDate,
-            lastProject,
+            lastProjectReference,
+            lastProjectId,
             lastTestingDate
         }) => ({
             'Tester Name': {
@@ -21,12 +22,16 @@ export const generateTesterList = testerList =>
             'Last Project': {
                 Component: (
                     <Link
-                        to={lastProject ? `/project/${lastProject}` : '/tester'}
+                        to={
+                            lastProjectId
+                                ? `/project/${lastProjectId}`
+                                : '/tester'
+                        }
                     >
-                        {lastProject || 'No Projects'}
+                        {lastProjectReference || 'No Projects'}
                     </Link>
                 ),
-                value: lastProject || 'No Projects'
+                value: lastProjectReference || 'No Projects'
             },
             'Last Testing Date': lastTestingDate || 'No Sessions',
             'Last Contact Date': lastContactDate || 'No Contacts'

@@ -13,8 +13,6 @@ import TesterDetails from './TesterDetails';
 import ProfileDetails from './ProfileDetails';
 import { GridContainer, GridItem, BarLoader } from 'components';
 
-// Selectors
-import {} from 'selectors';
 
 // Actions
 import { fetchProject } from 'actions';
@@ -30,7 +28,6 @@ const ProjectSingle = ({
     fetchProject
 }) => {
     const c = useStyles();
-
     const [isLoading, setLoading] = useState(true);
 
     useEffect(() => {

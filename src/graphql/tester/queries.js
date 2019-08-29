@@ -8,6 +8,7 @@ export const ListTesters = `query fetchTestersHome {
         items {
           date
           project {
+            id
             reference
           }
         }

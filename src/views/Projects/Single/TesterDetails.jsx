@@ -69,6 +69,7 @@ const TesterDetails = ({
                 page={page}
                 checkAll={value => console.log('selected all', value)}
                 itemsPerPage={5}
+                noResultsText='No Tester Sessions'
             />
             <div className={c.footer}>
                 <div>

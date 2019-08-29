@@ -121,6 +121,7 @@ const ProfileDetails = ({
                     itemsPerPage={pageStep}
                     styles={{ root: c.table }}
                     handleEditModal={handleProfileEditModal}
+                    noResultsText='No Profiles'
                 />
                 {data.length > 4 && totalPages > 1 && (
                     <div className={c.footer}>

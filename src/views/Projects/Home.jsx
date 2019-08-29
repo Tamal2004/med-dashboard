@@ -44,18 +44,17 @@ const ProjectHome = ({ projects, listProjects }) => {
         listProjects(filters, searchInput).then(() => setLoading(false));
     };
 
-    const handleSearch = () => {
-        setLoading(true);
-        listProjects(checkFilter, searchInput).then(() => setLoading(false));
-    };
-
-
     useEffect(() => {
         let shouldCancel = false;
         listProjects().then(() => !shouldCancel && setLoading(false));
 
         return () => (shouldCancel = true);
     }, []);
+
+    const handleSearch = () => {
+        setLoading(true);
+        listProjects(checkFilter, searchInput).then(() => setLoading(false));
+    };
 
     return (
         <GridContainer alignItems='center'>
@@ -82,7 +81,15 @@ const ProjectHome = ({ projects, listProjects }) => {
                 </Link>
             </GridItem>
             <GridItem md={12}>
-                {isLoading ? <BarLoader /> : <Table data={projects} page={1} />}
+                {isLoading ? (
+                    <BarLoader />
+                ) : (
+                    <Table
+                        data={projects}
+                        page={1}
+                        noResultText='No Projects'
+                    />
+                )}
             </GridItem>
         </GridContainer>
     );

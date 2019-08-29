@@ -142,6 +142,7 @@ const mapState = state => ({
 const mapDispatch = { change };
 
 const validate = (values, { hasManualAddress }) => {
+    console.log('arstar', values)
     const required = ['email', 'phone'];
 
     if (!hasManualAddress) required.push('address');
@@ -155,6 +156,7 @@ const onSubmit = (
     dispatch,
     { id }
 ) => {
+    console.log('phone', phone)
     let addressDetails = {};
 
     if (manualAddress) {
@@ -197,9 +199,10 @@ const _ContactDetails = compose(
     ),
     reduxForm({
         form: 'ContactDetails',
+        enableReinitialize: true,
+        keepDirtyOnReinitialize: true,
         validate,
         onSubmit,
-        enableReinitialize: true,
     })
 )(ContactDetails);
 

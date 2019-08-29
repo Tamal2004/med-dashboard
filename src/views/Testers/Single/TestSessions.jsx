@@ -42,6 +42,7 @@ const TestSessions = ({ sessions, handleSessionsModal, handleSessionsEditModal }
                 page={page}
                 itemsPerPage={5}
                 handleEditModal={handleSessionsEditModal}
+                noResultsText='No Sessions'
             />
             <div className={c.footer}>
                 <IconedButton

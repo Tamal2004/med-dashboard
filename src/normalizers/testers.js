@@ -20,12 +20,20 @@ export const normalizeTestersList = ({ items = [] }) =>
                 return acm < formattedDate ? formattedDate : acm;
             }, null);
 
-            const { date: lastTestingDate, reference } = sessions.reduce(
-                (acm, { date, project: { reference = null } = {} }) => {
-                    if (!acm.date) return { date: new Date(date), reference };
+            const {
+                date: lastTestingDate,
+                reference: lastProjectReference,
+                id: lastProjectId
+            } = sessions.reduce(
+                (
+                    acm,
+                    { date, project: { reference = null, id = null } = {} }
+                ) => {
+                    if (!acm.date)
+                        return { date: new Date(date), reference, id };
                     const formattedDate = new Date(date);
                     return acm.date < formattedDate
-                        ? { date: formattedDate, reference }
+                        ? { date: formattedDate, reference, id }
                         : acm;
                 },
                 { date: null }
@@ -34,7 +42,8 @@ export const normalizeTestersList = ({ items = [] }) =>
             return {
                 testerName: `${firstName} ${surname}`,
                 testerNumber: id,
-                lastProject: reference,
+                lastProjectReference,
+                lastProjectId,
                 lastTestingDate: deserializeDate(lastTestingDate),
                 lastContactDate: deserializeDate(lastContactDate)
             };

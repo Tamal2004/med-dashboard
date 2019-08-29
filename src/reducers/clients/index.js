@@ -6,7 +6,8 @@ import {
     SUCCESS,
     LIST_CLIENTS,
     CREATE_CLIENT,
-    UPDATE_CLIENT
+    UPDATE_CLIENT,
+    FETCH_CLIENT
 } from 'actionTypes';
 
 const clientsReducer = (
@@ -15,6 +16,15 @@ const clientsReducer = (
 ) => {
     const isSuccess = async === SUCCESS;
     switch (type) {
+        case FETCH_CLIENT: {
+            return isSuccess
+                ? {
+                      ...state,
+                      individual: payload
+                  }
+                : state;
+        }
+
         case CREATE_CLIENT: {
             return isSuccess
                 ? {
@@ -23,7 +33,6 @@ const clientsReducer = (
                   }
                 : state;
         }
-
         case UPDATE_CLIENT: {
             return isSuccess
                 ? {
