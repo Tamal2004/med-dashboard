@@ -1,17 +1,15 @@
 import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import { change, reduxForm, formValueSelector } from 'redux-form';
+import { reduxForm, formValueSelector } from 'redux-form';
 
 // Material
 import { Paper, Typography, Grid, Link } from '@material-ui/core';
-import { Link as AddressLink } from '@material-ui/core';
 
 // Local
 import useStyles from './styles';
 import onSubmit from './onSubmit';
 import { validate, asyncValidate } from './validate';
-import { GridItem } from 'components';
 
 // Libs
 import { validateEmail, validateDate, validateNumber } from 'libs';
@@ -58,8 +56,7 @@ const TesterApplication = ({
     hasManualAddress,
     invalid,
     handleSubmit,
-    submitting,
-    change
+    submitting
 }) => {
     const c = useStyles();
     return (
@@ -74,10 +71,8 @@ const TesterApplication = ({
                 possible.
             </Typography>
             <Typography className={c.info} variant='subtitle1' gutterBottom>
-                If you have any queries, please contact Avril on&nbsp;
-                <AddressLink href='mailto:avril@webusability.co.uk'>
-                    avril@webusability.co.uk
-                </AddressLink>
+                If you have any queries, please contact Avril on
+                avril@webusability.co.uk.
             </Typography>
             <Typography className={c.info} variant='subtitle1' gutterBottom>
                 Our database is maintained solely for our use in recruiting
@@ -107,18 +102,7 @@ const TesterApplication = ({
                         required
                     />
                 )}
-                <GridItem md={12} className={c.manualGrid}>
-                    <AddressLink
-                        className={c.manualLink}
-                        href='#'
-                        onClick={() =>
-                            change('manualAddress', !hasManualAddress)
-                        }
-                    >
-                        {hasManualAddress ? 'Close' : 'Enter address manually?'}
-                    </AddressLink>
-                </GridItem>
-
+                <Switch label='Enter address manually?' name='manualAddress' />
                 {hasManualAddress && (
                     <Fragment>
                         <Input label='House name or number' name='house' />
@@ -248,13 +232,7 @@ const TesterApplication = ({
                         <Grid item xs={10}>
                             <Typography>
                                 I confirm that I have read and accepted the
-                                Testers{' '}
-                                <Link
-                                    href='https://www.webusability.co.uk/be-a-tester/tester-terms-conditions/'
-                                    target='_blank'
-                                >
-                                    Terms &amp; Conditions
-                                </Link>
+                                Testers <Link href='#'>Terms & Conditions</Link>
                             </Typography>
                         </Grid>
                     </Grid>
@@ -297,17 +275,47 @@ const mapState = (state, ownProps) => {
             employmentStatus === 'Retired',
         isRetired: employmentStatus === 'Retired',
         isPublicUser: noauth,
-        hasManualAddress: formSelector(state, 'manualAddress')
+        hasManualAddress: formSelector(state, 'manualAddress'),
+        initialValues: {
+            manualAddress: true,
+            isPublicUser: noauth,
+            title: 'Mr',
+            firstName: 'Whatever',
+            surname: 'Tamal',
+            email: 'matthew@echotechsys.com',
+            phone: '01306568988',
+            address: 'Avenue Adolphe Buyl 12 1050 Ixelles',
+            house: '12',
+            street: 'Avenue Adolphe',
+            town: 'Brussels',
+            county: 'Yorkshire',
+            postcode: '1050',
+            country: 'Belgium',
+            gender: 'Male',
+            dob: '01/01/1999',
+            maritalStatus: 'Single',
+            hasChildren: true,
+            nationality: 'United Kingdom',
+            ethnicity: 'Arab',
+            firstLanguage: 'English',
+            otherLanguages: 'Bengali',
+            disability: 'None',
+            about: 'Software developer',
+            employmentStatus: 'Full-time employment',
+            jobTitle: 'Software Engineer',
+            businessName: 'Matt Tamal',
+            employmentSector: 'Computers & ICT',
+            employeeCount: '1 - 9',
+            subject: 'Medicine',
+            educationStage: 'University',
+            institution: 'Cambridge University',
+            termsChecked: true
+        }
     };
 };
 
-const mapDispatch = { change };
-
 const _TesterApplication = compose(
-    connect(
-        mapState,
-        mapDispatch
-    ),
+    connect(mapState),
     reduxForm({
         form: 'TesterApplication',
         validate,
