@@ -74,8 +74,10 @@ const TesterApplication = ({
                 possible.
             </Typography>
             <Typography className={c.info} variant='subtitle1' gutterBottom>
-                If you have any queries, please contact Avril on
-                avril@webusability.co.uk.
+                If you have any queries, please contact Avril on&nbsp;
+                <AddressLink href='mailto:avril@webusability.co.uk'>
+                    avril@webusability.co.uk
+                </AddressLink>
             </Typography>
             <Typography className={c.info} variant='subtitle1' gutterBottom>
                 Our database is maintained solely for our use in recruiting
@@ -246,7 +248,13 @@ const TesterApplication = ({
                         <Grid item xs={10}>
                             <Typography>
                                 I confirm that I have read and accepted the
-                                Testers <Link href='#'>Terms & Conditions</Link>
+                                Testers{' '}
+                                <Link
+                                    href='https://www.webusability.co.uk/be-a-tester/tester-terms-conditions/'
+                                    target='_blank'
+                                >
+                                    Terms &amp; Conditions
+                                </Link>
                             </Typography>
                         </Grid>
                     </Grid>
