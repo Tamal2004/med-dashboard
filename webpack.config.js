@@ -23,7 +23,7 @@ module.exports = {
         hot: true
     },
     plugins: [
-        new CopyWebpackPlugin(['index.html']),
+        new CopyWebpackPlugin(['ProfileEdit.jsx.html']),
         new webpack.HotModuleReplacementPlugin(),
         new webpack.DefinePlugin({
             HELLO: JSON.stringify(process.env.HELLO)

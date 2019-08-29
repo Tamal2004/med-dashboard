@@ -39,6 +39,9 @@ import {
 // Actions
 import { updateTester } from 'actions';
 
+// Normalizers
+import { normalizeDob } from 'normalizers';
+
 const useStyles = makeStyles(({ spacing, typography }) => ({
     name: {
         paddingLeft: spacing(2),
@@ -135,6 +138,7 @@ const TesterDetails = ({
                 label='Date of Birth'
                 name='dob'
                 isCard
+                normalize={normalizeDob}
                 active={isEditing}
                 required={isEditing}
             />

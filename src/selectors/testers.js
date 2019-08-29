@@ -1,6 +1,7 @@
 import createCachedSelector from 're-reselect';
 
 // Local
+import { selectContactTypes } from './datasets';
 import {
     mapToSelect,
     generateTesterList,
@@ -15,8 +16,8 @@ export const selectIndividual = createCachedSelector(
     ({ individual }) => individual
 )(() => 'placeholder');
 
-// Tester Projects
-export const selectTesterProjects = createCachedSelector(
+// Incomplete Projects
+export const selectIncompleteProjects = createCachedSelector(
     selectIndividual,
     ({ projects = [] }) => mapToSelect(projects, 'id', 'reference')
 )(() => 'placeholder');
@@ -34,7 +35,9 @@ export const selectTesterSessions = createCachedSelector(
 
 export const selectTesterContactNotes = createCachedSelector(
     selectIndividual,
-    ({ contactNotes }) => generateTesterContactNotes(contactNotes)
+    selectContactTypes,
+    ({ contactNotes }, contactTypes) =>
+        generateTesterContactNotes(contactNotes, contactTypes)
 )(() => 'placeholder');
 
 // Tester List

@@ -8,6 +8,7 @@ import {
     UPDATE_PROJECT,
     LIST_PROJECTS,
     LIST_PROJECT_CLIENTS,
+    LIST_PROJECT_USERS,
     REMOVE_SESSION
 } from 'actionTypes';
 
@@ -35,6 +36,10 @@ const projectsReducer = (
 
         case LIST_PROJECT_CLIENTS: {
             return isSuccess ? { ...state, clients: payload } : state;
+        }
+
+        case LIST_PROJECT_USERS: {
+            return isSuccess ? { ...state, users: payload } : state;
         }
 
         case LIST_PROJECTS: {

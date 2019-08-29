@@ -2,5 +2,6 @@ export default {
     individual: {},
     list: [],
     search: [],
-    clients: []
+    clients: [],
+    users: []
 };

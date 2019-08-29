@@ -1,6 +1,4 @@
 import API, { graphqlOperation } from '@aws-amplify/api';
-// Local
-import { history } from 'libs';
 
 // Normalizers
 import { normalizeSessionTester } from 'normalizers';
@@ -17,25 +15,25 @@ import {
     CREATE_SESSION,
     UPDATE_SESSION,
     REMOVE_SESSION,
-    LIST_SESSION_PROJECTS
+    LIST_INCOMPLETE_PROJECTS
 } from 'actionTypes';
 
-const listSessionProjectsAction = (async, payload = []) => ({
-    type: LIST_SESSION_PROJECTS,
+const listIncompleteProjectsAction = (async, payload = []) => ({
+    type: LIST_INCOMPLETE_PROJECTS,
     async,
     payload
 });
 
-export const listSessionProjects = () => async dispatch => {
-    dispatch(listSessionProjectsAction(REQUEST));
+export const listIncompleteProjects = () => async dispatch => {
+    dispatch(listIncompleteProjectsAction(REQUEST));
     const {
         data: { listProjects: { items = [] } = {}, error = null }
     } = await API.graphql(graphqlOperation(ListIncompleteProjects));
 
     if (!error) {
-        dispatch(listSessionProjectsAction(SUCCESS, items));
+        dispatch(listIncompleteProjectsAction(SUCCESS, items));
     } else {
-        dispatch(listSessionProjectsAction(FAIL));
+        dispatch(listIncompleteProjectsAction(FAIL));
     }
 };
 

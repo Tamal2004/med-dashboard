@@ -20,23 +20,26 @@ import {
 } from 'components';
 
 // Selectors
-import { selectNewProjectStatuses, selectProjectClients } from 'selectors';
+import { selectNewProjectStatuses, selectProjectClients, selectProjectUsers } from 'selectors';
 
 // Actions
-import { createProject, listProjectClients } from 'actions';
+import { createProject, listProjectClients, listProjectUsers } from 'actions';
 
 const ProjectNew = ({
     projectStatuses,
     clients,
+    users,
     invalid,
     pristine,
     reset,
     handleSubmit,
     submitting,
-    listProjectClients
+    listProjectClients,
+    listProjectUsers
 }) => {
     useEffect(() => {
         listProjectClients();
+        listProjectUsers();
     }, []);
     const c = useStyles();
 
@@ -75,10 +78,27 @@ const ProjectNew = ({
                     label='Purchase Order Number'
                     name='purchaseOrderNumber'
                 />
-                <Input label='Project Manager' name='manager' required />
-                <Input label='Tester Facilitator' name='testerFacilitator' />
-                <Input label='Client Facilitator' name='clientFacilitator' />
-                <Input label='Main Recruiter' name='mainRecruiter' />
+                <Select
+                    label='Project Manager'
+                    name='manager'
+                    data={users}
+                    required
+                />
+                <Select
+                    label='Tester Facilitator'
+                    name='testerFacilitator'
+                    data={users}
+                />
+                <Select
+                    label='Client Facilitator'
+                    name='clientFacilitator'
+                    data={users}
+                />
+                <Select
+                    label='Main Recruiter'
+                    name='mainRecruiter'
+                    data={users}
+                />
             </Container>
             <Grid container className={c.footer}>
                 <Grid item xs={6}>
@@ -110,10 +130,11 @@ const ProjectNew = ({
 
 const mapState = state => ({
     projectStatuses: selectNewProjectStatuses(state),
-    clients: selectProjectClients(state)
+    clients: selectProjectClients(state),
+    users: selectProjectUsers(state),
 });
 
-const mapDispatch = { listProjectClients };
+const mapDispatch = { listProjectClients, listProjectUsers };
 
 const _ProjectNew = compose(
     connect(

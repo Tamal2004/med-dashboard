@@ -65,9 +65,18 @@ export const generateTesterSessions = testerSessions =>
         })
     );
 
-export const generateTesterContactNotes = testerContactNotes =>
+export const generateTesterContactNotes = (testerContactNotes, contactTypes) =>
     testerContactNotes.map(
-        ({ date, projectId, projectReference, type, contactedBy, note }) => ({
+        ({
+            id,
+            date,
+            projectId,
+            projectReference,
+            type,
+            contactedBy,
+            note
+        }) => ({
+            id,
             Date: date,
             Project: {
                 Component: (
@@ -75,8 +84,18 @@ export const generateTesterContactNotes = testerContactNotes =>
                 ),
                 value: projectReference
             },
-            'Contact Type': type,
+            'Contact Type': {
+                editable: true,
+                Component: type,
+                type: 'Select',
+                props: { data: contactTypes }
+            },
             'Contacted By': contactedBy,
-            Details: note
+            Details: {
+                editable: true,
+                Component: note,
+                type: 'MultiInput',
+                props: { placeholder: 'Message details' }
+            }
         })
     );

@@ -1,5 +1,8 @@
 import { deserializeDate } from 'libs';
 
+export const normalizeProjectUsers = users =>
+    users.map(({ firstName, lastName }) => `${firstName} ${lastName}`);
+
 export const normalizeProjects = ({ items = [] }) =>
     items.map(({ client: { id, name }, testingDate, ...project }) => ({
         ...project,

@@ -1,15 +1,14 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { reduxForm } from 'redux-form';
-import PropTypes from 'prop-types';
 
 // Material
 import { Divider } from '@material-ui/core';
 
 // Local
 import useStyles from './styles';
-import { validateRequired } from 'libs';
+import { validateRequired, today } from 'libs';
 import {
     ModalHeader,
     ModalFooter,
@@ -20,27 +19,49 @@ import {
 } from 'components';
 
 // Selectors
-import { selectContactTypes } from 'selectors';
+import {
+    selectContactTypes,
+    selectIncompleteProjects,
+    selectTesterId,
+    selectFullName
+} from 'selectors';
 
-const ContactsModal = ({ contactTypes, data, onClose }) => {
+// Actions
+import { createContactNote, listIncompleteProjects } from 'actions';
+
+const ContactsModal = ({
+    contactTypes,
+    projects,
+    onClose,
+    listIncompleteProjects,
+    handleSubmit,
+    invalid
+}) => {
     const c = useStyles();
+    const [projectsLoading, setProjectsLoading] = useState(true);
+
+    useEffect(() => {
+        listIncompleteProjects().then(() => setProjectsLoading(false));
+    }, []);
+
     return (
         <Fragment>
             <ModalHeader onClose={onClose}>Create New Contact Note</ModalHeader>
             <ModalContent className={c.root}>
                 <Select
                     label='Contact Type'
-                    name='contactType'
+                    name='type'
                     data={contactTypes}
                     required
                 />
                 <Select
                     label='Project'
                     name='project'
-                    data={[]}
+                    data={projects}
                     required
+                    disabled={projectsLoading}
                 />
-                <MultiInput name='notes' placeholder='Message details' />
+                <MultiInput name='note' placeholder='Message details' />
             </ModalContent>
             <Divider />
             <ModalFooter className={c.footer}>
@@ -52,7 +73,13 @@ const ContactsModal = ({ contactTypes, data, onClose }) => {
                 >
                     Cancel
                 </Button>
-                <Button variant='contained' color='primary' size='large'>
+                <Button
+                    variant='contained'
+                    color='primary'
+                    size='large'
+                    onClick={handleSubmit}
+                    disabled={invalid}
+                >
                     Add Note
                 </Button>
             </ModalFooter>
@@ -64,8 +91,36 @@ ContactsModal.defaultProps = {};
 
 ContactsModal.propTypes = {};
 
-const mapState = state => ({ contactTypes: selectContactTypes(state) });
-const mapDispatch = {};
+const mapState = state => ({
+    testerId: selectTesterId(state),
+    username: selectFullName(state),
+    projects: selectIncompleteProjects(state),
+    contactTypes: selectContactTypes(state)
+});
+
+const mapDispatch = { listIncompleteProjects };
+
+export const validate = values => {
+    const required = ['type', 'project'];
+
+    return { ...validateRequired(values, required) };
+};
+
+const onSubmit = (
+    { project, ...values },
+    dispatch,
+    { testerId, username, onClose }
+) => {
+    const contactNote = {
+        contactNoteTesterId: testerId,
+        contactNoteProjectId: project,
+        date: today(),
+        contactedBy: username,
+        ...values
+    };
+
+    dispatch(createContactNote(contactNote)).then(() => onClose());
+};
 
 const _ContactsModal = compose(
     connect(
@@ -73,7 +128,9 @@ const _ContactsModal = compose(
         mapDispatch
     ),
     reduxForm({
-        form: 'TesterContacts'
+        form: 'TesterContacts',
+        validate,
+        onSubmit
     })
 )(ContactsModal);
 

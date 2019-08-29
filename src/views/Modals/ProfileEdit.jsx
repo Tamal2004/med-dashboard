@@ -26,9 +26,9 @@ const mapState = (state, { editIndex }) => {
     };
 };
 
-const onSubmit = ({ Profile }, dispatch, { id, profiles, editIndex }) => {
+const onSubmit = ({ Profile }, dispatch, { id, profiles, editIndex, onClose }) => {
     profiles[editIndex] = Profile;
-    dispatch(updateProject({ id, profiles }));
+    dispatch(updateProject({ id, profiles })).then(() => onClose());
 };
 
 const ProfileEditModal = compose(

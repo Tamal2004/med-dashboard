@@ -8,6 +8,16 @@ export const ListProjectClients = `query ListProjectClients {
 }
 `;
 
+export const ListProjectUsers = `query ListProjectUsers {
+  listUsers {
+    items {
+      firstName
+      lastName
+    }
+  }
+}
+`;
+
 export const CheckProjectReference = `query CheckProjectReference(
     $filter: ModelProjectFilterInput
 ) {

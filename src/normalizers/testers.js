@@ -2,6 +2,7 @@ import { deserializeDate, calculateAge } from 'libs';
 
 // Local
 import { normalizeSessionTester } from './sessions';
+import { normalizeContactNote } from './contactNotes';
 
 export const normalizeTestersList = ({ items = [] }) =>
     items.map(
@@ -110,6 +111,7 @@ export const normalizeTesterForm = (
     return { testerDetails, contactDetails, employmentDetails };
 };
 
+
 export const normalizeTester = ({
     id,
     sessions: { items: sessionsData = [] } = {},
@@ -118,14 +120,7 @@ export const normalizeTester = ({
 }) => {
     const sessions = sessionsData.map(normalizeSessionTester);
 
-    const contactNotes = contactNotesData.map(
-        ({ date, project: { id, reference } = {}, ...rest }) => ({
-            date: deserializeDate(date),
-            projectId: id,
-            projectReference: reference,
-            ...rest
-        })
-    );
+    const contactNotes = contactNotesData.map(normalizeContactNote);
 
     return {
         ...normalizeTesterForm(testerData, false),

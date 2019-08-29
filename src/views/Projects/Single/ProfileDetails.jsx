@@ -4,7 +4,7 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 
 // Material
-import { makeStyles, Typography } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/AddBox';
 
 // Local
@@ -12,9 +12,7 @@ import { ProfileEditModal } from 'views/Modals';
 import {
     Table,
     PaginationBase,
-    IconedButton,
     EditableCard,
-    Link,
     withModal,
     SearchInput,
     NavigateButton
@@ -48,7 +46,12 @@ const useStyles = makeStyles(({ palette, spacing, typography }) => ({
     }
 }));
 
-const ProfileDetails = ({ data, updateProject, id, handleProfileEditModal }) => {
+const ProfileDetails = ({
+    data,
+    updateProject,
+    id,
+    handleProfileEditModal
+}) => {
     const [page, setPage] = useState(1);
     const [input, setInput] = useState('');
     const [newProfile, openNewProfileForm] = useState(false);
@@ -148,7 +151,7 @@ const mapState = (state, props) => ({
 
 const mapDispatch = { updateProject };
 
-const mapModals = {handleProfileEditModal: ProfileEditModal};
+const mapModals = { handleProfileEditModal: ProfileEditModal };
 
 const _ProfileDetails = compose(
     connect(

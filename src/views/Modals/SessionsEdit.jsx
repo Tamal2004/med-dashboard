@@ -23,10 +23,12 @@ const mapState = (state, { editIndex }) => {
     };
 };
 
-const onSubmit = ({ Date, Time, Notes }, dispatch, { id }) =>
-    dispatch(updateSession({ id, date: Date, time: Time, notes: Notes }));
+const onSubmit = ({ Date, Time, Notes }, dispatch, { id, onClose }) =>
+    dispatch(updateSession({ id, date: Date, time: Time, notes: Notes })).then(
+        () => onClose()
+    );
 
-const _SessionsEditModal = compose(
+const SessionsEditModal = compose(
     connect(mapState),
     reduxForm({
         form: 'SessionsEdit',
@@ -34,7 +36,4 @@ const _SessionsEditModal = compose(
     })
 )(EditModal);
 
-export {
-    _SessionsEditModal as default,
-    _SessionsEditModal as SessionsEditModal
-};
+export { SessionsEditModal as default, SessionsEditModal };

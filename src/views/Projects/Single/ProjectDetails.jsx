@@ -18,17 +18,20 @@ import {
 import {
     selectProjectId,
     selectProjectStatuses,
-    selectProjectClients
+    selectProjectClients,
+    selectProjectUsers
 } from 'selectors';
 
 // Actions
-import { listProjectClients, updateProject } from 'actions';
+import { listProjectClients, listProjectUsers, updateProject } from 'actions';
 
 const ProjectDetails = ({
     projectStatuses,
     clients,
+    users,
     invalid,
     listProjectClients,
+    listProjectUsers,
     handleSubmit,
     reset
 }) => {
@@ -36,6 +39,7 @@ const ProjectDetails = ({
 
     useEffect(() => {
         listProjectClients();
+        listProjectUsers();
     }, []);
 
     return (
@@ -106,30 +110,34 @@ const ProjectDetails = ({
                 active={isEditing}
             />
             <CardDivider />
-            <Input
+            <Select
                 label='Project Manager'
                 name='manager'
-                isCard
+                data={users}
                 active={isEditing}
                 required={isEditing}
+                isCard
             />
-            <Input
+            <Select
                 label='Tester Facilitator'
                 name='testerFacilitator'
-                isCard
+                data={users}
                 active={isEditing}
+                isCard
             />
-            <Input
+            <Select
                 label='Client Facilitator'
                 name='clientFacilitator'
-                isCard
+                data={users}
                 active={isEditing}
+                isCard
             />
-            <Input
+            <Select
                 label='Main Recruiter'
                 name='mainRecruiter'
-                isCard
+                data={users}
                 active={isEditing}
+                isCard
             />
             {isEditing && (
                 <EditableFooter
@@ -148,12 +156,13 @@ const mapState = state => {
     return {
         id: selectProjectId(state),
         clients: selectProjectClients(state),
+        users: selectProjectUsers(state),
         projectStatuses: selectProjectStatuses(state),
         initialValues: { reference: 'astarst' }
     };
 };
 
-const mapDispatch = { listProjectClients };
+const mapDispatch = { listProjectClients, listProjectUsers };
 
 const validate = values => {
     const required = [

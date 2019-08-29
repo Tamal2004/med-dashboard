@@ -13,7 +13,8 @@ import {
     Input,
     DateInput,
     MultiInput,
-    Control
+    Control,
+    Select
 } from 'components';
 
 const useStyles = makeStyles(({ palette, spacing, breakpoints }) => ({
@@ -52,6 +53,8 @@ const EditModal = ({ formData, onClose, handleSubmit, dirty, title }) => {
                         <MultiInput name={key} {...props} />
                     </Fragment>
                 );
+            case 'Select':
+                return <Select key={key} name={key} label={label} {...props} />;
             default:
                 return (
                     <Input key={index} label={label} name={key} {...props} />
@@ -81,7 +84,7 @@ const EditModal = ({ formData, onClose, handleSubmit, dirty, title }) => {
                     size='large'
                     onClick={() => {
                         if (dirty) handleSubmit();
-                        onClose();
+                        else onClose();
                     }}
                 >
                     Update

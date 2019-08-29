@@ -22,15 +22,14 @@ import {
 
 // Selectors
 import {
-    selectTesterProjects,
+    selectIncompleteProjects,
     selectTestingLocations,
     selectTesterId,
-    selectProject,
     selectSessionProfiles
 } from 'selectors';
 
 // Actions
-import { listSessionProjects, createSession } from 'actions';
+import { listIncompleteProjects, createSession } from 'actions';
 
 // Normalizers
 import { normalizeTime } from 'normalizers';
@@ -41,7 +40,7 @@ const SessionsModal = ({
     facilities,
     data,
     onClose,
-    listSessionProjects,
+    listIncompleteProjects,
     handleSubmit,
     invalid
 }) => {
@@ -49,7 +48,7 @@ const SessionsModal = ({
     const [projectsLoading, setProjectsLoading] = useState(true);
 
     useEffect(() => {
-        listSessionProjects().then(() => setProjectsLoading(false));
+        listIncompleteProjects().then(() => setProjectsLoading(false));
     }, []);
 
     return (
@@ -121,7 +120,7 @@ SessionsModal.propTypes = {};
 
 const mapState = state => ({
     testerId: selectTesterId(state),
-    projects: selectTesterProjects(state),
+    projects: selectIncompleteProjects(state),
     profiles: selectSessionProfiles(
         state,
         formValueSelector('TesterSessions')(state, 'project')
@@ -129,7 +128,7 @@ const mapState = state => ({
     facilities: selectTestingLocations(state)
 });
 
-const mapDispatch = { listSessionProjects };
+const mapDispatch = { listIncompleteProjects };
 
 export const validate = values => {
     const required = ['project', 'profile', 'location', 'date', 'time'];
@@ -137,14 +136,14 @@ export const validate = values => {
     return { ...validateRequired(values, required) };
 };
 
-const onSubmit = ({ project, ...values }, dispatch, { testerId }) =>
+const onSubmit = ({ project, ...values }, dispatch, { testerId, onClose }) =>
     dispatch(
         createSession({
             sessionTesterId: testerId,
             sessionProjectId: project,
             ...values
         })
-    );
+    ).then(() => onClose());
 
 const _SessionsModal = compose(
     connect(

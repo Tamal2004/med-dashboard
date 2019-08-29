@@ -7,7 +7,7 @@ import { makeStyles } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/AddBox';
 
 // Local
-import { ContactsModal } from 'views/Modals';
+import { ContactsModal, ContactNotesEditModal } from 'views/Modals';
 
 // Components
 import {
@@ -21,6 +21,9 @@ import {
 // Selectors
 import { selectTesterContactNotes } from 'selectors';
 
+// Actions
+import { removeContactNote } from 'actions';
+
 const useStyles = makeStyles(({ spacing }) => ({
     footer: {
         marginTop: spacing(3),
@@ -29,15 +32,35 @@ const useStyles = makeStyles(({ spacing }) => ({
     }
 }));
 
-const ContactNotes = ({ contactNotes, handleContactsModal }) => {
+const ContactNotes = ({
+    contactNotes,
+    handleContactsModal,
+                          handleContactNotesEditModal,
+    removeContactNote
+}) => {
     const [page, setPage] = useState(1);
     const c = useStyles();
 
     const totalPages =
         Math.floor(contactNotes.length / 5) + !!(contactNotes.length % 5) || 1;
+
+    // Inject removeContactNote
+    const composedContactNotes = contactNotes.map(
+        ({ id, actions, ...rest }) => ({
+            ...rest,
+            actions: { ...actions, deleteAction: () => removeContactNote(id) }
+        })
+    );
+
     return (
         <EditableCard title='Contact Notes'>
-            <Table data={contactNotes} action page={page} itemsPerPage={5} />
+            <Table
+                data={composedContactNotes}
+                action
+                page={page}
+                itemsPerPage={5}
+                handleEditModal={handleContactNotesEditModal}
+            />
             <div className={c.footer}>
                 <IconedButton
                     Icon={AddIcon}
@@ -59,10 +82,11 @@ const mapState = state => ({
     contactNotes: selectTesterContactNotes(state)
 });
 
-const mapDispatch = {};
+const mapDispatch = { removeContactNote };
 
 const mapModal = {
-    handleContactsModal: ContactsModal
+    handleContactsModal: ContactsModal,
+    handleContactNotesEditModal: ContactNotesEditModal
 };
 
 const _ContactNotes = compose(

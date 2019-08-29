@@ -22,6 +22,12 @@ export const selectProjectClients = createCachedSelector(
     ({ clients }) => mapToSelect(clients, 'id', 'name')
 )(() => 'placeholder');
 
+// Project Users
+export const selectProjectUsers = createCachedSelector(
+    selectProjects,
+    ({ users }) => mapArray(users)
+)(() => 'placeholder');
+
 // Project Individual
 export const selectProjectId = createCachedSelector(
     selectIndividual,

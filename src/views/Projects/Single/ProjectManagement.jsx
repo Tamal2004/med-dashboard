@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
-import { reduxForm, formValueSelector } from 'redux-form';
+import { reduxForm } from 'redux-form';
 
 // Local
-import { deserializeDate } from 'libs';
 import {
     EditableCard,
     EditableFooter,
