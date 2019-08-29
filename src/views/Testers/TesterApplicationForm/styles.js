@@ -28,5 +28,12 @@ export default makeStyles(({ palette, spacing }) => ({
         height: spacing(6),
         marginLeft: spacing(3),
         marginRight: spacing(3)
+    },
+    manualGrid: {
+        textAlign: 'right',
+        padding: spacing(2)
+    },
+    manualLink: {
+        paddingLeft: spacing(2)
     }
 }));

@@ -1,15 +1,17 @@
 import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import { reduxForm, formValueSelector } from 'redux-form';
+import { change, reduxForm, formValueSelector } from 'redux-form';
 
 // Material
 import { Paper, Typography, Grid, Link } from '@material-ui/core';
+import { Link as AddressLink } from '@material-ui/core';
 
 // Local
 import useStyles from './styles';
 import onSubmit from './onSubmit';
 import { validate, asyncValidate } from './validate';
+import { GridItem } from 'components';
 
 // Libs
 import { validateEmail, validateDate, validateNumber } from 'libs';
@@ -56,7 +58,8 @@ const TesterApplication = ({
     hasManualAddress,
     invalid,
     handleSubmit,
-    submitting
+    submitting,
+    change
 }) => {
     const c = useStyles();
     return (
@@ -102,7 +105,18 @@ const TesterApplication = ({
                         required
                     />
                 )}
-                <Switch label='Enter address manually?' name='manualAddress' />
+                <GridItem md={12} className={c.manualGrid}>
+                    <AddressLink
+                        className={c.manualLink}
+                        href='#'
+                        onClick={() =>
+                            change('manualAddress', !hasManualAddress)
+                        }
+                    >
+                        {hasManualAddress ? 'Close' : 'Enter address manually?'}
+                    </AddressLink>
+                </GridItem>
+
                 {hasManualAddress && (
                     <Fragment>
                         <Input label='House name or number' name='house' />
@@ -275,47 +289,17 @@ const mapState = (state, ownProps) => {
             employmentStatus === 'Retired',
         isRetired: employmentStatus === 'Retired',
         isPublicUser: noauth,
-        hasManualAddress: formSelector(state, 'manualAddress'),
-        initialValues: {
-            manualAddress: true,
-            isPublicUser: noauth,
-            title: 'Mr',
-            firstName: 'Whatever',
-            surname: 'Tamal',
-            email: 'matthew@echotechsys.com',
-            phone: '01306568988',
-            address: 'Avenue Adolphe Buyl 12 1050 Ixelles',
-            house: '12',
-            street: 'Avenue Adolphe',
-            town: 'Brussels',
-            county: 'Yorkshire',
-            postcode: '1050',
-            country: 'Belgium',
-            gender: 'Male',
-            dob: '01/01/1999',
-            maritalStatus: 'Single',
-            hasChildren: true,
-            nationality: 'United Kingdom',
-            ethnicity: 'Arab',
-            firstLanguage: 'English',
-            otherLanguages: 'Bengali',
-            disability: 'None',
-            about: 'Software developer',
-            employmentStatus: 'Full-time employment',
-            jobTitle: 'Software Engineer',
-            businessName: 'Matt Tamal',
-            employmentSector: 'Computers & ICT',
-            employeeCount: '1 - 9',
-            subject: 'Medicine',
-            educationStage: 'University',
-            institution: 'Cambridge University',
-            termsChecked: true
-        }
+        hasManualAddress: formSelector(state, 'manualAddress')
     };
 };
 
+const mapDispatch = { change };
+
 const _TesterApplication = compose(
-    connect(mapState),
+    connect(
+        mapState,
+        mapDispatch
+    ),
     reduxForm({
         form: 'TesterApplication',
         validate,
