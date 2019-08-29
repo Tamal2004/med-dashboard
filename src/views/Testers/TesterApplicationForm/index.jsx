@@ -11,6 +11,7 @@ import useStyles from './styles';
 import onSubmit from './onSubmit';
 import { validate, asyncValidate } from './validate';
 
+import { createTester, createPublicTester } from 'actions';
 // Libs
 import { validateEmail, validateDate, validateNumber } from 'libs';
 
@@ -39,7 +40,6 @@ import {
     selectNationalities,
     selectTitles
 } from 'selectors';
-
 
 const TesterApplication = ({
     nationalities,
@@ -243,7 +243,7 @@ const TesterApplication = ({
                         className={c.submit}
                         variant='contained'
                         color='primary'
-                        onClick={handleSubmit}
+                        onClick={() => handleSubmit()}
                         disabled={invalid || submitting}
                     >
                         Submit
@@ -254,7 +254,8 @@ const TesterApplication = ({
     );
 };
 
-const mapState = state => {
+const mapState = (state, ownProps) => {
+    const { noauth = false } = ownProps;
     const formSelector = formValueSelector('TesterApplication');
     const employmentStatus = formSelector(state, 'employmentStatus');
     return {
@@ -274,13 +275,15 @@ const mapState = state => {
             employmentStatus === 'Full-time employment' ||
             employmentStatus === 'Retired',
         isRetired: employmentStatus === 'Retired',
+        isPublicUser: noauth,
         hasManualAddress: formSelector(state, 'manualAddress'),
         initialValues: {
             manualAddress: true,
+            isPublicUser: noauth,
             title: 'Mr',
-            firstName: 'Matt',
+            firstName: 'Whatever',
             surname: 'Tamal',
-            email: 'matt@echotechsys.com',
+            email: 'matthew@echotechsys.com',
             phone: '01306568988',
             address: 'Avenue Adolphe Buyl 12 1050 Ixelles',
             house: '12',

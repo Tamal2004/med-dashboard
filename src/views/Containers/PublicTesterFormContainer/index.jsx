@@ -23,12 +23,11 @@ export default function TesterContainer(props) {
                     </div>
                     <Button
                         variant='contained'
-                        color='default'
+                        color='primary'
                         onClick={props.gotoSignIn}
                         className={c.backIcon}
                     >
-                        <BackIcon className={c.leftIcon} />
-                        &nbsp;&nbsp;Back to Sign in
+                        Sign in
                     </Button>
                 </Toolbar>
             </AppBar>

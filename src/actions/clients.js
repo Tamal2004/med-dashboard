@@ -1,13 +1,9 @@
 import API, { graphqlOperation } from '@aws-amplify/api';
-import Auth from '@aws-amplify/auth';
 import { gql } from 'apollo-boost';
 
-// Local
-import { history } from 'libs';
-
 // Graph QL
-import { listClients as gQLListClients } from 'graphql/queries';
-import { client1, client2 } from '../App/client';
+import { listClients as gQLListClients, listTesters } from 'graphql/queries';
+import { client2 } from '../App/client';
 
 // Action Types
 import { REQUEST, SUCCESS, FAIL, FETCH_CLIENTS } from 'actionTypes';
@@ -35,7 +31,7 @@ export const fetchClients = () => async dispatch => {
 
 export const fetchPublicClients = () => async dispatch => {
     console.log('fetchPublicClients');
-    window.LOG_LEVEL = 'DEBUG';
+    // window.LOG_LEVEL = 'DEBUG';
 
     dispatch(fetchClientsAction(REQUEST));
     console.log('fetchClientsAction');
@@ -52,13 +48,11 @@ export const fetchPublicClients = () => async dispatch => {
 
     client2
         .query({
-            query: gql(gQLListClients)
+            query: gql(listTesters)
         })
-        .then(({ data: { listTodos } }) => {
-            console.log(listTodos.items);
-        });
+        .then(data => console.log('listTesters', data));
 
-    console.log('listClients');
+    console.log('listTesters');
 
     // if (!error) {
     //     dispatch(fetchClientsAction(SUCCESS, listClients));

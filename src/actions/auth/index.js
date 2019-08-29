@@ -25,10 +25,18 @@ const getSession = () => {
         .catch(err => console.log(err));
 };
 
-export const signUp = () => {
+export const signUp = ({
+    username,
+    password,
+    name,
+    email,
+    family_name,
+    given_name,
+    testerId
+}) => {
     return Auth.signUp({
-        username: 'report.nabil@gmail.com',
-        password: 'password',
+        username,
+        password,
         attributes: {
             name: 'report.nabil@gmail.com',
             email: 'report.nabil@gmail.com',
@@ -38,6 +46,27 @@ export const signUp = () => {
         }
     })
         .then(data => console.log(data))
+        .catch(err => console.log(err));
+};
+
+export const testerSignUp = ({ id, email, firstName, surname }) => {
+    return Auth.signUp({
+        username: email,
+        password: Math.random()
+            .toString(36)
+            .substring(4),
+        temporaryPassword: Math.random()
+            .toString(36)
+            .substring(4),
+        attributes: {
+            name: firstName,
+            email,
+            family_name: firstName,
+            given_name: surname,
+            'custom:testerId': id
+        }
+    })
+        .then(data => console.log('testerSignUp', data))
         .catch(err => console.log(err));
 };
 

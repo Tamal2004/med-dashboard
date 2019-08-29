@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Amplify from 'aws-amplify';
 import API from '@aws-amplify/api';
 import PubSub from '@aws-amplify/pubsub';
 import Auth from '@aws-amplify/auth';
@@ -28,7 +27,6 @@ import theme from 'components/theme';
 import { Notification } from 'components';
 import { setAuthUserInfo } from 'actions';
 import { history } from 'libs/history';
-import AWS from 'aws-sdk';
 import App from './App';
 
 Auth.configure(config);
@@ -49,12 +47,6 @@ class IndexApp extends Component {
                     <Authenticator
                         authState='signUp'
                         amplifyConfig={config}
-                        // authState={
-                        //     history.location.pathname.trim() ===
-                        //     '/tester-application-form'
-                        //         ? 'signUp'
-                        //         : 'signIn'
-                        // }
                         onStateChange={authState =>
                             authState === 'signedIn' &&
                             this.props.setAuthUserInfo()

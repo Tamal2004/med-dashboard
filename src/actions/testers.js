@@ -1,8 +1,10 @@
 import API, { graphqlOperation } from '@aws-amplify/api';
 import { initialize } from 'redux-form';
+import { gql } from 'apollo-boost';
 
 // Local
 import { history, today } from 'libs';
+import { client2 } from '../App/client';
 
 // Normalizers
 import {
@@ -12,7 +14,8 @@ import {
 } from 'normalizers';
 
 // Graph QL
-import { createTester as gQLCreateTester } from 'graphql/mutations';
+// import { createTester as gQLCreateTester } from 'graphql/mutations';
+import { CreateTester } from 'graphql/tester';
 import {
     FetchTester,
     FetchPublicTester,
@@ -31,6 +34,8 @@ import {
     UPDATE_TESTER
 } from 'actionTypes';
 
+import { testerSignUp } from 'actions';
+
 // Create Tester
 const createTesterAction = async => ({
     type: CREATE_TESTER,
@@ -40,7 +45,7 @@ const createTesterAction = async => ({
 export const createTester = tester => async dispatch => {
     dispatch(createTesterAction(REQUEST));
     const res = await API.graphql(
-        graphqlOperation(gQLCreateTester, { input: tester })
+        graphqlOperation(CreateTester, { input: tester })
     );
 
     if (!res.error) {
@@ -50,6 +55,32 @@ export const createTester = tester => async dispatch => {
     } else {
         dispatch(createTesterAction(FAIL));
     }
+};
+
+export const createPublicTester = tester => async dispatch => {
+    console.log('meh');
+    dispatch(createTesterAction(REQUEST));
+    // const res = await API.graphql(
+    //     graphqlOperation(CreateTester, { input: tester })
+    // );
+
+    console.log('client2 creds ', client2);
+
+    client2
+        .mutate({
+            mutation: gql(CreateTester),
+            variables: { input: tester }
+        })
+        .then(({ data }) => data)
+        .then(({ createTester }) => testerSignUp(createTester));
+
+    // if (!res.error) {
+    //     dispatch(createTesterAction(SUCCESS));
+    //     // Todo: do mail stuff here and tester create
+    //     history.push('/tester');
+    // } else {
+    //     dispatch(createTesterAction(FAIL));
+    // }
 };
 
 // List Tester

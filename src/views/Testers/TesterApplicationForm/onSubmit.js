@@ -1,10 +1,16 @@
 import { serializeDate, deserializeDate } from 'libs';
 
 // Actions
-import { createTester } from 'actions';
+import { createTester, createPublicTester } from 'actions';
 
 export default async (values, dispatch, { isStudent, isEmployed }) => {
-    const { manualAddress, termsChecked, dob, ...pruned } = values;
+    const {
+        manualAddress,
+        termsChecked,
+        dob,
+        isPublicUser,
+        ...pruned
+    } = values;
 
     let address = {};
     if (manualAddress) {
@@ -48,6 +54,9 @@ export default async (values, dispatch, { isStudent, isEmployed }) => {
         dob: serializeDate(dob),
         lastUpdated: serializeDate(deserializeDate(new Date())) // Today
     };
+    const Action = isPublicUser
+        ? createPublicTester(tester)
+        : createTester(tester);
 
-    return dispatch(createTester(tester));
+    return dispatch(Action);
 };
