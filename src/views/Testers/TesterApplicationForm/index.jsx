@@ -11,7 +11,6 @@ import useStyles from './styles';
 import onSubmit from './onSubmit';
 import { validate, asyncValidate } from './validate';
 
-import { createTester, createPublicTester } from 'actions';
 // Libs
 import { validateEmail, validateDate, validateNumber } from 'libs';
 

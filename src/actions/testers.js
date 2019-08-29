@@ -14,7 +14,6 @@ import {
 } from 'normalizers';
 
 // Graph QL
-// import { createTester as gQLCreateTester } from 'graphql/mutations';
 import { CreateTester } from 'graphql/tester';
 import {
     FetchTester,
@@ -57,16 +56,10 @@ export const createTester = tester => async dispatch => {
     }
 };
 
+// PUBLIC
 export const createPublicTester = tester => async dispatch => {
-    console.log('meh');
     dispatch(createTesterAction(REQUEST));
-    // const res = await API.graphql(
-    //     graphqlOperation(CreateTester, { input: tester })
-    // );
-
-    console.log('client2 creds ', client2);
-
-    client2
+    const res = client2
         .mutate({
             mutation: gql(CreateTester),
             variables: { input: tester }
@@ -74,13 +67,12 @@ export const createPublicTester = tester => async dispatch => {
         .then(({ data }) => data)
         .then(({ createTester }) => testerSignUp(createTester));
 
-    // if (!res.error) {
-    //     dispatch(createTesterAction(SUCCESS));
-    //     // Todo: do mail stuff here and tester create
-    //     history.push('/tester');
-    // } else {
-    //     dispatch(createTesterAction(FAIL));
-    // }
+    if (!res.error) {
+        dispatch(createTesterAction(SUCCESS));
+        // Todo: do mail stuff here and tester create
+    } else {
+        dispatch(createTesterAction(FAIL));
+    }
 };
 
 // List Tester

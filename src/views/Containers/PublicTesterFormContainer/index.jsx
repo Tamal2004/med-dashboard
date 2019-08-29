@@ -4,7 +4,6 @@ import AppBar from '@material-ui/core/AppBar';
 import Button from '@material-ui/core/Button';
 import Toolbar from '@material-ui/core/Toolbar';
 import Container from '@material-ui/core/Container';
-import BackIcon from '@material-ui/icons/ArrowBack';
 
 // Local
 import styles from './styles';

@@ -1,9 +1,7 @@
 import API, { graphqlOperation } from '@aws-amplify/api';
-import { gql } from 'apollo-boost';
 
 // Graph QL
-import { listClients as gQLListClients, listTesters } from 'graphql/queries';
-import { client2 } from '../App/client';
+import { listClients as gQLListClients } from 'graphql/queries';
 
 // Action Types
 import { REQUEST, SUCCESS, FAIL, FETCH_CLIENTS } from 'actionTypes';
@@ -20,43 +18,9 @@ export const fetchClients = () => async dispatch => {
         data: { listClients, error = null }
     } = await API.graphql(graphqlOperation(gQLListClients));
 
-    console.log(listClients);
-
     if (!error) {
         dispatch(fetchClientsAction(SUCCESS, listClients));
     } else {
         dispatch(fetchClientsAction(FAIL));
     }
-};
-
-export const fetchPublicClients = () => async dispatch => {
-    console.log('fetchPublicClients');
-    // window.LOG_LEVEL = 'DEBUG';
-
-    dispatch(fetchClientsAction(REQUEST));
-    console.log('fetchClientsAction');
-
-    // const res = await Auth.currentCredentials().then(data => {
-    //     console.log('currentCredentials', data);
-    //     return API.graphql({
-    //         authMode: 'AWS_IAM',
-    //         query: gQLListClients,
-    //         credentials: data
-    //     }).then(data => console.log('API DATA', data));
-    // });
-    // const res =
-
-    client2
-        .query({
-            query: gql(listTesters)
-        })
-        .then(data => console.log('listTesters', data));
-
-    console.log('listTesters');
-
-    // if (!error) {
-    //     dispatch(fetchClientsAction(SUCCESS, listClients));
-    // } else {
-    //     dispatch(fetchClientsAction(FAIL));
-    // }
 };
