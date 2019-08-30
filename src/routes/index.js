@@ -5,7 +5,8 @@ import { connect } from 'react-redux';
 import { PrivateContainer } from 'views/Containers';
 import { TesterSingle, NotFoundPage } from 'views';
 import {
-    AccountRoutes,
+    AdminAccountRoutes,
+    TesterAccountRoutes,
     ClientRoutes,
     HomeRoutes,
     ProjectRoutes,
@@ -18,7 +19,7 @@ const AdminUserRoutes = () => (
         <Route path={'/client'} component={ClientRoutes} />
         <Route path={'/project'} component={ProjectRoutes} />
         <Route path={'/tester'} component={TesterRoutes} />
-        <Route path={'/profile'} component={AccountRoutes} />
+        <Route path={'/profile'} component={AdminAccountRoutes} />
         <Route path={'*'} component={NotFoundPage} />
     </Switch>
 );
@@ -26,7 +27,7 @@ const AdminUserRoutes = () => (
 const TesterUserRoutes = () => (
     <Switch>
         <Route path={'/'} exact component={TesterSingle} />
-        <Route path={'/profile'} component={AccountRoutes} />
+        <Route path={'/profile'} component={TesterAccountRoutes} />
         <Route path={'*'} component={NotFoundPage} />
     </Switch>
 );

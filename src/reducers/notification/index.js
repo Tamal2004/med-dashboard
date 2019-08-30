@@ -18,7 +18,6 @@ const notificationReducer = (
             };
         }
         case RESET_NOTITICATION: {
-            console.log('RESET_NOTITICATION reducer');
             return {
                 ...state,
                 type: null,

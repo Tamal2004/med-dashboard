@@ -200,6 +200,11 @@ const ListItems = ({ auth: { isTester, name } }) => (
                 <LinkItem to={'/profile'} title={'Profile'}>
                     <LinkListItem text='Profile' />
                 </LinkItem>
+                {!isTester && (
+                    <LinkItem to={'/profile/new-user'} title={'Create user'}>
+                        <LinkListItem text='Create user' />
+                    </LinkItem>
+                )}
                 <LinkItem
                     to={'/profile/logout'}
                     onClick={() => this.props.logoutUser()}

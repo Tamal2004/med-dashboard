@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import AWS from 'aws-sdk';
+import Amplify from 'aws-amplify';
 import API from '@aws-amplify/api';
 import PubSub from '@aws-amplify/pubsub';
 import Auth from '@aws-amplify/auth';
@@ -29,6 +31,8 @@ import { setAuthUserInfo } from 'actions';
 import { history } from 'libs/history';
 import App from './App';
 
+AWS.config.update(config);
+Amplify.configure(config);
 Auth.configure(config);
 API.configure(config);
 PubSub.configure(config);
