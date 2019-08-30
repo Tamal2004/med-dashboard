@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -9,7 +9,8 @@ import {
     NavigateButton,
     Table,
     SearchInput,
-    BarLoader
+    BarLoader,
+    PaginationBase
 } from 'components';
 
 // Selectors
@@ -19,11 +20,16 @@ import { CheckFilterBar } from 'components/FilterComponents';
 // Actions
 import { listProjects } from 'actions';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles(({ spacing })=> ({
     buttonGridStyle: {
         display: 'flex',
         justifyContent: 'flex-end',
         alignContent: 'flex-end'
+    },
+    footer: {
+        marginTop: spacing(3),
+        display: 'flex',
+        justifyContent: 'center'
     }
 }));
 
@@ -31,7 +37,13 @@ const ProjectHome = ({ projects, listProjects }) => {
     const c = useStyles();
     const [searchInput, setSearchInput] = useState('');
     const [checkFilter, setCheckFilter] = useState([]);
+    const [page, setPage] = useState(1);
     const [isLoading, setLoading] = useState(true);
+
+    const pageStep = 10;
+    const totalPages =
+        Math.floor(projects.length / pageStep) +
+            !!(projects.length % pageStep) || 1;
 
     const setFilterValue = e => {
         const filters = [...checkFilter];
@@ -60,7 +72,7 @@ const ProjectHome = ({ projects, listProjects }) => {
         <GridContainer alignItems='center'>
             <GridItem md={4}>
                 <CheckFilterBar
-                    data={['Complete', 'Incomplete']}
+                    data={['Completed', 'In Progress', 'Pending', 'Cancelled']}
                     onChange={e => setFilterValue(e)}
                     checked={checkFilter}
                 />
@@ -84,11 +96,20 @@ const ProjectHome = ({ projects, listProjects }) => {
                 {isLoading ? (
                     <BarLoader />
                 ) : (
-                    <Table
-                        data={projects}
-                        page={1}
-                        noResultText='No Projects'
-                    />
+                    <Fragment>
+                        <Table
+                            data={projects}
+                            page={page}
+                            noResultText='No Projects'
+                            itemsPerPage={pageStep}
+                        />
+                        {!!projects.length && <div className={c.footer}>
+                            <PaginationBase
+                                handlePage={page => setPage(page)}
+                                totalPages={totalPages}
+                            />
+                        </div>}
+                    </Fragment>
                 )}
             </GridItem>
         </GridContainer>

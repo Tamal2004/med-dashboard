@@ -1,5 +1,5 @@
 export const ListClients = `query ListClients {
-    listClients {
+    listClients(limit: 500) {
         items {
             id
             name

@@ -6,3 +6,4 @@ export * from './ProfileEdit';
 export * from './SessionsEdit';
 export * from './ClientEdit';
 export * from './ContactNotesEdit';
+export * from './Confirmation';

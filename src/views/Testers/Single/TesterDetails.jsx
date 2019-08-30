@@ -23,7 +23,7 @@ import {
     CardDivider,
     withModal
 } from 'components';
-import { TesterMailModal } from 'views/Modals';
+import { TesterMailModal, ConfirmationModal } from 'views/Modals';
 
 // Selectors
 import {
@@ -73,12 +73,22 @@ const TesterDetails = ({
     firstName,
     surname,
     handleMailModal,
+    handleConfirmationModal,
     reset,
     handleSubmit,
     isTester
 }) => {
     const [isEditing, setEditing] = useState(false);
     const c = useStyles();
+
+    const confirmationProps = {
+        title: 'Confirmation',
+        promptText: 'Are you sure you want to delete this user?',
+        cancelText: 'Cancel',
+        submitText: 'Delete',
+        onSubmit: () => console.log('astarst')
+    };
+
 
     return (
         <EditableCard
@@ -256,7 +266,7 @@ const TesterDetails = ({
                 ) : (
                     !isTester && (
                         <IconedButton
-                            onClick={() => console.log('arstarst')}
+                            onClick={() => handleConfirmationModal(confirmationProps)}
                             Icon={DeleteIcon}
                         >
                             Delete Tester
@@ -289,7 +299,8 @@ const mapState = state => {
 const mapDispatch = {};
 
 const mapModal = {
-    handleMailModal: TesterMailModal
+    handleMailModal: TesterMailModal,
+    handleConfirmationModal: ConfirmationModal
 };
 
 const validate = values => {

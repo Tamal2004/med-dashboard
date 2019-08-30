@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
@@ -11,12 +11,13 @@ import {
     NavigateButton,
     Table,
     SearchInput,
-    Link,
-    withModal
+    BarLoader,
+    withModal,
+    PaginationBase
 } from 'components';
 
 // Selectors
-import { selectCounties, selectClientList } from 'selectors';
+import { selectClientList } from 'selectors';
 
 // Actions
 import { listClients } from 'actions';
@@ -29,6 +30,11 @@ const useStyles = makeStyles(({ spacing }) => ({
     },
     projectButton: {
         marginRight: spacing()
+    },
+    footer: {
+        marginTop: spacing(3),
+        display: 'flex',
+        justifyContent: 'center'
     }
 }));
 
@@ -40,6 +46,12 @@ const ClientHome = ({
 }) => {
     const c = useStyles();
     const [isLoading, setLoading] = useState(true);
+    const [page, setPage] = useState(1);
+
+    const pageStep = 10;
+    const totalPages =
+        Math.floor(clients.length / pageStep) +
+            !!(clients.length % pageStep) || 1;
 
     useEffect(() => {
         let shouldCancel = false;
@@ -50,8 +62,8 @@ const ClientHome = ({
 
     return (
         <GridContainer alignItems='center'>
-            <GridItem md={2}></GridItem>
-            <GridItem md={6}>
+            <GridItem md={4} />
+            <GridItem md={4}>
                 <SearchInput placeholder='Search by name or project reference' />
             </GridItem>
             <GridItem md={4} className={c.buttonGridStyle}>
@@ -64,13 +76,27 @@ const ClientHome = ({
                 </NavigateButton>
             </GridItem>
             <GridItem md={12}>
-                <Table
-                    action
-                    data={clients}
-                    page={1}
-                    handleEditModal={handleClientEditModal}
-                    noResultsText='No Clients'
-                />
+                {isLoading ? (
+                    <BarLoader />
+                ) : (
+                    <Fragment>
+                        <Table
+                            action
+                            data={clients}
+                            page={page}
+                            handleEditModal={handleClientEditModal}
+                            noResultsText='No Clients'
+                        />
+                        {!!clients.length && (
+                            <div className={c.footer}>
+                                <PaginationBase
+                                    handlePage={page => setPage(page)}
+                                    totalPages={totalPages}
+                                />
+                            </div>
+                        )}
+                    </Fragment>
+                )}
             </GridItem>
         </GridContainer>
     );

@@ -17,7 +17,8 @@ import {
     FetchTester,
     FetchPublicTester,
     ListTesters,
-    UpdateTester
+    UpdateTester,
+    RemoveTester
 } from 'graphql/tester';
 
 // Action Types
@@ -28,8 +29,13 @@ import {
     CREATE_TESTER,
     LIST_TESTERS,
     FETCH_TESTER,
-    UPDATE_TESTER
+    UPDATE_TESTER,
+    REMOVE_TESTER
 } from 'actionTypes';
+
+// Selectors
+import { selectIsTester } from 'selectors';
+
 
 // Create Tester
 const createTesterAction = async => ({
@@ -155,5 +161,32 @@ export const updateTester = ({ lastUpdated, ...tester }) => async dispatch => {
         dispatch(initialize('TesterDetails', testerDetails));
         dispatch(initialize('ContactDetails', contactDetails));
         dispatch(initialize('EmploymentDetails', employmentDetails));
+    }
+};
+
+
+const removeTesterAction = (async, payload = []) => ({
+    type: REMOVE_TESTER,
+    async,
+    payload
+});
+
+export const removeTester = id => async (dispatch, getState)=> {
+    dispatch(removeTesterAction(REQUEST));
+    const {
+        data: { deleteTester: { id: testerId } = {}, error = null }
+    } = await API.graphql(graphqlOperation(RemoveTester, { input: { id } }));
+
+    if (!error) {
+        // Check if tester
+        if (selectIsTester(getState())) {
+            // Log them out and delete their user
+            // Use 'testerId' variable if needed
+        } else {
+            history.push('/tester')
+        }
+        dispatch(removeTesterAction(SUCCESS));
+    } else {
+        dispatch(removeTesterAction(FAIL));
     }
 };

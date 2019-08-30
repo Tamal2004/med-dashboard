@@ -3,5 +3,6 @@ export default [
     'I-View Studios, London',
     'Wyoming Studios, London',
     'Client Premises',
-    'External Premises'
+    'External Premises',
+    'Remote'
 ];

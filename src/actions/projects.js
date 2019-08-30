@@ -138,12 +138,6 @@ export const listProjects = (
               {
                   or: [
                       ...statuses
-                          .map(status => {
-                              if (status === 'Incomplete')
-                                  return ['Pending', 'In Progress'];
-                              if (status === 'Complete') return ['Completed'];
-                          })
-                          .flatMap(x => x)
                           .map(statusFilter => ({
                               status: { contains: statusFilter }
                           }))

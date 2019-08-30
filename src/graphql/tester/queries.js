@@ -1,5 +1,5 @@
-export const ListTesters = `query fetchTestersHome {
-  listTesters {
+export const ListTesters = `query ListTesters {
+  listTesters(limit: 500) {
     items {
       id
       firstName

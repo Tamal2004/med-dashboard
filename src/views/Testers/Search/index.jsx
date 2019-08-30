@@ -52,13 +52,9 @@ const TesterSearch = ({ testers, handleMailModal }) => {
 	return (
 		<Fragment>
 			<GridWrapper>
-				<GridItem md={3}></GridItem>
+				<GridItem md={3}/>
 				<GridItem md={6}>
 					<SearchInput placeholder='Search by name or project reference' />
-					<div className={c.searchMessage}>
-						Showing results for <b>'wpu'</b>. &nbsp;&nbsp;
-						<i>Search instead for 'wup'</i>
-					</div>
 				</GridItem>
 				<GridItem md={3}>
 					<div className={c.filterButtonWrapper}>

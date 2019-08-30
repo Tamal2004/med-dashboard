@@ -10,8 +10,8 @@ import {
     Link,
     NavigateButton,
     Table,
-    withModal,
-    BarLoader
+    BarLoader,
+    PaginationBase
 } from 'components';
 
 // Selectors
@@ -20,13 +20,13 @@ import { selectTesterList } from 'selectors';
 // Actions
 import { listTesters } from 'actions';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles(({ palette, spacing }) => ({
     gridDistance: {
         marginBottom: 32
     },
     buttonAnchor: {
         textDecoration: 'none',
-        color: theme.palette.primary.main
+        color: palette.primary.main
     },
     buttonGridStyle: {
         display: 'flex',
@@ -35,6 +35,11 @@ const useStyles = makeStyles(theme => ({
         '& a + a': {
             marginLeft: 10
         }
+    },
+    footer: {
+        marginTop: spacing(3),
+        display: 'flex',
+        justifyContent: 'center'
     }
 }));
 
@@ -49,7 +54,13 @@ const GridWrapper = ({ children }) => {
 
 const TesterHome = ({ testers, listTesters }) => {
     const c = useStyles();
+    const [page, setPage] = useState(1);
     const [isLoading, setLoading] = useState(true);
+
+    const pageStep = 10;
+    const totalPages =
+        Math.floor(testers.length / pageStep) + !!(testers.length % pageStep) ||
+        1;
 
     useEffect(() => {
         listTesters().then(() => setLoading(false));
@@ -77,11 +88,21 @@ const TesterHome = ({ testers, listTesters }) => {
                     {isLoading ? (
                         <BarLoader />
                     ) : (
-                        <Table
-                            data={testers}
-                            page={1}
-                            noResultsText='No Testers'
-                        />
+                        <Fragment>
+                            <Table
+                                data={testers}
+                                page={page}
+                                noResultsText='No Testers'
+                            />
+                            {!!testers.length && (
+                                <div className={c.footer}>
+                                    <PaginationBase
+                                        handlePage={page => setPage(page)}
+                                        totalPages={totalPages}
+                                    />
+                                </div>
+                            )}
+                        </Fragment>
                     )}
                 </GridItem>
             </GridWrapper>
@@ -89,11 +110,9 @@ const TesterHome = ({ testers, listTesters }) => {
     );
 };
 
-const mapState = (state) => ({
+const mapState = state => ({
     testers: selectTesterList(state)
 });
-
-
 
 const mapDispatch = {
     listTesters
@@ -103,7 +122,7 @@ const _TesterHome = compose(
     connect(
         mapState,
         mapDispatch
-    ),
+    )
 )(TesterHome);
 
 export { _TesterHome as default, _TesterHome as TesterHome };

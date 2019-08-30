@@ -1,5 +1,5 @@
 export const ListProjectClients = `query ListProjectClients {
-  listClients {
+  listClients(limit: 500) {
     items {
       id
       name
@@ -9,7 +9,7 @@ export const ListProjectClients = `query ListProjectClients {
 `;
 
 export const ListProjectUsers = `query ListProjectUsers {
-  listUsers {
+  listUsers(limit: 500) {
     items {
       firstName
       lastName
@@ -80,7 +80,7 @@ export const FetchProject = `query FetchProject($id: ID!) {
 }`;
 
 export const ListProjects = `query ListProjects($filter: ModelProjectFilterInput) {
-    listProjects(filter: $filter) {
+    listProjects(filter: $filter limit: 500) {
         items {
             id
             client {
@@ -95,13 +95,14 @@ export const ListProjects = `query ListProjects($filter: ModelProjectFilterInput
         }
     }
 }`;
+
 export const ListIncompleteProjects = `query ListIncompleteProjects {
     listProjects(filter: {
         or: [
             { status: { contains: "In Progress" } }   
             { status: { contains: "Pending" } }   
         ]
-    }) {
+    } limit: 500) {
         items {
             id
             reference

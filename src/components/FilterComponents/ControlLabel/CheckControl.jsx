@@ -5,21 +5,22 @@ import { makeStyles } from '@material-ui/core/styles';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import { CheckboxBlankIcon, CheckboxFilledIcon } from 'assets';
 
-const useStyles = makeStyles(theme => ({
-	icon: { width: 21, height: 21 },
-	labelRoot: { fontSize: '0.875rem' }
+const useStyles = makeStyles(({ spacing, typography}) => ({
+	icon: { width: spacing(2), height: spacing(2) },
+	root: { marginRight: spacing(1.5), marginLeft: spacing(-1.5)},
+	label: { fontSize: typography.caption.fontSize }
 }));
 
 const CheckControlLabel = ({ checked, value }) => {
-	const c = useStyles();
+	const {icon, ...c} = useStyles();
 	return (
 		<FormControlLabel
-			classes={{ label: c.labelRoot }}
+			classes={c}
 			value={value}
 			control={
 				<Checkbox
-					icon={<CheckboxBlankIcon className={c.icon} />}
-					checkedIcon={<CheckboxFilledIcon className={c.icon} />}
+					icon={<CheckboxBlankIcon className={icon} />}
+					checkedIcon={<CheckboxFilledIcon className={icon} />}
 					checked={checked}
 					color='primary'
 				/>

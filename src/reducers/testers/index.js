@@ -44,8 +44,8 @@ const testersReducer = (
                       individual: {
                           ...state.individual,
                           contactNotes: [
-                              ...state.individual.contactNotes,
-                              payload
+                              payload,
+                              ...state.individual.contactNotes
                           ]
                       }
                   }
@@ -89,7 +89,7 @@ const testersReducer = (
                       ...state,
                       individual: {
                           ...state.individual,
-                          sessions: [...state.individual.sessions, payload]
+                          sessions: [payload, ...state.individual.sessions]
                       }
                   }
                 : state;

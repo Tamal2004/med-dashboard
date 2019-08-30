@@ -36,3 +36,10 @@ export const UpdateTester = `mutation UpdateTester($input: UpdateTesterInput!) {
         lastUpdated
     }
 }`;
+
+export const RemoveTester = `mutation RemoveTester($input: DeleteTesterInput!) {
+  deleteTester(input: $input) {
+    id
+  }
+}
+`;

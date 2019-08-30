@@ -61,8 +61,8 @@ const ProfileDetails = ({
         const profiles = {
             id,
             profiles: [
+                input,
                 ...data.map(({ Profile: { Component } }) => Component),
-                input
             ]
         };
         updateProject(profiles);
