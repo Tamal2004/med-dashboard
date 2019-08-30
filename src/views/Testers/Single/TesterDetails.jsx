@@ -12,7 +12,12 @@ import EditIcon from '@material-ui/icons/Edit';
 import MailIcon from '@material-ui/icons/Email';
 
 // Local
-import { validateRequired, mapFromValue, serializeDate } from 'libs';
+import {
+    validateRequired,
+    mapFromValue,
+    serializeDate,
+    composeRequest
+} from 'libs';
 import {
     Select,
     Input,
@@ -23,7 +28,8 @@ import {
     CardDivider,
     withModal
 } from 'components';
-import { TesterMailModal, ConfirmationModal } from 'views/Modals';
+import { MailModal, ConfirmationModal } from 'views/Modals';
+import { sendMail } from 'services';
 
 // Selectors
 import {
@@ -33,7 +39,10 @@ import {
     selectGenders,
     selectMaritalStatuses,
     selectNationalities,
-    selectTitles
+    selectTitles,
+    selectHasChildren,
+    selectEmail,
+    selectFullName
 } from 'selectors';
 
 // Actions
@@ -68,7 +77,9 @@ const TesterDetails = ({
     martitalStatuses,
     nationalities,
     ethnicities,
+    hasChildren,
     invalid,
+    email,
     title,
     firstName,
     surname,
@@ -76,7 +87,9 @@ const TesterDetails = ({
     handleConfirmationModal,
     reset,
     handleSubmit,
-    isTester
+    isTester,
+    userEmail,
+    userFullName
 }) => {
     const [isEditing, setEditing] = useState(false);
     const c = useStyles();
@@ -89,6 +102,20 @@ const TesterDetails = ({
         onSubmit: () => console.log('astarst')
     };
 
+    const mailProps = {
+        from: userEmail,
+        to: [email],
+        handleMail: sendMail
+    };
+
+    const requestMailProps = {
+        ...mailProps,
+        ...composeRequest({
+            firstName,
+            surname,
+            userFullName
+        })
+    };
 
     return (
         <EditableCard
@@ -160,9 +187,10 @@ const TesterDetails = ({
                 active={isEditing}
                 required={isEditing}
             />
-            <Switch
+            <Select
                 label='Any children?'
                 name='hasChildren'
+                data={hasChildren}
                 isCard
                 active={isEditing}
                 required={isEditing}
@@ -237,7 +265,7 @@ const TesterDetails = ({
                 <ButtonGroup color='secondary'>
                     <IconedButton
                         color='secondary'
-                        onClick={() => handleMailModal()}
+                        onClick={() => handleMailModal(requestMailProps)}
                         Icon={RequestIcon}
                         size='small'
                     >
@@ -245,7 +273,7 @@ const TesterDetails = ({
                     </IconedButton>
                     <IconedButton
                         color='secondary'
-                        onClick={() => handleMailModal()}
+                        onClick={() => handleMailModal(mailProps)}
                         Icon={MailIcon}
                         size='small'
                     >
@@ -266,7 +294,9 @@ const TesterDetails = ({
                 ) : (
                     !isTester && (
                         <IconedButton
-                            onClick={() => handleConfirmationModal(confirmationProps)}
+                            onClick={() =>
+                                handleConfirmationModal(confirmationProps)
+                            }
                             Icon={DeleteIcon}
                         >
                             Delete Tester
@@ -282,14 +312,17 @@ const mapState = state => {
     const formSelector = formValueSelector('TesterDetails');
     const titles = selectTitles(state);
     return {
+        userEmail: selectEmail(state),
+        userFullName: selectFullName(state),
         id: selectTesterId(state),
         isTester: selectIsTester(state),
-        // isTester: true,
         titles,
         genders: selectGenders(state),
         martitalStatuses: selectMaritalStatuses(state),
         nationalities: selectNationalities(state),
         ethnicities: selectEthnicities(state),
+        hasChildren: selectHasChildren(state),
+        email: formSelector(state, 'email'),
         title: mapFromValue(titles, formSelector(state, 'title')),
         firstName: formSelector(state, 'firstName'),
         surname: formSelector(state, 'surname')
@@ -299,7 +332,7 @@ const mapState = state => {
 const mapDispatch = {};
 
 const mapModal = {
-    handleMailModal: TesterMailModal,
+    handleMailModal: MailModal,
     handleConfirmationModal: ConfirmationModal
 };
 
@@ -320,10 +353,15 @@ const validate = values => {
     return { ...validateRequired(values, required) };
 };
 
-const onSubmit = ({ age, dob, ...values }, dispatch, { id }) => {
+const onSubmit = (
+    { age, dob, hasChildren, email, ...values },
+    dispatch,
+    { id }
+) => {
     const tester = {
         id,
         dob: serializeDate(dob),
+        hasChildren: hasChildren === 'Yes',
         ...values
     };
     return dispatch(updateTester(tester));

@@ -7,20 +7,14 @@ import useStyles from './styles';
 import { InputBase } from 'components';
 import { Control } from '../Control';
 
-const Input = ({
-    required = false,
-    label,
-    isCard,
-    active,
-    ...restProps
-}) => {
+const Input = ({ required, label, isCard, active, width, ...restProps }) => {
     const { cardRoot, inactiveRoot, ...c } = useStyles();
     const inputStyles = {
         ...c,
         root: clsx(c.root, isCard && cardRoot, !active && inactiveRoot)
     };
 
-    const controlProps = { required, label, isCard };
+    const controlProps = { required, label, isCard, width };
     return (
         <Control {...controlProps}>
             <InputBase styles={inputStyles} {...restProps} />
@@ -29,6 +23,7 @@ const Input = ({
 };
 
 Input.defaultProps = {
+    required: false,
     isCard: false,
     active: true
 };

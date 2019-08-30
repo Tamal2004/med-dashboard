@@ -11,8 +11,6 @@ import { Link as AddressLink } from '@material-ui/core';
 import useStyles from './styles';
 import onSubmit from './onSubmit';
 import { validate, asyncValidate } from './validate';
-import { GridItem } from 'components';
-
 // Libs
 import { validateEmail, validateDate, validateNumber } from 'libs';
 
@@ -28,7 +26,8 @@ import {
     MultiInput,
     CheckboxBase,
     Switch,
-    NavigateButton
+    NavigateButton,
+    GridItem
 } from 'components';
 
 // Selectors
@@ -42,7 +41,9 @@ import {
     selectGenders,
     selectMaritalStatuses,
     selectNationalities,
-    selectTitles
+    selectTitles,
+    selectHasChildren,
+    selectIsTester
 } from 'selectors';
 
 const TesterApplication = ({
@@ -52,6 +53,7 @@ const TesterApplication = ({
     employmentSectors,
     employmentStatuses,
     ethnicities,
+    hasChildren,
     genders,
     maritalStatuses,
     titles,
@@ -62,6 +64,7 @@ const TesterApplication = ({
     invalid,
     handleSubmit,
     submitting,
+    isTester,
     change
 }) => {
     const c = useStyles();
@@ -150,8 +153,9 @@ const TesterApplication = ({
                     name='maritalStatus'
                     required
                 />
-                <Switch
+                <Select
                     label='Do you have children?'
+                    data={hasChildren}
                     name='hasChildren'
                     required
                 />
@@ -284,6 +288,8 @@ const mapState = (state, ownProps) => {
     const formSelector = formValueSelector('TesterApplication');
     const employmentStatus = formSelector(state, 'employmentStatus');
     return {
+        isTester: selectIsTester(state),
+        hasChildren: selectHasChildren(state),
         counties: selectCounties(state),
         nationalities: selectNationalities(state),
         educationStages: selectEducationStages(state),
@@ -301,7 +307,7 @@ const mapState = (state, ownProps) => {
             employmentStatus === 'Retired',
         isRetired: employmentStatus === 'Retired',
         isPublicUser: noauth,
-        hasManualAddress: formSelector(state, 'manualAddress')
+        hasManualAddress: formSelector(state, 'manualAddress'),
     };
 };
 

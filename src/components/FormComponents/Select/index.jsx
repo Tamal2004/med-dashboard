@@ -12,6 +12,7 @@ const Select = ({
     label,
     isCard,
     active,
+    width,
     ...restProps
 }) => {
     const {
@@ -35,7 +36,7 @@ const Select = ({
         dropdownRoot: clsx(c.dropdownRoot, !active && inactiveDropdownRoot)
     };
 
-    const controlProps = { required, label, isCard };
+    const controlProps = { required, label, isCard, width };
 
     return (
         <Control {...controlProps}>

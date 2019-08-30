@@ -223,7 +223,7 @@ class Select extends Component {
             disabled
         };
         const id = `${form}-${name}`;
-        const valid = isNaN(value)  ? !!value : !!Number(value);
+        const valid = isNaN(value) ? !!value : !!Number(value);
         const success = !disabled && valid;
         const error = meta.touched && !!meta.error;
 

@@ -9,6 +9,7 @@ export default async (values, dispatch, { isStudent, isEmployed }) => {
         termsChecked,
         dob,
         isPublicUser,
+        hasChildren,
         ...pruned
     } = values;
 
@@ -52,6 +53,7 @@ export default async (values, dispatch, { isStudent, isEmployed }) => {
         ...address,
         ...employment,
         dob: serializeDate(dob),
+        hasChildren: hasChildren === 'Yes',
         lastUpdated: serializeDate(deserializeDate(new Date())) // Today
     };
     const Action = isPublicUser

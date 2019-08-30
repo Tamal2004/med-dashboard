@@ -1,28 +1,25 @@
 import AWS from 'aws-sdk';
 import htmlTemplate from './htmlTemplate';
 
-export const sendMail = (
-    data = {},
-    ToAddresses = ['matthew.tamal@gmail.com', 'ahmad.nabil@echotechsys.com'],
-    Source = 'matthew.tamal@gmail.com'
-) => {
+export const sendMail = ({ from, to, subject, body }) => {
+    console.log(from, to, subject, body);
     const params = {
         Destination: {
-            ToAddresses
+            ToAddresses: to
         },
         Message: {
             Subject: {
                 Charset: 'UTF-8',
-                Data: 'Website Enquiry'
+                Data: subject
             },
             Body: {
                 Html: {
                     Charset: 'UTF-8',
-                    Data: htmlTemplate(data)
+                    Data: body
                 }
             }
         },
-        Source
+        Source: from
     };
 
     const sendPromise = new AWS.SES().sendEmail(params).promise();

@@ -12,6 +12,11 @@ export const selectIsTester = createCachedSelector(
     testerId => !!testerId
 )(() => 'placeholder');
 
+export const selectEmail = createCachedSelector(
+    selectAuth,
+    ({ email }) => email
+)(() => 'placeholder');
+
 export const selectFullName = createCachedSelector(
     selectAuth,
     ({ firstName, lastName }) => `${firstName} ${lastName}`

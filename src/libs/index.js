@@ -7,3 +7,4 @@ export * from './static';
 export * from './validation';
 export * from './dates';
 export * from './tableGenerators';
+export * from './mailTemplates';
