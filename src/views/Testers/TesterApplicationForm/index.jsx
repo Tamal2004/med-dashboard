@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import { reduxForm, formValueSelector } from 'redux-form';
+import { reduxForm, formValueSelector, change } from 'redux-form';
 
 // Material
 import { Paper, Typography, Grid, Link } from '@material-ui/core';
@@ -23,7 +23,8 @@ import {
     MultiInput,
     CheckboxBase,
     Switch,
-    NavigateButton
+    NavigateButton,
+    GridItem
 } from 'components';
 
 // Selectors
@@ -38,7 +39,8 @@ import {
     selectGenders,
     selectMaritalStatuses,
     selectNationalities,
-    selectTitles
+    selectTitles,
+    selectHasChildren
 } from 'selectors';
 
 // Normalizers
@@ -51,6 +53,7 @@ const TesterApplication = ({
     employmentSectors,
     employmentStatuses,
     ethnicities,
+    hasChildren,
     genders,
     maritalStatuses,
     titles,
@@ -61,7 +64,8 @@ const TesterApplication = ({
     invalid,
     handleSubmit,
     submitting,
-    isTester
+    isTester,
+    change
 }) => {
     const c = useStyles();
     return (
@@ -123,7 +127,17 @@ const TesterApplication = ({
                         required
                     />
                 )}
-                <Switch label='Enter address manually?' name='manualAddress' />
+                <GridItem md={12} className={c.manualGrid}>
+                    <Link
+                        className={c.manualLink}
+                        href='#'
+                        onClick={() =>
+                            change('manualAddress', !hasManualAddress)
+                        }
+                    >
+                        {hasManualAddress ? 'Close' : 'Enter address manually?'}
+                    </Link>
+                </GridItem>
                 {hasManualAddress && (
                     <Fragment>
                         <Input label='House name or number' name='house' />
@@ -152,8 +166,9 @@ const TesterApplication = ({
                     name='maritalStatus'
                     required
                 />
-                <Switch
+                <Select
                     label='Do you have children?'
+                    data={hasChildren}
                     name='hasChildren'
                     required
                 />
@@ -286,6 +301,7 @@ const mapState = state => {
     const employmentStatus = formSelector(state, 'employmentStatus');
     return {
         isTester: selectIsTester(state),
+        hasChildren: selectHasChildren(state),
         counties: selectCounties(state),
         nationalities: selectNationalities(state),
         educationStages: selectEducationStages(state),
@@ -320,7 +336,7 @@ const mapState = state => {
             gender: 'Male',
             dob: '01/01/1999',
             maritalStatus: 'Single',
-            hasChildren: true,
+            hasChildren: 'Yes',
             nationality: 'United Kingdom',
             ethnicity: 'Arab',
             firstLanguage: 'English',
@@ -340,8 +356,13 @@ const mapState = state => {
     };
 };
 
+const mapDispatch = { change };
+
 const _TesterApplication = compose(
-    connect(mapState),
+    connect(
+        mapState,
+        mapDispatch
+    ),
     reduxForm({
         form: 'TesterApplication',
         validate,

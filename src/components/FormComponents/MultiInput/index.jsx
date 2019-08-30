@@ -13,6 +13,7 @@ const MultiInput = ({
     isCard,
     memo,
     active,
+    width,
     ...restProps
 }) => {
     const { cardRoot, inactiveRoot, ...c } = useStyles();
@@ -20,7 +21,7 @@ const MultiInput = ({
         ...c,
         root: clsx(c.root, isCard && cardRoot, !active && inactiveRoot)
     };
-    const controlProps = { required, label, isCard, memo };
+    const controlProps = { required, label, isCard, memo, width };
 
     return (
         <Control {...controlProps}>

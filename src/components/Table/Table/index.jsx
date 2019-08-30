@@ -311,10 +311,9 @@ class Table extends Component {
         const {
             props: {
                 data: [datum = {}] = [],
-                itemsPerPage,
                 handleEditModal,
                 checkAll,
-                noResultsText
+                noResultsText,
             },
             state: { data },
             c,
@@ -388,9 +387,7 @@ class Table extends Component {
                                                 hasCheckAction && (
                                                     <CheckAllAction
                                                         onClick={checkAll}
-                                                        dataLength={
-                                                            data.length
-                                                        }
+                                                        dataLength={data.length}
                                                     />
                                                 )}
                                         </TableCell>

@@ -13,7 +13,7 @@ import LockIcon from '@material-ui/icons/Lock';
 
 // Local
 import styles from './styles';
-import { LabelBase } from 'components';
+import { LabelBase} from 'components';
 import { composeClasses } from 'libs';
 
 const LockAdornment = props => (

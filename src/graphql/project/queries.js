@@ -110,3 +110,31 @@ export const ListIncompleteProjects = `query ListIncompleteProjects {
         }
     }
 }`;
+
+export const ListProjectReport = `query ListProjectReport($id: ID!) {
+    getProject(id: $id) {
+        items {
+            id
+            reference
+            title
+            session {
+                items {
+                    profile
+                    location
+                    date
+                    time
+                    notes
+                    tester {
+                        firstName
+                        surname
+                        phone
+                        dob
+                        gender
+                        ethnicity
+                        jobTitle
+                    }
+                }
+            }
+        }
+    }
+}`;

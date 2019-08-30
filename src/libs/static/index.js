@@ -10,6 +10,7 @@ import FACILITIES from './facilities';
 import GENDERS from './genders';
 import MARITAL_STATUSES from './maritalStatuses';
 import PROJECT_STATUSES from './projectStatuses';
+import HAS_CHILDREN from './hasChildren';
 import TITLES from './titles';
 
 export {
@@ -25,5 +26,6 @@ export {
     MARITAL_STATUSES,
     NATIONALITIES,
     PROJECT_STATUSES,
+    HAS_CHILDREN,
     TITLES
 };

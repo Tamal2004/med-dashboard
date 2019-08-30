@@ -4,7 +4,7 @@ import { serializeDate, deserializeDate } from 'libs';
 import { createTester } from 'actions';
 
 export default async (values, dispatch, { isStudent, isEmployed }) => {
-    const { manualAddress, termsChecked, dob, ...pruned } = values;
+    const { manualAddress, termsChecked, dob, hasChildren, ...pruned } = values;
 
     let address = {};
     if (manualAddress) {
@@ -46,6 +46,7 @@ export default async (values, dispatch, { isStudent, isEmployed }) => {
         ...address,
         ...employment,
         dob: serializeDate(dob),
+        hasChildren: hasChildren === 'Yes',
         lastUpdated: serializeDate(deserializeDate(new Date())) // Today
     };
 

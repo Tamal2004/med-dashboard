@@ -3,6 +3,24 @@ import React from 'react';
 import { Link } from 'components';
 import { normalizeTime } from 'normalizers';
 
+export const generateTestersSearch = testersSearch =>
+    testersSearch.map(
+        ({ id, name, age, gender, email, about, clientNotes }) => ({
+            'Tester Name': {
+                Component: <Link to={`/tester/${id}`}>{name}</Link>,
+                value: name
+            },
+            Age: age,
+            Sex: gender,
+            Email: email,
+            Details: about,
+            'Client Notes': clientNotes,
+            actions: {
+                checkAction: id => console.log('checked', id)
+            }
+        })
+    );
+
 export const generateTesterList = testerList =>
     testerList.map(
         ({

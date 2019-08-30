@@ -4,6 +4,13 @@ import { deserializeDate, calculateAge } from 'libs';
 import { normalizeSessionTester } from './sessions';
 import { normalizeContactNote } from './contactNotes';
 
+export const normalizeTestersSearch = testersSearch =>
+    testersSearch.map(({ dob, firstName, surname, ...tester }) => ({
+        name: `${firstName} ${surname}`,
+        age: calculateAge(dob),
+        ...tester
+    }));
+
 export const normalizeTestersList = ({ items = [] }) =>
     items.map(
         ({
@@ -51,20 +58,21 @@ export const normalizeTestersList = ({ items = [] }) =>
     );
 
 export const normalizeTesterForm = (
-    { dob, lastUpdated, address, ...testerForm },
+    { dob, hasChildren, lastUpdated, address, ...testerForm },
     isPublic = true
 ) => {
     const publicTesterDetails = {
         dob: deserializeDate(dob),
         lastUpdated: deserializeDate(lastUpdated),
         age: calculateAge(dob),
+        hasChildren: hasChildren ? 'Yes' : 'No',
         ...Object.splice(testerForm, [
+            'email',
             'title',
             'firstName',
             'surname',
             'gender',
             'maritalStatus',
-            'hasChildren',
             'nationality',
             'ethnicity',
             'firstLanguage',

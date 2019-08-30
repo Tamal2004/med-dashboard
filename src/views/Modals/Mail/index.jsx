@@ -1,100 +1,181 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
-import { change, formValueSelector, reduxForm } from 'redux-form';
+import { reduxForm } from 'redux-form';
+
+// Material
 import { makeStyles } from '@material-ui/core/styles';
-import { validateRequired } from 'libs';
+
+// Components
 import {
-	ModalHeader,
-	ModalFooter,
-	ModalContent,
-	Divider,
-	Button,
-	Select,
-	Input,
-	MultiInput
+    ModalHeader,
+    ModalFooter,
+    ModalContent,
+    Divider,
+    Button,
+    Select,
+    Input,
+    MultiInput,
+    Editor
 } from 'components';
 
-const useStyles = makeStyles(theme => ({
-	root: {
-		width: theme.breakpoints.values.sm,
-		paddingLeft: theme.spacing(2),
-		paddingRight: theme.spacing(2)
-	},
-	gridContainer: {
-		padding: 16
-	},
-	footer: {
-		padding: theme.spacing(4),
-		paddingBottom: theme.spacing(2),
-		paddingTop: theme.spacing(2),
-		display: 'flex',
-		justifyContent: 'flex-end'
-	}
+// Libs
+import { validateRequired } from 'libs';
+
+// Selectors
+import { selectContactTypes, selectIncompleteProjects } from 'selectors';
+
+// Actions
+import { listIncompleteProjects } from 'actions';
+
+const useStyles = makeStyles(({ breakpoints, spacing }) => ({
+    root: {
+        width: breakpoints.values.sm,
+        paddingLeft: spacing(2),
+        paddingRight: spacing(2),
+        overflow: 'unset'
+    },
+    gridContainer: {
+        padding: 16
+    },
+    editor: {
+        margin: spacing(2),
+        marginBottom: spacing(3),
+    },
+    footer: {
+        padding: spacing(4),
+        paddingBottom: spacing(2),
+        paddingTop: spacing(2),
+        display: 'flex',
+        justifyContent: 'flex-end'
+    }
 }));
 
-const TesterMailModal = ({ change, onClose }) => {
-	const c = useStyles();
+const MailModal = ({
+    change,
+    onClose,
+    projects,
+    contactTypes,
+    listIncompleteProjects,
+    needsProject,
+    needsContactType,
+    invalid,
+    handleSubmit,
+    to
+}) => {
+    const c = useStyles();
 
-	return (
-		<Fragment>
-			<ModalHeader onClose={onClose}>Mail Tester(s)</ModalHeader>
-			<ModalContent className={c.root}>
-				{/*conditionally disabled if has data*/}
-				<Select label='From' name='from' data={[]} required />
-				{/*conditionally disabled if has data*/}
-				<Select label='To' name='to' data={[]} required />
+    const [projectsLoading, setProjectsLoading] = useState(true);
 
-				<Input
-					label='Subject'
-					name='subject'
-					placeholder='Subject'
-					required
-				/>
+    useEffect(() => {
+        needsProject &&
+            listIncompleteProjects().then(() => setProjectsLoading(false));
+    }, []);
 
-				<Select label='Project' name='project' data={[]} />
-				<Select label='Contact type' name='contactType' data={[]} />
-				<MultiInput name='body' placeholder='Write something....' />
-			</ModalContent>
-			<Divider />
-			<ModalFooter className={c.footer}>
-				<Button size='large'>Send Mail</Button>
-			</ModalFooter>
-		</Fragment>
-	);
+    return (
+        <Fragment>
+            <ModalHeader onClose={onClose}>{`Mail Tester${
+                to.length > 1 ? '(s)' : ''
+            }`}</ModalHeader>
+            <ModalContent className={c.root}>
+                {/*conditionally disabled if has data*/}
+                <Input label='From' name='from' active={false} width={9} />
+                {/*conditionally disabled if has data*/}
+                <Input label='To' name='to' active={false} width={9} />
+
+                <Input
+                    label='Subject'
+                    name='subject'
+                    placeholder='Subject'
+                    required
+                    width={9}
+                />
+
+                {needsProject && (
+                    <Select
+                        label='Project'
+                        name='project'
+                        data={projects}
+                        disabled={projectsLoading}
+                        width={9}
+                    />
+                )}
+                {needsContactType && (
+                    <Select
+                        label='Contact type'
+                        name='contactType'
+                        data={contactTypes}
+                        width={9}
+                    />
+                )}
+                <div className={c.editor}>
+                    <Editor name='body' label='Body' placeholder='Email body' />
+                </div>
+            </ModalContent>
+            <Divider />
+            <ModalFooter className={c.footer}>
+                <Button size='large' disabled={invalid} onClick={handleSubmit}>
+                    Send Mail
+                </Button>
+            </ModalFooter>
+        </Fragment>
+    );
 };
 
 const validate = values => {
-	const required = [];
+    const required = ['subject', 'body'];
 
-	return { ...validateRequired(values, required) };
+    return { ...validateRequired(values, required) };
 };
 
-const mapState = state => {
-	const selector = formValueSelector('TesterMailModal');
-	const to = selector(state, 'to');
-
-	return {
-		to
-	};
+const mapState = (state, { from, to, body, subject }) => {
+    return {
+        projects: selectIncompleteProjects(state),
+        contactTypes: selectContactTypes(state),
+        initialValues: {
+            from,
+            to: to.length > 1 ? `${to.length} Testers` : to[0] || '',
+            body,
+            subject
+        }
+    };
 };
 
 const mapDispatch = {
-	change
+    listIncompleteProjects
 };
 
-const _TesterMailModal = compose(
-	connect(
-		mapState,
-		mapDispatch
-	),
-	reduxForm({
-		form: 'TesterMailModal',
-		validate,
-		initialValues: {
-			to: []
-		}
-	})
-)(TesterMailModal);
+const onSubmit = (values, d, { to, handleMail, onClose }) =>
+    handleMail({ ...values, to }).then(() => onClose());
 
-export { _TesterMailModal as default, _TesterMailModal as TesterMailModal };
+MailModal.defaultProps = {
+    to: [],
+    subject: '',
+    body: '',
+    needsProject: false,
+    needsContactType: false
+};
+
+MailModal.propTypes = {
+    from: PropTypes.string.isRequired,
+    to: PropTypes.array.isRequired,
+    subject: PropTypes.string.isRequired,
+    body: PropTypes.string.isRequired,
+    needsProject: PropTypes.bool,
+    needsContactType: PropTypes.bool
+};
+
+const _MailModal = compose(
+    connect(
+        mapState,
+        mapDispatch
+    ),
+    reduxForm({
+        form: 'MailModal',
+        validate,
+        onSubmit
+    })
+)(MailModal);
+
+export { _MailModal as default, _MailModal as MailModal };

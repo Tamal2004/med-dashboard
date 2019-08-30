@@ -43,10 +43,7 @@ export const generateProjectSessions = projectSessions =>
             Profile: profile,
             'Testing Date': date,
             'Testing Time': time,
-            Notes: notes,
-            actions: {
-                checkAction: value => console.log('check meh', value)
-            }
+            Notes: notes
         })
     );
 

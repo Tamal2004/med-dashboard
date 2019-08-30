@@ -22,68 +22,73 @@ import Input from '@material-ui/core/Input';
 import { AccordionFilterContainer } from './FilterContainer';
 
 const useStyles = makeStyles(theme => ({
-	gridContainer: {
-		margin: 0,
-		padding: 9,
-		width: '100%'
-	},
-	textCenter: {
-		textAlign: 'center'
-	}
+    gridContainer: {
+        margin: 0,
+        padding: 9,
+        width: '100%'
+    },
+    textCenter: {
+        textAlign: 'center'
+    }
 }));
 
 const RangeFilter = ({ value, onChange, title, step, min, max }) => {
-	const c = useStyles();
+    const c = useStyles();
 
-	const [rangeValue, setValue] = useState([min, max]);
+    const [rangeValue, setValue] = useState([min, max]);
+    const [committedRangeValue, setCommittedValue] = useState([min, max]);
 
-	const handleChange = (e, newValue) => setValue(newValue);
+    const handleChange = (e, newValue) => setValue(newValue);
 
-	const valuetext = value => value;
+    const handleCommittedChange = (e, committedValue) =>
+        setCommittedValue(committedValue);
 
-	useEffect(() => {
-		onChange(null, rangeValue);
-	}, [rangeValue]);
+    const valuetext = value => value;
 
-	return (
-		<AccordionFilterContainer title={title}>
-			<Grid
-				container
-				spacing={2}
-				className={c.gridContainer}
-				alignItems='center'
-			>
-				<Grid md={2} item className={c.textCenter}>
-					{rangeValue[0]}
-				</Grid>
-				<Grid md={8} item>
-					<Slider
-						value={rangeValue}
-						onChange={handleChange}
-						valueLabelDisplay='auto'
-						aria-labelledby={title}
-						marks
-						getAriaValueText={valuetext}
-					/>
-				</Grid>
-				<Grid md={2} item className={c.textCenter}>
-					{rangeValue[1]}
-				</Grid>
-			</Grid>
-		</AccordionFilterContainer>
-	);
+    useEffect(() => {
+        onChange(null, committedRangeValue);
+    }, [committedRangeValue]);
+
+    return (
+        <AccordionFilterContainer title={title}>
+            <Grid
+                container
+                spacing={2}
+                className={c.gridContainer}
+                alignItems='center'
+            >
+                <Grid md={2} item className={c.textCenter}>
+                    {rangeValue[0]}
+                </Grid>
+                <Grid md={8} item>
+                    <Slider
+                        value={rangeValue}
+                        onChange={handleChange}
+						onChangeCommitted={handleCommittedChange}
+                        valueLabelDisplay='auto'
+                        aria-labelledby={title}
+                        marks
+                        getAriaValueText={valuetext}
+                    />
+                </Grid>
+                <Grid md={2} item className={c.textCenter}>
+                    {rangeValue[1]}
+                </Grid>
+            </Grid>
+        </AccordionFilterContainer>
+    );
 };
 
 RangeFilter.defaultProps = {
-	step: 1,
-	max: 100,
-	min: 0
+    step: 1,
+    max: 100,
+    min: 0
 };
 RangeFilter.propTypes = {
-	max: PropTypes.number,
-	min: PropTypes.number,
-	step: PropTypes.number,
-	title: PropTypes.string.isRequired
+    max: PropTypes.number,
+    min: PropTypes.number,
+    step: PropTypes.number,
+    title: PropTypes.string.isRequired
 };
 
 export { RangeFilter as default, RangeFilter };

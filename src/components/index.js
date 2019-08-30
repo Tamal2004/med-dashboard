@@ -13,6 +13,7 @@ export * from './Icons';
 export * from './Cards';
 export * from './Modals';
 export * from './Notification';
+export * from './Editor';
 export * from './Snackbars';
 export * from './FormComponents';
 export * from './Typography';

@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/core';
 
-export default makeStyles(({ palette, spacing }) => ({
+export default makeStyles(({ palette, spacing, typography }) => ({
     root: {
         margin: spacing(4),
         padding: spacing(4),
@@ -28,5 +28,13 @@ export default makeStyles(({ palette, spacing }) => ({
         height: spacing(6),
         marginLeft: spacing(3),
         marginRight: spacing(3)
+    },
+    manualGrid: {
+        textAlign: 'right',
+        padding: spacing(2)
+    },
+    manualLink: {
+        paddingLeft: spacing(2),
+        fontSize: typography.subtitle1.fontSize
     }
 }));

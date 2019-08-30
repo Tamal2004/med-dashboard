@@ -25,7 +25,8 @@ export default ({ spacing, palette, shape }) => ({
     },
     input: {
         height: '100%',
-        padding: 0
+        padding: 0,
+        textOverflow: 'ellipsis'
     },
     focused: {
         borderColor: palette.grey[500],

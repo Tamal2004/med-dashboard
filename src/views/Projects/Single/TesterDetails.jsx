@@ -22,7 +22,7 @@ import {
 } from 'components';
 
 // Selectors
-import { selectProjectSessions } from 'selectors';
+import { selectProjectSessions, selectProjectId } from 'selectors';
 
 // Actions
 import { removeSession } from 'actions';
@@ -45,29 +45,35 @@ const useStyles = makeStyles(({ palette, spacing }) => ({
 const TesterDetails = ({
     testerDetails,
     handleSessionsModal,
-    projectReference,
+    projectId,
     removeSession
 }) => {
     const [page, setPage] = useState(1);
+    const [selectedTesters, setSelectedTesters] = useState([]);
     const c = useStyles();
     const totalPages =
         Math.floor(testerDetails.length / 5) + !!(testerDetails.length % 5) ||
         1;
 
     // Inject removeProfile
-    const composedTesterDetails = testerDetails.map(
-        ({ id, actions, ...rest }) => ({
-            ...rest,
-            actions: { ...actions, deleteAction: () => removeSession(id) }
-        })
-    );
+    const composedTesterDetails = testerDetails.map(({ id, ...rest }) => ({
+        ...rest,
+        actions: {
+            checkAction: value => setSelectedTesters(value),
+            deleteAction: () => removeSession(id)
+        }
+    }));
+
+    const reportTestersParameter = !!selectedTesters.length
+        ? `&testers=${selectedTesters.join('||')}`
+        : '';
 
     return (
         <EditableCard title='Tester Details'>
             <Table
                 data={composedTesterDetails}
                 page={page}
-                checkAll={value => console.log('selected all', value)}
+                checkAll={value => setSelectedTesters(value)}
                 itemsPerPage={5}
                 noResultsText='No Tester Sessions'
             />
@@ -79,7 +85,7 @@ const TesterDetails = ({
                             Icon={NamedIcon}
                             onClick={() =>
                                 history.push(
-                                    `/project/report?ref=${projectReference}&type=named`
+                                    `/project/report?id=${projectId}&type=named${reportTestersParameter}`
                                 )
                             }
                         >
@@ -90,7 +96,7 @@ const TesterDetails = ({
                             Icon={AnonymousIcon}
                             onClick={() =>
                                 history.push(
-                                    `/project/report?ref=${projectReference}&type=anonymous`
+                                    `/project/report?id=${projectId}&type=anonymous${reportTestersParameter}`
                                 )
                             }
                         >
@@ -112,7 +118,7 @@ TesterDetails.propTypes = {
 };
 
 const mapState = state => ({
-    projectReference: formValueSelector('ProjectDetails')(state, 'reference'),
+    projectId: selectProjectId(state),
     testerDetails: selectProjectSessions(state)
 });
 

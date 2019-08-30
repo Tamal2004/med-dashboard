@@ -74,3 +74,9 @@ export const selectTestingLocations = createCachedSelector(
     selectDatasets,
     ({ facilities }) => mapArray(facilities)
 )(() => 'placeholder');
+
+// Has Children
+export const selectHasChildren = createCachedSelector(
+    selectDatasets,
+    ({ hasChildren }) => mapArray(hasChildren)
+)(() => 'placeholder');

@@ -7,6 +7,7 @@ import { history, today } from 'libs';
 // Normalizers
 import {
     normalizeTestersList,
+    normalizeTestersSearch,
     normalizeTester,
     normalizeTesterForm
 } from 'normalizers';
@@ -17,6 +18,7 @@ import {
     FetchTester,
     FetchPublicTester,
     ListTesters,
+    ListTestersSearch,
     UpdateTester,
     RemoveTester
 } from 'graphql/tester';
@@ -28,9 +30,12 @@ import {
     FAIL,
     CREATE_TESTER,
     LIST_TESTERS,
+    LIST_TESTERS_SEARCH,
     FETCH_TESTER,
     UPDATE_TESTER,
-    REMOVE_TESTER
+    REMOVE_TESTER,
+    MAIL_TESTER,
+    MAIL_TESTERS
 } from 'actionTypes';
 
 // Selectors
@@ -74,6 +79,31 @@ export const listTesters = () => async dispatch => {
         dispatch(listTestersAction(SUCCESS, normalizeTestersList(listTesters)));
     } else {
         dispatch(listTestersAction(FAIL));
+    }
+};
+
+// List Testers Search
+const listTestersSearchAction = (async, payload = []) => ({
+    type: LIST_TESTERS_SEARCH,
+    async,
+    payload
+});
+
+export const listTestersSearch = () => async dispatch => {
+    dispatch(listTestersSearchAction(REQUEST));
+    const {
+        data: { listTesters: { items: listTesters = [] } = {}, error = null }
+    } = await API.graphql(graphqlOperation(ListTestersSearch));
+
+    if (!error) {
+        dispatch(
+            listTestersSearchAction(
+                SUCCESS,
+                normalizeTestersSearch(listTesters)
+            )
+        );
+    } else {
+        dispatch(listTestersSearchAction(FAIL));
     }
 };
 
@@ -187,4 +217,12 @@ export const removeTester = id => async (dispatch, getState) => {
     } else {
         dispatch(removeTesterAction(FAIL));
     }
+};
+
+const mailTesterAction = () => ({
+    type: MAIL_TESTER
+});
+
+export const mailTester = ({ from, to, subject, body }) => async dispatch => {
+    // dispatch(mailTesterAction());
 };

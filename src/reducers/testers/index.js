@@ -11,6 +11,7 @@ import {
     REMOVE_CONTACT_NOTE,
     FETCH_TESTER,
     LIST_TESTERS,
+    LIST_TESTERS_SEARCH,
     LIST_INCOMPLETE_PROJECTS
 } from 'actionTypes';
 
@@ -26,6 +27,10 @@ const testersReducer = (
 
         case LIST_TESTERS: {
             return isSuccess ? { ...state, list: payload } : state;
+        }
+
+        case LIST_TESTERS_SEARCH: {
+            return isSuccess ? { ...state, search: payload } : state;
         }
 
         case LIST_INCOMPLETE_PROJECTS: {
