@@ -36,7 +36,6 @@ import {
 // Selectors
 import { selectIsTester } from 'selectors';
 
-
 // Create Tester
 const createTesterAction = async => ({
     type: CREATE_TESTER,
@@ -164,14 +163,13 @@ export const updateTester = ({ lastUpdated, ...tester }) => async dispatch => {
     }
 };
 
-
 const removeTesterAction = (async, payload = []) => ({
     type: REMOVE_TESTER,
     async,
     payload
 });
 
-export const removeTester = id => async (dispatch, getState)=> {
+export const removeTester = id => async (dispatch, getState) => {
     dispatch(removeTesterAction(REQUEST));
     const {
         data: { deleteTester: { id: testerId } = {}, error = null }
@@ -183,7 +181,7 @@ export const removeTester = id => async (dispatch, getState)=> {
             // Log them out and delete their user
             // Use 'testerId' variable if needed
         } else {
-            history.push('/tester')
+            history.push('/tester');
         }
         dispatch(removeTesterAction(SUCCESS));
     } else {

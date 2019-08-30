@@ -137,10 +137,9 @@ export const listProjects = (
         ? [
               {
                   or: [
-                      ...statuses
-                          .map(statusFilter => ({
-                              status: { contains: statusFilter }
-                          }))
+                      ...statuses.map(statusFilter => ({
+                          status: { contains: statusFilter }
+                      }))
                   ]
               }
           ]
