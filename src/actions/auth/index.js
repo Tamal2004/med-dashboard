@@ -58,12 +58,9 @@ const getUser = () => {
 // };
 
 const changePassword = ({ oldPassword, newPassword }) => {
-    console.log('changePassword');
-
-    return Auth.currentAuthenticatedUser()
-        .then(user => Auth.changePassword(user, oldPassword, newPassword))
-        .then(data => data)
-        .catch(err => err);
+    return Auth.currentAuthenticatedUser().then(user =>
+        Auth.changePassword(user, oldPassword, newPassword)
+    );
 };
 
 /**********
@@ -71,45 +68,63 @@ const changePassword = ({ oldPassword, newPassword }) => {
  ***********/
 
 export const testerSignUp = ({ id, email, firstName, surname }) => {
-    return Auth.signUp({
-        username: email,
-        password: TEMP_PASSWORD(),
-        temporaryPassword: TEMP_PASSWORD(),
-        attributes: {
-            name: firstName,
-            email,
-            family_name: firstName,
-            given_name: surname,
-            'custom:testerId': id
-        }
-    })
-        .then(data => console.log('testerSignUp', data))
-        .catch(err => console.log(err));
+    const PASS = TEMP_PASSWORD();
+    return async dispatch => {
+        return Auth.signUp({
+            username: email,
+            password: PASS,
+            temporaryPassword: PASS,
+            attributes: {
+                name: firstName,
+                email,
+                family_name: firstName,
+                given_name: surname,
+                'custom:testerId': id
+            }
+        })
+            .then(() => {
+                //TODO: send an email with generated password, variable: PASS
+                dispatch(
+                    showNotification({
+                        type: 'success',
+                        message: 'Sign up successful!'
+                    })
+                );
+            })
+            .catch(err =>
+                dispatch(
+                    showNotification({
+                        type: 'error',
+                        message: err.message
+                    })
+                )
+            );
+    };
 };
 
-export const signUp = ({
-    username,
-    password,
-    name,
-    email,
-    family_name,
-    given_name,
-    testerId
-}) => {
-    return Auth.signUp({
-        username,
-        password,
-        attributes: {
-            name: 'report.nabil@gmail.com',
-            email: 'report.nabil@gmail.com',
-            family_name: 'Nabil',
-            given_name: 'Ahmad',
-            'custom:testerId': '123'
-        }
-    })
-        .then(data => console.log(data))
-        .catch(err => console.log(err));
-};
+// export const signUp = ({
+//     username,
+//     password,
+//     name,
+//     email,
+//     family_name,
+//     given_name,
+//     testerId
+// }) => {
+//     return Auth.signUp({
+//         username,
+//         password,
+//         attributes: {
+//             name: 'report.nabil@gmail.com',
+//             email: 'report.nabil@gmail.com',
+//             family_name: 'Nabil',
+//             given_name: 'Ahmad',
+//             'custom:testerId': '123'
+//         }
+//     })
+//         .then(data => console.log(data))
+//         .catch(err => console.log(err));
+// };
 
 export const createUserByAdmin = ({
     email,
@@ -169,6 +184,8 @@ export const setAuthUserInfo = () => {
                 type: SET_AUTH_USER_INFO,
                 payload: res.attributes
             });
+
+        return res;
     };
 };
 
@@ -190,13 +207,17 @@ export const updateAuthUserPassword = payload => {
 };
 
 export const logoutUser = () => {
-    console.log('LOG OUT USER');
     return async dispatch => {
         Auth.signOut()
             .then(data => {
-                console.log(data);
+                dispatch(
+                    showNotification({
+                        type: 'success',
+                        message: 'Sign out successfully!'
+                    })
+                );
                 history.push('/');
             })
-            .catch(err => console.log(err));
+            .catch(err => err);
     };
 };

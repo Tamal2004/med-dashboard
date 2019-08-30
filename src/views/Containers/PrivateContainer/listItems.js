@@ -24,6 +24,8 @@ import {
 
 import { Accordion, AccordionPanel } from 'components';
 
+import { logoutUser } from 'actions';
+
 const useStyles = makeStyles(theme => ({
     textStyle: {
         fontSize: 14
@@ -76,10 +78,10 @@ const LinkItem = ({ to, title, children, ...rest }) => {
     );
 };
 
-const LinkListItem = ({ text }) => {
+const LinkListItem = ({ text, onClick }) => {
     const c = useStyles();
     return (
-        <ListItem button>
+        <ListItem button onClick={onClick}>
             <ListItemIcon classes={{ root: c.ListRoot }}>
                 <SvgIcon fontSize='small'>
                     <ListIcon />
@@ -147,7 +149,7 @@ const MenuItem = ({ children, ...restProps }) => {
 /********************
  * Public Components *
  ********************/
-const ListItems = ({ auth: { isTester, name } }) => (
+const ListItems = ({ auth: { isTester, name }, logoutUser }) => (
     <Fragment>
         {/*Client and Project and Tester*/}
         {isTester ? (
@@ -205,13 +207,7 @@ const ListItems = ({ auth: { isTester, name } }) => (
                         <LinkListItem text='Create user' />
                     </LinkItem>
                 )}
-                <LinkItem
-                    to={'/profile/logout'}
-                    onClick={() => this.props.logoutUser()}
-                    title={'Logout'}
-                >
-                    <LinkListItem text='Logout' />
-                </LinkItem>
+                <LinkListItem onClick={() => logoutUser()} text='Logout' />
             </MenuItem>
         </Menu>
 
@@ -221,6 +217,13 @@ const ListItems = ({ auth: { isTester, name } }) => (
 
 const mapState = ({ auth }) => ({ auth });
 
-const _ListItems = connect(mapState)(ListItems);
+const mapDispatch = {
+    logoutUser
+};
+
+const _ListItems = connect(
+    mapState,
+    mapDispatch
+)(ListItems);
 
 export { _ListItems as default, _ListItems as ListItems };

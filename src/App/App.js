@@ -1,6 +1,6 @@
 import React, { Suspense } from 'react';
 import { compose } from 'redux';
-import { CircularLoader } from 'components';
+import { connect } from 'react-redux';
 
 import { ApolloProvider } from '@apollo/react-hooks';
 
@@ -8,23 +8,11 @@ import { ApolloProvider } from '@apollo/react-hooks';
 import { AuthPiece } from 'aws-amplify-react';
 
 // Local
-import { withModalProvider } from 'components';
+import { withModalProvider, BarLoader } from 'components';
+import { setAuthUserInfo } from 'actions';
 import Routes from 'routes';
 
-import { client1, client2 } from './client';
-
-const loaderWrapper = {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: '100vh'
-};
-
-const Loader = () => (
-    <div style={loaderWrapper}>
-        <CircularLoader />
-    </div>
-);
+import { client1 } from './client';
 
 class App extends AuthPiece {
     constructor(props) {
@@ -32,15 +20,35 @@ class App extends AuthPiece {
         this._validAuthStates = ['signedIn'];
     }
 
+    state = {
+        loading: true
+    };
+
+    componentDidMount() {
+        this.props
+            .setAuthUserInfo()
+            .then(data => this.setState({ loading: false }));
+    }
+
     showComponent(theme) {
         return (
-            <Suspense fallback={<Loader />}>
+            <Suspense fallback={<BarLoader />}>
                 <ApolloProvider client={client1}>
-                    <Routes />
+                    {this.state.loading ? <BarLoader /> : <Routes />}
                 </ApolloProvider>
             </Suspense>
         );
     }
 }
 
-export default compose(withModalProvider)(App);
+const mapDispatch = {
+    setAuthUserInfo
+};
+
+export default compose(
+    withModalProvider,
+    connect(
+        null,
+        mapDispatch
+    )
+)(App);

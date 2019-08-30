@@ -1,14 +1,13 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
-import { Logout, CreateUser, ProfileHome } from 'views';
+import { CreateUser, ProfileHome } from 'views';
 
 const AdminAccountRoutes = ({ match }) => {
 	return (
 		<Switch>
 			<Route path={match.path} exact component={ProfileHome} />
 			<Route path={`${match.path}/new-user`} component={CreateUser} />
-			<Route path={`${match.path}/logout`} component={Logout} />
 			<Route path={'*'} component={ProfileHome} />
 		</Switch>
 	);

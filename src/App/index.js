@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import AWS from 'aws-sdk';
-import Amplify from 'aws-amplify';
 import API from '@aws-amplify/api';
 import PubSub from '@aws-amplify/pubsub';
 import Auth from '@aws-amplify/auth';
@@ -31,8 +29,6 @@ import { setAuthUserInfo } from 'actions';
 import { history } from 'libs/history';
 import App from './App';
 
-AWS.config.update(config);
-Amplify.configure(config);
 Auth.configure(config);
 API.configure(config);
 PubSub.configure(config);
@@ -44,10 +40,7 @@ class IndexApp extends Component {
     }
 
     render() {
-        const {
-            setAuthUserInfo,
-            auth: { email }
-        } = this.props;
+        const { setAuthUserInfo } = this.props;
 
         return (
             <Router history={history}>
@@ -57,9 +50,7 @@ class IndexApp extends Component {
                         authState='signUp'
                         amplifyConfig={config}
                         onStateChange={authState =>
-                            authState === 'signedIn' &&
-                            !email &&
-                            setAuthUserInfo()
+                            authState === 'signedIn' && setAuthUserInfo()
                         }
                         hide={[
                             Greetings,
@@ -79,13 +70,11 @@ class IndexApp extends Component {
     }
 }
 
-const mapState = ({ auth }) => ({ auth });
-
 const mapDispatch = {
     setAuthUserInfo
 };
 
 export default connect(
-    mapState,
+    null,
     mapDispatch
 )(IndexApp);
