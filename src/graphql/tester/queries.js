@@ -22,6 +22,20 @@ export const ListTesters = `query ListTesters {
   }
 }`;
 
+export const ListTestersSearch = `query ListTestersSearch {
+  listTesters(limit: 500) {
+    items {
+      id
+      firstName
+      surname
+      dob
+      gender
+      email
+      about
+      clientNotes
+  }
+}`;
+
 export const CheckTesterEmail = `query CheckTesterEmail(
     $filter: ModelTesterFilterInput
 ) {
