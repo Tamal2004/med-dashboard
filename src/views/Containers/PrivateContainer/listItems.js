@@ -200,7 +200,11 @@ const ListItems = ({ auth: { isTester, name } }) => (
                 <LinkItem to={'/profile'} title={'Profile'}>
                     <LinkListItem text='Profile' />
                 </LinkItem>
-                <LinkItem to={'/profile/logout'} title={'Logout'}>
+                <LinkItem
+                    to={'/profile/logout'}
+                    onClick={() => this.props.logoutUser()}
+                    title={'Logout'}
+                >
                     <LinkListItem text='Logout' />
                 </LinkItem>
             </MenuItem>

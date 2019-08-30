@@ -34,13 +34,7 @@ export default makeStyles(theme => ({
         justifyContent: 'space-between'
     },
     backIcon: {
-        boxShadow: 'none',
-        background: 'transparent',
-        color: theme.palette.primary.main,
-        fontWeight: 700,
-        '&:hover': {
-            background: 'transparent'
-        }
+        color: '#fff'
     },
     leftIcon: {
         fill: 'rgba(0, 0, 0, 0.87)'

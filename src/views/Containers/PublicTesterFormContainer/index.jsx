@@ -4,7 +4,6 @@ import AppBar from '@material-ui/core/AppBar';
 import Button from '@material-ui/core/Button';
 import Toolbar from '@material-ui/core/Toolbar';
 import Container from '@material-ui/core/Container';
-import BackIcon from '@material-ui/icons/ArrowBack';
 
 // Local
 import styles from './styles';
@@ -23,12 +22,11 @@ export default function TesterContainer(props) {
                     </div>
                     <Button
                         variant='contained'
-                        color='default'
+                        color='primary'
                         onClick={props.gotoSignIn}
                         className={c.backIcon}
                     >
-                        <BackIcon className={c.leftIcon} />
-                        &nbsp;&nbsp;Back to Sign in
+                        Sign in
                     </Button>
                 </Toolbar>
             </AppBar>

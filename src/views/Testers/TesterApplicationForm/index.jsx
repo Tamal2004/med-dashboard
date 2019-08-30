@@ -1,18 +1,23 @@
 import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import { reduxForm, formValueSelector } from 'redux-form';
+import { change, reduxForm, formValueSelector } from 'redux-form';
 
 // Material
 import { Paper, Typography, Grid, Link } from '@material-ui/core';
+import { Link as AddressLink } from '@material-ui/core';
 
 // Local
 import useStyles from './styles';
 import onSubmit from './onSubmit';
 import { validate, asyncValidate } from './validate';
+import { GridItem } from 'components';
 
 // Libs
 import { validateEmail, validateDate, validateNumber } from 'libs';
+
+// Normalizers
+import { normalizeDob } from 'normalizers';
 
 // Components
 import {
@@ -28,7 +33,6 @@ import {
 
 // Selectors
 import {
-    selectIsTester,
     selectCounties,
     selectEducationStages,
     selectEmployeeCounts,
@@ -40,9 +44,6 @@ import {
     selectNationalities,
     selectTitles
 } from 'selectors';
-
-// Normalizers
-import { normalizeDob } from 'normalizers';
 
 const TesterApplication = ({
     nationalities,
@@ -61,45 +62,31 @@ const TesterApplication = ({
     invalid,
     handleSubmit,
     submitting,
-    isTester
+    change
 }) => {
     const c = useStyles();
     return (
         <Paper className={c.root}>
-            {isTester && (
-                <Fragment>
-                    <Typography className={c.header} variant='h4' gutterBottom>
-                        Tester Application Form
-                    </Typography>
-                    <Typography
-                        className={c.info}
-                        variant='subtitle1'
-                        gutterBottom
-                    >
-                        Thank you for your interest in becoming a website
-                        tester. So we can match you with the most suitable
-                        testing opportunities please fill out the form below
-                        with as much information as possible.
-                    </Typography>
-                    <Typography
-                        className={c.info}
-                        variant='subtitle1'
-                        gutterBottom
-                    >
-                        If you have any queries, please contact Avril on
-                        avril@webusability.co.uk.
-                    </Typography>
-                    <Typography
-                        className={c.info}
-                        variant='subtitle1'
-                        gutterBottom
-                    >
-                        Our database is maintained solely for our use in
-                        recruiting testers. The information is not passed on to
-                        any other organisation.
-                    </Typography>
-                </Fragment>
-            )}
+            <Typography className={c.header} variant='h4' gutterBottom>
+                Tester Application Form
+            </Typography>
+            <Typography className={c.info} variant='subtitle1' gutterBottom>
+                Thank you for your interest in becoming a website tester. So we
+                can match you with the most suitable testing opportunities
+                please fill out the form below with as much information as
+                possible.
+            </Typography>
+            <Typography className={c.info} variant='subtitle1' gutterBottom>
+                If you have any queries, please contact Avril on&nbsp;
+                <AddressLink href='mailto:avril@webusability.co.uk'>
+                    avril@webusability.co.uk
+                </AddressLink>
+            </Typography>
+            <Typography className={c.info} variant='subtitle1' gutterBottom>
+                Our database is maintained solely for our use in recruiting
+                testers. The information is not passed on to any other
+                organisation.
+            </Typography>
             <Container title='Contact Details'>
                 <Select label='Title' data={titles} name='title' required />
                 <Input label='First Name' name='firstName' required />
@@ -123,7 +110,18 @@ const TesterApplication = ({
                         required
                     />
                 )}
-                <Switch label='Enter address manually?' name='manualAddress' />
+                <GridItem md={12} className={c.manualGrid}>
+                    <AddressLink
+                        className={c.manualLink}
+                        href='#'
+                        onClick={() =>
+                            change('manualAddress', !hasManualAddress)
+                        }
+                    >
+                        {hasManualAddress ? 'Close' : 'Enter address manually?'}
+                    </AddressLink>
+                </GridItem>
+
                 {hasManualAddress && (
                     <Fragment>
                         <Input label='House name or number' name='house' />
@@ -246,31 +244,31 @@ const TesterApplication = ({
             </Container>
             <Grid container className={c.footer}>
                 <Grid item xs={6}>
-                    {isTester && (
-                        <Grid container>
-                            <Grid item xs={2}>
-                                <CheckboxBase
-                                    name='termsChecked'
-                                    color='primary'
-                                />
-                            </Grid>
-
-                            <Grid item xs={10}>
-                                <Typography>
-                                    I confirm that I have read and accepted the
-                                    Testers{' '}
-                                    <Link href='#'>Terms & Conditions</Link>
-                                </Typography>
-                            </Grid>
+                    <Grid container>
+                        <Grid item xs={2}>
+                            <CheckboxBase name='termsChecked' color='primary' />
                         </Grid>
-                    )}
+
+                        <Grid item xs={10}>
+                            <Typography>
+                                I confirm that I have read and accepted the
+                                Testers{' '}
+                                <Link
+                                    href='https://www.webusability.co.uk/be-a-tester/tester-terms-conditions/'
+                                    target='_blank'
+                                >
+                                    Terms &amp; Conditions
+                                </Link>
+                            </Typography>
+                        </Grid>
+                    </Grid>
                 </Grid>
                 <Grid item xs={6}>
                     <NavigateButton
                         className={c.submit}
                         variant='contained'
                         color='primary'
-                        onClick={handleSubmit}
+                        onClick={() => handleSubmit()}
                         disabled={invalid || submitting}
                     >
                         Submit
@@ -281,11 +279,11 @@ const TesterApplication = ({
     );
 };
 
-const mapState = state => {
+const mapState = (state, ownProps) => {
+    const { noauth = false } = ownProps;
     const formSelector = formValueSelector('TesterApplication');
     const employmentStatus = formSelector(state, 'employmentStatus');
     return {
-        isTester: selectIsTester(state),
         counties: selectCounties(state),
         nationalities: selectNationalities(state),
         educationStages: selectEducationStages(state),
@@ -302,46 +300,18 @@ const mapState = state => {
             employmentStatus === 'Full-time employment' ||
             employmentStatus === 'Retired',
         isRetired: employmentStatus === 'Retired',
-        hasManualAddress: formSelector(state, 'manualAddress'),
-        initialValues: {
-            manualAddress: true,
-            title: 'Mr',
-            firstName: 'Matt',
-            surname: 'Tamal',
-            email: 'matt@echotechsys.com',
-            phone: '01306568988',
-            address: 'Avenue Adolphe Buyl 12 1050 Ixelles',
-            house: '12',
-            street: 'Avenue Adolphe',
-            town: 'Brussels',
-            county: 'Yorkshire',
-            postcode: '1050',
-            country: 'Belgium',
-            gender: 'Male',
-            dob: '01/01/1999',
-            maritalStatus: 'Single',
-            hasChildren: true,
-            nationality: 'United Kingdom',
-            ethnicity: 'Arab',
-            firstLanguage: 'English',
-            otherLanguages: 'Bengali',
-            disability: 'None',
-            about: 'Software developer',
-            employmentStatus: 'Full-time employment',
-            jobTitle: 'Software Engineer',
-            businessName: 'Matt Tamal',
-            employmentSector: 'Computers & ICT',
-            employeeCount: '1 - 9',
-            subject: 'Medicine',
-            educationStage: 'University',
-            institution: 'Cambridge University',
-            termsChecked: true
-        }
+        isPublicUser: noauth,
+        hasManualAddress: formSelector(state, 'manualAddress')
     };
 };
 
+const mapDispatch = { change };
+
 const _TesterApplication = compose(
-    connect(mapState),
+    connect(
+        mapState,
+        mapDispatch
+    ),
     reduxForm({
         form: 'TesterApplication',
         validate,

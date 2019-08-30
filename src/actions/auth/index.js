@@ -1,27 +1,15 @@
-import Amplify, { Auth } from 'aws-amplify';
+import { Auth } from 'aws-amplify';
+import { history } from 'libs/history';
 
 import { SET_AUTH_USER_INFO } from 'actionTypes';
 import { showNotification } from 'actions';
-
-/**************
- * SET CONFIG *
- **************/
-const setConfig = token => {
-    Amplify.configure({
-        API: {
-            graphql_headers: async () => ({
-                'My-Custom-Header': 'my value'
-            })
-        }
-    });
-};
 
 /***********
  * API CALL *
  ************/
 const getUser = () => {
     return Auth.currentAuthenticatedUser({
-        bypassCache: false // Optional, By default is false. If set to true, this call will send a request to Cognito to get the latest user data
+        bypassCache: true // Optional, By default is false. If set to true, this call will send a request to Cognito to get the latest user data
     })
         .then(({ attributes }) => ({
             attributes
@@ -33,23 +21,66 @@ const getSession = () => {
     return Auth.currentSession()
         .then(data => {
             console.log(data);
-            setConfig();
         })
         .catch(err => console.log(err));
 };
 
-const signUp = () => {
+export const signUp = ({
+    username,
+    password,
+    name,
+    email,
+    family_name,
+    given_name,
+    testerId
+}) => {
     return Auth.signUp({
-        username: 'report.nabil@gmail.com',
-        password: 'password',
+        username,
+        password,
         attributes: {
             name: 'report.nabil@gmail.com',
             email: 'report.nabil@gmail.com',
+            family_name: 'Nabil',
+            given_name: 'Ahmad',
             'custom:testerId': '123'
         }
     })
         .then(data => console.log(data))
         .catch(err => console.log(err));
+};
+
+export const testerSignUp = ({ id, email, firstName, surname }) => {
+    return Auth.signUp({
+        username: email,
+        password: Math.random()
+            .toString(36)
+            .substring(4),
+        temporaryPassword: Math.random()
+            .toString(36)
+            .substring(4),
+        attributes: {
+            name: firstName,
+            email,
+            family_name: firstName,
+            given_name: surname,
+            'custom:testerId': id
+        }
+    })
+        .then(data => console.log('testerSignUp', data))
+        .catch(err => console.log(err));
+};
+
+export const signIn = () => {
+    return async dispatch => {
+        const res = await Auth.signIn({
+            username: 'ahmad.nabil@echotechsys.com',
+            password: 'password'
+        })
+            .then(data => console.log('After signIn: ', data))
+            .catch(err => console.log(err));
+
+        console.log('res', res);
+    };
 };
 
 const changePassword = ({ oldPassword, newPassword }) => {
@@ -88,5 +119,17 @@ export const updateAuthUserPassword = payload => {
             console.log('password change error', res, res.message, res.code);
             dispatch(showNotification({ type: 'error', message: res.message }));
         }
+    };
+};
+
+export const logoutUser = () => {
+    console.log('LOG OUT USER');
+    return async dispatch => {
+        Auth.signOut()
+            .then(data => {
+                console.log(data);
+                history.push('/');
+            })
+            .catch(err => console.log(err));
     };
 };

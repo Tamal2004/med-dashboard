@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Amplify from 'aws-amplify';
 import API from '@aws-amplify/api';
 import PubSub from '@aws-amplify/pubsub';
 import Auth from '@aws-amplify/auth';
@@ -30,8 +29,6 @@ import { setAuthUserInfo } from 'actions';
 import { history } from 'libs/history';
 import App from './App';
 
-Amplify.configure(config);
-Auth.configure(config);
 Auth.configure(config);
 API.configure(config);
 PubSub.configure(config);
@@ -43,21 +40,22 @@ class IndexApp extends Component {
     }
 
     render() {
+        const {
+            setAuthUserInfo,
+            auth: { email }
+        } = this.props;
+
         return (
             <Router history={history}>
                 <MuiThemeProvider theme={theme}>
                     <CssBaseline />
                     <Authenticator
+                        authState='signUp'
                         amplifyConfig={config}
-                        authState={
-                            history.location.pathname.trim() ===
-                            '/tester-application-form'
-                                ? 'signUp'
-                                : 'signIn'
-                        }
                         onStateChange={authState =>
                             authState === 'signedIn' &&
-                            this.props.setAuthUserInfo()
+                            !email &&
+                            setAuthUserInfo()
                         }
                         hide={[
                             Greetings,
@@ -77,11 +75,13 @@ class IndexApp extends Component {
     }
 }
 
+const mapState = ({ auth }) => ({ auth });
+
 const mapDispatch = {
     setAuthUserInfo
 };
 
 export default connect(
-    null,
+    mapState,
     mapDispatch
 )(IndexApp);

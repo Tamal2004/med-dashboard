@@ -43,3 +43,13 @@ export const RemoveTester = `mutation RemoveTester($input: DeleteTesterInput!) {
   }
 }
 `;
+
+export const CreateTester = `mutation CreateTester($input: CreateTesterInput!) {
+  createTester(input: $input) {
+    id
+    firstName
+    surname
+    email
+  }
+}`;
+
