@@ -7,7 +7,6 @@ import { SET_AUTH_USER_INFO } from 'actionTypes';
 const authReducer = (state = initialState, { type, payload, ...action }) => {
     switch (type) {
         case SET_AUTH_USER_INFO: {
-            console.log('SET_AUTH_USER_INFO', payload);
             const {
                 'custom:testerId': testerId,
                 email,

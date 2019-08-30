@@ -40,6 +40,11 @@ class IndexApp extends Component {
     }
 
     render() {
+        const {
+            setAuthUserInfo,
+            auth: { email }
+        } = this.props;
+
         return (
             <Router history={history}>
                 <MuiThemeProvider theme={theme}>
@@ -49,7 +54,8 @@ class IndexApp extends Component {
                         amplifyConfig={config}
                         onStateChange={authState =>
                             authState === 'signedIn' &&
-                            this.props.setAuthUserInfo()
+                            !email &&
+                            setAuthUserInfo()
                         }
                         hide={[
                             Greetings,
@@ -69,11 +75,13 @@ class IndexApp extends Component {
     }
 }
 
+const mapState = ({ auth }) => ({ auth });
+
 const mapDispatch = {
     setAuthUserInfo
 };
 
 export default connect(
-    null,
+    mapState,
     mapDispatch
 )(IndexApp);
