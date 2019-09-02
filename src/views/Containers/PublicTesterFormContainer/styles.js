@@ -38,5 +38,8 @@ export default makeStyles(theme => ({
     },
     leftIcon: {
         fill: 'rgba(0, 0, 0, 0.87)'
+    },
+    pointer: {
+        cursor: 'pointer'
     }
 }));
