@@ -23,6 +23,8 @@ import { GridContainer, GridItem, NavigateButton } from 'components';
 
 import { updateAuthUserPassword } from 'actions';
 
+import DeleteAccount from './DeleteAccount';
+
 const useStyles = makeStyles(theme => ({
 	alignCenter: {
 		textAlign: 'center'
@@ -33,13 +35,6 @@ const useStyles = makeStyles(theme => ({
 	form: {
 		width: '100%', // Fix IE 11 issue.
 		marginTop: theme.spacing(1)
-	},
-	deleteBtn: {
-		backgroundColor: '#d43c31',
-		marginTop: 20,
-		'&:hover': {
-			backgroundColor: '#af332a'
-		}
 	}
 }));
 
@@ -129,12 +124,7 @@ const ProfileHome = props => {
 					</ListItem>
 					{isTester && !values.showPasswordField && (
 						<ListItem>
-							<NavigateButton
-								className={c.deleteBtn}
-								color='secondary'
-							>
-								DELETE ACCOUNT
-							</NavigateButton>
+							<DeleteAccount />
 						</ListItem>
 					)}
 

@@ -9,14 +9,13 @@ import { ModalHeader, ModalFooter, ModalContent, Button } from 'components';
 
 const useStyles = makeStyles(({ palette, spacing, breakpoints }) => ({
     root: {
-        width: breakpoints.values.sm,
-        paddingLeft: `${spacing(2)}px !important`,
-        paddingRight: `${spacing(2)}px !important`
+        width: 'auto',
+        padding: `${spacing(4)}px`
     },
     footer: {
-        padding: `${spacing(4)}px !important`,
-        paddingBottom: `${spacing(2)}px !important`,
-        paddingTop: `${spacing(2)}px !important`,
+        padding: `${spacing(4)}px`,
+        paddingBottom: `${spacing(2)}px`,
+        paddingTop: `${spacing(2)}px`,
         display: 'flex',
         justifyContent: 'space-between'
     }
@@ -53,7 +52,10 @@ const ConfirmationModal = ({
                     variant='contained'
                     color='primary'
                     size='large'
-                    onClick={onSubmit}
+                    onClick={e => {
+                        onSubmit();
+                        onClose();
+                    }}
                 >
                     {submitText}
                 </Button>
@@ -66,7 +68,7 @@ ConfirmationModal.defaultProps = {
     title: 'Edit',
     prompt: 'Are you sure?',
     cancelText: 'No',
-    submitText: 'Yes',
+    submitText: 'Yes'
 };
 
 ConfirmationModal.propTypes = {

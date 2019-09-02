@@ -348,7 +348,9 @@ class Table extends Component {
             <Fragment>
                 {!data.length ? (
                     <div className={c.nullRoot}>
-                        <Typography variant='h6'>{noResultsText}</Typography>
+                        <Typography variant='subtitle2'>
+                            {noResultsText}
+                        </Typography>
                     </div>
                 ) : (
                     <MuiTable className={c.root}>
@@ -388,9 +390,7 @@ class Table extends Component {
                                                 hasCheckAction && (
                                                     <CheckAllAction
                                                         onClick={checkAll}
-                                                        dataLength={
-                                                            data.length
-                                                        }
+                                                        dataLength={data.length}
                                                     />
                                                 )}
                                         </TableCell>

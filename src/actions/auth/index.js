@@ -176,6 +176,54 @@ export const createUserByAdmin = ({
     };
 };
 
+export const deleteUserByAdmin = email => {
+    const payload = {
+        UserPoolId: REACT_APP_COGNITO_USER_POOL_ID,
+        Username: email
+    };
+    return async dispatch => {
+        return await COGNITO_CLIENT.adminDeleteUser(payload, (err, data) => {
+            if (err) {
+                dispatch(
+                    showNotification({ type: 'error', message: err.message })
+                );
+            } else {
+                dispatch(
+                    showNotification({
+                        type: 'success',
+                        message: 'Successfully deleted!'
+                    })
+                );
+                history.push('/tester');
+            }
+        });
+    };
+};
+
+export const deleteOwnAccount = email => {
+    const payload = {
+        UserPoolId: REACT_APP_COGNITO_USER_POOL_ID,
+        Username: email
+    };
+    return async dispatch => {
+        return await COGNITO_CLIENT.adminDeleteUser(payload, (err, data) => {
+            if (err) {
+                dispatch(
+                    showNotification({ type: 'error', message: err.message })
+                );
+            } else {
+                dispatch(
+                    showNotification({
+                        type: 'success',
+                        message: 'Account deleted!'
+                    })
+                );
+                dispatch(logoutUser());
+            }
+        });
+    };
+};
+
 export const setAuthUserInfo = () => {
     return async dispatch => {
         const res = await getUser();

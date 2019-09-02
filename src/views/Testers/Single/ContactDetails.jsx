@@ -15,7 +15,6 @@ import { selectTesterId } from 'selectors';
 // Actions
 import { updateTester } from 'actions';
 
-
 const useStyles = makeStyles(theme => ({
     manualGrid: {
         textAlign: 'right',
@@ -142,7 +141,6 @@ const mapState = state => ({
 const mapDispatch = { change };
 
 const validate = (values, { hasManualAddress }) => {
-    console.log('arstar', values)
     const required = ['email', 'phone'];
 
     if (!hasManualAddress) required.push('address');
@@ -156,7 +154,6 @@ const onSubmit = (
     dispatch,
     { id }
 ) => {
-    console.log('phone', phone)
     let addressDetails = {};
 
     if (manualAddress) {
@@ -202,7 +199,7 @@ const _ContactDetails = compose(
         enableReinitialize: true,
         keepDirtyOnReinitialize: true,
         validate,
-        onSubmit,
+        onSubmit
     })
 )(ContactDetails);
 

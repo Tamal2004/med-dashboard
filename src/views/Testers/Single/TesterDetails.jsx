@@ -37,7 +37,7 @@ import {
 } from 'selectors';
 
 // Actions
-import { updateTester } from 'actions';
+import { updateTester, deleteUserByAdmin } from 'actions';
 
 // Normalizers
 import { normalizeDob } from 'normalizers';
@@ -72,23 +72,24 @@ const TesterDetails = ({
     title,
     firstName,
     surname,
+    reset,
+    isTester,
+    email,
+    handleSubmit,
     handleMailModal,
     handleConfirmationModal,
-    reset,
-    handleSubmit,
-    isTester
+    deleteUserByAdmin
 }) => {
     const [isEditing, setEditing] = useState(false);
     const c = useStyles();
 
     const confirmationProps = {
         title: 'Confirmation',
-        promptText: 'Are you sure you want to delete this user?',
+        promptText: `Are you sure you want to delete ${email}?`,
         cancelText: 'Cancel',
         submitText: 'Delete',
-        onSubmit: () => console.log('astarst')
+        onSubmit: () => deleteUserByAdmin(email)
     };
-
 
     return (
         <EditableCard
@@ -266,7 +267,9 @@ const TesterDetails = ({
                 ) : (
                     !isTester && (
                         <IconedButton
-                            onClick={() => handleConfirmationModal(confirmationProps)}
+                            onClick={() =>
+                                handleConfirmationModal(confirmationProps)
+                            }
                             Icon={DeleteIcon}
                         >
                             Delete Tester
@@ -280,6 +283,7 @@ const TesterDetails = ({
 
 const mapState = state => {
     const formSelector = formValueSelector('TesterDetails');
+    const contactSelector = formValueSelector('ContactDetails');
     const titles = selectTitles(state);
     return {
         id: selectTesterId(state),
@@ -292,11 +296,14 @@ const mapState = state => {
         ethnicities: selectEthnicities(state),
         title: mapFromValue(titles, formSelector(state, 'title')),
         firstName: formSelector(state, 'firstName'),
-        surname: formSelector(state, 'surname')
+        surname: formSelector(state, 'surname'),
+        email: contactSelector(state, 'email')
     };
 };
 
-const mapDispatch = {};
+const mapDispatch = {
+    deleteUserByAdmin
+};
 
 const mapModal = {
     handleMailModal: TesterMailModal,
@@ -330,7 +337,10 @@ const onSubmit = ({ age, dob, ...values }, dispatch, { id }) => {
 };
 
 const _TesterDetails = compose(
-    connect(mapState),
+    connect(
+        mapState,
+        mapDispatch
+    ),
     withModal(mapModal),
     reduxForm({
         form: 'TesterDetails',
