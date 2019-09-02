@@ -105,3 +105,14 @@ export const normalizeProject = ({
         }
     };
 };
+
+export const normalizeProjectReports = projectReports => {
+
+    const { items} = projectReports;
+
+    console.log('reports', projectReports);
+
+
+    return {};
+
+}

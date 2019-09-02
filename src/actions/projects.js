@@ -11,7 +11,8 @@ import {
     UpdateProject,
     ListProjects,
     ListProjectClients,
-    ListProjectUsers
+    ListProjectUsers,
+    ListProjectReports
 } from 'graphql/project';
 
 // Normalizers
@@ -19,7 +20,8 @@ import {
     normalizeProjects,
     normalizeProject,
     normalizeUpdatedProject,
-    normalizeProjectUsers
+    normalizeProjectUsers,
+    normalizeProjectReports,
 } from 'normalizers';
 
 // Action Types
@@ -199,5 +201,25 @@ export const listProjectUsers = () => async dispatch => {
         dispatch(listProjectUsersAction(SUCCESS, normalizeProjectUsers(items)));
     } else {
         dispatch(listProjectUsersAction(FAIL));
+    }
+};
+
+
+const listProjectReportsAction = (async, payload = []) => ({
+    type: LIST_PROJECT_USERS,
+    async,
+    payload
+});
+
+export const listProjectReports = () => async dispatch => {
+    dispatch(listProjectReportsAction(REQUEST));
+    const {
+        data: { listProjects: { items: listProjects = [] } = {}, error = null }
+    } = await API.graphql(graphqlOperation(ListProjectReports));
+
+    if (!error) {
+        dispatch(listProjectReportsAction(SUCCESS, normalizeProjectReports(listProjects)));
+    } else {
+        dispatch(listProjectReportsAction(FAIL));
     }
 };
