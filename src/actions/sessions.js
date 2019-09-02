@@ -17,6 +17,7 @@ import {
     REMOVE_SESSION,
     LIST_INCOMPLETE_PROJECTS
 } from 'actionTypes';
+import { showNotification } from './notification';
 
 const listIncompleteProjectsAction = (async, payload = []) => ({
     type: LIST_INCOMPLETE_PROJECTS,
@@ -53,8 +54,20 @@ export const createSession = input => async dispatch => {
         dispatch(
             createSessionAction(SUCCESS, normalizeSessionTester(createSession))
         );
+        dispatch(
+            showNotification({
+                type: 'success',
+                message: 'Session created successfully!'
+            })
+        );
     } else {
         dispatch(createSessionAction(FAIL));
+        dispatch(
+            showNotification({
+                type: 'error',
+                message: 'Failed! Something went wrong!'
+            })
+        );
     }
 };
 
@@ -74,8 +87,20 @@ export const updateSession = input => async dispatch => {
         dispatch(
             updateSessionAction(SUCCESS, normalizeSessionTester(updateSession))
         );
+        dispatch(
+            showNotification({
+                type: 'success',
+                message: 'Session updated successfully!'
+            })
+        );
     } else {
         dispatch(updateSessionAction(FAIL));
+        dispatch(
+            showNotification({
+                type: 'error',
+                message: 'Failed! Something went wrong!'
+            })
+        );
     }
 };
 
@@ -93,7 +118,19 @@ export const removeSession = id => async dispatch => {
 
     if (!error) {
         dispatch(removeSessionAction(SUCCESS, sessionId));
+        dispatch(
+            showNotification({
+                type: 'success',
+                message: 'Session removed successfully!'
+            })
+        );
     } else {
         dispatch(removeSessionAction(FAIL));
+        dispatch(
+            showNotification({
+                type: 'error',
+                message: 'Remove failed!'
+            })
+        );
     }
 };

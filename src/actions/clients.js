@@ -26,6 +26,7 @@ import {
     CREATE_CLIENT,
     UPDATE_CLIENT
 } from 'actionTypes';
+import { showNotification } from './notification';
 
 const fetchClientAction = (async, payload = []) => ({
     type: FETCH_CLIENT,
@@ -79,8 +80,20 @@ export const createClient = input => async dispatch => {
 
     if (!error) {
         dispatch(createClientAction(SUCCESS, normalizeClient(createClient)));
+        dispatch(
+            showNotification({
+                type: 'success',
+                message: 'Created successfully!'
+            })
+        );
     } else {
         dispatch(createClientAction(FAIL));
+        dispatch(
+            showNotification({
+                type: 'error',
+                message: 'Something went wrong!'
+            })
+        );
     }
 };
 
@@ -98,7 +111,19 @@ export const updateClient = input => async dispatch => {
 
     if (!error) {
         dispatch(updateClientAction(SUCCESS, normalizeClient(updateClient)));
+        dispatch(
+            showNotification({
+                type: 'success',
+                message: 'Updated successfully!'
+            })
+        );
     } else {
         dispatch(updateClientAction(FAIL));
+        dispatch(
+            showNotification({
+                type: 'error',
+                message: 'Update failed'
+            })
+        );
     }
 };

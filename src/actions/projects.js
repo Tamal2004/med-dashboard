@@ -21,7 +21,7 @@ import {
     normalizeProject,
     normalizeUpdatedProject,
     normalizeProjectUsers,
-    normalizeProjectReports,
+    normalizeProjectReports
 } from 'normalizers';
 
 // Action Types
@@ -36,6 +36,7 @@ import {
     LIST_PROJECT_CLIENTS,
     LIST_PROJECT_USERS
 } from 'actionTypes';
+import { showNotification } from './notification';
 
 const createProjectAction = async => ({
     type: CREATE_PROJECT,
@@ -50,9 +51,21 @@ export const createProject = project => async dispatch => {
 
     if (!res.error) {
         dispatch(createProjectAction(SUCCESS));
+        dispatch(
+            showNotification({
+                type: 'success',
+                message: 'Project created successfully!'
+            })
+        );
         history.push('/project');
     } else {
         dispatch(createProjectAction(FAIL));
+        dispatch(
+            showNotification({
+                type: 'error',
+                message: 'Failed! Something went wrong!'
+            })
+        );
     }
 };
 
@@ -109,8 +122,20 @@ export const updateProject = project => async dispatch => {
         dispatch(initialize('ProjectManagement', projectManagement));
         dispatch(initialize('ClientFeedback', clientFeedback));
         dispatch(updateProjectAction(SUCCESS, projectData));
+        dispatch(
+            showNotification({
+                type: 'success',
+                message: 'Project updated successfully!'
+            })
+        );
     } else {
         dispatch(updateProjectAction(FAIL));
+        dispatch(
+            showNotification({
+                type: 'error',
+                message: 'Failed! Something went wrong!'
+            })
+        );
     }
 };
 
@@ -204,7 +229,6 @@ export const listProjectUsers = () => async dispatch => {
     }
 };
 
-
 const listProjectReportsAction = (async, payload = []) => ({
     type: LIST_PROJECT_USERS,
     async,
@@ -218,7 +242,12 @@ export const listProjectReports = () => async dispatch => {
     } = await API.graphql(graphqlOperation(ListProjectReports));
 
     if (!error) {
-        dispatch(listProjectReportsAction(SUCCESS, normalizeProjectReports(listProjects)));
+        dispatch(
+            listProjectReportsAction(
+                SUCCESS,
+                normalizeProjectReports(listProjects)
+            )
+        );
     } else {
         dispatch(listProjectReportsAction(FAIL));
     }
