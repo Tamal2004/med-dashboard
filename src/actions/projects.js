@@ -12,7 +12,7 @@ import {
     ListProjects,
     ListProjectClients,
     ListProjectUsers,
-    ListProjectReports
+    ListProjectReport
 } from 'graphql/project';
 
 // Normalizers
@@ -21,7 +21,7 @@ import {
     normalizeProject,
     normalizeUpdatedProject,
     normalizeProjectUsers,
-    normalizeProjectReports,
+    normalizeProjectReport
 } from 'normalizers';
 
 // Action Types
@@ -34,7 +34,9 @@ import {
     UPDATE_PROJECT,
     LIST_PROJECTS,
     LIST_PROJECT_CLIENTS,
-    LIST_PROJECT_USERS
+    LIST_PROJECT_USERS,
+    FETCH_PROJECT_REPORT,
+    RESET_PROJECT_REPORT
 } from 'actionTypes';
 
 const createProjectAction = async => ({
@@ -204,22 +206,33 @@ export const listProjectUsers = () => async dispatch => {
     }
 };
 
-
-const listProjectReportsAction = (async, payload = []) => ({
-    type: LIST_PROJECT_USERS,
+const fetchProjectReportsAction = (async, payload = []) => ({
+    type: FETCH_PROJECT_REPORT,
     async,
     payload
 });
 
-export const listProjectReports = () => async dispatch => {
-    dispatch(listProjectReportsAction(REQUEST));
+export const fetchProjectReport = (
+    id,
+    testerIndices = []
+) => async dispatch => {
+    dispatch(fetchProjectReportsAction(REQUEST));
     const {
-        data: { listProjects: { items: listProjects = [] } = {}, error = null }
-    } = await API.graphql(graphqlOperation(ListProjectReports));
+        data: { getProject = {}, error = null }
+    } = await API.graphql(graphqlOperation(ListProjectReport, { id }));
 
     if (!error) {
-        dispatch(listProjectReportsAction(SUCCESS, normalizeProjectReports(listProjects)));
+        dispatch(
+            fetchProjectReportsAction(
+                SUCCESS,
+                normalizeProjectReport(getProject, testerIndices)
+            )
+        );
     } else {
-        dispatch(listProjectReportsAction(FAIL));
+        dispatch(fetchProjectReportsAction(FAIL));
     }
 };
+
+export const resetProjectReport = () => ({
+    type: RESET_PROJECT_REPORT
+});

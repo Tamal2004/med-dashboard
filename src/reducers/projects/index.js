@@ -4,12 +4,15 @@ import initialState from './initialState';
 // Action Types
 import {
     SUCCESS,
+    REQUEST,
     FETCH_PROJECT,
     UPDATE_PROJECT,
     LIST_PROJECTS,
     LIST_PROJECT_CLIENTS,
     LIST_PROJECT_USERS,
-    REMOVE_SESSION
+    REMOVE_SESSION,
+    FETCH_PROJECT_REPORT,
+    RESET_PROJECT_REPORT
 } from 'actionTypes';
 
 const projectsReducer = (
@@ -20,6 +23,14 @@ const projectsReducer = (
     switch (type) {
         case FETCH_PROJECT: {
             return isSuccess ? { ...state, individual: payload } : state;
+        }
+
+        case FETCH_PROJECT_REPORT: {
+            return isSuccess ? { ...state, report: payload } : state;
+        }
+
+        case RESET_PROJECT_REPORT: {
+            return { ...state, report: {} };
         }
 
         case UPDATE_PROJECT: {

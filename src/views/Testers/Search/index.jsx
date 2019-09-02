@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import classNames from 'clsx';
@@ -24,7 +24,7 @@ import { selectTestersSearch } from 'selectors';
 // Actions
 import { listTestersSearch } from 'actions';
 
-const useStyles = makeStyles(({ spacing}) => ({
+const useStyles = makeStyles(({ spacing }) => ({
     gridDistance: {
         marginBottom: spacing(4)
     },
@@ -61,23 +61,32 @@ const GridWrapper = ({ className, children }) => {
 
 const TesterSearch = ({ testers, handleMailModal, listTestersSearch }) => {
     const c = useStyles();
-    const [searchInput, setSearchInput] = useState('');
+    const [input, setInput] = useState('');
+    const [filterCounter, setFilterCounter] = useState(0); // Initial calls
+    const [filters, setFilters] = useState('');
     const [isLoading, setLoading] = useState(false);
     const [page, setPage] = useState(1);
 
     const pageStep = 10;
     const totalPages =
-        Math.floor(testers.length / pageStep) +
-            !!(testers.length % pageStep) || 1;
+        Math.floor(testers.length / pageStep) + !!(testers.length % pageStep) ||
+        1;
 
-    const testerSearch = (filterValues = {}) => {
-    	console.log('from parent', filterValues);
+    const search = () => {
+        console.log('from parent', filters, input);
 
-        // setLoading(true);
-        // listTestersSearch(searchInput).then(() => setLoading(false));
+        setLoading(true);
+        listTestersSearch(filters, input).then(() => setLoading(false));
     };
 
+    useEffect(() => {
+        if (filterCounter < 3) setFilterCounter(filterCounter + 1);
+        else search();
+    }, [filters]);
 
+    const handleFilters = filters => {
+        setFilters(filters);
+    };
 
     return (
         <Fragment>
@@ -85,12 +94,9 @@ const TesterSearch = ({ testers, handleMailModal, listTestersSearch }) => {
                 <GridItem md={3} />
                 <GridItem md={6}>
                     <SearchInput
-                        placeholder='Search by Tester Name or Email'
-                        handleText={({ target: { value } }) =>
-                            setSearchInput(value)
-                        }
-                        value={searchInput}
-                        handleClick={() => testerSearch()}
+                        placeholder='Search by Tester Name, Email or Town'
+                        handleChange={text => setInput(text)}
+                        handleClick={() => search()}
                     />
                 </GridItem>
                 <GridItem md={3}>
@@ -104,7 +110,9 @@ const TesterSearch = ({ testers, handleMailModal, listTestersSearch }) => {
 
             <GridWrapper className={c.filterGridWrapper}>
                 <GridItem md={3}>
-                    <SearchFilter handleFilter={testerSearch} />
+                    <SearchFilter
+                        handleFilter={filters => handleFilters(filters)}
+                    />
                 </GridItem>
                 <GridItem md={9}>
                     {isLoading ? (

@@ -2,10 +2,13 @@ import AWS from 'aws-sdk';
 import { Auth } from 'aws-amplify';
 import { history } from 'libs/history';
 import { reset } from 'redux-form';
+
 //Local
 import { SET_AUTH_USER_INFO } from 'actionTypes';
 import { showNotification } from 'actions';
 import config from '../../aws-exports';
+import { composeNewAccount } from 'libs';
+import { sendMail } from 'services';
 
 const {
     REACT_APP_COGNITO_USER_POOL_ID,
@@ -84,6 +87,7 @@ export const testerSignUp = ({ id, email, firstName, surname }) => {
         })
             .then(() => {
                 //TODO: send an email with generated password, variable: PASS
+                sendMail(composeNewAccount());
                 dispatch(
                     showNotification({
                         type: 'success',

@@ -49,3 +49,9 @@ export const selectProjectList = createCachedSelector(
     selectProjects,
     ({ list }) => generateProjectList(list)
 )(() => 'placeholder');
+
+// Project Report
+export const selectProjectReport = createCachedSelector(
+    selectProjects,
+    ({ report }) => report
+)(() => 'placeholder');

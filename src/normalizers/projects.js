@@ -1,4 +1,4 @@
-import { deserializeDate } from 'libs';
+import { deserializeDate, calculateAge } from 'libs';
 
 export const normalizeProjectUsers = users =>
     users.map(({ firstName, lastName }) => `${firstName} ${lastName}`);
@@ -106,13 +106,36 @@ export const normalizeProject = ({
     };
 };
 
-export const normalizeProjectReports = projectReports => {
+export const normalizeProjectReport = (
+    { id, reference, title, sessions: { items: sessions = [] } = {} },
+    testerIndices
+) => {
+    const reportData = sessions
+        .map(
+            ({
+                tester: {
+                    id: testerId,
+                    firstName,
+                    surname,
+                    phone,
+                    dob,
+                    gender,
+                    ...restTester
+                },
+                date,
+                ...restReport
+            }) => ({
+                testerId,
+                name: `${firstName} ${surname}`,
+                phoneNumber: phone,
+                age: calculateAge(dob),
+                sex: gender,
+                date: deserializeDate(date),
+                ...restTester,
+                ...restReport
+            })
+        )
+        .filter((datum, idx) => testerIndices.includes(String(idx)));
 
-    const { items} = projectReports;
-
-    console.log('reports', projectReports);
-
-
-    return {};
-
-}
+    return { id, reference, title, reportData };
+};

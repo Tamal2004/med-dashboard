@@ -3,5 +3,6 @@ export default {
     list: [],
     search: [],
     clients: [],
-    users: []
+    users: [],
+    report: {}
 };

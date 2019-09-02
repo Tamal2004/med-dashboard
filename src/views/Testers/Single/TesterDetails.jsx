@@ -260,26 +260,30 @@ const TesterDetails = ({
                 isCard
                 active={false}
             />
-            <CardDivider />
+            {!isTester ? <CardDivider /> : isEditing && <CardDivider />}
             <div className={c.footer}>
-                <ButtonGroup color='secondary'>
-                    <IconedButton
-                        color='secondary'
-                        onClick={() => handleMailModal(requestMailProps)}
-                        Icon={RequestIcon}
-                        size='small'
-                    >
-                        Request Update
-                    </IconedButton>
-                    <IconedButton
-                        color='secondary'
-                        onClick={() => handleMailModal(mailProps)}
-                        Icon={MailIcon}
-                        size='small'
-                    >
-                        Email Tester
-                    </IconedButton>
-                </ButtonGroup>
+                {!isTester ? (
+                    <ButtonGroup color='secondary'>
+                        <IconedButton
+                            color='secondary'
+                            onClick={() => handleMailModal(requestMailProps)}
+                            Icon={RequestIcon}
+                            size='small'
+                        >
+                            Request Update
+                        </IconedButton>
+                        <IconedButton
+                            color='secondary'
+                            onClick={() => handleMailModal(mailProps)}
+                            Icon={MailIcon}
+                            size='small'
+                        >
+                            Email Tester
+                        </IconedButton>
+                    </ButtonGroup>
+                ) : (
+                    <div />
+                )}
                 {isEditing ? (
                     <IconedButton
                         Icon={EditIcon}

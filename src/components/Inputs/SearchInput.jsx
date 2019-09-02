@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
@@ -15,9 +15,8 @@ function SearchInput({ ...props }) {
         labelText,
         placeholder,
         inputType,
-        value,
         isDisabled,
-        handleText,
+        handleChange = () => {},
         isAmend,
         required,
         multiline,
@@ -27,7 +26,8 @@ function SearchInput({ ...props }) {
         handleClick,
         color
     } = props;
-
+    const [value, setValue] = useState('');
+    const handleText = ({ target: { value = '' } } = {}) => setValue(value);
     return (
         <TextField
             fullWidth
@@ -50,7 +50,7 @@ function SearchInput({ ...props }) {
                     className: textArea ? classes.textArea : ''
                 },
                 endAdornment: (
-                    <InputAdornment position='end' onClick={handleClick}>
+                    <InputAdornment position='end' onClick={() => handleClick(value)}>
                         <IconButton color={color} edge='end'>
                             <Adornment color={color} />
                         </IconButton>
@@ -74,7 +74,8 @@ function SearchInput({ ...props }) {
             placeholder={placeholder}
             value={value}
             onChange={handleText}
-            disabled={isDisabled ? true : false}
+            onBlur={() => handleChange(value)}
+            disabled={isDisabled}
         />
     );
 }

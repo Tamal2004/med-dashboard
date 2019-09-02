@@ -20,7 +20,7 @@ import { CheckFilterBar } from 'components/FilterComponents';
 // Actions
 import { listProjects } from 'actions';
 
-const useStyles = makeStyles(({ spacing })=> ({
+const useStyles = makeStyles(({ spacing }) => ({
     buttonGridStyle: {
         display: 'flex',
         justifyContent: 'flex-end',
@@ -80,10 +80,7 @@ const ProjectHome = ({ projects, listProjects }) => {
             <GridItem md={4}>
                 <SearchInput
                     placeholder='Search by name or project reference'
-                    handleText={({ target: { value } }) =>
-                        setSearchInput(value)
-                    }
-                    value={searchInput}
+                    handleChange={value => setSearchInput(value)}
                     handleClick={handleSearch}
                 />
             </GridItem>
@@ -103,12 +100,14 @@ const ProjectHome = ({ projects, listProjects }) => {
                             noResultText='No Projects'
                             itemsPerPage={pageStep}
                         />
-                        {!!projects.length && <div className={c.footer}>
-                            <PaginationBase
-                                handlePage={page => setPage(page)}
-                                totalPages={totalPages}
-                            />
-                        </div>}
+                        {!!projects.length && (
+                            <div className={c.footer}>
+                                <PaginationBase
+                                    handlePage={page => setPage(page)}
+                                    totalPages={totalPages}
+                                />
+                            </div>
+                        )}
                     </Fragment>
                 )}
             </GridItem>

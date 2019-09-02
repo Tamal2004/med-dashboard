@@ -49,8 +49,5 @@ export const generateProjectSessions = projectSessions =>
 
 export const generateProjectProfiles = projectProfiles =>
     projectProfiles.map(({ profile }) => ({
-        Profile: { editable: true, Component: profile },
-        actions: {
-            deleteAction: idx => console.log('delete', idx)
-        }
+        Profile: { editable: true, Component: profile }
     }));

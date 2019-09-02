@@ -35,7 +35,7 @@ const useStyles = makeStyles(({ spacing }) => ({
 const ContactNotes = ({
     contactNotes,
     handleContactsModal,
-                          handleContactNotesEditModal,
+    handleContactNotesEditModal,
     removeContactNote
 }) => {
     const [page, setPage] = useState(1);

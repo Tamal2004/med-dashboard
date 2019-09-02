@@ -53,11 +53,10 @@ const ProfileDetails = ({
     handleProfileEditModal
 }) => {
     const [page, setPage] = useState(1);
-    const [input, setInput] = useState('');
     const [newProfile, openNewProfileForm] = useState(false);
     const c = useStyles();
 
-    const addProfile = () => {
+    const addProfile = (input) => {
         const profiles = {
             id,
             profiles: [
@@ -66,7 +65,6 @@ const ProfileDetails = ({
             ]
         };
         updateProject(profiles);
-        setInput('');
     };
 
     const removeProfile = idx => {
@@ -79,9 +77,9 @@ const ProfileDetails = ({
     };
 
     // Inject removeProfile
-    const profileTable = data.map(({ actions, ...rest }) => ({
-        ...rest,
-        actions: { ...actions, deleteAction: removeProfile }
+    const profileTable = data.map((profile) => ({
+        ...profile,
+        actions: { deleteAction: removeProfile }
     }));
 
     const toggleNewProfileForm = () => {
@@ -108,8 +106,6 @@ const ProfileDetails = ({
                         Adornment={AddIcon}
                         placeholder='Profile...'
                         color='secondary'
-                        handleText={({ target: { value } }) => setInput(value)}
-                        value={input}
                         handleClick={addProfile}
                     />
                 )}

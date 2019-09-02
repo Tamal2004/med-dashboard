@@ -88,6 +88,7 @@ const TesterDetails = ({
                                     `/project/report?id=${projectId}&type=named${reportTestersParameter}`
                                 )
                             }
+                            disabled={!selectedTesters.length}
                         >
                             Named Report
                         </IconedButton>
@@ -99,6 +100,7 @@ const TesterDetails = ({
                                     `/project/report?id=${projectId}&type=anonymous${reportTestersParameter}`
                                 )
                             }
+                            disabled={!selectedTesters.length}
                         >
                             Anonymous Report
                         </IconedButton>

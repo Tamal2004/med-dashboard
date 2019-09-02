@@ -32,9 +32,9 @@ class App extends AuthPiece {
 
     showComponent(theme) {
         return (
-            <Suspense fallback={<BarLoader />}>
+            <Suspense fallback={<BarLoader fullScreen />}>
                 <ApolloProvider client={client1}>
-                    {this.state.loading ? <BarLoader /> : <Routes />}
+                    {this.state.loading ? <BarLoader fullScreen /> : <Routes />}
                 </ApolloProvider>
             </Suspense>
         );

@@ -3,7 +3,7 @@ import { initialize } from 'redux-form';
 import { gql } from 'apollo-boost';
 
 // Local
-import { history, today } from 'libs';
+import { history, today, deserializeDate } from 'libs';
 import { client2 } from '../App/client';
 
 // Normalizers
@@ -59,7 +59,6 @@ export const createTester = tester => async dispatch => {
 
     if (!res.error) {
         dispatch(createTesterAction(SUCCESS));
-        // Todo: do mail stuff here and tester create
         history.push('/tester');
     } else {
         dispatch(createTesterAction(FAIL));
@@ -112,11 +111,112 @@ const listTestersSearchAction = (async, payload = []) => ({
     payload
 });
 
-export const listTestersSearch = () => async dispatch => {
+const composeFilters = filters => {
+    // Local: DB
+    const formatFilters = {
+        'marital-statuses': 'maritalStatus',
+        ethnicities: 'ethnicity',
+        'business-sectors': 'employmentSector',
+        'employee-counts': 'employeeCount',
+        'employment-statuses': 'employmentStatus',
+        children: 'hasChildren'
+    };
+
+    const localFilters = Object.keys(formatFilters);
+
+    const calculateDob = age => {
+        const now = today();
+
+        let nowArray = now.split('-');
+        nowArray[0] = nowArray[0] - age;
+
+        return nowArray.join('-');
+    };
+
+    return Object.entries(filters).reduce((acm, [key, values]) => {
+        if (!!values.length) {
+            let filterKey = key;
+            let filterValues = values;
+
+            if (localFilters.includes(key)) filterKey = formatFilters[key];
+
+            if (key === 'children') {
+                return [
+                    ...acm,
+                    {
+                        or: filterValues.map(filterValue => ({
+                            [filterKey]: { eq: filterValue === 'Yes' }
+                        }))
+                    }
+                ];
+            }
+
+            if (key === 'disability') {
+                const query = {
+                    [filterKey]: { between: ['A', 'Z'] }
+                };
+
+                return [
+                    ...acm,
+                    {
+                        or: values.map(value =>
+                            value === 'Yes' ? query : { not: query }
+                        )
+                    }
+                ];
+            }
+
+            if (key === 'age') {
+                return [
+                    ...acm,
+                    {
+                        or: {
+                            dob: {
+                                between: [
+                                    calculateDob(filterValues[1]),
+                                    calculateDob(filterValues[0])
+                                ]
+                            }
+                        }
+                    }
+                ];
+            }
+
+            return [
+                ...acm,
+                {
+                    or: filterValues.map(filterValue => ({
+                        [filterKey]: { contains: filterValue }
+                    }))
+                }
+            ];
+        } else return acm;
+    }, []);
+};
+
+export const listTestersSearch = (filters, search) => async dispatch => {
+    const searchFilter = search
+        ? [
+              {
+                  or: [
+                      { firstName: { contains: search } },
+                      { surname: { contains: search } },
+                      { email: { contains: search } },
+                      { town: { contains: search } }
+                  ]
+              }
+          ]
+        : [];
+
+    // Compose filters
+    const filter = {
+        and: [...searchFilter, ...composeFilters(filters)]
+    };
+
     dispatch(listTestersSearchAction(REQUEST));
     const {
         data: { listTesters: { items: listTesters = [] } = {}, error = null }
-    } = await API.graphql(graphqlOperation(ListTestersSearch));
+    } = await API.graphql(graphqlOperation(ListTestersSearch, { filter }));
 
     if (!error) {
         dispatch(
