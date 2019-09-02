@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import clsx from 'clsx';
 import AppBar from '@material-ui/core/AppBar';
 import Button from '@material-ui/core/Button';
@@ -8,23 +8,21 @@ import Container from '@material-ui/core/Container';
 // Local
 import styles from './styles';
 import { Logo } from 'assets';
-import { history } from 'libs/history';
+import { Link } from 'components';
 
 const useStyles = styles;
 
 export default function TesterContainer(props) {
     const c = useStyles();
 
-    useEffect(() => {
-        history.push('/');
-    }, []);
-
     return (
         <div className={c.root}>
             <AppBar position='absolute' className={clsx(c.appBar)}>
                 <Toolbar classes={{ root: c.toolbarRoot }}>
                     <div>
-                        <img className={c.logo} src={Logo} alt='WUP' />
+                        <Link to='/'>
+                            <img className={c.logo} src={Logo} alt='WUP' />
+                        </Link>
                     </div>
                     <Button
                         variant='contained'

@@ -78,7 +78,8 @@ const TesterDetails = ({
     handleSubmit,
     handleMailModal,
     handleConfirmationModal,
-    deleteUserByAdmin
+    deleteUserByAdmin,
+    testerId
 }) => {
     const [isEditing, setEditing] = useState(false);
     const c = useStyles();
@@ -88,7 +89,7 @@ const TesterDetails = ({
         promptText: `Are you sure you want to delete ${email}?`,
         cancelText: 'Cancel',
         submitText: 'Delete',
-        onSubmit: () => deleteUserByAdmin(email)
+        onSubmit: () => deleteUserByAdmin(email, testerId)
     };
 
     return (

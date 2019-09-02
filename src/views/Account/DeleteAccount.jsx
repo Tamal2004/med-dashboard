@@ -19,7 +19,12 @@ const useStyles = makeStyles(theme => ({
 	}
 }));
 
-const CreateUser = ({ handleConfirmationModal, deleteOwnAccount, email }) => {
+const DeleteUser = ({
+	handleConfirmationModal,
+	deleteOwnAccount,
+	email,
+	testerId
+}) => {
 	const c = useStyles();
 
 	const confirmationprops = {
@@ -28,7 +33,7 @@ const CreateUser = ({ handleConfirmationModal, deleteOwnAccount, email }) => {
 			'Are you sure you want to delete your account? This action is irreversible.',
 		cancelText: 'Cancel',
 		submitText: 'Delete',
-		onSubmit: () => deleteOwnAccount(email)
+		onSubmit: () => deleteOwnAccount(email, testerId)
 	};
 
 	return (
@@ -46,20 +51,21 @@ const mapModal = {
 	handleConfirmationModal: ConfirmationModal
 };
 
-const mapState = ({ auth: { email } }) => ({
-	email
+const mapState = ({ auth: { email, testerId } }) => ({
+	email,
+	testerId
 });
 
 const mapDispatch = {
 	deleteOwnAccount
 };
 
-const _CreateUser = compose(
+const _DeleteUser = compose(
 	connect(
 		mapState,
 		mapDispatch
 	),
 	withModal(mapModal)
-)(CreateUser);
+)(DeleteUser);
 
-export { _CreateUser as default, _CreateUser as CreateUser };
+export { _DeleteUser as default, _DeleteUser as DeleteUser };

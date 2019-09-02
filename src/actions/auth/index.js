@@ -4,7 +4,8 @@ import { history } from 'libs/history';
 import { reset } from 'redux-form';
 //Local
 import { SET_AUTH_USER_INFO } from 'actionTypes';
-import { showNotification } from 'actions';
+import { showNotification } from '../notification';
+import { removeTester } from '../testers';
 import config from '../../aws-exports';
 
 const {
@@ -176,7 +177,7 @@ export const createUserByAdmin = ({
     };
 };
 
-export const deleteUserByAdmin = email => {
+export const deleteUserByAdmin = (email, testerId) => {
     const payload = {
         UserPoolId: REACT_APP_COGNITO_USER_POOL_ID,
         Username: email
@@ -188,6 +189,7 @@ export const deleteUserByAdmin = email => {
                     showNotification({ type: 'error', message: err.message })
                 );
             } else {
+                dispatch(removeTester(testerId));
                 dispatch(
                     showNotification({
                         type: 'success',
@@ -200,7 +202,7 @@ export const deleteUserByAdmin = email => {
     };
 };
 
-export const deleteOwnAccount = email => {
+export const deleteOwnAccount = (email, testerId) => {
     const payload = {
         UserPoolId: REACT_APP_COGNITO_USER_POOL_ID,
         Username: email
@@ -212,6 +214,7 @@ export const deleteOwnAccount = email => {
                     showNotification({ type: 'error', message: err.message })
                 );
             } else {
+                dispatch(removeTester(testerId));
                 dispatch(
                     showNotification({
                         type: 'success',
@@ -221,6 +224,14 @@ export const deleteOwnAccount = email => {
                 dispatch(logoutUser());
             }
         });
+    };
+};
+
+export const getAuthUserInfo = () => {
+    return async dispatch => {
+        const res = await getUser();
+
+        return res;
     };
 };
 
