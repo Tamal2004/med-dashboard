@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 
 // Local
-import { AddNewUser } from 'views/Modals';
+import { CreateUser } from 'views/Modals';
 import {
 	GridContainer,
 	GridItem,
@@ -102,7 +102,7 @@ const mapState = state => ({
 const mapDispatch = { listUsers };
 
 const mapModal = {
-	handleAddNewUser: AddNewUser
+	handleAddNewUser: CreateUser
 };
 
 const _AllUsers = compose(
