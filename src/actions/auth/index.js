@@ -4,7 +4,8 @@ import { history } from 'libs/history';
 import { reset } from 'redux-form';
 //Local
 import { SET_AUTH_USER_INFO } from 'actionTypes';
-import { showNotification } from 'actions';
+import { showNotification } from '../notification';
+import { removeTester } from '../testers';
 import config from '../../aws-exports';
 
 const {
@@ -173,6 +174,64 @@ export const createUserByAdmin = ({
                 );
             }
         });
+    };
+};
+
+export const deleteUserByAdmin = (email, testerId) => {
+    const payload = {
+        UserPoolId: REACT_APP_COGNITO_USER_POOL_ID,
+        Username: email
+    };
+    return async dispatch => {
+        return await COGNITO_CLIENT.adminDeleteUser(payload, (err, data) => {
+            if (err) {
+                dispatch(
+                    showNotification({ type: 'error', message: err.message })
+                );
+            } else {
+                dispatch(removeTester(testerId));
+                dispatch(
+                    showNotification({
+                        type: 'success',
+                        message: 'Successfully deleted!'
+                    })
+                );
+                history.push('/tester');
+            }
+        });
+    };
+};
+
+export const deleteOwnAccount = (email, testerId) => {
+    const payload = {
+        UserPoolId: REACT_APP_COGNITO_USER_POOL_ID,
+        Username: email
+    };
+    return async dispatch => {
+        return await COGNITO_CLIENT.adminDeleteUser(payload, (err, data) => {
+            if (err) {
+                dispatch(
+                    showNotification({ type: 'error', message: err.message })
+                );
+            } else {
+                dispatch(removeTester(testerId));
+                dispatch(
+                    showNotification({
+                        type: 'success',
+                        message: 'Account deleted!'
+                    })
+                );
+                dispatch(logoutUser());
+            }
+        });
+    };
+};
+
+export const getAuthUserInfo = () => {
+    return async dispatch => {
+        const res = await getUser();
+
+        return res;
     };
 };
 

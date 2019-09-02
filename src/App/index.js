@@ -3,7 +3,7 @@ import API from '@aws-amplify/api';
 import PubSub from '@aws-amplify/pubsub';
 import Auth from '@aws-amplify/auth';
 import { connect } from 'react-redux';
-import { Router } from 'react-router-dom';
+import { Router, Route, Switch } from 'react-router-dom';
 
 // AWS
 import config from '../aws-exports';
@@ -25,7 +25,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 // Local
 import theme from 'components/theme';
 import { Notification } from 'components';
-import { setAuthUserInfo } from 'actions';
+import { setAuthUserInfo, getAuthUserInfo } from 'actions';
 import { history } from 'libs/history';
 import App from './App';
 
@@ -41,13 +41,12 @@ class IndexApp extends Component {
 
     render() {
         const { setAuthUserInfo } = this.props;
-
         return (
             <Router history={history}>
                 <MuiThemeProvider theme={theme}>
                     <CssBaseline />
                     <Authenticator
-                        authState='signUp'
+                        authState={'signUp'}
                         amplifyConfig={config}
                         onStateChange={authState =>
                             authState === 'signedIn' && setAuthUserInfo()
@@ -71,7 +70,8 @@ class IndexApp extends Component {
 }
 
 const mapDispatch = {
-    setAuthUserInfo
+    setAuthUserInfo,
+    getAuthUserInfo
 };
 
 export default connect(

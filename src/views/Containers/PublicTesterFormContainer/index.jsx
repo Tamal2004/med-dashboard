@@ -8,17 +8,21 @@ import Container from '@material-ui/core/Container';
 // Local
 import styles from './styles';
 import { Logo } from 'assets';
+import { Link } from 'components';
 
 const useStyles = styles;
 
 export default function TesterContainer(props) {
     const c = useStyles();
+
     return (
         <div className={c.root}>
             <AppBar position='absolute' className={clsx(c.appBar)}>
                 <Toolbar classes={{ root: c.toolbarRoot }}>
                     <div>
-                        <img className={c.logo} src={Logo} alt='WUP' />
+                        <Link to='/'>
+                            <img className={c.logo} src={Logo} alt='WUP' />
+                        </Link>
                     </div>
                     <Button
                         variant='contained'

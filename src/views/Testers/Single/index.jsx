@@ -48,7 +48,7 @@ const TesterSingle = ({
                 <Fragment>
                     <GridContainer className={c.root} alignItems='flex-start'>
                         <GridItem md={6}>
-                            <TesterDetails />
+                            <TesterDetails testerId={id} />
                         </GridItem>
                         <GridItem md={6}>
                             <GridItem md={12}>
