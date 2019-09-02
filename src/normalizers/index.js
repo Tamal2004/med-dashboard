@@ -4,3 +4,4 @@ export * from './sessions';
 export * from './clients';
 export * from './contactNotes';
 export * from './testers';
+export * from './users';

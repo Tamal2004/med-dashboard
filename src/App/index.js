@@ -3,7 +3,7 @@ import API from '@aws-amplify/api';
 import PubSub from '@aws-amplify/pubsub';
 import Auth from '@aws-amplify/auth';
 import { connect } from 'react-redux';
-import { Router, Route, Switch } from 'react-router-dom';
+import { Router } from 'react-router-dom';
 
 // AWS
 import config from '../aws-exports';

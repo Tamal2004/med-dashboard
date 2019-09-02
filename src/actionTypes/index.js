@@ -6,4 +6,5 @@ export * from './contactNotes';
 export * from './sessions';
 export * from './testers';
 export * from './notification';
+export * from './users';
 export * from './utils';
