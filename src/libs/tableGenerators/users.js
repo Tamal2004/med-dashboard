@@ -1,8 +1,8 @@
 export const generateuserList = userList =>
     userList.map(({ id, firstName, lastName, email }) => ({
         User: {
-            Component: firstName + ' ' + firstName,
-            value: firstName + ' ' + firstName
+            Component: firstName + ' ' + lastName,
+            value: firstName + ' ' + lastName
         },
         Email: {
             Component: email,

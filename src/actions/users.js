@@ -4,13 +4,7 @@ import API, { graphqlOperation } from '@aws-amplify/api';
 import { normalizeUsers } from 'normalizers';
 
 // Graph QL
-import {
-    CreateClient,
-    UpdateClient,
-    RemoveClient,
-    FetchClient,
-    ListUsers
-} from 'graphql/users';
+import { CreateUser, ListUsers } from 'graphql/users';
 
 // Action Types
 import {
@@ -31,15 +25,45 @@ const listUsersAction = (async, payload = []) => ({
 });
 
 export const listUsers = () => async dispatch => {
-    console.log('calling listUsers');
     dispatch(listUsersAction(REQUEST));
     const {
         data: { listUsers: { items: listUsers = [] } = {}, error = null }
     } = await API.graphql(graphqlOperation(ListUsers));
-    console.log('listUsers', listUsers);
+
     if (!error) {
         dispatch(listUsersAction(SUCCESS, normalizeUsers(listUsers)));
     } else {
         dispatch(listUsersAction(FAIL));
+    }
+};
+
+const createUserAction = (async, payload = []) => ({
+    type: CREATE_USER,
+    async,
+    payload
+});
+
+export const createUser = input => async dispatch => {
+    dispatch(createUserAction(REQUEST));
+    const {
+        data: { createUser, error = null }
+    } = await API.graphql(graphqlOperation(CreateUser, { input }));
+
+    if (!error) {
+        dispatch(createUserAction(SUCCESS));
+        dispatch(
+            showNotification({
+                type: 'success',
+                message: 'Created successfully!'
+            })
+        );
+    } else {
+        dispatch(createUserAction(FAIL));
+        dispatch(
+            showNotification({
+                type: 'error',
+                message: 'Something went wrong!'
+            })
+        );
     }
 };

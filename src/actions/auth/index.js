@@ -6,6 +6,7 @@ import { reset } from 'redux-form';
 import { SET_AUTH_USER_INFO } from 'actionTypes';
 import { showNotification } from '../notification';
 import { removeTester } from '../testers';
+import { createUser } from '../users';
 import config from '../../aws-exports';
 
 const {
@@ -127,12 +128,7 @@ export const testerSignUp = ({ id, email, firstName, surname }) => {
 //         .catch(err => console.log(err));
 // };
 
-export const createUserByAdmin = ({
-    email,
-    family_name,
-    given_name,
-    username
-}) => {
+export const createUserByAdmin = ({ email, family_name, given_name }) => {
     const payload = {
         UserPoolId: REACT_APP_COGNITO_USER_POOL_ID,
         Username: email,
@@ -165,6 +161,12 @@ export const createUserByAdmin = ({
                     showNotification({ type: 'error', message: err.message })
                 );
             } else {
+                const userParams = {
+                    firstname: family_name,
+                    lastname: given_name,
+                    email: email
+                };
+                dispatch(createUser(userParams));
                 dispatch(reset('CreateUser'));
                 dispatch(
                     showNotification({

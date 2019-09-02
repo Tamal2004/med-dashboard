@@ -26,6 +26,7 @@ import {
     CREATE_CLIENT,
     UPDATE_CLIENT
 } from 'actionTypes';
+
 import { showNotification } from './notification';
 
 const fetchClientAction = (async, payload = []) => ({

@@ -1,23 +1,18 @@
 import createCachedSelector from 're-reselect';
 
 // Local
-import {
-    mapArray,
-    mapToSelect,
-    generateClientProjects,
-    generateuserList
-} from 'libs';
+import { generateuserList } from 'libs';
 
 const selectUsers = state => state.users;
 
 // User Id
-// export const selectClientId = createCachedSelector(
-//     selectUsers,
-//     (state, clientIndex) => clientIndex,
-//     ({ list = [] }, clientIndex) => {
-//         return list[clientIndex] && list[clientIndex].id;
-//     }
-// )(() => 'placeholder');
+export const selectUserId = createCachedSelector(
+    selectUsers,
+    (state, userIndex) => userIndex,
+    ({ list = [] }, userIndex) => {
+        return list[userIndex] && list[userIndex].id;
+    }
+)(() => 'placeholder');
 
 // User List
 export const selectUserList = createCachedSelector(selectUsers, ({ list }) =>
