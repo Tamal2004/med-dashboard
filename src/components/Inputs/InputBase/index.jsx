@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import classNames from 'classnames';
 import { Field } from 'redux-form';
+import PropTypes from 'prop-types';
 
 // Material
 import {
@@ -13,7 +14,7 @@ import LockIcon from '@material-ui/icons/Lock';
 
 // Local
 import styles from './styles';
-import { LabelBase} from 'components';
+import { LabelBase } from 'components';
 import { composeClasses } from 'libs';
 
 const LockAdornment = props => (
@@ -32,6 +33,7 @@ const InputBase = ({
     disabled,
     required,
     label,
+    handleForm,
     ...restProps
 }) => {
     const c = composeClasses({ classes, styles });
@@ -39,6 +41,9 @@ const InputBase = ({
 
     const success = !disabled && Boolean(input.value);
     const error = meta.touched && !!meta.error;
+
+    useEffect(() => handleForm && handleForm(error));
+
     const inputBaseProps = {
         classes: {
             root: classNames(
@@ -76,6 +81,10 @@ const InputBase = ({
             <MuiInputBase {...inputBaseProps} />
         </FormControl>
     );
+};
+
+InputBase.propTypes = {
+    handleForm: () => {}
 };
 
 const _InputBase = withStyles(styles)(InputBase);

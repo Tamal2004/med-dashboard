@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
@@ -9,15 +9,21 @@ import { Control } from '../Control';
 
 const Input = ({ required, label, isCard, active, width, ...restProps }) => {
     const { cardRoot, inactiveRoot, ...c } = useStyles();
+
+    const [isError, setValue] = useState(false);
     const inputStyles = {
         ...c,
         root: clsx(c.root, isCard && cardRoot, !active && inactiveRoot)
     };
 
-    const controlProps = { required, label, isCard, width };
+    const controlProps = { required, label, isCard, width, isError };
     return (
         <Control {...controlProps}>
-            <InputBase styles={inputStyles} {...restProps} />
+            <InputBase
+                handleForm={isError => setValue(isError)}
+                styles={inputStyles}
+                {...restProps}
+            />
         </Control>
     );
 };

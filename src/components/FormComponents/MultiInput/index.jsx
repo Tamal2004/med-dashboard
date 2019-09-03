@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
@@ -17,15 +17,17 @@ const MultiInput = ({
     ...restProps
 }) => {
     const { cardRoot, inactiveRoot, ...c } = useStyles();
+    const [isError, setForm] = useState(false);
     const multiInputStyles = {
         ...c,
         root: clsx(c.root, isCard && cardRoot, !active && inactiveRoot)
     };
-    const controlProps = { required, label, isCard, memo, width };
+    const controlProps = { required, label, isCard, memo, width, isError };
 
     return (
         <Control {...controlProps}>
             <InputBase
+                handleForm={isError => setForm(isError)}
                 styles={multiInputStyles}
                 multiline
                 rows={8}

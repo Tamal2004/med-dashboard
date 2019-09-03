@@ -11,7 +11,7 @@ import { DatePicker } from '@material-ui/pickers';
 // Local
 import styles from './styles';
 import withDateProvider from './withDateProvider';
-import { composeClasses, deserializeDate, serializeDate } from 'libs';
+import { composeClasses } from 'libs';
 
 const DateInputBase = ({
     classes,
