@@ -19,7 +19,7 @@ import {
 import { selectUserList } from 'selectors';
 
 // Actions
-import { listUsers } from 'actions';
+import { listUsers, deleteWupUser } from 'actions';
 
 const useStyles = makeStyles(({ spacing }) => ({
 	buttonGridStyle: {
@@ -41,7 +41,8 @@ const AllUsers = ({
 	users,
 	handleAddNewUser,
 	handleClientEditModal,
-	listUsers
+	listUsers,
+	deleteWupUser
 }) => {
 	const c = useStyles();
 	const [isLoading, setLoading] = useState(true);
@@ -57,6 +58,15 @@ const AllUsers = ({
 
 		return () => (shouldCancel = true);
 	}, []);
+
+	const allUsers = users.map(({ id, actions, Email, ...rest }) => ({
+		...rest,
+		Email,
+		actions: {
+			...actions,
+			deleteAction: () => deleteWupUser({ id, email: Email.value })
+		}
+	}));
 
 	return (
 		<GridContainer alignItems='center'>
@@ -76,7 +86,7 @@ const AllUsers = ({
 					<Fragment>
 						<Table
 							action
-							data={users}
+							data={allUsers}
 							page={page}
 							noResultsText='No users'
 						/>
@@ -99,7 +109,7 @@ const mapState = state => ({
 	users: selectUserList(state)
 });
 
-const mapDispatch = { listUsers };
+const mapDispatch = { listUsers, deleteWupUser };
 
 const mapModal = {
 	handleAddNewUser: CreateUser

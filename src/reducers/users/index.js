@@ -2,13 +2,7 @@
 import initialState from './initialState';
 
 // Action Types
-import {
-    SUCCESS,
-    LIST_USERS,
-    CREATE_USER,
-    UPDATE_USER,
-    REMOVE_USER
-} from 'actionTypes';
+import { SUCCESS, LIST_USERS, CREATE_USER, REMOVE_USER } from 'actionTypes';
 
 const usersReducer = (
     state = initialState,
@@ -16,24 +10,22 @@ const usersReducer = (
 ) => {
     const isSuccess = async === SUCCESS;
     switch (type) {
-        // case CREATE_USER: {
-        //     return isSuccess
-        //         ? {
-        //               ...state,
-        //               list: [...state.list, payload]
-        //           }
-        //         : state;
-        // }
-        // case UPDATE_USER: {
-        //     return isSuccess
-        //         ? {
-        //               ...state,
-        //               list: state.list.map(client =>
-        //                   client.id === payload.id ? payload : client
-        //               )
-        //           }
-        //         : state;
-        // }
+        case CREATE_USER: {
+            return isSuccess
+                ? {
+                      ...state,
+                      list: [...state.list, payload]
+                  }
+                : state;
+        }
+        case REMOVE_USER: {
+            return isSuccess
+                ? {
+                      ...state,
+                      list: state.list.filter(user => user.id !== payload.id)
+                  }
+                : state;
+        }
 
         case LIST_USERS: {
             return isSuccess ? { ...state, list: payload } : state;

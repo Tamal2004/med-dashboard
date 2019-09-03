@@ -6,7 +6,7 @@ import { reset } from 'redux-form';
 import { SET_AUTH_USER_INFO } from 'actionTypes';
 import { showNotification } from '../notification';
 import { removeTester } from '../testers';
-import { createUser } from '../users';
+import { createUser, deleteUser } from '../users';
 import config from '../../aws-exports';
 
 const {
@@ -162,9 +162,9 @@ export const createUserByAdmin = ({ email, family_name, given_name }) => {
                 );
             } else {
                 const userParams = {
-                    firstname: family_name,
-                    lastname: given_name,
-                    email: email
+                    email: email,
+                    firstName: family_name,
+                    lastName: given_name
                 };
                 dispatch(createUser(userParams));
                 dispatch(reset('CreateUser'));
@@ -172,6 +172,30 @@ export const createUserByAdmin = ({ email, family_name, given_name }) => {
                     showNotification({
                         type: 'success',
                         message: 'New user created successfully!'
+                    })
+                );
+            }
+        });
+    };
+};
+
+export const deleteWupUser = ({ id, email }) => {
+    const payload = {
+        UserPoolId: REACT_APP_COGNITO_USER_POOL_ID,
+        Username: email
+    };
+    return async dispatch => {
+        return await COGNITO_CLIENT.adminDeleteUser(payload, (err, data) => {
+            if (err) {
+                dispatch(
+                    showNotification({ type: 'error', message: err.message })
+                );
+            } else {
+                dispatch(deleteUser({ id }));
+                dispatch(
+                    showNotification({
+                        type: 'success',
+                        message: 'Successfully deleted!'
                     })
                 );
             }

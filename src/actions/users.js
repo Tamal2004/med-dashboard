@@ -4,7 +4,7 @@ import API, { graphqlOperation } from '@aws-amplify/api';
 import { normalizeUsers } from 'normalizers';
 
 // Graph QL
-import { CreateUser, ListUsers } from 'graphql/users';
+import { CreateUser, DeleteUser, ListUsers } from 'graphql/users';
 
 // Action Types
 import {
@@ -12,7 +12,6 @@ import {
     SUCCESS,
     FAIL,
     CREATE_USER,
-    UPDATE_USER,
     REMOVE_USER,
     LIST_USERS
 } from 'actionTypes';
@@ -46,11 +45,11 @@ const createUserAction = (async, payload = []) => ({
 export const createUser = input => async dispatch => {
     dispatch(createUserAction(REQUEST));
     const {
-        data: { createUser, error = null }
+        data: { createUser = {}, error = null }
     } = await API.graphql(graphqlOperation(CreateUser, { input }));
 
     if (!error) {
-        dispatch(createUserAction(SUCCESS));
+        dispatch(createUserAction(SUCCESS, createUser));
         dispatch(
             showNotification({
                 type: 'success',
@@ -59,6 +58,37 @@ export const createUser = input => async dispatch => {
         );
     } else {
         dispatch(createUserAction(FAIL));
+        dispatch(
+            showNotification({
+                type: 'error',
+                message: 'Something went wrong!'
+            })
+        );
+    }
+};
+
+const deleteUserAction = (async, payload = []) => ({
+    type: REMOVE_USER,
+    async,
+    payload
+});
+
+export const deleteUser = input => async dispatch => {
+    dispatch(deleteUserAction(REQUEST));
+    const {
+        data: { deleteUser = {}, error = null }
+    } = await API.graphql(graphqlOperation(DeleteUser, { input }));
+
+    if (!error) {
+        dispatch(deleteUserAction(SUCCESS, deleteUser));
+        dispatch(
+            showNotification({
+                type: 'success',
+                message: 'Deleted successfully!'
+            })
+        );
+    } else {
+        dispatch(deleteUserAction(FAIL));
         dispatch(
             showNotification({
                 type: 'error',
