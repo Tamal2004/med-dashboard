@@ -155,7 +155,7 @@ class Table extends Component {
     CheckAllAction = ({ onClick = () => {}, dataLength }) => {
         return (
             <IconButton
-                className={this.c.action}
+                className={clsx(this.c.action, this.c.checkAll)}
                 size='small'
                 color='secondary'
                 aria-label='Check'
@@ -313,7 +313,7 @@ class Table extends Component {
                 data: [datum = {}] = [],
                 handleEditModal,
                 checkAll,
-                noResultsText,
+                noResultsText
             },
             state: { data },
             c,

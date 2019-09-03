@@ -316,7 +316,6 @@ const TesterDetails = ({
 
 const mapState = state => {
     const formSelector = formValueSelector('TesterDetails');
-    const contactSelector = formValueSelector('ContactDetails');
     const titles = selectTitles(state);
     return {
         userEmail: selectEmail(state),
@@ -333,7 +332,6 @@ const mapState = state => {
         title: mapFromValue(titles, formSelector(state, 'title')),
         firstName: formSelector(state, 'firstName'),
         surname: formSelector(state, 'surname'),
-        email: contactSelector(state, 'email')
     };
 };
 

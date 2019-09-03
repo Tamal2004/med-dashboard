@@ -5,6 +5,7 @@ import { gql } from 'apollo-boost';
 // Local
 import { history, today, deserializeDate } from 'libs';
 import { client2 } from '../App/client';
+import { sendMail } from 'services';
 
 // Normalizers
 import {
@@ -395,4 +396,33 @@ const mailTesterAction = () => ({
 
 export const mailTester = ({ from, to, subject, body }) => async dispatch => {
     // dispatch(mailTesterAction());
+};
+
+const mailTestersAction = async => ({
+    type: MAIL_TESTERS,
+    async
+});
+
+export const mailTesters = mail => async dispatch => {
+    dispatch(mailTestersAction(REQUEST));
+
+    const mailRes = await sendMail({ ...mail, to: 'matthew.tamal@gmail.com' });
+    console.log(mailRes);
+    //
+    // if (!error) {
+    //     dispatch(removeTesterAction(SUCCESS));
+    //     dispatch(
+    //         showNotification({
+    //             type: 'success',
+    //             message: 'Mails not sent'
+    //         })
+    //     );
+    // } else {
+    //     dispatch(
+    //         showNotification({
+    //             type: 'error',
+    //             message: 'Mails not sent'
+    //         })
+    //     );
+    // }
 };

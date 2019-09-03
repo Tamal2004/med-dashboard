@@ -1,1 +1,1 @@
-export default ['Approached', 'Confirmed', 'Attended', 'Completed'];
+export default ['Approached', 'Confirmed', 'Cancelled', 'Completed'];
