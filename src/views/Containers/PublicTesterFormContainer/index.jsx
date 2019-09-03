@@ -1,6 +1,7 @@
 import React from 'react';
 import clsx from 'clsx';
 import AppBar from '@material-ui/core/AppBar';
+import Link from '@material-ui/core/Link';
 import Button from '@material-ui/core/Button';
 import Toolbar from '@material-ui/core/Toolbar';
 import Container from '@material-ui/core/Container';
@@ -12,7 +13,7 @@ import history from 'libs/history';
 
 const useStyles = styles;
 
-export default function TesterContainer({ gotoSignIn, children }) {
+export default function TesterContainer({ gotoSignIn, gotoSignUp, children }) {
     const c = useStyles();
 
     const signInPage = () => {
@@ -24,9 +25,9 @@ export default function TesterContainer({ gotoSignIn, children }) {
         <div className={c.root}>
             <AppBar position='absolute' className={clsx(c.appBar)}>
                 <Toolbar classes={{ root: c.toolbarRoot }}>
-                    <div onClick={() => signInPage()} className={c.pointer}>
+                    <Link href='/' className={c.pointer}>
                         <img className={c.logo} src={Logo} alt='WUP' />
-                    </div>
+                    </Link>
                     <Button
                         variant='contained'
                         color='primary'
