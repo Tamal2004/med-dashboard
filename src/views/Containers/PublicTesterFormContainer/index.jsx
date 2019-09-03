@@ -13,11 +13,12 @@ const useStyles = styles;
 
 export default function TesterContainer(props) {
     const c = useStyles();
+
     return (
         <div className={c.root}>
             <AppBar position='absolute' className={clsx(c.appBar)}>
                 <Toolbar classes={{ root: c.toolbarRoot }}>
-                    <div>
+                    <div onClick={props.gotoSignIn} className={c.pointer}>
                         <img className={c.logo} src={Logo} alt='WUP' />
                     </div>
                     <Button

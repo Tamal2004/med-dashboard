@@ -39,6 +39,7 @@ import {
     MAIL_TESTER,
     MAIL_TESTERS
 } from 'actionTypes';
+import { showNotification } from './notification';
 
 // Selectors
 import { selectIsTester } from 'selectors';
@@ -59,9 +60,21 @@ export const createTester = tester => async dispatch => {
 
     if (!res.error) {
         dispatch(createTesterAction(SUCCESS));
+        dispatch(
+            showNotification({
+                type: 'success',
+                message: 'Tester created successfully!'
+            })
+        );
         history.push('/tester');
     } else {
         dispatch(createTesterAction(FAIL));
+        dispatch(
+            showNotification({
+                type: 'error',
+                message: 'Failed! Something went wrong!'
+            })
+        );
     }
 };
 
@@ -78,9 +91,20 @@ export const createPublicTester = tester => async dispatch => {
 
     if (!res.error) {
         dispatch(createTesterAction(SUCCESS));
-        // Todo: do mail stuff here and tester create
+        dispatch(
+            showNotification({
+                type: 'success',
+                message: 'Signup successful!'
+            })
+        );
     } else {
         dispatch(createTesterAction(FAIL));
+        dispatch(
+            showNotification({
+                type: 'error',
+                message: 'Signup failed!'
+            })
+        );
     }
 };
 
@@ -294,8 +318,6 @@ export const updateTester = ({ lastUpdated, ...tester }) => async dispatch => {
         ...tester
     };
 
-    console.log('arstars', datedTester);
-
     dispatch(updateTesterAction(REQUEST));
     const {
         data: { updateTester, error = null }
@@ -313,6 +335,19 @@ export const updateTester = ({ lastUpdated, ...tester }) => async dispatch => {
         dispatch(initialize('TesterDetails', testerDetails));
         dispatch(initialize('ContactDetails', contactDetails));
         dispatch(initialize('EmploymentDetails', employmentDetails));
+        dispatch(
+            showNotification({
+                type: 'success',
+                message: 'Updated successfully'
+            })
+        );
+    } else {
+        dispatch(
+            showNotification({
+                type: 'error',
+                message: 'Failed! Something went wrong!'
+            })
+        );
     }
 };
 
@@ -337,8 +372,20 @@ export const removeTester = id => async (dispatch, getState) => {
             history.push('/tester');
         }
         dispatch(removeTesterAction(SUCCESS));
+        dispatch(
+            showNotification({
+                type: 'success',
+                message: 'Removed successfully'
+            })
+        );
     } else {
         dispatch(removeTesterAction(FAIL));
+        dispatch(
+            showNotification({
+                type: 'error',
+                message: 'Remove failed'
+            })
+        );
     }
 };
 

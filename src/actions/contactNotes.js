@@ -19,6 +19,7 @@ import {
     UPDATE_CONTACT_NOTE,
     REMOVE_CONTACT_NOTE
 } from 'actionTypes';
+import { showNotification } from './notification';
 
 const createContactNoteAction = (async, payload = []) => ({
     type: CREATE_CONTACT_NOTE,
@@ -39,8 +40,20 @@ export const createContactNote = input => async dispatch => {
                 normalizeContactNote(createContactNote)
             )
         );
+        dispatch(
+            showNotification({
+                type: 'success',
+                message: 'Note created successfully!'
+            })
+        );
     } else {
         dispatch(createContactNoteAction(FAIL));
+        dispatch(
+            showNotification({
+                type: 'error',
+                message: 'Note creation failed!'
+            })
+        );
     }
 };
 
@@ -63,8 +76,20 @@ export const updateContactNote = input => async dispatch => {
                 normalizeContactNote(updateContactNote)
             )
         );
+        dispatch(
+            showNotification({
+                type: 'success',
+                message: 'Updated successfully!'
+            })
+        );
     } else {
         dispatch(updateContactNoteAction(FAIL));
+        dispatch(
+            showNotification({
+                type: 'error',
+                message: 'Update failed!'
+            })
+        );
     }
 };
 
@@ -84,7 +109,19 @@ export const removeContactNote = id => async dispatch => {
 
     if (!error) {
         dispatch(removeContactNoteAction(SUCCESS, contactNoteId));
+        dispatch(
+            showNotification({
+                type: 'success',
+                message: 'Removed successfully!'
+            })
+        );
     } else {
         dispatch(removeContactNoteAction(FAIL));
+        dispatch(
+            showNotification({
+                type: 'error',
+                message: 'Remove failed!'
+            })
+        );
     }
 };

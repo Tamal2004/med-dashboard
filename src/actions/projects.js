@@ -38,6 +38,7 @@ import {
     FETCH_PROJECT_REPORT,
     RESET_PROJECT_REPORT
 } from 'actionTypes';
+import { showNotification } from './notification';
 
 const createProjectAction = async => ({
     type: CREATE_PROJECT,
@@ -52,9 +53,21 @@ export const createProject = project => async dispatch => {
 
     if (!res.error) {
         dispatch(createProjectAction(SUCCESS));
+        dispatch(
+            showNotification({
+                type: 'success',
+                message: 'Project created successfully!'
+            })
+        );
         history.push('/project');
     } else {
         dispatch(createProjectAction(FAIL));
+        dispatch(
+            showNotification({
+                type: 'error',
+                message: 'Failed! Something went wrong!'
+            })
+        );
     }
 };
 
@@ -111,8 +124,20 @@ export const updateProject = project => async dispatch => {
         dispatch(initialize('ProjectManagement', projectManagement));
         dispatch(initialize('ClientFeedback', clientFeedback));
         dispatch(updateProjectAction(SUCCESS, projectData));
+        dispatch(
+            showNotification({
+                type: 'success',
+                message: 'Project updated successfully!'
+            })
+        );
     } else {
         dispatch(updateProjectAction(FAIL));
+        dispatch(
+            showNotification({
+                type: 'error',
+                message: 'Failed! Something went wrong!'
+            })
+        );
     }
 };
 
@@ -206,7 +231,7 @@ export const listProjectUsers = () => async dispatch => {
     }
 };
 
-const fetchProjectReportsAction = (async, payload = []) => ({
+const fetchProjectReportAction = (async, payload = []) => ({
     type: FETCH_PROJECT_REPORT,
     async,
     payload
@@ -216,20 +241,20 @@ export const fetchProjectReport = (
     id,
     testerIndices = []
 ) => async dispatch => {
-    dispatch(fetchProjectReportsAction(REQUEST));
+    dispatch(fetchProjectReportAction(REQUEST));
     const {
         data: { getProject = {}, error = null }
     } = await API.graphql(graphqlOperation(ListProjectReport, { id }));
 
     if (!error) {
         dispatch(
-            fetchProjectReportsAction(
+            fetchProjectReportAction(
                 SUCCESS,
                 normalizeProjectReport(getProject, testerIndices)
             )
         );
     } else {
-        dispatch(fetchProjectReportsAction(FAIL));
+        dispatch(fetchProjectReportAction(FAIL));
     }
 };
 

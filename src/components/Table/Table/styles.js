@@ -28,7 +28,15 @@ export default ({ palette, spacing, transitions, typography }) => ({
             backgroundColor: palette.grey[50]
         }
     },
-    titleWrapper: { display: 'inline-flex' },
+    titleWrapper: {
+        maxWidth: 160,
+        overflow: 'hidden',
+        display: 'inline-block',
+        margin: '0 5px 0 5px',
+        textAlign: 'center',
+        textOverflow: 'ellipsis',
+        whiteSpace: 'nowrap'
+    },
     cell: {
         padding: `${spacing(2)}px ${spacing()}px`,
         minWidth: spacing(10.5),

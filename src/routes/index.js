@@ -14,32 +14,32 @@ import {
 } from './partials';
 
 const AdminUserRoutes = () => (
-    <Switch>
-        <Route path={'/'} exact component={HomeRoutes} />
-        <Route path={'/client'} component={ClientRoutes} />
-        <Route path={'/project'} component={ProjectRoutes} />
-        <Route path={'/tester'} component={TesterRoutes} />
-        <Route path={'/profile'} component={AdminAccountRoutes} />
-        <Route path={'*'} component={NotFoundPage} />
-    </Switch>
+    <PrivateContainer>
+        <Switch>
+            <Route path={'/'} exact component={HomeRoutes} />
+            <Route path={'/client'} component={ClientRoutes} />
+            <Route path={'/project'} component={ProjectRoutes} />
+            <Route path={'/tester'} component={TesterRoutes} />
+            <Route path={'/profile'} component={AdminAccountRoutes} />
+            <Route path={'*'} component={NotFoundPage} />
+        </Switch>
+    </PrivateContainer>
 );
 
 const TesterUserRoutes = () => (
-    <Switch>
-        <Route path={'/'} exact component={TesterSingle} />
-        <Route path={'/profile'} component={TesterAccountRoutes} />
-        <Route path={'*'} component={NotFoundPage} />
-    </Switch>
+    <PrivateContainer>
+        <Switch>
+            <Route path={'/'} exact component={TesterSingle} />
+            <Route path={'/profile'} component={TesterAccountRoutes} />
+            <Route path={'*'} component={NotFoundPage} />
+        </Switch>
+    </PrivateContainer>
 );
 
 class Routes extends PureComponent {
     render() {
         const { isTester } = this.props.auth;
-        return (
-            <PrivateContainer>
-                {!isTester ? <AdminUserRoutes /> : <TesterUserRoutes />}
-            </PrivateContainer>
-        );
+        return !isTester ? <AdminUserRoutes /> : <TesterUserRoutes />;
     }
 }
 
