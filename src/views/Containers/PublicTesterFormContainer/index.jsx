@@ -8,23 +8,29 @@ import Container from '@material-ui/core/Container';
 // Local
 import styles from './styles';
 import { Logo } from 'assets';
+import history from 'libs/history';
 
 const useStyles = styles;
 
-export default function TesterContainer(props) {
+export default function TesterContainer({ gotoSignIn, children }) {
     const c = useStyles();
+
+    const signInPage = () => {
+        history.replace('/');
+        gotoSignIn();
+    };
 
     return (
         <div className={c.root}>
             <AppBar position='absolute' className={clsx(c.appBar)}>
                 <Toolbar classes={{ root: c.toolbarRoot }}>
-                    <div onClick={props.gotoSignIn} className={c.pointer}>
+                    <div onClick={() => signInPage()} className={c.pointer}>
                         <img className={c.logo} src={Logo} alt='WUP' />
                     </div>
                     <Button
                         variant='contained'
                         color='primary'
-                        onClick={props.gotoSignIn}
+                        onClick={() => signInPage()}
                         className={c.backIcon}
                     >
                         Sign in
@@ -34,7 +40,7 @@ export default function TesterContainer(props) {
             <main className={c.content}>
                 <div className={c.appBarSpacer} />
                 <Container maxWidth='lg' className={c.container}>
-                    {props.children}
+                    {children}
                 </Container>
             </main>
         </div>

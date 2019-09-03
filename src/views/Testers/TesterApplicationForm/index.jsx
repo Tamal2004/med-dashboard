@@ -113,7 +113,7 @@ const TesterApplication = ({
                         required
                     />
                 )}
-                <GridItem md={12} className={c.manualGrid}>
+                <GridItem md={12} sm={12} className={c.manualGrid}>
                     <AddressLink
                         className={c.manualLink}
                         href='#'
@@ -247,14 +247,13 @@ const TesterApplication = ({
                 )}
             </Container>
             <Grid container className={c.footer}>
-                <Grid item xs={6}>
+                <Grid item xs={12} sm={6}>
                     <Grid container>
-                        <Grid item xs={2}>
+                        <Grid item xs={2} md={2}>
                             <CheckboxBase name='termsChecked' color='primary' />
                         </Grid>
-
-                        <Grid item xs={10}>
-                            <Typography>
+                        <Grid item xs={9} md={10}>
+                            <Typography className={c.checkboxTypography}>
                                 I confirm that I have read and accepted the
                                 Testers{' '}
                                 <Link
@@ -267,11 +266,11 @@ const TesterApplication = ({
                         </Grid>
                     </Grid>
                 </Grid>
-                <Grid item xs={6}>
+                <Grid item xs={12} sm={6}>
                     <NavigateButton
-                        className={c.submit}
-                        variant='contained'
-                        color='primary'
+                        classes={{
+                            root: c.submit
+                        }}
                         onClick={() => handleSubmit()}
                         disabled={invalid || submitting}
                     >
@@ -307,7 +306,7 @@ const mapState = (state, ownProps) => {
             employmentStatus === 'Retired',
         isRetired: employmentStatus === 'Retired',
         isPublicUser: noauth,
-        hasManualAddress: formSelector(state, 'manualAddress'),
+        hasManualAddress: formSelector(state, 'manualAddress')
     };
 };
 

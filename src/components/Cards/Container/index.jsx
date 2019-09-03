@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 
 // Local
 import useStyles from './styles';
-import { Card, Typography, Grid } from '@material-ui/core';
-import { SelectBase } from 'components';
+import { Card, Typography } from '@material-ui/core';
 
 const Container = ({ title, children }) => {
     const c = useStyles();

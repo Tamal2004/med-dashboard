@@ -73,8 +73,6 @@ const TesterSearch = ({ testers, handleMailModal, listTestersSearch }) => {
         1;
 
     const search = () => {
-        console.log('from parent', filters, input);
-
         setLoading(true);
         listTestersSearch(filters, input).then(() => setLoading(false));
     };

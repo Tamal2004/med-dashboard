@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/core';
 
-export default makeStyles(({ palette, spacing }) => ({
+export default makeStyles(({ breakpoints, palette, spacing }) => ({
     root: {
         marginTop: spacing(3),
         marginBottom: spacing(3)
@@ -10,14 +10,20 @@ export default makeStyles(({ palette, spacing }) => ({
     },
     left: {
         paddingRight: spacing(4),
-        paddingLeft: spacing(2)
+        paddingLeft: spacing(2),
+        [breakpoints.down('xs')]: {
+            paddingRight: spacing(2)
+        }
     },
     right: {
         paddingRight: spacing(2),
         paddingLeft: spacing(4),
         display: 'flex',
         flexDirection: 'column',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        [breakpoints.down('xs')]: {
+            paddingLeft: spacing(2)
+        }
     },
     noLabelRight: {
         paddingLeft: spacing(2)
@@ -25,7 +31,8 @@ export default makeStyles(({ palette, spacing }) => ({
     label: {
         height: spacing(6),
         display: 'flex',
-        alignItems: 'center'
+        alignItems: 'center',
+        textAlign: 'left'
     },
     labelText: { color: palette.text.primary },
     memo: { color: palette.text.hint },

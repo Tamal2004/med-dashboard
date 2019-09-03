@@ -17,6 +17,10 @@ const useStyles = makeStyles(theme => ({
 		minWidth: 150,
 		'&:hover': {
 			background: '#424244'
+		},
+		[theme.breakpoints.down('sm')]: {
+			minWidth: 100,
+			marginBottom: 10
 		}
 	},
 	gridWrapper: {
@@ -24,6 +28,7 @@ const useStyles = makeStyles(theme => ({
 		display: 'flex',
 		flexDirection: 'column',
 		alignItems: 'center',
+		textAlign: 'center',
 		justifyContent: 'center',
 		border: '2px solid #d2d2d2',
 		margin: 40
@@ -35,7 +40,10 @@ const useStyles = makeStyles(theme => ({
 		alignContent: 'space-between',
 		marginTop: 30,
 		borderTop: '2px solid #eaeaea',
-		paddingTop: 30
+		paddingTop: 30,
+		[theme.breakpoints.down('xs')]: {
+			flexDirection: 'column'
+		}
 	},
 	typography: {
 		fontWeight: 700
@@ -61,7 +69,7 @@ const UnsubscribeUser = ({ unsubscribe, gotoSignIn }) => {
 
 	return (
 		<GridContainer alignItems='center'>
-			<GridItem md={6} className={c.gridWrapper}>
+			<GridItem md={6} xs={8} className={c.gridWrapper}>
 				<Typography className={c.typography} variant='h5' gutterBottom>
 					Do you really want to unsubscribe?
 				</Typography>
