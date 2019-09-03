@@ -5,5 +5,6 @@ export * from './notification';
 export * from './sessions';
 export * from './projects';
 export * from './testers';
+export * from './users';
 export * from './utils';
 export * from './unsubscribe';

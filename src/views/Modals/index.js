@@ -1,4 +1,5 @@
 export * from './AddNewClient';
+export * from './AddNewUser';
 export * from './SessionsModal';
 export * from './ContactsModal';
 export * from './Mail';
