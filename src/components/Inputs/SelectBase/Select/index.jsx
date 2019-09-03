@@ -71,9 +71,13 @@ class Select extends Component {
             classes: { select, selectCancellable, selectQuery },
             isCancellable,
             styles,
-            meta: { dirty },
-            placeholder
+            meta: { dirty, ...meta },
+            placeholder,
+            handleForm
         } = props;
+
+        const isError = meta.touched && !!meta.error;
+        handleForm(isError);
 
         const nextState = {
             selectStyle: classNames(select, styles.select),
@@ -181,6 +185,7 @@ class Select extends Component {
             required,
             disabled,
             displayFirst, // Take out of restProps
+            handleForm,
             ...restProps
         } = props;
 

@@ -22,7 +22,8 @@ export const validate = (
         'nationality',
         'ethnicity',
         'about',
-        'employmentStatus'
+        'employmentStatus',
+        'hasChildren'
     ];
 
     if (isTester) required.push('termsChecked');

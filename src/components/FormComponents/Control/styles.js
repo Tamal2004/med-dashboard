@@ -38,5 +38,10 @@ export default makeStyles(({ breakpoints, palette, spacing }) => ({
     memo: { color: palette.text.hint },
     cardLabel: {
         height: spacing(5)
+    },
+    required: {
+        color: 'red',
+        fontSize: 13,
+        marginLeft: 10
     }
 }));

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
@@ -24,6 +24,8 @@ const Select = ({
         ...c
     } = useStyles();
 
+    const [isError, setForm] = useState(false);
+
     const selectStyles = {
         ...c,
         control: clsx(
@@ -36,11 +38,15 @@ const Select = ({
         dropdownRoot: clsx(c.dropdownRoot, !active && inactiveDropdownRoot)
     };
 
-    const controlProps = { required, label, isCard, width };
+    const controlProps = { required, label, isCard, width, isError };
 
     return (
         <Control {...controlProps}>
-            <SelectBase styles={selectStyles} {...restProps} />
+            <SelectBase
+                handleForm={isError => setForm(isError)}
+                styles={selectStyles}
+                {...restProps}
+            />
         </Control>
     );
 };

@@ -13,7 +13,8 @@ const Control = ({
     isCard,
     memo,
     children,
-    width
+    width,
+    isError
 }) => {
     const c = useStyles();
     return (
@@ -30,6 +31,9 @@ const Control = ({
                         >
                             {label}
                         </Typography>
+                        {required && isError && (
+                            <span className={c.required}>required</span>
+                        )}
                     </FormLabel>
                     {memo && (
                         <Typography className={c.memo} variant='subtitle2'>
@@ -54,7 +58,8 @@ Control.defaultProps = {
     required: false,
     isCard: false,
     isCompact: false,
-    width: 6
+    width: 6,
+    isError: false
 };
 
 Control.propTypes = {

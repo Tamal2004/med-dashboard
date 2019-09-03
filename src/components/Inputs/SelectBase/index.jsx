@@ -47,9 +47,7 @@ class SelectBase extends Component {
         )(Select);
 
         return (
-            unitHeight && (
-                <Field {...selectProps} component={SelectComponent}/>
-            )
+            unitHeight && <Field {...selectProps} component={SelectComponent} />
         );
     };
 
@@ -95,7 +93,8 @@ class SelectBase extends Component {
 
 SelectBase.propTypes = {
     classes: PropTypes.object.isRequired,
-    data: PropTypes.array.isRequired
+    data: PropTypes.array.isRequired,
+    handleForm: () => {}
 };
 
 const _SelectBase = withStyles(containerStyles)(SelectBase);
