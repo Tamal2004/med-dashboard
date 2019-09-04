@@ -13,7 +13,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
     success: {
-        backgroundColor: green[600]
+        backgroundColor: green[500]
     },
     error: {
         backgroundColor: theme.palette.error.dark

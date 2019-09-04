@@ -40,4 +40,3 @@ dist/
 node_modules/
 aws-exports.js
 awsconfiguration.json
-/amplify

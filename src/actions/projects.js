@@ -183,7 +183,10 @@ export const listProjects = (
 
     dispatch(listProjectsAction(REQUEST));
     const {
-        data: { listSortedProjects, error = null }
+        data: {
+            listSortedProjects: { items: listSortedProjects = [] },
+            error = null
+        }
     } = await API.graphql(graphqlOperation(ListProjects, variables));
 
     if (!error) {

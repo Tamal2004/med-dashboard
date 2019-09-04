@@ -4,7 +4,7 @@ import { history } from 'libs/history';
 import { reset } from 'redux-form';
 
 //Local
-import { SET_AUTH_USER_INFO } from 'actionTypes';
+import { SET_AUTH_USER_INFO, LOGOUT } from 'actionTypes';
 import { showNotification } from '../notification';
 import { removeTester } from '../testers';
 import { createUser, deleteUser } from '../users';
@@ -116,12 +116,8 @@ export const createUserByAdmin = ({ email, family_name, given_name }) => {
                 Value: family_name
             },
             {
-                Name: 'custom:lastName',
+                Name: 'custom:surname',
                 Value: given_name
-            },
-            {
-                Name: 'custom:name',
-                Value: family_name + ' ' + given_name
             }
         ]
     };
@@ -263,6 +259,10 @@ export const updateAuthUserPassword = payload => {
     };
 };
 
+const logoutAction = () => ({
+    type: LOGOUT
+});
+
 export const logoutUser = () => {
     return async dispatch => {
         Auth.signOut()
@@ -273,6 +273,7 @@ export const logoutUser = () => {
                         message: 'Sign out successfully!'
                     })
                 );
+                dispatch(logoutAction());
                 history.push('/');
             })
             .catch(err => err);

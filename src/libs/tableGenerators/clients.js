@@ -16,20 +16,16 @@ export const generateClientList = clientList =>
                 Component: <Link to={`/client/${id}`}>{name}</Link>,
                 value: name
             },
-            'Latest Project': {
-                Component: (
-                    <Link
-                        to={
-                            latestProjectId
-                                ? `/project/${latestProjectId}`
-                                : '/client'
-                        }
-                    >
-                        {latestProjectReference || 'No Projects'}
-                    </Link>
-                ),
-                value: latestProjectReference || 'No Projects'
-            },
+            'Latest Project': latestProjectId
+                ? {
+                      Component: (
+                          <Link to={`/project/${latestProjectId}`}>
+                              {latestProjectReference}
+                          </Link>
+                      ),
+                      value: latestProjectReference
+                  }
+                : 'No Projects',
             'Latest Project Date': latestProjectDate || 'No Project Dates',
             actions: {}
         })

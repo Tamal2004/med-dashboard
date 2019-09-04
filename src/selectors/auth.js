@@ -8,8 +8,8 @@ export const selectAuthTesterId = createCachedSelector(
 )(() => 'placeholder');
 
 export const selectIsTester = createCachedSelector(
-    selectAuthTesterId,
-    testerId => !!testerId
+    selectAuth,
+    ({ isTester }) => isTester
 )(() => 'placeholder');
 
 export const selectEmail = createCachedSelector(
@@ -19,5 +19,5 @@ export const selectEmail = createCachedSelector(
 
 export const selectFullName = createCachedSelector(
     selectAuth,
-    ({ firstName, lastName }) => `${firstName} ${lastName}`
+    ({ name }) => name
 )(() => 'placeholder');

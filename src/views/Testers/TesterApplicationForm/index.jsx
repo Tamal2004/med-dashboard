@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react';
+import clsx from 'clsx';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { change, reduxForm, formValueSelector } from 'redux-form';
@@ -70,11 +71,17 @@ const TesterApplication = ({
     const c = useStyles();
     return (
         <Paper className={c.root}>
+            <Typography
+                classes={{
+                    root: clsx(c.header, !isTester && c.noTesterHeader)
+                }}
+                variant='h4'
+                gutterBottom
+            >
+                Tester Application Form
+            </Typography>
             {isTester && (
                 <Fragment>
-                    <Typography className={c.header} variant='h4' gutterBottom>
-                        Tester Application Form
-                    </Typography>
                     <Typography
                         className={c.info}
                         variant='subtitle1'
@@ -106,7 +113,10 @@ const TesterApplication = ({
                     </Typography>
                 </Fragment>
             )}
-            <Container title='Contact Details'>
+            <Container
+                title='Contact Details'
+                className={!isTester ? c.noTesterCard : null}
+            >
                 <Select label='Title' data={titles} name='title' required />
                 <Input label='First Name' name='firstName' required />
                 <Input label='Surname' name='surname' required />

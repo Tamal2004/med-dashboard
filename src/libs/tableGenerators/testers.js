@@ -37,20 +37,16 @@ export const generateTesterList = testerList =>
                 ),
                 value: testerName
             },
-            'Last Project': {
-                Component: (
-                    <Link
-                        to={
-                            lastProjectId
-                                ? `/project/${lastProjectId}`
-                                : '/tester'
-                        }
-                    >
-                        {lastProjectReference || 'No Projects'}
-                    </Link>
-                ),
-                value: lastProjectReference || 'No Projects'
-            },
+            'Last Project': lastProjectId
+                ? {
+                      Component: (
+                          <Link to={`/project/${lastProjectId}`}>
+                              {lastProjectReference}
+                          </Link>
+                      ),
+                      value: lastProjectReference
+                  }
+                : 'No Projects',
             'Last Testing Date': lastTestingDate || 'No Sessions',
             'Last Contact Date': lastContactDate || 'No Contacts'
         })

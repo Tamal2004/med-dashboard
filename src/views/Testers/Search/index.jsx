@@ -92,11 +92,17 @@ const TesterSearch = ({
     useEffect(() => {
         if (filterCounter < 3) setFilterCounter(filterCounter + 1);
         else search();
-    }, [filters]);
+    }, [filters, input]);
 
     const handleFilters = filters => {
         setFilters(filters);
     };
+
+    const handleSearch = text => {
+        setInput(text);
+    };
+
+
 
     const { addresses, ids } = selectedTesters.reduce(
         (acm, testerIdx) => ({
@@ -132,8 +138,8 @@ const TesterSearch = ({
                 <GridItem md={6}>
                     <SearchInput
                         placeholder='Search by Tester Name, Email or Town'
-                        handleChange={text => setInput(text)}
-                        handleClick={() => search()}
+                        handleClick={handleSearch}
+                        handleChange={value => setInput(value)}
                     />
                 </GridItem>
                 <GridItem md={3}>

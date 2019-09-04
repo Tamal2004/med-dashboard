@@ -125,7 +125,10 @@ const listTestersAction = (async, payload = []) => ({
 export const listTesters = () => async dispatch => {
     dispatch(listTestersAction(REQUEST));
     const {
-        data: { listSortedTesters, error = null }
+        data: {
+            listSortedTesters: { items: listSortedTesters = [] },
+            error = null
+        }
     } = await API.graphql(graphqlOperation(ListTesters));
 
     if (!error) {

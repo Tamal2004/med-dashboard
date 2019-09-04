@@ -23,6 +23,12 @@ export default makeStyles(({ palette, spacing, typography, breakpoints }) => ({
             paddingBottom: 0
         }
     },
+    noTesterHeader: {
+        paddingBottom: '0px'
+    },
+    noTesterCard: {
+        paddingTop: 0
+    },
     info: {
         padding: spacing(3),
         paddingBottom: 0

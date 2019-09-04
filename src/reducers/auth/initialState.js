@@ -3,5 +3,5 @@ export default {
     name: '',
     firstName: 'Ahmad',
     lastName: 'Nabil',
-    isTester: false
+    isTester: true
 };

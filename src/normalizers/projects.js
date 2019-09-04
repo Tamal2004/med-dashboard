@@ -3,8 +3,8 @@ import { deserializeDate, calculateAge } from 'libs';
 export const normalizeProjectUsers = users =>
     users.map(({ firstName, lastName }) => `${firstName} ${lastName}`);
 
-export const normalizeProjects = ({ items = [] }) =>
-    items.map(({ client: { id, name }, testingDate, ...project }) => ({
+export const normalizeProjects = projects =>
+    projects.map(({ client: { id, name }, testingDate, ...project }) => ({
         ...project,
         clientId: id,
         clientName: name,
