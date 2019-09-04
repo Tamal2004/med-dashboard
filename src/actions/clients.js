@@ -52,14 +52,28 @@ const listClientsAction = (async, payload = []) => ({
     payload
 });
 
-export const listClients = () => async dispatch => {
+export const listClients = (search = null) => async dispatch => {
+    // Compose filters
+    const filter = search
+        ? {
+              filter: {
+                  or: [{ name: { contains: search } }]
+              }
+          }
+        : {};
+
     dispatch(listClientsAction(REQUEST));
     const {
-        data: { listSortedClients: { items: listSortedClients = [] } = {}, error = null }
-    } = await API.graphql(graphqlOperation(ListClients));
+        data: {
+            listSortedClients: { items: listSortedClients = [] } = {},
+            error = null
+        }
+    } = await API.graphql(graphqlOperation(ListClients, filter));
 
     if (!error) {
-        dispatch(listClientsAction(SUCCESS, normalizeClients(listSortedClients)));
+        dispatch(
+            listClientsAction(SUCCESS, normalizeClients(listSortedClients))
+        );
     } else {
         dispatch(listClientsAction(FAIL));
     }

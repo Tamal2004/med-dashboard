@@ -4,12 +4,17 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import './editor.css';
 
+import { ClickAwayListener } from '@material-ui/core';
+
 class Editor extends Component {
     state = {
         value: this.props.input.value || ''
     };
 
-    handleChange = value => this.setState({ value });
+    handleChange = value => {
+        this.setState({ value });
+        this.props.input.onChange(value);
+    };
 
     handleBlur = () => {
         const { state, props } = this;
@@ -36,13 +41,15 @@ class Editor extends Component {
         const { input, ...restProps } = props;
 
         return (
-            <ReactQuill
-                value={state.value}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                onFocus={handleFocus}
-                {...restProps}
-            />
+            <ClickAwayListener onClickAway={handleBlur}>
+                <ReactQuill
+                    value={state.value}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    onFocus={handleFocus}
+                    {...restProps}
+                />
+            </ClickAwayListener>
         );
     }
 }

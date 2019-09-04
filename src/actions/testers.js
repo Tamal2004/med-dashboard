@@ -3,7 +3,13 @@ import { initialize } from 'redux-form';
 import { gql } from 'apollo-boost';
 
 // Local
-import { history, today, deserializeDate } from 'libs';
+import {
+    history,
+    today,
+    deserializeDate,
+    composeSearch,
+    composeFilters
+} from 'libs';
 import { client2 } from '../App/client';
 import { sendMail } from 'services';
 
@@ -16,8 +22,8 @@ import {
 } from 'normalizers';
 
 // Graph QL
-import { CreateTester } from 'graphql/tester';
 import {
+    CreateTester,
     FetchTester,
     FetchPublicTester,
     ListTesters,
@@ -25,6 +31,7 @@ import {
     UpdateTester,
     RemoveTester
 } from 'graphql/tester';
+import { CreateContactNotes } from 'graphql/contactNotes';
 
 // Action Types
 import {
@@ -43,7 +50,7 @@ import {
 import { showNotification } from './notification';
 
 // Selectors
-import { selectIsTester } from 'selectors';
+import { selectIsTester, selectFullName } from 'selectors';
 
 import { testerSignUp } from 'actions';
 
@@ -138,147 +145,11 @@ const listTestersSearchAction = (async, payload = []) => ({
     payload
 });
 
-const composeFilters = filters => {
-    // Local: DB
-    const formatFilters = {
-        'marital-statuses': 'maritalStatus',
-        ethnicities: 'ethnicity',
-        'business-sectors': 'employmentSector',
-        'employee-counts': 'employeeCount',
-        'employment-statuses': 'employmentStatus',
-        children: 'hasChildren'
-    };
-
-    const localFilters = Object.keys(formatFilters);
-
-    const calculateDob = age => {
-        const now = today();
-
-        let nowArray = now.split('-');
-        nowArray[0] = nowArray[0] - age;
-
-        return nowArray.join('-');
-    };
-
-    return Object.entries(filters).reduce((acm, [key, values]) => {
-        if (!!values.length) {
-            let filterKey = key;
-            let filterValues = values;
-
-            if (localFilters.includes(key)) filterKey = formatFilters[key];
-
-            if (key === 'children') {
-                return [
-                    ...acm,
-                    {
-                        or: filterValues.map(filterValue => ({
-                            [filterKey]: { eq: filterValue === 'Yes' }
-                        }))
-                    }
-                ];
-            }
-
-            if (key === 'disability') {
-                const query = {
-                    [filterKey]: { between: ['A', 'Z'] }
-                };
-
-                return [
-                    ...acm,
-                    {
-                        or: values.map(value =>
-                            value === 'Yes' ? query : { not: query }
-                        )
-                    }
-                ];
-            }
-
-            if (key === 'age') {
-                return [
-                    ...acm,
-                    {
-                        or: {
-                            dob: {
-                                between: [
-                                    calculateDob(filterValues[1]),
-                                    calculateDob(filterValues[0])
-                                ]
-                            }
-                        }
-                    }
-                ];
-            }
-
-            return [
-                ...acm,
-                {
-                    or: filterValues.map(filterValue => ({
-                        [filterKey]: { contains: filterValue }
-                    }))
-                }
-            ];
-        } else return acm;
-    }, []);
-};
-
 export const listTestersSearch = (filters, search) => async dispatch => {
-    const searchFields = ['firstName', 'surname', 'email', 'town'];
-
-    const searchStrings = search.split('+').map(x => x.trim());
-
-    const searchQueries = searchStrings
-        .map((filterString, idx, array) => {
-            const otherStrings = array.filter((f, i) => i !== idx);
-            console.log('filterstring', filterString);
-            console.log('other', otherStrings);
-
-            const compose = (currentFilter, otherFilters) => {
-                return searchFields.map(
-                    (searchField, searchFieldIdx, searchFieldArray) => {
-                        const otherSearchFields = searchFieldArray.filter(
-                            (f, i) => i !== searchFieldIdx
-                        );
-
-                        const ors = otherFilters.map((otherFilter) => {
-
-                          return { or: otherSearchFields.map(otherSearchField => ({
-                              [otherSearchField]: { contains: otherFilter }
-                          }))}
-
-                        });
-
-                        return {
-                            and: [
-                                { [searchField]: { contains: currentFilter } },
-                                ...ors
-                            ]
-                        };
-                    }
-                );
-
-            };
-
-
-            return compose(filterString, otherStrings);
-
-        })
-        .flatMap(x => x);
-
-    const searchFilter = search
-        ? [
-              {
-                  or: searchQueries
-              }
-          ]
-        : [];
-
     // Compose filters
     const filter = {
-        and: [...searchFilter, ...composeFilters(filters)]
+        and: [...composeSearch(search), ...composeFilters(filters)]
     };
-
-    console.log('filter', filter)
-
 
     dispatch(listTestersSearchAction(REQUEST));
     const {
@@ -448,26 +319,51 @@ const mailTestersAction = async => ({
     async
 });
 
-export const mailTesters = mail => async dispatch => {
+export const mailTesters = ({ project, contactType, ...mail }, ids) => async (
+    dispatch,
+    getState
+) => {
     dispatch(mailTestersAction(REQUEST));
 
-    const mailRes = await sendMail({ ...mail, to: 'matthew.tamal@gmail.com' });
-    console.log(mailRes);
-    //
-    // if (!error) {
-    //     dispatch(removeTesterAction(SUCCESS));
-    //     dispatch(
-    //         showNotification({
-    //             type: 'success',
-    //             message: 'Mails not sent'
-    //         })
-    //     );
-    // } else {
-    //     dispatch(
-    //         showNotification({
-    //             type: 'error',
-    //             message: 'Mails not sent'
-    //         })
-    //     );
-    // }
+    const username = selectFullName(getState());
+    const contactNotes = ids.map(id => {
+        return {
+            contactNoteTesterId: id,
+            contactNoteProjectId: project,
+            type: contactType,
+            note: mail.body.replace(/<\/?[^>]+>/gi, ' '),
+            date: today(),
+            contactedBy: username
+        };
+    });
+
+    await sendMail({
+        from: 'matthew.tamal@gmail.com',
+        ...mail
+    });
+
+    const {
+        data: { createContactNotes, error = null }
+    } = await API.graphql(
+        graphqlOperation(CreateContactNotes, { contactNotes })
+    );
+
+    console.log('work?', createContactNotes);
+    if (!error) {
+        dispatch(mailTestersAction(SUCCESS));
+        dispatch(
+            showNotification({
+                type: 'success',
+                message: 'Mails sent'
+            })
+        );
+    } else {
+        dispatch(mailTestersAction(FAIL));
+        dispatch(
+            showNotification({
+                type: 'error',
+                message: 'Mails not sent'
+            })
+        );
+    }
 };

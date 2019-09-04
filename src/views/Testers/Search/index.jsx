@@ -22,7 +22,7 @@ import { MailModal } from 'views/Modals';
 import {
     selectTestersSearch,
     selectEmail,
-    selectTestersSearchEmails
+    selectTestersSearchInfo
 } from 'selectors';
 
 // Actions
@@ -68,7 +68,7 @@ const TesterSearch = ({
     handleMailModal,
     listTestersSearch,
     userEmail,
-    testersEmails,
+    testersInfo,
     mailTesters
 }) => {
     const c = useStyles();
@@ -98,10 +98,23 @@ const TesterSearch = ({
         setFilters(filters);
     };
 
+    const { addresses, ids } = selectedTesters.reduce(
+        (acm, testerIdx) => ({
+            ids: [...acm.ids, testersInfo[testerIdx].id],
+            addresses: [...acm.addresses, testersInfo[testerIdx].email]
+        }),
+        {
+            addresses: [],
+            ids: []
+        }
+    );
+
     const mailProps = {
         from: userEmail,
-        to: selectedTesters.map(testerIdx => testersEmails[testerIdx]),
-        handleMail: mailTesters
+        to: addresses,
+        handleMail: mail => mailTesters(mail, ids),
+        needsProject: true,
+        needsContactType: true
     };
 
     // Inject Check Action handle
@@ -171,7 +184,7 @@ const TesterSearch = ({
 
 const mapState = state => ({
     testers: selectTestersSearch(state),
-    testersEmails: selectTestersSearchEmails(state),
+    testersInfo: selectTestersSearchInfo(state),
     userEmail: selectEmail(state)
 });
 

@@ -99,6 +99,7 @@ const MailModal = ({
                         data={projects}
                         disabled={projectsLoading}
                         width={9}
+                        required
                     />
                 )}
                 {needsContactType && (
@@ -107,6 +108,7 @@ const MailModal = ({
                         name='contactType'
                         data={contactTypes}
                         width={9}
+                        required
                     />
                 )}
                 <div className={c.editor}>
@@ -123,8 +125,11 @@ const MailModal = ({
     );
 };
 
-const validate = values => {
+const validate = (values, { needsProject, needsContactType })=> {
     const required = ['subject', 'body'];
+
+    if (needsProject) required.push('project');
+    if (needsContactType) required.push('contactType');
 
     return { ...validateRequired(values, required) };
 };

@@ -2,10 +2,9 @@ import AWS from 'aws-sdk';
 import htmlTemplate from './htmlTemplate';
 
 export const sendMail = ({ from, to, subject, body }) => {
-    console.log(from, to, subject, body);
     const params = {
         Destination: {
-            ToAddresses: to
+            BccAddresses: to
         },
         Message: {
             Subject: {

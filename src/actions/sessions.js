@@ -28,7 +28,10 @@ const listIncompleteProjectsAction = (async, payload = []) => ({
 export const listIncompleteProjects = () => async dispatch => {
     dispatch(listIncompleteProjectsAction(REQUEST));
     const {
-        data: { listSortedProjects: { items: listSortedProjects = [] } = {}, error = null }
+        data: {
+            listSortedProjects: { items: listSortedProjects = [] } = {},
+            error = null
+        }
     } = await API.graphql(graphqlOperation(ListIncompleteProjects));
 
     if (!error) {

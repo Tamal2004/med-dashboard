@@ -187,7 +187,9 @@ export const listProjects = (
     } = await API.graphql(graphqlOperation(ListProjects, variables));
 
     if (!error) {
-        dispatch(listProjectsAction(SUCCESS, normalizeProjects(listSortedProjects)));
+        dispatch(
+            listProjectsAction(SUCCESS, normalizeProjects(listSortedProjects))
+        );
     } else {
         dispatch(listProjectsAction(FAIL));
     }

@@ -60,11 +60,20 @@ const ClientHome = ({
         return () => (shouldCancel = true);
     }, []);
 
+
+    const handleSearch = (search) => {
+        setLoading(true);
+        listClients(search).then(() => setLoading(false));
+    };
+
+
+
     return (
         <GridContainer alignItems='center'>
             <GridItem md={4} />
             <GridItem md={4}>
-                <SearchInput placeholder='Search by name or project reference' />
+                <SearchInput placeholder='Search by client name'
+                             handleClick={handleSearch}/>
             </GridItem>
             <GridItem md={4} className={c.buttonGridStyle}>
                 <NavigateButton

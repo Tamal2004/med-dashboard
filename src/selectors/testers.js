@@ -53,7 +53,7 @@ export const selectTestersSearch = createCachedSelector(
     ({ search }) => generateTestersSearch(search)
 )(() => 'placeholder');
 
-export const selectTestersSearchEmails = createCachedSelector(
+export const selectTestersSearchInfo = createCachedSelector(
     selectTesters,
-    ({ search }) => search.map(({ email }) => email)
+    ({ search }) => search.map(({ id, email }) => ({ id, email }))
 )(() => 'placeholder');
