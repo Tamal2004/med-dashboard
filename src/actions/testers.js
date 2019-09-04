@@ -119,11 +119,13 @@ const listTestersAction = (async, payload = []) => ({
 export const listTesters = () => async dispatch => {
     dispatch(listTestersAction(REQUEST));
     const {
-        data: { listTesters, error = null }
+        data: { listSortedTesters, error = null }
     } = await API.graphql(graphqlOperation(ListTesters));
 
     if (!error) {
-        dispatch(listTestersAction(SUCCESS, normalizeTestersList(listTesters)));
+        dispatch(
+            listTestersAction(SUCCESS, normalizeTestersList(listSortedTesters))
+        );
     } else {
         dispatch(listTestersAction(FAIL));
     }
@@ -220,15 +222,52 @@ const composeFilters = filters => {
 };
 
 export const listTestersSearch = (filters, search) => async dispatch => {
+    const searchFields = ['firstName', 'surname', 'email', 'town'];
+
+    const searchStrings = search.split('+').map(x => x.trim());
+
+    const searchQueries = searchStrings
+        .map((filterString, idx, array) => {
+            const otherStrings = array.filter((f, i) => i !== idx);
+            console.log('filterstring', filterString);
+            console.log('other', otherStrings);
+
+            const compose = (currentFilter, otherFilters) => {
+                return searchFields.map(
+                    (searchField, searchFieldIdx, searchFieldArray) => {
+                        const otherSearchFields = searchFieldArray.filter(
+                            (f, i) => i !== searchFieldIdx
+                        );
+
+                        const ors = otherFilters.map((otherFilter) => {
+
+                          return { or: otherSearchFields.map(otherSearchField => ({
+                              [otherSearchField]: { contains: otherFilter }
+                          }))}
+
+                        });
+
+                        return {
+                            and: [
+                                { [searchField]: { contains: currentFilter } },
+                                ...ors
+                            ]
+                        };
+                    }
+                );
+
+            };
+
+
+            return compose(filterString, otherStrings);
+
+        })
+        .flatMap(x => x);
+
     const searchFilter = search
         ? [
               {
-                  or: [
-                      { firstName: { contains: search } },
-                      { surname: { contains: search } },
-                      { email: { contains: search } },
-                      { town: { contains: search } }
-                  ]
+                  or: searchQueries
               }
           ]
         : [];
@@ -238,16 +277,22 @@ export const listTestersSearch = (filters, search) => async dispatch => {
         and: [...searchFilter, ...composeFilters(filters)]
     };
 
+    console.log('filter', filter)
+
+
     dispatch(listTestersSearchAction(REQUEST));
     const {
-        data: { listTesters: { items: listTesters = [] } = {}, error = null }
+        data: {
+            listSortedTesters: { items: listSortedTesters = [] } = {},
+            error = null
+        }
     } = await API.graphql(graphqlOperation(ListTestersSearch, { filter }));
 
     if (!error) {
         dispatch(
             listTestersSearchAction(
                 SUCCESS,
-                normalizeTestersSearch(listTesters)
+                normalizeTestersSearch(listSortedTesters)
             )
         );
     } else {

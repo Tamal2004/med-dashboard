@@ -11,7 +11,6 @@ import {
 import {
     CreateClient,
     UpdateClient,
-    RemoveClient,
     FetchClient,
     ListClients
 } from 'graphql/clients';
@@ -56,11 +55,11 @@ const listClientsAction = (async, payload = []) => ({
 export const listClients = () => async dispatch => {
     dispatch(listClientsAction(REQUEST));
     const {
-        data: { listClients: { items: listClients = [] } = {}, error = null }
+        data: { listSortedClients: { items: listSortedClients = [] } = {}, error = null }
     } = await API.graphql(graphqlOperation(ListClients));
 
     if (!error) {
-        dispatch(listClientsAction(SUCCESS, normalizeClients(listClients)));
+        dispatch(listClientsAction(SUCCESS, normalizeClients(listSortedClients)));
     } else {
         dispatch(listClientsAction(FAIL));
     }

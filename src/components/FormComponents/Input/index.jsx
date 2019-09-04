@@ -17,7 +17,11 @@ const Input = ({ required, label, isCard, active, width, ...restProps }) => {
     const controlProps = { required, label, isCard, width };
     return (
         <Control {...controlProps}>
-            <InputBase styles={inputStyles} {...restProps} />
+            <InputBase
+                styles={inputStyles}
+                normalize={value => (value === '' ? null : value)}
+                {...restProps}
+            />
         </Control>
     );
 };

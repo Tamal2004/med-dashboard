@@ -1,5 +1,5 @@
 export const ListTesters = `query ListTesters {
-  listTesters(limit: 500) {
+  listSortedTesters(sortDirection: DESC limit: 500) {
     items {
       id
       firstName
@@ -23,7 +23,7 @@ export const ListTesters = `query ListTesters {
 }`;
 
 export const ListTestersSearch = `query ListTestersSearch($filter: ModelTesterFilterInput) {
-    listTesters(filter: $filter limit: 500) {
+    listSortedTesters(filter: $filter limit: 500 sortDirection: DESC) {
         items {
             id
             firstName

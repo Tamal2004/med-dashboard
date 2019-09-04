@@ -1,27 +1,1152 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const createTodo = `mutation CreateTodo($input: CreateTodoInput!) {
-  createTodo(input: $input) {
+export const createClient = `mutation CreateClient($input: CreateClientInput!) {
+  createClient(input: $input) {
     id
     updatedAt
+    hidden
     name
+    projects {
+      items {
+        id
+        updatedAt
+        hidden
+        reference
+        title
+        status
+        principalContact
+        otherContact
+        testingDate
+        cost
+        purchaseOrderNumber
+        manager
+        testerFacilitator
+        clientFacilitator
+        mainRecruiter
+        facilities
+        screenerApproved
+        facilitationGuideSent
+        testerProfilesSent
+        facilitationGuideApproved
+        testerProfilesApproved
+        sessionDetailsSent
+        attendees
+        reportSent
+        feedbackEntered
+        videosUploaded
+        invoiced
+        invoiceNumber
+        clientComments
+        wuComments
+        profiles
+      }
+      nextToken
+    }
   }
 }
 `;
-export const updateTodo = `mutation UpdateTodo($input: UpdateTodoInput!) {
-  updateTodo(input: $input) {
+export const updateClient = `mutation UpdateClient($input: UpdateClientInput!) {
+  updateClient(input: $input) {
     id
     updatedAt
+    hidden
     name
+    projects {
+      items {
+        id
+        updatedAt
+        hidden
+        reference
+        title
+        status
+        principalContact
+        otherContact
+        testingDate
+        cost
+        purchaseOrderNumber
+        manager
+        testerFacilitator
+        clientFacilitator
+        mainRecruiter
+        facilities
+        screenerApproved
+        facilitationGuideSent
+        testerProfilesSent
+        facilitationGuideApproved
+        testerProfilesApproved
+        sessionDetailsSent
+        attendees
+        reportSent
+        feedbackEntered
+        videosUploaded
+        invoiced
+        invoiceNumber
+        clientComments
+        wuComments
+        profiles
+      }
+      nextToken
+    }
   }
 }
 `;
-export const deleteTodo = `mutation DeleteTodo($input: DeleteTodoInput!) {
-  deleteTodo(input: $input) {
+export const deleteClient = `mutation DeleteClient($input: DeleteClientInput!) {
+  deleteClient(input: $input) {
     id
     updatedAt
+    hidden
     name
+    projects {
+      items {
+        id
+        updatedAt
+        hidden
+        reference
+        title
+        status
+        principalContact
+        otherContact
+        testingDate
+        cost
+        purchaseOrderNumber
+        manager
+        testerFacilitator
+        clientFacilitator
+        mainRecruiter
+        facilities
+        screenerApproved
+        facilitationGuideSent
+        testerProfilesSent
+        facilitationGuideApproved
+        testerProfilesApproved
+        sessionDetailsSent
+        attendees
+        reportSent
+        feedbackEntered
+        videosUploaded
+        invoiced
+        invoiceNumber
+        clientComments
+        wuComments
+        profiles
+      }
+      nextToken
+    }
+  }
+}
+`;
+export const createProject = `mutation CreateProject($input: CreateProjectInput!) {
+  createProject(input: $input) {
+    id
+    updatedAt
+    hidden
+    reference
+    title
+    status
+    client {
+      id
+      updatedAt
+      hidden
+      name
+      projects {
+        nextToken
+      }
+    }
+    principalContact
+    otherContact
+    testingDate
+    cost
+    purchaseOrderNumber
+    manager
+    testerFacilitator
+    clientFacilitator
+    mainRecruiter
+    facilities
+    screenerApproved
+    facilitationGuideSent
+    testerProfilesSent
+    facilitationGuideApproved
+    testerProfilesApproved
+    sessionDetailsSent
+    attendees
+    reportSent
+    feedbackEntered
+    videosUploaded
+    invoiced
+    invoiceNumber
+    clientComments
+    wuComments
+    profiles
+    sessions {
+      items {
+        id
+        profile
+        location
+        date
+        time
+        notes
+      }
+      nextToken
+    }
+    contactNotes {
+      items {
+        id
+        type
+        date
+        contactedBy
+        note
+      }
+      nextToken
+    }
+  }
+}
+`;
+export const updateProject = `mutation UpdateProject($input: UpdateProjectInput!) {
+  updateProject(input: $input) {
+    id
+    updatedAt
+    hidden
+    reference
+    title
+    status
+    client {
+      id
+      updatedAt
+      hidden
+      name
+      projects {
+        nextToken
+      }
+    }
+    principalContact
+    otherContact
+    testingDate
+    cost
+    purchaseOrderNumber
+    manager
+    testerFacilitator
+    clientFacilitator
+    mainRecruiter
+    facilities
+    screenerApproved
+    facilitationGuideSent
+    testerProfilesSent
+    facilitationGuideApproved
+    testerProfilesApproved
+    sessionDetailsSent
+    attendees
+    reportSent
+    feedbackEntered
+    videosUploaded
+    invoiced
+    invoiceNumber
+    clientComments
+    wuComments
+    profiles
+    sessions {
+      items {
+        id
+        profile
+        location
+        date
+        time
+        notes
+      }
+      nextToken
+    }
+    contactNotes {
+      items {
+        id
+        type
+        date
+        contactedBy
+        note
+      }
+      nextToken
+    }
+  }
+}
+`;
+export const deleteProject = `mutation DeleteProject($input: DeleteProjectInput!) {
+  deleteProject(input: $input) {
+    id
+    updatedAt
+    hidden
+    reference
+    title
+    status
+    client {
+      id
+      updatedAt
+      hidden
+      name
+      projects {
+        nextToken
+      }
+    }
+    principalContact
+    otherContact
+    testingDate
+    cost
+    purchaseOrderNumber
+    manager
+    testerFacilitator
+    clientFacilitator
+    mainRecruiter
+    facilities
+    screenerApproved
+    facilitationGuideSent
+    testerProfilesSent
+    facilitationGuideApproved
+    testerProfilesApproved
+    sessionDetailsSent
+    attendees
+    reportSent
+    feedbackEntered
+    videosUploaded
+    invoiced
+    invoiceNumber
+    clientComments
+    wuComments
+    profiles
+    sessions {
+      items {
+        id
+        profile
+        location
+        date
+        time
+        notes
+      }
+      nextToken
+    }
+    contactNotes {
+      items {
+        id
+        type
+        date
+        contactedBy
+        note
+      }
+      nextToken
+    }
+  }
+}
+`;
+export const createSession = `mutation CreateSession($input: CreateSessionInput!) {
+  createSession(input: $input) {
+    id
+    project {
+      id
+      updatedAt
+      hidden
+      reference
+      title
+      status
+      client {
+        id
+        updatedAt
+        hidden
+        name
+      }
+      principalContact
+      otherContact
+      testingDate
+      cost
+      purchaseOrderNumber
+      manager
+      testerFacilitator
+      clientFacilitator
+      mainRecruiter
+      facilities
+      screenerApproved
+      facilitationGuideSent
+      testerProfilesSent
+      facilitationGuideApproved
+      testerProfilesApproved
+      sessionDetailsSent
+      attendees
+      reportSent
+      feedbackEntered
+      videosUploaded
+      invoiced
+      invoiceNumber
+      clientComments
+      wuComments
+      profiles
+      sessions {
+        nextToken
+      }
+      contactNotes {
+        nextToken
+      }
+    }
+    tester {
+      id
+      updatedAt
+      hidden
+      title
+      firstName
+      surname
+      email
+      phone
+      address
+      house
+      street
+      town
+      county
+      postcode
+      country
+      gender
+      dob
+      maritalStatus
+      hasChildren
+      nationality
+      ethnicity
+      firstLanguage
+      otherLanguages
+      disability
+      about
+      employmentStatus
+      jobTitle
+      businessName
+      employmentSector
+      employeeCount
+      subject
+      educationStage
+      institution
+      clientNotes
+      facilitatorComments
+      lastUpdated
+      contactNotes {
+        nextToken
+      }
+      sessions {
+        nextToken
+      }
+    }
+    profile
+    location
+    date
+    time
+    notes
+  }
+}
+`;
+export const updateSession = `mutation UpdateSession($input: UpdateSessionInput!) {
+  updateSession(input: $input) {
+    id
+    project {
+      id
+      updatedAt
+      hidden
+      reference
+      title
+      status
+      client {
+        id
+        updatedAt
+        hidden
+        name
+      }
+      principalContact
+      otherContact
+      testingDate
+      cost
+      purchaseOrderNumber
+      manager
+      testerFacilitator
+      clientFacilitator
+      mainRecruiter
+      facilities
+      screenerApproved
+      facilitationGuideSent
+      testerProfilesSent
+      facilitationGuideApproved
+      testerProfilesApproved
+      sessionDetailsSent
+      attendees
+      reportSent
+      feedbackEntered
+      videosUploaded
+      invoiced
+      invoiceNumber
+      clientComments
+      wuComments
+      profiles
+      sessions {
+        nextToken
+      }
+      contactNotes {
+        nextToken
+      }
+    }
+    tester {
+      id
+      updatedAt
+      hidden
+      title
+      firstName
+      surname
+      email
+      phone
+      address
+      house
+      street
+      town
+      county
+      postcode
+      country
+      gender
+      dob
+      maritalStatus
+      hasChildren
+      nationality
+      ethnicity
+      firstLanguage
+      otherLanguages
+      disability
+      about
+      employmentStatus
+      jobTitle
+      businessName
+      employmentSector
+      employeeCount
+      subject
+      educationStage
+      institution
+      clientNotes
+      facilitatorComments
+      lastUpdated
+      contactNotes {
+        nextToken
+      }
+      sessions {
+        nextToken
+      }
+    }
+    profile
+    location
+    date
+    time
+    notes
+  }
+}
+`;
+export const deleteSession = `mutation DeleteSession($input: DeleteSessionInput!) {
+  deleteSession(input: $input) {
+    id
+    project {
+      id
+      updatedAt
+      hidden
+      reference
+      title
+      status
+      client {
+        id
+        updatedAt
+        hidden
+        name
+      }
+      principalContact
+      otherContact
+      testingDate
+      cost
+      purchaseOrderNumber
+      manager
+      testerFacilitator
+      clientFacilitator
+      mainRecruiter
+      facilities
+      screenerApproved
+      facilitationGuideSent
+      testerProfilesSent
+      facilitationGuideApproved
+      testerProfilesApproved
+      sessionDetailsSent
+      attendees
+      reportSent
+      feedbackEntered
+      videosUploaded
+      invoiced
+      invoiceNumber
+      clientComments
+      wuComments
+      profiles
+      sessions {
+        nextToken
+      }
+      contactNotes {
+        nextToken
+      }
+    }
+    tester {
+      id
+      updatedAt
+      hidden
+      title
+      firstName
+      surname
+      email
+      phone
+      address
+      house
+      street
+      town
+      county
+      postcode
+      country
+      gender
+      dob
+      maritalStatus
+      hasChildren
+      nationality
+      ethnicity
+      firstLanguage
+      otherLanguages
+      disability
+      about
+      employmentStatus
+      jobTitle
+      businessName
+      employmentSector
+      employeeCount
+      subject
+      educationStage
+      institution
+      clientNotes
+      facilitatorComments
+      lastUpdated
+      contactNotes {
+        nextToken
+      }
+      sessions {
+        nextToken
+      }
+    }
+    profile
+    location
+    date
+    time
+    notes
+  }
+}
+`;
+export const createTester = `mutation CreateTester($input: CreateTesterInput!) {
+  createTester(input: $input) {
+    id
+    updatedAt
+    hidden
+    title
+    firstName
+    surname
+    email
+    phone
+    address
+    house
+    street
+    town
+    county
+    postcode
+    country
+    gender
+    dob
+    maritalStatus
+    hasChildren
+    nationality
+    ethnicity
+    firstLanguage
+    otherLanguages
+    disability
+    about
+    employmentStatus
+    jobTitle
+    businessName
+    employmentSector
+    employeeCount
+    subject
+    educationStage
+    institution
+    clientNotes
+    facilitatorComments
+    lastUpdated
+    contactNotes {
+      items {
+        id
+        type
+        date
+        contactedBy
+        note
+      }
+      nextToken
+    }
+    sessions {
+      items {
+        id
+        profile
+        location
+        date
+        time
+        notes
+      }
+      nextToken
+    }
+  }
+}
+`;
+export const updateTester = `mutation UpdateTester($input: UpdateTesterInput!) {
+  updateTester(input: $input) {
+    id
+    updatedAt
+    hidden
+    title
+    firstName
+    surname
+    email
+    phone
+    address
+    house
+    street
+    town
+    county
+    postcode
+    country
+    gender
+    dob
+    maritalStatus
+    hasChildren
+    nationality
+    ethnicity
+    firstLanguage
+    otherLanguages
+    disability
+    about
+    employmentStatus
+    jobTitle
+    businessName
+    employmentSector
+    employeeCount
+    subject
+    educationStage
+    institution
+    clientNotes
+    facilitatorComments
+    lastUpdated
+    contactNotes {
+      items {
+        id
+        type
+        date
+        contactedBy
+        note
+      }
+      nextToken
+    }
+    sessions {
+      items {
+        id
+        profile
+        location
+        date
+        time
+        notes
+      }
+      nextToken
+    }
+  }
+}
+`;
+export const deleteTester = `mutation DeleteTester($input: DeleteTesterInput!) {
+  deleteTester(input: $input) {
+    id
+    updatedAt
+    hidden
+    title
+    firstName
+    surname
+    email
+    phone
+    address
+    house
+    street
+    town
+    county
+    postcode
+    country
+    gender
+    dob
+    maritalStatus
+    hasChildren
+    nationality
+    ethnicity
+    firstLanguage
+    otherLanguages
+    disability
+    about
+    employmentStatus
+    jobTitle
+    businessName
+    employmentSector
+    employeeCount
+    subject
+    educationStage
+    institution
+    clientNotes
+    facilitatorComments
+    lastUpdated
+    contactNotes {
+      items {
+        id
+        type
+        date
+        contactedBy
+        note
+      }
+      nextToken
+    }
+    sessions {
+      items {
+        id
+        profile
+        location
+        date
+        time
+        notes
+      }
+      nextToken
+    }
+  }
+}
+`;
+export const createContactNote = `mutation CreateContactNote($input: CreateContactNoteInput!) {
+  createContactNote(input: $input) {
+    id
+    type
+    project {
+      id
+      updatedAt
+      hidden
+      reference
+      title
+      status
+      client {
+        id
+        updatedAt
+        hidden
+        name
+      }
+      principalContact
+      otherContact
+      testingDate
+      cost
+      purchaseOrderNumber
+      manager
+      testerFacilitator
+      clientFacilitator
+      mainRecruiter
+      facilities
+      screenerApproved
+      facilitationGuideSent
+      testerProfilesSent
+      facilitationGuideApproved
+      testerProfilesApproved
+      sessionDetailsSent
+      attendees
+      reportSent
+      feedbackEntered
+      videosUploaded
+      invoiced
+      invoiceNumber
+      clientComments
+      wuComments
+      profiles
+      sessions {
+        nextToken
+      }
+      contactNotes {
+        nextToken
+      }
+    }
+    date
+    contactedBy
+    note
+    tester {
+      id
+      updatedAt
+      hidden
+      title
+      firstName
+      surname
+      email
+      phone
+      address
+      house
+      street
+      town
+      county
+      postcode
+      country
+      gender
+      dob
+      maritalStatus
+      hasChildren
+      nationality
+      ethnicity
+      firstLanguage
+      otherLanguages
+      disability
+      about
+      employmentStatus
+      jobTitle
+      businessName
+      employmentSector
+      employeeCount
+      subject
+      educationStage
+      institution
+      clientNotes
+      facilitatorComments
+      lastUpdated
+      contactNotes {
+        nextToken
+      }
+      sessions {
+        nextToken
+      }
+    }
+  }
+}
+`;
+export const updateContactNote = `mutation UpdateContactNote($input: UpdateContactNoteInput!) {
+  updateContactNote(input: $input) {
+    id
+    type
+    project {
+      id
+      updatedAt
+      hidden
+      reference
+      title
+      status
+      client {
+        id
+        updatedAt
+        hidden
+        name
+      }
+      principalContact
+      otherContact
+      testingDate
+      cost
+      purchaseOrderNumber
+      manager
+      testerFacilitator
+      clientFacilitator
+      mainRecruiter
+      facilities
+      screenerApproved
+      facilitationGuideSent
+      testerProfilesSent
+      facilitationGuideApproved
+      testerProfilesApproved
+      sessionDetailsSent
+      attendees
+      reportSent
+      feedbackEntered
+      videosUploaded
+      invoiced
+      invoiceNumber
+      clientComments
+      wuComments
+      profiles
+      sessions {
+        nextToken
+      }
+      contactNotes {
+        nextToken
+      }
+    }
+    date
+    contactedBy
+    note
+    tester {
+      id
+      updatedAt
+      hidden
+      title
+      firstName
+      surname
+      email
+      phone
+      address
+      house
+      street
+      town
+      county
+      postcode
+      country
+      gender
+      dob
+      maritalStatus
+      hasChildren
+      nationality
+      ethnicity
+      firstLanguage
+      otherLanguages
+      disability
+      about
+      employmentStatus
+      jobTitle
+      businessName
+      employmentSector
+      employeeCount
+      subject
+      educationStage
+      institution
+      clientNotes
+      facilitatorComments
+      lastUpdated
+      contactNotes {
+        nextToken
+      }
+      sessions {
+        nextToken
+      }
+    }
+  }
+}
+`;
+export const deleteContactNote = `mutation DeleteContactNote($input: DeleteContactNoteInput!) {
+  deleteContactNote(input: $input) {
+    id
+    type
+    project {
+      id
+      updatedAt
+      hidden
+      reference
+      title
+      status
+      client {
+        id
+        updatedAt
+        hidden
+        name
+      }
+      principalContact
+      otherContact
+      testingDate
+      cost
+      purchaseOrderNumber
+      manager
+      testerFacilitator
+      clientFacilitator
+      mainRecruiter
+      facilities
+      screenerApproved
+      facilitationGuideSent
+      testerProfilesSent
+      facilitationGuideApproved
+      testerProfilesApproved
+      sessionDetailsSent
+      attendees
+      reportSent
+      feedbackEntered
+      videosUploaded
+      invoiced
+      invoiceNumber
+      clientComments
+      wuComments
+      profiles
+      sessions {
+        nextToken
+      }
+      contactNotes {
+        nextToken
+      }
+    }
+    date
+    contactedBy
+    note
+    tester {
+      id
+      updatedAt
+      hidden
+      title
+      firstName
+      surname
+      email
+      phone
+      address
+      house
+      street
+      town
+      county
+      postcode
+      country
+      gender
+      dob
+      maritalStatus
+      hasChildren
+      nationality
+      ethnicity
+      firstLanguage
+      otherLanguages
+      disability
+      about
+      employmentStatus
+      jobTitle
+      businessName
+      employmentSector
+      employeeCount
+      subject
+      educationStage
+      institution
+      clientNotes
+      facilitatorComments
+      lastUpdated
+      contactNotes {
+        nextToken
+      }
+      sessions {
+        nextToken
+      }
+    }
+  }
+}
+`;
+export const createUser = `mutation CreateUser($input: CreateUserInput!) {
+  createUser(input: $input) {
+    id
+    updatedAt
+    hidden
+    email
+    firstName
+    lastName
+  }
+}
+`;
+export const updateUser = `mutation UpdateUser($input: UpdateUserInput!) {
+  updateUser(input: $input) {
+    id
+    updatedAt
+    hidden
+    email
+    firstName
+    lastName
+  }
+}
+`;
+export const deleteUser = `mutation DeleteUser($input: DeleteUserInput!) {
+  deleteUser(input: $input) {
+    id
+    updatedAt
+    hidden
+    email
+    firstName
+    lastName
   }
 }
 `;
