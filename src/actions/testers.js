@@ -337,10 +337,7 @@ export const mailTesters = ({ project, contactType, ...mail }, ids) => async (
         };
     });
 
-    await sendMail({
-        from: 'matthew.tamal@gmail.com',
-        ...mail
-    });
+    await sendMail(mail);
 
     const {
         data: { createContactNotes, error = null }
@@ -348,7 +345,6 @@ export const mailTesters = ({ project, contactType, ...mail }, ids) => async (
         graphqlOperation(CreateContactNotes, { contactNotes })
     );
 
-    console.log('work?', createContactNotes);
     if (!error) {
         dispatch(mailTestersAction(SUCCESS));
         dispatch(
