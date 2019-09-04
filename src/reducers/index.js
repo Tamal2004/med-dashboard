@@ -12,15 +12,15 @@ import notification from './notification';
 import utils from './utils';
 
 const rootReducer = combineReducers({
-	auth,
-	clients,
-	users,
-	datasets,
-	form,
-	testers,
-	projects,
-	notification,
-	utils
+    auth,
+    clients,
+    users,
+    datasets,
+    form,
+    testers,
+    projects,
+    notification,
+    utils
 });
 
 export default rootReducer;
