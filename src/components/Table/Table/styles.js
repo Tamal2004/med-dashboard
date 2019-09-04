@@ -29,16 +29,18 @@ export default ({ palette, spacing, transitions, typography }) => ({
         }
     },
     titleWrapper: {
-        maxWidth: 160,
         overflow: 'hidden',
         display: 'inline-block',
         margin: '0 5px 0 5px',
+        maxWidth: 'inherit',
         textAlign: 'center',
         textOverflow: 'ellipsis',
         whiteSpace: 'nowrap'
     },
     cell: {
-        padding: `${spacing(2)}px ${spacing()}px`,
+        padding: `${spacing(2)}px ${spacing(2)}px ${spacing(
+            2
+        )}px ${spacing()}px`,
         minWidth: spacing(10.5),
         maxWidth: spacing(31.5),
         whiteSpace: 'nowrap',
@@ -80,7 +82,7 @@ export default ({ palette, spacing, transitions, typography }) => ({
     actionCellHeader: {
         backgroundColor: palette.grey[50],
         textAlign: 'right',
-        paddingRight: 16,
+        paddingRight: '21px !important',
         minWidth: 'unset !important',
         width: spacing()
     },

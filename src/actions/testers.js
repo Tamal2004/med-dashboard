@@ -86,15 +86,14 @@ export const createPublicTester = tester => async dispatch => {
             mutation: gql(CreateTester),
             variables: { input: tester }
         })
-        .then(({ data }) => data)
-        .then(({ createTester }) => testerSignUp(createTester));
+        .then(({ data: createTester }) => testerSignUp(createTester));
 
     if (!res.error) {
         dispatch(createTesterAction(SUCCESS));
         dispatch(
             showNotification({
                 type: 'success',
-                message: 'Signup successful!'
+                message: 'Application submitted successfully!'
             })
         );
     } else {
@@ -102,7 +101,7 @@ export const createPublicTester = tester => async dispatch => {
         dispatch(
             showNotification({
                 type: 'error',
-                message: 'Signup failed!'
+                message: 'Failed! Something went  wrong!'
             })
         );
     }

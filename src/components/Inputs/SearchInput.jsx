@@ -23,11 +23,18 @@ function SearchInput({ ...props }) {
         textArea,
         rows,
         Adornment,
-        handleClick,
+        handleClick = () => {},
         color
     } = props;
     const [value, setValue] = useState('');
     const handleText = ({ target: { value = '' } } = {}) => setValue(value);
+
+    const keyPressed = e => {
+        if (e.which === 13) {
+            handleClick(value);
+        }
+    };
+
     return (
         <TextField
             fullWidth
@@ -50,7 +57,10 @@ function SearchInput({ ...props }) {
                     className: textArea ? classes.textArea : ''
                 },
                 endAdornment: (
-                    <InputAdornment position='end' onClick={() => handleClick(value)}>
+                    <InputAdornment
+                        position='end'
+                        onClick={() => handleClick(value)}
+                    >
                         <IconButton color={color} edge='end'>
                             <Adornment color={color} />
                         </IconButton>
@@ -74,6 +84,7 @@ function SearchInput({ ...props }) {
             placeholder={placeholder}
             value={value}
             onChange={handleText}
+            onKeyPress={keyPressed}
             onBlur={() => handleChange(value)}
             disabled={isDisabled}
         />

@@ -54,14 +54,6 @@ const getUser = () => {
         .catch(err => err);
 };
 
-// const getSession = () => {
-//     return Auth.currentSession()
-//         .then(data => {
-//             console.log(data);
-//         })
-//         .catch(err => console.log(err));
-// };
-
 const changePassword = ({ oldPassword, newPassword }) => {
     return Auth.currentAuthenticatedUser().then(user =>
         Auth.changePassword(user, oldPassword, newPassword)
@@ -80,10 +72,10 @@ export const testerSignUp = ({ id, email, firstName, surname }) => {
             password: PASS,
             temporaryPassword: PASS,
             attributes: {
-                name: firstName,
                 email,
-                family_name: firstName,
-                given_name: surname,
+                'custom:name': firstName + ' ' + surname,
+                'custom:firstName': firstName,
+                'custom:lastName': surname,
                 'custom:testerId': id
             }
         })
@@ -108,30 +100,6 @@ export const testerSignUp = ({ id, email, firstName, surname }) => {
     };
 };
 
-// export const signUp = ({
-//     username,
-//     password,
-//     name,
-//     email,
-//     family_name,
-//     given_name,
-//     testerId
-// }) => {
-//     return Auth.signUp({
-//         username,
-//         password,
-//         attributes: {
-//             name: 'report.nabil@gmail.com',
-//             email: 'report.nabil@gmail.com',
-//             family_name: 'Nabil',
-//             given_name: 'Ahmad',
-//             'custom:testerId': '123'
-//         }
-//     })
-//         .then(data => console.log(data))
-//         .catch(err => console.log(err));
-// };
-
 export const createUserByAdmin = ({ email, family_name, given_name }) => {
     const payload = {
         UserPoolId: REACT_APP_COGNITO_USER_POOL_ID,
@@ -144,16 +112,16 @@ export const createUserByAdmin = ({ email, family_name, given_name }) => {
                 Value: email
             },
             {
-                Name: 'family_name',
+                Name: 'custom:firstName',
                 Value: family_name
             },
             {
-                Name: 'given_name',
+                Name: 'custom:lastName',
                 Value: given_name
             },
             {
-                Name: 'name',
-                Value: family_name
+                Name: 'custom:name',
+                Value: family_name + ' ' + given_name
             }
         ]
     };
