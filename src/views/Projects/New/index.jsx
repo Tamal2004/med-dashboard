@@ -20,7 +20,11 @@ import {
 } from 'components';
 
 // Selectors
-import { selectNewProjectStatuses, selectProjectClients, selectProjectUsers } from 'selectors';
+import {
+    selectNewProjectStatuses,
+    selectProjectClients,
+    selectProjectUsers
+} from 'selectors';
 
 // Actions
 import { createProject, listProjectClients, listProjectUsers } from 'actions';
@@ -128,10 +132,13 @@ const ProjectNew = ({
     );
 };
 
-const mapState = state => ({
+const mapState = (state, { location }) => ({
     projectStatuses: selectNewProjectStatuses(state),
     clients: selectProjectClients(state),
     users: selectProjectUsers(state),
+    initialValues: {
+        projectClientId: !!location.search && location.search.substr(8)
+    }
 });
 
 const mapDispatch = { listProjectClients, listProjectUsers };

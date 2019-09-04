@@ -14,11 +14,9 @@ const Control = ({
     memo,
     children,
     width,
-    isError,
     error
 }) => {
     const c = useStyles();
-    console.log('error', error)
     return (
         <Grid container className={clsx(c.root, isCard && c.cardRoot)}>
             {label && (

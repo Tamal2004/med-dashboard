@@ -62,11 +62,10 @@ const ProjectHome = ({ projects, listProjects }) => {
 
         return () => (shouldCancel = true);
     }, []);
-
-    const handleSearch = () => {
+    useEffect(() => {
         setLoading(true);
         listProjects(checkFilter, searchInput).then(() => setLoading(false));
-    };
+    }, [searchInput]);
 
     return (
         <GridContainer alignItems='center'>
@@ -81,7 +80,7 @@ const ProjectHome = ({ projects, listProjects }) => {
                 <SearchInput
                     placeholder='Search by name or project reference'
                     handleChange={value => setSearchInput(value)}
-                    handleClick={handleSearch}
+                    handleClick={value => setSearchInput(value)}
                 />
             </GridItem>
             <GridItem md={4} className={c.buttonGridStyle}>

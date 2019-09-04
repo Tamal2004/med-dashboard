@@ -11,8 +11,8 @@ export const normalizeTestersSearch = testersSearch =>
         ...tester
     }));
 
-export const normalizeTestersList = ({ items = [] }) =>
-    items.map(
+export const normalizeTestersList = testers =>
+    testers.map(
         ({
             id,
             firstName,

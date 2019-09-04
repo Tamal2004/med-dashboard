@@ -187,7 +187,7 @@ class Select extends Component {
             required,
             disabled,
             displayFirst, // Take out of restProps
-            handleForm,
+            handleError,
             ...restProps
         } = props;
 
