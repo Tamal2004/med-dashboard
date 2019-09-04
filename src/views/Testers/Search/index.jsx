@@ -19,10 +19,14 @@ import {
 import { MailModal } from 'views/Modals';
 
 // Selectors
-import { selectTestersSearch } from 'selectors';
+import {
+    selectTestersSearch,
+    selectEmail,
+    selectTestersSearchInfo
+} from 'selectors';
 
 // Actions
-import { listTestersSearch } from 'actions';
+import { listTestersSearch, mailTesters } from 'actions';
 
 const useStyles = makeStyles(({ spacing }) => ({
     gridDistance: {
@@ -59,13 +63,21 @@ const GridWrapper = ({ className, children }) => {
     );
 };
 
-const TesterSearch = ({ testers, handleMailModal, listTestersSearch }) => {
+const TesterSearch = ({
+    testers,
+    handleMailModal,
+    listTestersSearch,
+    userEmail,
+    testersInfo,
+    mailTesters
+}) => {
     const c = useStyles();
     const [input, setInput] = useState('');
     const [filterCounter, setFilterCounter] = useState(0); // Initial calls
     const [filters, setFilters] = useState('');
     const [isLoading, setLoading] = useState(false);
     const [page, setPage] = useState(1);
+    const [selectedTesters, setSelectedTesters] = useState([]);
 
     const pageStep = 10;
     const totalPages =
@@ -86,6 +98,33 @@ const TesterSearch = ({ testers, handleMailModal, listTestersSearch }) => {
         setFilters(filters);
     };
 
+    const { addresses, ids } = selectedTesters.reduce(
+        (acm, testerIdx) => ({
+            ids: [...acm.ids, testersInfo[testerIdx].id],
+            addresses: [...acm.addresses, testersInfo[testerIdx].email]
+        }),
+        {
+            addresses: [],
+            ids: []
+        }
+    );
+
+    const mailProps = {
+        from: userEmail,
+        to: addresses,
+        handleMail: mail => mailTesters(mail, ids),
+        needsProject: true,
+        needsContactType: true
+    };
+
+    // Inject Check Action handle
+    const composedTesters = testers.map(tester => ({
+        ...tester,
+        actions: {
+            checkAction: value => setSelectedTesters(value)
+        }
+    }));
+
     return (
         <Fragment>
             <GridWrapper>
@@ -99,7 +138,10 @@ const TesterSearch = ({ testers, handleMailModal, listTestersSearch }) => {
                 </GridItem>
                 <GridItem md={3}>
                     <div className={c.filterButtonWrapper}>
-                        <NavigateButton onClick={() => handleMailModal()}>
+                        <NavigateButton
+                            onClick={() => handleMailModal(mailProps)}
+                            disabled={!selectedTesters.length}
+                        >
                             Email Testers
                         </NavigateButton>
                     </div>
@@ -118,10 +160,11 @@ const TesterSearch = ({ testers, handleMailModal, listTestersSearch }) => {
                     ) : (
                         <Fragment>
                             <Table
-                                data={testers}
+                                data={composedTesters}
                                 page={page}
                                 noResultText='No Testers'
                                 itemsPerPage={pageStep}
+                                checkAll={value => setSelectedTesters(value)}
                             />
                             {!!testers.length && (
                                 <div className={c.footer}>
@@ -140,10 +183,12 @@ const TesterSearch = ({ testers, handleMailModal, listTestersSearch }) => {
 };
 
 const mapState = state => ({
-    testers: selectTestersSearch(state)
+    testers: selectTestersSearch(state),
+    testersInfo: selectTestersSearchInfo(state),
+    userEmail: selectEmail(state)
 });
 
-const mapDispatch = { listTestersSearch };
+const mapDispatch = { listTestersSearch, mailTesters };
 
 const mapModal = {
     handleMailModal: MailModal

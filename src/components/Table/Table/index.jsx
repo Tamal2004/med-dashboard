@@ -148,7 +148,7 @@ class Table extends Component {
     CheckAllAction = ({ onClick = () => {}, dataLength }) => {
         return (
             <IconButton
-                className={this.c.action}
+                className={clsx(this.c.action, this.c.checkAll)}
                 size='small'
                 color='secondary'
                 aria-label='Check'

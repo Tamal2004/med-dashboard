@@ -43,7 +43,7 @@ export const generateClientProjects = clientProjects =>
                 value: reference
             },
             'Project Title': {
-                Component: <Link to={`/project/${reference}`}>{title}</Link>,
+                Component: <Link to={`/project/${id}`}>{title}</Link>,
                 value: title
             },
             'Observed Date': testingDate,

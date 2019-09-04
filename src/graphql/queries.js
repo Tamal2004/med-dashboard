@@ -4,11 +4,14 @@
 export const getClient = `query GetClient($id: ID!) {
   getClient(id: $id) {
     id
+    updatedAt
+    hidden
     name
-    createdBy
     projects {
       items {
         id
+        updatedAt
+        hidden
         reference
         title
         status
@@ -17,6 +20,10 @@ export const getClient = `query GetClient($id: ID!) {
         testingDate
         cost
         purchaseOrderNumber
+        manager
+        testerFacilitator
+        clientFacilitator
+        mainRecruiter
         facilities
         screenerApproved
         facilitationGuideSent
@@ -47,8 +54,9 @@ export const listClients = `query ListClients(
   listClients(filter: $filter, limit: $limit, nextToken: $nextToken) {
     items {
       id
+      updatedAt
+      hidden
       name
-      createdBy
       projects {
         nextToken
       }
@@ -60,13 +68,16 @@ export const listClients = `query ListClients(
 export const getProject = `query GetProject($id: ID!) {
   getProject(id: $id) {
     id
+    updatedAt
+    hidden
     reference
     title
     status
     client {
       id
+      updatedAt
+      hidden
       name
-      createdBy
       projects {
         nextToken
       }
@@ -76,30 +87,10 @@ export const getProject = `query GetProject($id: ID!) {
     testingDate
     cost
     purchaseOrderNumber
-    manager {
-      id
-      email
-      firstName
-      lastName
-    }
-    testerFacilitator {
-      id
-      email
-      firstName
-      lastName
-    }
-    clientFacilitator {
-      id
-      email
-      firstName
-      lastName
-    }
-    mainRecruiter {
-      id
-      email
-      firstName
-      lastName
-    }
+    manager
+    testerFacilitator
+    clientFacilitator
+    mainRecruiter
     facilities
     screenerApproved
     facilitationGuideSent
@@ -132,6 +123,7 @@ export const getProject = `query GetProject($id: ID!) {
         id
         type
         date
+        contactedBy
         note
       }
       nextToken
@@ -147,43 +139,26 @@ export const listProjects = `query ListProjects(
   listProjects(filter: $filter, limit: $limit, nextToken: $nextToken) {
     items {
       id
+      updatedAt
+      hidden
       reference
       title
       status
       client {
         id
+        updatedAt
+        hidden
         name
-        createdBy
       }
       principalContact
       otherContact
       testingDate
       cost
       purchaseOrderNumber
-      manager {
-        id
-        email
-        firstName
-        lastName
-      }
-      testerFacilitator {
-        id
-        email
-        firstName
-        lastName
-      }
-      clientFacilitator {
-        id
-        email
-        firstName
-        lastName
-      }
-      mainRecruiter {
-        id
-        email
-        firstName
-        lastName
-      }
+      manager
+      testerFacilitator
+      clientFacilitator
+      mainRecruiter
       facilities
       screenerApproved
       facilitationGuideSent
@@ -216,43 +191,26 @@ export const getSession = `query GetSession($id: ID!) {
     id
     project {
       id
+      updatedAt
+      hidden
       reference
       title
       status
       client {
         id
+        updatedAt
+        hidden
         name
-        createdBy
       }
       principalContact
       otherContact
       testingDate
       cost
       purchaseOrderNumber
-      manager {
-        id
-        email
-        firstName
-        lastName
-      }
-      testerFacilitator {
-        id
-        email
-        firstName
-        lastName
-      }
-      clientFacilitator {
-        id
-        email
-        firstName
-        lastName
-      }
-      mainRecruiter {
-        id
-        email
-        firstName
-        lastName
-      }
+      manager
+      testerFacilitator
+      clientFacilitator
+      mainRecruiter
       facilities
       screenerApproved
       facilitationGuideSent
@@ -278,6 +236,8 @@ export const getSession = `query GetSession($id: ID!) {
     }
     tester {
       id
+      updatedAt
+      hidden
       title
       firstName
       surname
@@ -336,6 +296,8 @@ export const listSessions = `query ListSessions(
       id
       project {
         id
+        updatedAt
+        hidden
         reference
         title
         status
@@ -344,6 +306,10 @@ export const listSessions = `query ListSessions(
         testingDate
         cost
         purchaseOrderNumber
+        manager
+        testerFacilitator
+        clientFacilitator
+        mainRecruiter
         facilities
         screenerApproved
         facilitationGuideSent
@@ -363,6 +329,8 @@ export const listSessions = `query ListSessions(
       }
       tester {
         id
+        updatedAt
+        hidden
         title
         firstName
         surname
@@ -410,6 +378,8 @@ export const listSessions = `query ListSessions(
 export const getTester = `query GetTester($id: ID!) {
   getTester(id: $id) {
     id
+    updatedAt
+    hidden
     title
     firstName
     surname
@@ -448,6 +418,7 @@ export const getTester = `query GetTester($id: ID!) {
         id
         type
         date
+        contactedBy
         note
       }
       nextToken
@@ -474,6 +445,8 @@ export const listTesters = `query ListTesters(
   listTesters(filter: $filter, limit: $limit, nextToken: $nextToken) {
     items {
       id
+      updatedAt
+      hidden
       title
       firstName
       surname
@@ -524,43 +497,26 @@ export const getContactNote = `query GetContactNote($id: ID!) {
     type
     project {
       id
+      updatedAt
+      hidden
       reference
       title
       status
       client {
         id
+        updatedAt
+        hidden
         name
-        createdBy
       }
       principalContact
       otherContact
       testingDate
       cost
       purchaseOrderNumber
-      manager {
-        id
-        email
-        firstName
-        lastName
-      }
-      testerFacilitator {
-        id
-        email
-        firstName
-        lastName
-      }
-      clientFacilitator {
-        id
-        email
-        firstName
-        lastName
-      }
-      mainRecruiter {
-        id
-        email
-        firstName
-        lastName
-      }
+      manager
+      testerFacilitator
+      clientFacilitator
+      mainRecruiter
       facilities
       screenerApproved
       facilitationGuideSent
@@ -585,15 +541,12 @@ export const getContactNote = `query GetContactNote($id: ID!) {
       }
     }
     date
-    contactedBy {
-      id
-      email
-      firstName
-      lastName
-    }
+    contactedBy
     note
     tester {
       id
+      updatedAt
+      hidden
       title
       firstName
       surname
@@ -648,6 +601,8 @@ export const listContactNotes = `query ListContactNotes(
       type
       project {
         id
+        updatedAt
+        hidden
         reference
         title
         status
@@ -656,6 +611,10 @@ export const listContactNotes = `query ListContactNotes(
         testingDate
         cost
         purchaseOrderNumber
+        manager
+        testerFacilitator
+        clientFacilitator
+        mainRecruiter
         facilities
         screenerApproved
         facilitationGuideSent
@@ -674,15 +633,12 @@ export const listContactNotes = `query ListContactNotes(
         profiles
       }
       date
-      contactedBy {
-        id
-        email
-        firstName
-        lastName
-      }
+      contactedBy
       note
       tester {
         id
+        updatedAt
+        hidden
         title
         firstName
         surname
@@ -725,6 +681,8 @@ export const listContactNotes = `query ListContactNotes(
 export const getUser = `query GetUser($id: ID!) {
   getUser(id: $id) {
     id
+    updatedAt
+    hidden
     email
     firstName
     lastName
@@ -739,6 +697,8 @@ export const listUsers = `query ListUsers(
   listUsers(filter: $filter, limit: $limit, nextToken: $nextToken) {
     items {
       id
+      updatedAt
+      hidden
       email
       firstName
       lastName

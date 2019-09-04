@@ -4,11 +4,14 @@
 export const createClient = `mutation CreateClient($input: CreateClientInput!) {
   createClient(input: $input) {
     id
+    updatedAt
+    hidden
     name
-    createdBy
     projects {
       items {
         id
+        updatedAt
+        hidden
         reference
         title
         status
@@ -17,6 +20,10 @@ export const createClient = `mutation CreateClient($input: CreateClientInput!) {
         testingDate
         cost
         purchaseOrderNumber
+        manager
+        testerFacilitator
+        clientFacilitator
+        mainRecruiter
         facilities
         screenerApproved
         facilitationGuideSent
@@ -42,11 +49,14 @@ export const createClient = `mutation CreateClient($input: CreateClientInput!) {
 export const updateClient = `mutation UpdateClient($input: UpdateClientInput!) {
   updateClient(input: $input) {
     id
+    updatedAt
+    hidden
     name
-    createdBy
     projects {
       items {
         id
+        updatedAt
+        hidden
         reference
         title
         status
@@ -55,6 +65,10 @@ export const updateClient = `mutation UpdateClient($input: UpdateClientInput!) {
         testingDate
         cost
         purchaseOrderNumber
+        manager
+        testerFacilitator
+        clientFacilitator
+        mainRecruiter
         facilities
         screenerApproved
         facilitationGuideSent
@@ -80,11 +94,14 @@ export const updateClient = `mutation UpdateClient($input: UpdateClientInput!) {
 export const deleteClient = `mutation DeleteClient($input: DeleteClientInput!) {
   deleteClient(input: $input) {
     id
+    updatedAt
+    hidden
     name
-    createdBy
     projects {
       items {
         id
+        updatedAt
+        hidden
         reference
         title
         status
@@ -93,6 +110,10 @@ export const deleteClient = `mutation DeleteClient($input: DeleteClientInput!) {
         testingDate
         cost
         purchaseOrderNumber
+        manager
+        testerFacilitator
+        clientFacilitator
+        mainRecruiter
         facilities
         screenerApproved
         facilitationGuideSent
@@ -118,13 +139,16 @@ export const deleteClient = `mutation DeleteClient($input: DeleteClientInput!) {
 export const createProject = `mutation CreateProject($input: CreateProjectInput!) {
   createProject(input: $input) {
     id
+    updatedAt
+    hidden
     reference
     title
     status
     client {
       id
+      updatedAt
+      hidden
       name
-      createdBy
       projects {
         nextToken
       }
@@ -134,30 +158,10 @@ export const createProject = `mutation CreateProject($input: CreateProjectInput!
     testingDate
     cost
     purchaseOrderNumber
-    manager {
-      id
-      email
-      firstName
-      lastName
-    }
-    testerFacilitator {
-      id
-      email
-      firstName
-      lastName
-    }
-    clientFacilitator {
-      id
-      email
-      firstName
-      lastName
-    }
-    mainRecruiter {
-      id
-      email
-      firstName
-      lastName
-    }
+    manager
+    testerFacilitator
+    clientFacilitator
+    mainRecruiter
     facilities
     screenerApproved
     facilitationGuideSent
@@ -190,6 +194,7 @@ export const createProject = `mutation CreateProject($input: CreateProjectInput!
         id
         type
         date
+        contactedBy
         note
       }
       nextToken
@@ -200,13 +205,16 @@ export const createProject = `mutation CreateProject($input: CreateProjectInput!
 export const updateProject = `mutation UpdateProject($input: UpdateProjectInput!) {
   updateProject(input: $input) {
     id
+    updatedAt
+    hidden
     reference
     title
     status
     client {
       id
+      updatedAt
+      hidden
       name
-      createdBy
       projects {
         nextToken
       }
@@ -216,30 +224,10 @@ export const updateProject = `mutation UpdateProject($input: UpdateProjectInput!
     testingDate
     cost
     purchaseOrderNumber
-    manager {
-      id
-      email
-      firstName
-      lastName
-    }
-    testerFacilitator {
-      id
-      email
-      firstName
-      lastName
-    }
-    clientFacilitator {
-      id
-      email
-      firstName
-      lastName
-    }
-    mainRecruiter {
-      id
-      email
-      firstName
-      lastName
-    }
+    manager
+    testerFacilitator
+    clientFacilitator
+    mainRecruiter
     facilities
     screenerApproved
     facilitationGuideSent
@@ -272,6 +260,7 @@ export const updateProject = `mutation UpdateProject($input: UpdateProjectInput!
         id
         type
         date
+        contactedBy
         note
       }
       nextToken
@@ -282,13 +271,16 @@ export const updateProject = `mutation UpdateProject($input: UpdateProjectInput!
 export const deleteProject = `mutation DeleteProject($input: DeleteProjectInput!) {
   deleteProject(input: $input) {
     id
+    updatedAt
+    hidden
     reference
     title
     status
     client {
       id
+      updatedAt
+      hidden
       name
-      createdBy
       projects {
         nextToken
       }
@@ -298,30 +290,10 @@ export const deleteProject = `mutation DeleteProject($input: DeleteProjectInput!
     testingDate
     cost
     purchaseOrderNumber
-    manager {
-      id
-      email
-      firstName
-      lastName
-    }
-    testerFacilitator {
-      id
-      email
-      firstName
-      lastName
-    }
-    clientFacilitator {
-      id
-      email
-      firstName
-      lastName
-    }
-    mainRecruiter {
-      id
-      email
-      firstName
-      lastName
-    }
+    manager
+    testerFacilitator
+    clientFacilitator
+    mainRecruiter
     facilities
     screenerApproved
     facilitationGuideSent
@@ -354,6 +326,7 @@ export const deleteProject = `mutation DeleteProject($input: DeleteProjectInput!
         id
         type
         date
+        contactedBy
         note
       }
       nextToken
@@ -366,43 +339,26 @@ export const createSession = `mutation CreateSession($input: CreateSessionInput!
     id
     project {
       id
+      updatedAt
+      hidden
       reference
       title
       status
       client {
         id
+        updatedAt
+        hidden
         name
-        createdBy
       }
       principalContact
       otherContact
       testingDate
       cost
       purchaseOrderNumber
-      manager {
-        id
-        email
-        firstName
-        lastName
-      }
-      testerFacilitator {
-        id
-        email
-        firstName
-        lastName
-      }
-      clientFacilitator {
-        id
-        email
-        firstName
-        lastName
-      }
-      mainRecruiter {
-        id
-        email
-        firstName
-        lastName
-      }
+      manager
+      testerFacilitator
+      clientFacilitator
+      mainRecruiter
       facilities
       screenerApproved
       facilitationGuideSent
@@ -428,6 +384,8 @@ export const createSession = `mutation CreateSession($input: CreateSessionInput!
     }
     tester {
       id
+      updatedAt
+      hidden
       title
       firstName
       surname
@@ -481,43 +439,26 @@ export const updateSession = `mutation UpdateSession($input: UpdateSessionInput!
     id
     project {
       id
+      updatedAt
+      hidden
       reference
       title
       status
       client {
         id
+        updatedAt
+        hidden
         name
-        createdBy
       }
       principalContact
       otherContact
       testingDate
       cost
       purchaseOrderNumber
-      manager {
-        id
-        email
-        firstName
-        lastName
-      }
-      testerFacilitator {
-        id
-        email
-        firstName
-        lastName
-      }
-      clientFacilitator {
-        id
-        email
-        firstName
-        lastName
-      }
-      mainRecruiter {
-        id
-        email
-        firstName
-        lastName
-      }
+      manager
+      testerFacilitator
+      clientFacilitator
+      mainRecruiter
       facilities
       screenerApproved
       facilitationGuideSent
@@ -543,6 +484,8 @@ export const updateSession = `mutation UpdateSession($input: UpdateSessionInput!
     }
     tester {
       id
+      updatedAt
+      hidden
       title
       firstName
       surname
@@ -596,43 +539,26 @@ export const deleteSession = `mutation DeleteSession($input: DeleteSessionInput!
     id
     project {
       id
+      updatedAt
+      hidden
       reference
       title
       status
       client {
         id
+        updatedAt
+        hidden
         name
-        createdBy
       }
       principalContact
       otherContact
       testingDate
       cost
       purchaseOrderNumber
-      manager {
-        id
-        email
-        firstName
-        lastName
-      }
-      testerFacilitator {
-        id
-        email
-        firstName
-        lastName
-      }
-      clientFacilitator {
-        id
-        email
-        firstName
-        lastName
-      }
-      mainRecruiter {
-        id
-        email
-        firstName
-        lastName
-      }
+      manager
+      testerFacilitator
+      clientFacilitator
+      mainRecruiter
       facilities
       screenerApproved
       facilitationGuideSent
@@ -658,6 +584,8 @@ export const deleteSession = `mutation DeleteSession($input: DeleteSessionInput!
     }
     tester {
       id
+      updatedAt
+      hidden
       title
       firstName
       surname
@@ -709,6 +637,8 @@ export const deleteSession = `mutation DeleteSession($input: DeleteSessionInput!
 export const createTester = `mutation CreateTester($input: CreateTesterInput!) {
   createTester(input: $input) {
     id
+    updatedAt
+    hidden
     title
     firstName
     surname
@@ -747,6 +677,7 @@ export const createTester = `mutation CreateTester($input: CreateTesterInput!) {
         id
         type
         date
+        contactedBy
         note
       }
       nextToken
@@ -768,6 +699,8 @@ export const createTester = `mutation CreateTester($input: CreateTesterInput!) {
 export const updateTester = `mutation UpdateTester($input: UpdateTesterInput!) {
   updateTester(input: $input) {
     id
+    updatedAt
+    hidden
     title
     firstName
     surname
@@ -806,6 +739,7 @@ export const updateTester = `mutation UpdateTester($input: UpdateTesterInput!) {
         id
         type
         date
+        contactedBy
         note
       }
       nextToken
@@ -827,6 +761,8 @@ export const updateTester = `mutation UpdateTester($input: UpdateTesterInput!) {
 export const deleteTester = `mutation DeleteTester($input: DeleteTesterInput!) {
   deleteTester(input: $input) {
     id
+    updatedAt
+    hidden
     title
     firstName
     surname
@@ -865,6 +801,7 @@ export const deleteTester = `mutation DeleteTester($input: DeleteTesterInput!) {
         id
         type
         date
+        contactedBy
         note
       }
       nextToken
@@ -889,43 +826,26 @@ export const createContactNote = `mutation CreateContactNote($input: CreateConta
     type
     project {
       id
+      updatedAt
+      hidden
       reference
       title
       status
       client {
         id
+        updatedAt
+        hidden
         name
-        createdBy
       }
       principalContact
       otherContact
       testingDate
       cost
       purchaseOrderNumber
-      manager {
-        id
-        email
-        firstName
-        lastName
-      }
-      testerFacilitator {
-        id
-        email
-        firstName
-        lastName
-      }
-      clientFacilitator {
-        id
-        email
-        firstName
-        lastName
-      }
-      mainRecruiter {
-        id
-        email
-        firstName
-        lastName
-      }
+      manager
+      testerFacilitator
+      clientFacilitator
+      mainRecruiter
       facilities
       screenerApproved
       facilitationGuideSent
@@ -950,15 +870,12 @@ export const createContactNote = `mutation CreateContactNote($input: CreateConta
       }
     }
     date
-    contactedBy {
-      id
-      email
-      firstName
-      lastName
-    }
+    contactedBy
     note
     tester {
       id
+      updatedAt
+      hidden
       title
       firstName
       surname
@@ -1008,43 +925,26 @@ export const updateContactNote = `mutation UpdateContactNote($input: UpdateConta
     type
     project {
       id
+      updatedAt
+      hidden
       reference
       title
       status
       client {
         id
+        updatedAt
+        hidden
         name
-        createdBy
       }
       principalContact
       otherContact
       testingDate
       cost
       purchaseOrderNumber
-      manager {
-        id
-        email
-        firstName
-        lastName
-      }
-      testerFacilitator {
-        id
-        email
-        firstName
-        lastName
-      }
-      clientFacilitator {
-        id
-        email
-        firstName
-        lastName
-      }
-      mainRecruiter {
-        id
-        email
-        firstName
-        lastName
-      }
+      manager
+      testerFacilitator
+      clientFacilitator
+      mainRecruiter
       facilities
       screenerApproved
       facilitationGuideSent
@@ -1069,15 +969,12 @@ export const updateContactNote = `mutation UpdateContactNote($input: UpdateConta
       }
     }
     date
-    contactedBy {
-      id
-      email
-      firstName
-      lastName
-    }
+    contactedBy
     note
     tester {
       id
+      updatedAt
+      hidden
       title
       firstName
       surname
@@ -1127,43 +1024,26 @@ export const deleteContactNote = `mutation DeleteContactNote($input: DeleteConta
     type
     project {
       id
+      updatedAt
+      hidden
       reference
       title
       status
       client {
         id
+        updatedAt
+        hidden
         name
-        createdBy
       }
       principalContact
       otherContact
       testingDate
       cost
       purchaseOrderNumber
-      manager {
-        id
-        email
-        firstName
-        lastName
-      }
-      testerFacilitator {
-        id
-        email
-        firstName
-        lastName
-      }
-      clientFacilitator {
-        id
-        email
-        firstName
-        lastName
-      }
-      mainRecruiter {
-        id
-        email
-        firstName
-        lastName
-      }
+      manager
+      testerFacilitator
+      clientFacilitator
+      mainRecruiter
       facilities
       screenerApproved
       facilitationGuideSent
@@ -1188,15 +1068,12 @@ export const deleteContactNote = `mutation DeleteContactNote($input: DeleteConta
       }
     }
     date
-    contactedBy {
-      id
-      email
-      firstName
-      lastName
-    }
+    contactedBy
     note
     tester {
       id
+      updatedAt
+      hidden
       title
       firstName
       surname
@@ -1243,6 +1120,8 @@ export const deleteContactNote = `mutation DeleteContactNote($input: DeleteConta
 export const createUser = `mutation CreateUser($input: CreateUserInput!) {
   createUser(input: $input) {
     id
+    updatedAt
+    hidden
     email
     firstName
     lastName
@@ -1252,6 +1131,8 @@ export const createUser = `mutation CreateUser($input: CreateUserInput!) {
 export const updateUser = `mutation UpdateUser($input: UpdateUserInput!) {
   updateUser(input: $input) {
     id
+    updatedAt
+    hidden
     email
     firstName
     lastName
@@ -1261,6 +1142,8 @@ export const updateUser = `mutation UpdateUser($input: UpdateUserInput!) {
 export const deleteUser = `mutation DeleteUser($input: DeleteUserInput!) {
   deleteUser(input: $input) {
     id
+    updatedAt
+    hidden
     email
     firstName
     lastName

@@ -34,3 +34,10 @@ export const UpdateContactNote = `mutation UpdateContactNote($input: UpdateConta
     }
 }
 `;
+
+export const CreateContactNotes = `mutation CreateContactNotes($contactNotes: [CreateContactNoteInput!]) {
+    createContactNotes(contactNotes: $contactNotes) {
+        id
+    }
+}
+`;

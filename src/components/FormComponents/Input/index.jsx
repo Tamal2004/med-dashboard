@@ -22,6 +22,7 @@ const Input = ({ required, label, isCard, active, width, ...restProps }) => {
             <InputBase
                 handleForm={isError => setValue(isError)}
                 styles={inputStyles}
+                normalize={value => (value === '' ? null : value)}
                 {...restProps}
             />
         </Control>

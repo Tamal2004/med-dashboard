@@ -183,11 +183,13 @@ export const listProjects = (
 
     dispatch(listProjectsAction(REQUEST));
     const {
-        data: { listProjects, error = null }
+        data: { listSortedProjects, error = null }
     } = await API.graphql(graphqlOperation(ListProjects, variables));
 
     if (!error) {
-        dispatch(listProjectsAction(SUCCESS, normalizeProjects(listProjects)));
+        dispatch(
+            listProjectsAction(SUCCESS, normalizeProjects(listSortedProjects))
+        );
     } else {
         dispatch(listProjectsAction(FAIL));
     }
@@ -202,11 +204,14 @@ const listProjectClientsAction = (async, payload = []) => ({
 export const listProjectClients = () => async dispatch => {
     dispatch(listProjectClientsAction(REQUEST));
     const {
-        data: { listClients: { items = [] } = {}, error = null }
+        data: {
+            listSortedClients: { items: listSortedClients = [] } = {},
+            error = null
+        }
     } = await API.graphql(graphqlOperation(ListProjectClients));
 
     if (!error) {
-        dispatch(listProjectClientsAction(SUCCESS, items));
+        dispatch(listProjectClientsAction(SUCCESS, listSortedClients));
     } else {
         dispatch(listProjectClientsAction(FAIL));
     }
@@ -221,11 +226,19 @@ const listProjectUsersAction = (async, payload = []) => ({
 export const listProjectUsers = () => async dispatch => {
     dispatch(listProjectUsersAction(REQUEST));
     const {
-        data: { listUsers: { items = [] } = {}, error = null }
+        data: {
+            listSortedUsers: { items: listSortedUsers = [] } = {},
+            error = null
+        }
     } = await API.graphql(graphqlOperation(ListProjectUsers));
 
     if (!error) {
-        dispatch(listProjectUsersAction(SUCCESS, normalizeProjectUsers(items)));
+        dispatch(
+            listProjectUsersAction(
+                SUCCESS,
+                normalizeProjectUsers(listSortedUsers)
+            )
+        );
     } else {
         dispatch(listProjectUsersAction(FAIL));
     }

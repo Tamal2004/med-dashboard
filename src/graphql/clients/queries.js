@@ -1,5 +1,5 @@
-export const ListClients = `query ListClients {
-    listClients(limit: 500) {
+export const ListClients = `query ListClients($filter: ModelClientFilterInput) {
+    listSortedClients(filter: $filter sortDirection: DESC limit: 200) {
         items {
             id
             name
