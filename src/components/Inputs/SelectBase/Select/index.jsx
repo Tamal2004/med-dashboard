@@ -73,11 +73,13 @@ class Select extends Component {
             styles,
             meta: { dirty, ...meta },
             placeholder,
-            handleForm
+            handleError
         } = props;
 
-        const isError = meta.touched && !!meta.error;
-        handleForm(isError);
+        if (meta.touched && !!meta.error)
+            handleError(meta.error);
+        else
+            handleError('');
 
         const nextState = {
             selectStyle: classNames(select, styles.select),

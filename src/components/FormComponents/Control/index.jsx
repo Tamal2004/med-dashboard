@@ -14,9 +14,11 @@ const Control = ({
     memo,
     children,
     width,
-    isError
+    isError,
+    error
 }) => {
     const c = useStyles();
+    console.log('error', error)
     return (
         <Grid container className={clsx(c.root, isCard && c.cardRoot)}>
             {label && (
@@ -31,9 +33,7 @@ const Control = ({
                         >
                             {label}
                         </Typography>
-                        {required && isError && (
-                            <span className={c.required}>required</span>
-                        )}
+                        <span className={c.required}>{error}</span>
                     </FormLabel>
                     {memo && (
                         <Typography className={c.memo} variant='subtitle2'>

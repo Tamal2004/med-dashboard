@@ -17,17 +17,17 @@ const MultiInput = ({
     ...restProps
 }) => {
     const { cardRoot, inactiveRoot, ...c } = useStyles();
-    const [isError, setForm] = useState(false);
+    const [error, setError] = useState(false);
     const multiInputStyles = {
         ...c,
         root: clsx(c.root, isCard && cardRoot, !active && inactiveRoot)
     };
-    const controlProps = { required, label, isCard, memo, width, isError };
+    const controlProps = { required, label, isCard, memo, width, error };
 
     return (
         <Control {...controlProps}>
             <InputBase
-                handleForm={isError => setForm(isError)}
+                handleError={error => setError(error)}
                 styles={multiInputStyles}
                 multiline
                 rows={8}
