@@ -62,18 +62,14 @@ const createTesterAction = async => ({
 
 export const createTester = tester => async dispatch => {
     dispatch(createTesterAction(REQUEST));
-    const res = await API.graphql(
-        graphqlOperation(CreateTester, { input: tester })
-    );
+    const {
+        data: { createTester, error = null }
+    } = await API.graphql(graphqlOperation(CreateTester, { input: tester }));
 
-    if (!res.error) {
+    if (!error) {
+        console.log('createTester', createTester);
         dispatch(createTesterAction(SUCCESS));
-        dispatch(
-            showNotification({
-                type: 'success',
-                message: 'Tester created successfully!'
-            })
-        );
+        dispatch(testerSignUp(createTester));
         history.push('/tester');
     } else {
         dispatch(createTesterAction(FAIL));
@@ -291,12 +287,6 @@ export const removeTester = id => async (dispatch, getState) => {
             history.push('/tester');
         }
         dispatch(removeTesterAction(SUCCESS));
-        dispatch(
-            showNotification({
-                type: 'success',
-                message: 'Removed successfully'
-            })
-        );
     } else {
         dispatch(removeTesterAction(FAIL));
         dispatch(

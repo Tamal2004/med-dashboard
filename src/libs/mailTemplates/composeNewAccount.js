@@ -1,5 +1,7 @@
+const { REACT_APP_SES_ADMIN_EMAIL } = process.env;
+
 export const composeNewAccount = ({ firstName, email, password }) => ({
-    from: 'matthew.tamal@gmail.com',
+    from: REACT_APP_SES_ADMIN_EMAIL,
     to: { email },
     subject: 'Your Web Usability account has been registered!',
     body: `

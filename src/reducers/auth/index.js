@@ -18,7 +18,9 @@ const authReducer = (state = initialState, { type, payload, ...action }) => {
                 isTester: !!testerId,
                 testerId: testerId,
                 email,
-                name: `${firstName} ${surname}`
+                name: `${firstName ? firstName : '-'} ${
+                    surname ? surname : '-'
+                }`
             };
         }
 

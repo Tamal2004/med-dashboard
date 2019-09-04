@@ -66,6 +66,7 @@ const changePassword = ({ oldPassword, newPassword }) => {
 
 export const testerSignUp = ({ id, email, firstName, surname }) => {
     const PASS = TEMP_PASSWORD();
+    console.log('testerSignUp');
     return async dispatch => {
         return Auth.signUp({
             username: email,
@@ -73,19 +74,21 @@ export const testerSignUp = ({ id, email, firstName, surname }) => {
             temporaryPassword: PASS,
             attributes: {
                 email,
-                'custom:name': firstName + ' ' + surname,
                 'custom:firstName': firstName,
-                'custom:lastName': surname,
+                'custom:surname': surname,
                 'custom:testerId': id
             }
         })
-            .then(() => {
+            .then(res => {
+                console.log('after tester signup', res);
                 //TODO: send an email with generated password, variable: PASS
-                sendMail(composeNewAccount());
+                sendMail(
+                    composeNewAccount({ firstName, email, password: PASS })
+                );
                 dispatch(
                     showNotification({
                         type: 'success',
-                        message: 'Sign up successful!'
+                        message: 'Tester created successfully!'
                     })
                 );
             })
@@ -100,10 +103,41 @@ export const testerSignUp = ({ id, email, firstName, surname }) => {
     };
 };
 
-export const createUserByAdmin = ({ email, family_name, given_name }) => {
+export const verifyUserOnSignUp = adminPayload => {
     const payload = {
+        ...adminPayload,
+        UserAttributes: [
+            {
+                Name: 'email_verified',
+                Value: 'true'
+            }
+        ]
+    };
+
+    console.log('payload', payload);
+
+    return async dispatch => {
+        return await COGNITO_CLIENT.adminUpdateUserAttributes(
+            payload,
+            (err, data) => {
+                if (err) {
+                    console.log('Error,, ', err);
+                } else {
+                    console.log('Success ', data);
+                }
+            }
+        );
+    };
+};
+
+export const createUserByAdmin = ({ email, family_name, given_name }) => {
+    const adminPayload = {
         UserPoolId: REACT_APP_COGNITO_USER_POOL_ID,
-        Username: email,
+        Username: email
+    };
+
+    const payload = {
+        ...adminPayload,
         DesiredDeliveryMediums: ['EMAIL'],
         TemporaryPassword: TEMP_PASSWORD(),
         UserAttributes: [
@@ -142,6 +176,7 @@ export const createUserByAdmin = ({ email, family_name, given_name }) => {
                         message: 'New user created successfully!'
                     })
                 );
+                dispatch(verifyUserOnSignUp(adminPayload));
             }
         });
     };
