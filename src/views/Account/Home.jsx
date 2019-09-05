@@ -96,10 +96,10 @@ const ProfileHome = props => {
 
 	return (
 		<GridContainer alignItems='center'>
-			<GridItem md={12} className={c.alignCenter}>
+			<GridItem md={12} sm={12} className={c.alignCenter}>
 				<Typography variant='h6'>ACCOUNT DETAILS</Typography>
 			</GridItem>
-			<GridItem md={6} className={c.settingList}>
+			<GridItem md={6} sm={12} className={c.settingList}>
 				<List subheader={<ListSubheader>Information</ListSubheader>}>
 					<ListItem>
 						<ListItemIcon>
@@ -121,7 +121,7 @@ const ProfileHome = props => {
 					</ListItem>
 				</List>
 			</GridItem>
-			<GridItem md={6} className={c.settingList}>
+			<GridItem md={6} sm={12} className={c.settingList}>
 				<List subheader={<ListSubheader>Settings</ListSubheader>}>
 					<ListItem>
 						<NavigateButton

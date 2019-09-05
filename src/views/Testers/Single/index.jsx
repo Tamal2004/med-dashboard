@@ -47,14 +47,14 @@ const TesterSingle = ({
             ) : (
                 <Fragment>
                     <GridContainer className={c.root} alignItems='flex-start'>
-                        <GridItem md={6}>
+                        <GridItem md={6} sm={12}>
                             <TesterDetails testerId={id} />
                         </GridItem>
-                        <GridItem md={6}>
-                            <GridItem md={12}>
+                        <GridItem md={6} sm={12}>
+                            <GridItem md={12} sm={12}>
                                 <ContactDetails />
                             </GridItem>
-                            <GridItem md={12}>
+                            <GridItem md={12} sm={12}>
                                 <EmploymentDetails />
                             </GridItem>
                         </GridItem>
@@ -65,7 +65,7 @@ const TesterSingle = ({
                                 className={c.root}
                                 alignItems='center'
                             >
-                                <GridItem md={12}>
+                                <GridItem md={12} sm={12}>
                                     <TestSessions />
                                 </GridItem>
                             </GridContainer>
@@ -73,7 +73,7 @@ const TesterSingle = ({
                                 className={c.root}
                                 alignItems='center'
                             >
-                                <GridItem md={12}>
+                                <GridItem md={12} sm={12}>
                                     <ContactNotes />
                                 </GridItem>
                             </GridContainer>

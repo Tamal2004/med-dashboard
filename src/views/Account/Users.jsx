@@ -85,7 +85,7 @@ const AllUsers = ({
 
     return (
         <GridContainer alignItems='center'>
-            <GridItem md={12} className={c.buttonGridStyle}>
+            <GridItem md={12} sm={12} className={c.buttonGridStyle}>
                 <NavigateButton
                     onClick={() => handleAddNewUser()}
                     variant='outlined'
@@ -94,7 +94,7 @@ const AllUsers = ({
                     Add new user
                 </NavigateButton>
             </GridItem>
-            <GridItem md={12}>
+            <GridItem md={12} sm={12}>
                 {isLoading ? (
                     <BarLoader />
                 ) : (

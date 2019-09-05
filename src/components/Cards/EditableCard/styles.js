@@ -5,7 +5,8 @@ export default makeStyles(({ palette, spacing, typography }) => ({
         marginTop: spacing(4),
         paddingTop: spacing(2),
         paddingBottom: spacing(2),
-        width: '100%'
+        width: '100%',
+        overflowX: 'auto'
     },
     header: {
         paddingLeft: spacing(2),

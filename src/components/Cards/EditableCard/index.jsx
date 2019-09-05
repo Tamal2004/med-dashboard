@@ -22,12 +22,12 @@ const EditableCard = ({
     return (
         <Card className={c.root}>
             <Grid container className={c.header}>
-                <Grid item sm={6} xs={12}>
+                <Grid item md={6} sm={12} xs={12}>
                     <Typography variant='h6' className={c.title}>
                         {title}
                     </Typography>
                 </Grid>
-                <Grid item sm={6} xs={12} className={c.actionContainer}>
+                <Grid item md={6} sm={12} xs={12} className={c.actionContainer}>
                     {onEdit && (
                         <TooltipIcon
                             title={isEditing ? 'Close' : actionTitle}

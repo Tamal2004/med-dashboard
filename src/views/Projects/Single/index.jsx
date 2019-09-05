@@ -13,7 +13,6 @@ import TesterDetails from './TesterDetails';
 import ProfileDetails from './ProfileDetails';
 import { GridContainer, GridItem, BarLoader } from 'components';
 
-
 // Actions
 import { fetchProject } from 'actions';
 
@@ -41,26 +40,26 @@ const ProjectSingle = ({
             ) : (
                 <Fragment>
                     <GridContainer className={c.root} alignItems='flex-start'>
-                        <GridItem md={6}>
-                            <GridItem md={12}>
+                        <GridItem md={6} sm={12}>
+                            <GridItem md={12} sm={12}>
                                 <ProjectDetails />
                             </GridItem>
-                            <GridItem md={12}>
+                            <GridItem md={12} sm={12}>
                                 <ProfileDetails />
                             </GridItem>
                         </GridItem>
-                        <GridItem md={6}>
-                            <GridItem md={12}>
+                        <GridItem md={6} sm={12}>
+                            <GridItem md={12} sm={12}>
                                 <ProjectManagement />
                             </GridItem>
-                            <GridItem md={12}>
+                            <GridItem md={12} sm={12}>
                                 <ClientFeedback />
                             </GridItem>
                         </GridItem>
                     </GridContainer>
 
                     <GridContainer className={c.root} alignItems='center'>
-                        <GridItem md={12}>
+                        <GridItem md={12} sm={12}>
                             <TesterDetails />
                         </GridItem>
                     </GridContainer>
