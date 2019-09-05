@@ -10,17 +10,17 @@ import { Control } from '../Control';
 const Input = ({ required, label, isCard, active, width, ...restProps }) => {
     const { cardRoot, inactiveRoot, ...c } = useStyles();
 
-    const [isError, setValue] = useState(false);
+    const [error, setError] = useState(false);
     const inputStyles = {
         ...c,
         root: clsx(c.root, isCard && cardRoot, !active && inactiveRoot)
     };
 
-    const controlProps = { required, label, isCard, width, isError };
+    const controlProps = { required, label, isCard, width, error };
     return (
         <Control {...controlProps}>
             <InputBase
-                handleForm={isError => setValue(isError)}
+                handleError={error => setError(error)}
                 styles={inputStyles}
                 normalize={value => (value === '' ? null : value)}
                 {...restProps}

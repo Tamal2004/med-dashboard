@@ -80,7 +80,8 @@ const _CreateUser = compose(
         validate: values => ({
             ...validateRequired(values, ['family_name', 'given_name', 'email'])
         }),
-        onSubmit: (values, dispatch) => dispatch(createUserByAdmin(values))
+        onSubmit: (values, dispatch, { onClose }) =>
+            dispatch(createUserByAdmin(values)).then(() => onClose())
     })
 )(CreateUser);
 

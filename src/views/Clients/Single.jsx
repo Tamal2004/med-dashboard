@@ -65,7 +65,7 @@ const ClientSingle = ({
                 <Typography variant='h3'>{name}</Typography>
             </GridItem>
             <GridItem md={3} className={c.buttonGridStyle}>
-                <Link to='/project/new' className={c.linkGap}>
+                <Link to={`/project/new?client=${id}`} className={c.linkGap}>
                     <NavigateButton>Add a new project</NavigateButton>
                 </Link>
             </GridItem>

@@ -14,7 +14,7 @@ const Control = ({
     memo,
     children,
     width,
-    isError
+    error
 }) => {
     const c = useStyles();
     return (
@@ -31,9 +31,7 @@ const Control = ({
                         >
                             {label}
                         </Typography>
-                        {required && isError && (
-                            <span className={c.required}>required</span>
-                        )}
+                        <span className={c.required}>{error}</span>
                     </FormLabel>
                     {memo && (
                         <Typography className={c.memo} variant='subtitle2'>

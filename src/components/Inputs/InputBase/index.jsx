@@ -34,6 +34,7 @@ const InputBase = ({
     required,
     label,
     handleForm,
+    handleError,
     ...restProps
 }) => {
     const c = composeClasses({ classes, styles });
@@ -42,7 +43,9 @@ const InputBase = ({
     const success = !disabled && Boolean(input.value);
     const error = meta.touched && !!meta.error;
 
-    useEffect(() => handleForm && handleForm(error));
+    useEffect(() => {
+        handleError && meta.touched && handleError(meta.error);
+    });
 
     const inputBaseProps = {
         classes: {

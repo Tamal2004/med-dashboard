@@ -24,7 +24,7 @@ const Select = ({
         ...c
     } = useStyles();
 
-    const [isError, setForm] = useState(false);
+    const [error, setError] = useState(false);
 
     const selectStyles = {
         ...c,
@@ -38,12 +38,12 @@ const Select = ({
         dropdownRoot: clsx(c.dropdownRoot, !active && inactiveDropdownRoot)
     };
 
-    const controlProps = { required, label, isCard, width, isError };
+    const controlProps = { required, label, isCard, width, error };
 
     return (
         <Control {...controlProps}>
             <SelectBase
-                handleForm={isError => setForm(isError)}
+                handleError={error => setError(error)}
                 styles={selectStyles}
                 {...restProps}
             />
