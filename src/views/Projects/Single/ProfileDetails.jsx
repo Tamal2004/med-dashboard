@@ -56,15 +56,18 @@ const ProfileDetails = ({
     const [newProfile, openNewProfileForm] = useState(false);
     const c = useStyles();
 
-    const addProfile = (input) => {
-        const profiles = {
-            id,
-            profiles: [
-                input,
-                ...data.map(({ Profile: { Component } }) => Component),
-            ]
-        };
-        updateProject(profiles);
+    const addProfile = input => {
+        const profileData = data.map(({ Profile: { Component } }) => Component);
+        if (!profileData.includes(input.trim())) {
+            const profiles = {
+                id,
+                profiles: [
+                    input.trim(),
+                    ...profileData,
+                ]
+            };
+            updateProject(profiles);
+        }
     };
 
     const removeProfile = idx => {
@@ -77,7 +80,7 @@ const ProfileDetails = ({
     };
 
     // Inject removeProfile
-    const profileTable = data.map((profile) => ({
+    const profileTable = data.map(profile => ({
         ...profile,
         actions: { deleteAction: removeProfile }
     }));
@@ -90,7 +93,7 @@ const ProfileDetails = ({
     const totalPages =
         Math.floor(data.length / pageStep) + !!(data.length % pageStep) || 1;
     return (
-        <EditableCard title='Profile Details'>
+        <EditableCard title='Profiles'>
             <div className={c.root}>
                 <NavigateButton
                     className={c.addButton}

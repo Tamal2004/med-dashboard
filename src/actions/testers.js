@@ -285,7 +285,6 @@ export const removeTester = id => async (dispatch, getState) => {
                 message: 'Tester removed'
             })
         );
-
     } else {
         dispatch(removeTesterAction(FAIL));
         dispatch(

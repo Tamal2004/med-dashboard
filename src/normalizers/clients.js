@@ -3,7 +3,13 @@ import { deserializeDate, calculateAge } from 'libs';
 export const normalizeClientSingle = ({
     name,
     projects: { items: projects = [] } = {}
-}) => ({ name, projects });
+}) => ({
+    name,
+    projects: projects.map(({ testingDate, ...project }) => ({
+        testingDate: deserializeDate(testingDate),
+        ...project
+    }))
+});
 
 export const normalizeClient = client => {
     const { projects: { items: projects = [] } = {}, ...rest } = client;

@@ -15,6 +15,9 @@ import { selectTesterId } from 'selectors';
 // Actions
 import { updateTester } from 'actions';
 
+// Normalizers
+import { normalizePhone } from 'normalizers';
+
 const useStyles = makeStyles(theme => ({
     manualGrid: {
         textAlign: 'right',
@@ -54,6 +57,7 @@ const ContactDetails = ({
             <Input
                 label='Phone number'
                 name='phone'
+                normalize={normalizePhone}
                 isCard
                 active={isEditing}
                 required={isEditing}

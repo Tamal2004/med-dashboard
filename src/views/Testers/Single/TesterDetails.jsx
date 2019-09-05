@@ -120,6 +120,8 @@ const TesterDetails = ({
         })
     };
 
+    const shownTitle = title === 'Other' ? '' : `${title} `;
+
     return (
         <EditableCard
             title='Tester Details'
@@ -162,7 +164,7 @@ const TesterDetails = ({
                 <Typography
                     className={c.name}
                     variant='h6'
-                >{`${title} ${firstName} ${surname}`}</Typography>
+                >{`${shownTitle}${firstName} ${surname}`}</Typography>
             )}
             <CardDivider />
             <Select

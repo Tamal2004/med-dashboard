@@ -78,7 +78,7 @@ const ProjectHome = ({ projects, listProjects }) => {
             </GridItem>
             <GridItem md={4}>
                 <SearchInput
-                    placeholder='Search by name or project reference'
+                    placeholder='Search by project title or reference'
                     handleChange={value => setSearchInput(value)}
                     handleClick={value => setSearchInput(value)}
                 />

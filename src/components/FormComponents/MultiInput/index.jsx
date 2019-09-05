@@ -32,7 +32,7 @@ const MultiInput = ({
                 multiline
                 rows={8}
                 rowsMax={8}
-                normalize={value => value === "" ? null : value}
+                normalize={value => (value.trim() === '' ? null : value)}
                 {...restProps}
             />
         </Control>

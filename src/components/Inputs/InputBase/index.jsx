@@ -8,7 +8,7 @@ import {
     withStyles,
     InputBase as MuiInputBase,
     InputAdornment,
-    FormControl
+    FormControl,
 } from '@material-ui/core';
 import LockIcon from '@material-ui/icons/Lock';
 

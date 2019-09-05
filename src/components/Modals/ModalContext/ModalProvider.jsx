@@ -53,12 +53,13 @@ class ModalProvider extends Component {
             handleModal
         } = this;
 
-        return Object.fromEntries(
-            Modals.map(({ handlerName }) => [
-                handlerName,
-                handleModal(handlerName)
-            ])
+        return Modals.reduce(
+            (acm, { handlerName }) => ({
+                [handlerName]: handleModal(handlerName)
+            }),
+            {}
         );
+
     };
 
     addModals = mapModalData => {

@@ -10,10 +10,8 @@ export default ({ palette, spacing, transitions, typography }) => ({
         borderTop: '1px solid',
         borderColor: palette.grey[200],
         height: spacing(6),
-        backgroundColor: palette.grey[50]
-    },
-    checkAll: {
-        marginRight: spacing(0.5) + 1
+        backgroundColor: palette.grey[50],
+        marginTop: spacing(3)
     },
     action: {
         cursor: 'pointer'

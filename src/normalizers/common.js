@@ -63,3 +63,14 @@ export const normalizeTime = (val, prevVal) => {
 
     return val;
 };
+
+export const normalizePhone = val => {
+    const regEx = /^[a-zA-Z]+$/;
+    const length = val.length;
+
+    if (regEx.test(val[length - 1]) || length >= 15) {
+        return val.slice(0, -1);
+    }
+
+    return val;
+};

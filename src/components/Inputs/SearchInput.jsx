@@ -31,7 +31,6 @@ function SearchInput({ ...props }) {
 
     const keyPressed = e => {
         if (e.which === 13) {
-            console.log('arstarstrastrastrat')
             handleClick(value);
         }
     };

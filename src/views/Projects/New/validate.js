@@ -19,7 +19,7 @@ export const validate = values => {
 export const asyncValidate = ({ reference }) =>
     API.graphql(
         graphqlOperation(CheckProjectReference, {
-            filter: { reference: { eq: reference } }
+            filter: { reference: { eq: reference.trim() } }
         })
     ).then(
         ({
