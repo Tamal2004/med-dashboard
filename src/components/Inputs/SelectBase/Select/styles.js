@@ -103,7 +103,8 @@ export default ({ unitHeight, unitWidth, listMaxNumber, iconRight }) => ({
         },
 
         modal: {
-            width: 0
+            width: 0,
+            pointerEvents: 'none'
         },
         selectQuery: {
             color: palette.common.transparent

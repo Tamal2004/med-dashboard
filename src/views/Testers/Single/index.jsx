@@ -36,8 +36,10 @@ const TesterSingle = ({
     const c = useStyles();
     const [isLoading, setLoading] = useState(true);
     useEffect(() => {
-        if (isTester) fetchPublicTester(testerId).then(() => setLoading(false));
-        else fetchTester(id).then(() => setLoading(false));
+        if (isTester)
+            testerId &&
+                fetchPublicTester(testerId).then(() => setLoading(false));
+        else id && fetchTester(id).then(() => setLoading(false));
     });
 
     return (

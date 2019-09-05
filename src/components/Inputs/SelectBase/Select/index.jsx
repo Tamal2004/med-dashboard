@@ -121,7 +121,7 @@ class Select extends Component {
             );
         });
 
-        this.setState({ data, queryValue, selectOpen: true });
+        this.setState({ data, queryValue, selectFocus: true });
     };
 
     onBlur = () => {
@@ -215,7 +215,8 @@ class Select extends Component {
                 disableAutoFocusItem: true,
                 disableAutoFocus: true,
                 disablePortal: true,
-                ModalClasses: { root: c.modal }
+                ModalClasses: c.modal,
+                disableEnforceFocus: true,
             },
             classes: { ...Object.splice(c, ['root', 'select', 'icon']) },
             IconComponent: renderDropdownIcon,
@@ -224,8 +225,8 @@ class Select extends Component {
             ...restProps,
             inputProps,
             open: !disabled && selectFocus,
-            onClose: onBlur,
-            onOpen: onFocus,
+            // onClose: onBlur,
+            // onOpen: onFocus,
             onChange,
             disabled
         };
@@ -272,7 +273,8 @@ class Select extends Component {
                         value={queryValue}
                         onChange={onQuery}
                         htmlFor={id}
-                        onClick={onFocus}
+                        autoFocus={selectFocus}
+                        // onClick={onFocus}
                         disabled={disabled}
                     />
 

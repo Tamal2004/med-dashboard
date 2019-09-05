@@ -91,7 +91,8 @@ const TesterDetails = ({
     handleMailModal,
     handleConfirmationModal,
     deleteUserByAdmin,
-    testerId
+    testerId,
+    submitting
 }) => {
     const [isEditing, setEditing] = useState(false);
     const c = useStyles();
@@ -293,7 +294,7 @@ const TesterDetails = ({
                             handleSubmit();
                             setEditing(!isEditing);
                         }}
-                        disabled={invalid}
+                        disabled={invalid || submitting}
                     >
                         Save Edits
                     </IconedButton>
