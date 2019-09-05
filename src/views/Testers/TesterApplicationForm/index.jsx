@@ -336,8 +336,10 @@ const mapState = (state, ownProps) => {
             employmentStatus === 'Full-time employment' ||
             employmentStatus === 'Retired',
         isRetired: employmentStatus === 'Retired',
-        isPublicUser: noauth,
-        hasManualAddress: formSelector(state, 'manualAddress')
+        hasManualAddress: formSelector(state, 'manualAddress'),
+        initialValues: {
+            isPublicUser: noauth //required
+        }
     };
 };
 
