@@ -35,7 +35,8 @@ const ContactsModal = ({
     onClose,
     listIncompleteProjects,
     handleSubmit,
-    invalid
+    invalid,
+    submitting
 }) => {
     const c = useStyles();
     const [projectsLoading, setProjectsLoading] = useState(true);
@@ -69,7 +70,7 @@ const ContactsModal = ({
                     variant='outlined'
                     color='secondary'
                     size='large'
-                    onClick={onClose}
+                    onClick={onClose || submitting}
                 >
                     Cancel
                 </Button>
@@ -78,7 +79,7 @@ const ContactsModal = ({
                     color='primary'
                     size='large'
                     onClick={handleSubmit}
-                    disabled={invalid}
+                    disabled={invalid || submitting}
                 >
                     Add Note
                 </Button>

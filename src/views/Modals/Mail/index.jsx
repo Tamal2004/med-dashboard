@@ -41,7 +41,7 @@ const useStyles = makeStyles(({ breakpoints, spacing }) => ({
     },
     editor: {
         margin: spacing(2),
-        marginBottom: spacing(3),
+        marginBottom: spacing(3)
     },
     footer: {
         padding: spacing(4),
@@ -62,6 +62,7 @@ const MailModal = ({
     needsContactType,
     invalid,
     handleSubmit,
+    submitting,
     to
 }) => {
     const c = useStyles();
@@ -117,7 +118,11 @@ const MailModal = ({
             </ModalContent>
             <Divider />
             <ModalFooter className={c.footer}>
-                <Button size='large' disabled={invalid} onClick={handleSubmit}>
+                <Button
+                    size='large'
+                    disabled={invalid || submitting}
+                    onClick={handleSubmit}
+                >
                     Send Mail
                 </Button>
             </ModalFooter>
@@ -125,7 +130,7 @@ const MailModal = ({
     );
 };
 
-const validate = (values, { needsProject, needsContactType })=> {
+const validate = (values, { needsProject, needsContactType }) => {
     const required = ['subject', 'body'];
 
     if (needsProject) required.push('project');

@@ -30,7 +30,8 @@ const ContactDetails = ({
     invalid,
     change,
     reset,
-    handleSubmit
+    handleSubmit,
+    submitting
 }) => {
     const c = useStyles();
     const [isEditing, setEditing] = useState(false);
@@ -123,7 +124,7 @@ const ContactDetails = ({
                         if (isEditing) handleSubmit();
                         setEditing(!isEditing);
                     }}
-                    disabled={invalid}
+                    disabled={invalid || submitting}
                 />
             )}
         </EditableCard>

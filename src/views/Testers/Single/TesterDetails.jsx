@@ -91,7 +91,8 @@ const TesterDetails = ({
     handleMailModal,
     handleConfirmationModal,
     deleteUserByAdmin,
-    testerId
+    testerId,
+    submitting
 }) => {
     const [isEditing, setEditing] = useState(false);
     const c = useStyles();
@@ -293,7 +294,7 @@ const TesterDetails = ({
                             handleSubmit();
                             setEditing(!isEditing);
                         }}
-                        disabled={invalid}
+                        disabled={invalid || submitting}
                     >
                         Save Edits
                     </IconedButton>
@@ -304,6 +305,7 @@ const TesterDetails = ({
                                 handleConfirmationModal(confirmationProps)
                             }
                             Icon={DeleteIcon}
+                            disabled={submitting}
                         >
                             Delete Tester
                         </IconedButton>
@@ -331,7 +333,7 @@ const mapState = state => {
         email: formSelector(state, 'email'),
         title: mapFromValue(titles, formSelector(state, 'title')),
         firstName: formSelector(state, 'firstName'),
-        surname: formSelector(state, 'surname'),
+        surname: formSelector(state, 'surname')
     };
 };
 

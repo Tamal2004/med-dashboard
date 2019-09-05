@@ -33,7 +33,8 @@ const ProjectDetails = ({
     listProjectClients,
     listProjectUsers,
     handleSubmit,
-    reset
+    reset,
+    submitting
 }) => {
     const [isEditing, setEditing] = useState(false);
 
@@ -145,7 +146,7 @@ const ProjectDetails = ({
                         handleSubmit();
                         setEditing(!isEditing);
                     }}
-                    disabled={invalid}
+                    disabled={invalid || submitting}
                 />
             )}
         </EditableCard>

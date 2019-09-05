@@ -20,7 +20,7 @@ import { validateRequired } from 'libs';
 // Actions
 import { createClient } from 'actions';
 
-const AddNewClient = ({ onClose, handleSubmit, invalid }) => {
+const AddNewClient = ({ onClose, handleSubmit, invalid, submitting }) => {
     const c = useStyles();
 
     return (
@@ -35,7 +35,7 @@ const AddNewClient = ({ onClose, handleSubmit, invalid }) => {
                     variant='outlined'
                     color='secondary'
                     size='large'
-                    onClick={onClose}
+                    onClick={onClose || submitting}
                 >
                     Cancel
                 </Button>
@@ -44,7 +44,7 @@ const AddNewClient = ({ onClose, handleSubmit, invalid }) => {
                     color='primary'
                     size='large'
                     onClick={handleSubmit}
-                    disabled={invalid}
+                    disabled={invalid || submitting}
                 >
                     Create
                 </Button>

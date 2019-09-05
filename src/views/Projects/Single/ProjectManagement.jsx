@@ -20,7 +20,13 @@ import { selectProjectId, selectFacilities } from 'selectors';
 // Actions
 import { updateProject } from 'actions';
 
-const ProjectManagement = ({ facilities, handleSubmit, reset, dirty }) => {
+const ProjectManagement = ({
+    facilities,
+    handleSubmit,
+    reset,
+    dirty,
+    submitting
+}) => {
     const [isEditing, setEditing] = useState(false);
     return (
         <EditableCard
@@ -118,6 +124,7 @@ const ProjectManagement = ({ facilities, handleSubmit, reset, dirty }) => {
                         if (isEditing && dirty) handleSubmit();
                         setEditing(!isEditing);
                     }}
+                    disabled={submitting}
                 />
             )}
         </EditableCard>

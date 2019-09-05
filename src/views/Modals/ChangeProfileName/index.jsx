@@ -38,7 +38,7 @@ const UpdateProfile = ({ onClose, handleSubmit, invalid, submitting }) => {
                     variant='outlined'
                     color='secondary'
                     size='large'
-                    onClick={onClose}
+                    onClick={onClose || submitting}
                 >
                     Cancel
                 </Button>

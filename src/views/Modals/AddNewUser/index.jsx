@@ -34,7 +34,7 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-const CreateUser = ({ onClose, handleSubmit, invalid }) => {
+const CreateUser = ({ onClose, handleSubmit, invalid, submitting }) => {
     const c = useStyles();
 
     return (
@@ -56,7 +56,7 @@ const CreateUser = ({ onClose, handleSubmit, invalid }) => {
                     variant='outlined'
                     color='secondary'
                     size='large'
-                    onClick={onClose}
+                    onClick={onClose || submitting}
                 >
                     Cancel
                 </Button>
@@ -65,7 +65,7 @@ const CreateUser = ({ onClose, handleSubmit, invalid }) => {
                     color='primary'
                     size='large'
                     onClick={handleSubmit}
-                    disabled={invalid}
+                    disabled={invalid || submitting}
                 >
                     Create
                 </Button>

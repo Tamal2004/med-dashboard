@@ -29,7 +29,8 @@ const EmploymentDetails = ({
     isRetired,
     invalid,
     reset,
-    handleSubmit
+    handleSubmit,
+    submitting
 }) => {
     const [isEditing, setEditing] = useState(false);
     return (
@@ -115,7 +116,7 @@ const EmploymentDetails = ({
                         if (isEditing) handleSubmit();
                         setEditing(!isEditing);
                     }}
-                    disabled={invalid}
+                    disabled={invalid || submitting}
                 />
             )}
         </EditableCard>

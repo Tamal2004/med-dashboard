@@ -19,7 +19,7 @@ import { selectProjectId } from 'selectors';
 // Actions
 import { updateProject } from 'actions';
 
-const ClientFeedback = ({ invalid, handleSubmit, reset }) => {
+const ClientFeedback = ({ invalid, handleSubmit, reset, submitting }) => {
     const [isEditing, setEditing] = useState(false);
     return (
         <EditableCard
@@ -41,7 +41,7 @@ const ClientFeedback = ({ invalid, handleSubmit, reset }) => {
                         handleSubmit();
                         setEditing(!isEditing);
                     }}
-                    disabled={invalid}
+                    disabled={invalid || submitting}
                 />
             )}
         </EditableCard>

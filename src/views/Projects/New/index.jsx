@@ -111,7 +111,7 @@ const ProjectNew = ({
                         variant='contained'
                         color='secondary'
                         onClick={reset}
-                        disabled={pristine}
+                        disabled={pristine || submitting}
                     >
                         Reset
                     </NavigateButton>

@@ -42,7 +42,8 @@ const SessionsModal = ({
     onClose,
     listIncompleteProjects,
     handleSubmit,
-    invalid
+    invalid,
+    submitting
 }) => {
     const c = useStyles();
     const [projectsLoading, setProjectsLoading] = useState(true);
@@ -96,7 +97,7 @@ const SessionsModal = ({
                     variant='outlined'
                     color='secondary'
                     size='large'
-                    onClick={onClose}
+                    onClick={onClose || submitting}
                 >
                     Cancel
                 </Button>
@@ -105,7 +106,7 @@ const SessionsModal = ({
                     color='primary'
                     size='large'
                     onClick={handleSubmit}
-                    disabled={invalid}
+                    disabled={invalid || submitting}
                 >
                     Add Session
                 </Button>
