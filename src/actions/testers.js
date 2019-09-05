@@ -52,7 +52,7 @@ import { showNotification } from './notification';
 // Selectors
 import { selectIsTester, selectFullName } from 'selectors';
 
-import { testerSignUp } from 'actions';
+import { testerSignUp } from './auth';
 
 // Create Tester
 const createTesterAction = async => ({
@@ -67,7 +67,6 @@ export const createTester = tester => async dispatch => {
     } = await API.graphql(graphqlOperation(CreateTester, { input: tester }));
 
     if (!error) {
-        console.log('createTester', createTester);
         dispatch(createTesterAction(SUCCESS));
         dispatch(testerSignUp(createTester));
         history.push('/tester');
@@ -90,22 +89,18 @@ export const createPublicTester = tester => async dispatch => {
             mutation: gql(CreateTester),
             variables: { input: tester }
         })
-        .then(({ data: createTester }) => testerSignUp(createTester));
+        .then(({ data: { createTester } }) =>
+            dispatch(testerSignUp(createTester))
+        );
 
     if (!res.error) {
         dispatch(createTesterAction(SUCCESS));
-        dispatch(
-            showNotification({
-                type: 'success',
-                message: 'Application submitted successfully!'
-            })
-        );
     } else {
         dispatch(createTesterAction(FAIL));
         dispatch(
             showNotification({
                 type: 'error',
-                message: 'Failed! Something went  wrong!'
+                message: 'Failed! Something went wrong!'
             })
         );
     }

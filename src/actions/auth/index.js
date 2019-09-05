@@ -66,12 +66,11 @@ const changePassword = ({ oldPassword, newPassword }) => {
 
 export const testerSignUp = ({ id, email, firstName, surname }) => {
     const PASS = TEMP_PASSWORD();
-    console.log('testerSignUp');
+
     return async dispatch => {
         return Auth.signUp({
             username: email,
             password: PASS,
-            temporaryPassword: PASS,
             attributes: {
                 email,
                 'custom:firstName': firstName,
@@ -80,8 +79,6 @@ export const testerSignUp = ({ id, email, firstName, surname }) => {
             }
         })
             .then(res => {
-                console.log('after tester signup', res);
-                //TODO: send an email with generated password, variable: PASS
                 sendMail(
                     composeNewAccount({ firstName, email, password: PASS })
                 );
@@ -113,8 +110,6 @@ export const verifyUserOnSignUp = adminPayload => {
             }
         ]
     };
-
-    console.log('payload', payload);
 
     return async dispatch => {
         return await COGNITO_CLIENT.adminUpdateUserAttributes(
@@ -176,7 +171,7 @@ export const createUserByAdmin = ({ email, family_name, given_name }) => {
                         message: 'New user created successfully!'
                     })
                 );
-                dispatch(verifyUserOnSignUp(adminPayload));
+                // dispatch(verifyUserOnSignUp(adminPayload));
             }
         });
     };
