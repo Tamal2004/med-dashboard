@@ -4,10 +4,15 @@ import { history } from 'libs/history';
 import { reset } from 'redux-form';
 
 //Local
-import { SET_AUTH_USER_INFO, LOGOUT } from 'actionTypes';
+import { SET_AUTH_USER_INFO, UPDATE_USER_INFO, LOGOUT } from 'actionTypes';
 import { showNotification } from '../notification';
 import { removeTester } from '../testers';
-import { createUser, deleteUser } from '../users';
+import {
+    createUser,
+    updateUser,
+    deleteUser,
+    fetchUserIdByEmail
+} from '../users';
 import config from '../../aws-exports';
 import { composeNewAccount } from 'libs';
 import { sendMail } from 'services';
@@ -100,31 +105,6 @@ export const testerSignUp = ({ id, email, firstName, surname }) => {
     };
 };
 
-export const verifyUserOnSignUp = adminPayload => {
-    const payload = {
-        ...adminPayload,
-        UserAttributes: [
-            {
-                Name: 'email_verified',
-                Value: 'true'
-            }
-        ]
-    };
-
-    return async dispatch => {
-        return await COGNITO_CLIENT.adminUpdateUserAttributes(
-            payload,
-            (err, data) => {
-                if (err) {
-                    console.log('Error,, ', err);
-                } else {
-                    console.log('Success ', data);
-                }
-            }
-        );
-    };
-};
-
 export const createUserByAdmin = ({ email, family_name, given_name }) => {
     const adminPayload = {
         UserPoolId: REACT_APP_COGNITO_USER_POOL_ID,
@@ -171,7 +151,6 @@ export const createUserByAdmin = ({ email, family_name, given_name }) => {
                         message: 'New user created successfully!'
                     })
                 );
-                // dispatch(verifyUserOnSignUp(adminPayload));
             }
         });
     };
@@ -214,12 +193,6 @@ export const deleteUserByAdmin = (email, testerId) => {
                 );
             } else {
                 dispatch(removeTester(testerId));
-                dispatch(
-                    showNotification({
-                        type: 'success',
-                        message: 'Successfully deleted!'
-                    })
-                );
                 history.push('/tester');
             }
         });
@@ -239,15 +212,76 @@ export const deleteOwnAccount = (email, testerId) => {
                 );
             } else {
                 dispatch(removeTester(testerId));
-                dispatch(
-                    showNotification({
-                        type: 'success',
-                        message: 'Account deleted!'
-                    })
-                );
                 dispatch(logoutUser());
             }
         });
+    };
+};
+
+export const changeUserInfo = ({
+    email,
+    firstName,
+    surname
+}) => async dispatch => {
+    const userIdArr = await dispatch(fetchUserIdByEmail(email));
+
+    if (userIdArr.length) {
+        const id = userIdArr[0].id;
+        const updateUserSuccess = await dispatch(
+            updateUser({ id, firstName, lastName: surname })
+        );
+
+        if (updateUserSuccess === 200) {
+            await dispatch(
+                changCongnitoUserInfo({ email, firstName, surname })
+            );
+            return 200;
+        }
+    }
+};
+
+export const changCongnitoUserInfo = ({ email, firstName, surname }) => {
+    const payload = {
+        UserPoolId: REACT_APP_COGNITO_USER_POOL_ID,
+        Username: email,
+        UserAttributes: [
+            {
+                Name: 'custom:firstName',
+                Value: firstName
+            },
+            {
+                Name: 'custom:surname',
+                Value: surname
+            }
+        ]
+    };
+
+    return async dispatch => {
+        return await COGNITO_CLIENT.adminUpdateUserAttributes(
+            payload,
+            (err, data) => {
+                if (err) {
+                    dispatch(
+                        showNotification({
+                            type: 'error',
+                            message: err.message
+                        })
+                    );
+                } else {
+                    dispatch({
+                        type: UPDATE_USER_INFO,
+                        payload: { firstName, surname }
+                    });
+                    dispatch(
+                        showNotification({
+                            type: 'success',
+                            message: 'Update successful!'
+                        })
+                    );
+                    return 200;
+                }
+            }
+        );
     };
 };
 
@@ -274,8 +308,8 @@ export const setAuthUserInfo = () => {
 
 export const updateAuthUserPassword = payload => {
     return async dispatch => {
-        const res = await changePassword(payload);
-        if (res === 'SUCCESS') {
+        try {
+            await changePassword(payload);
             dispatch(
                 showNotification({
                     type: 'success',
@@ -283,8 +317,8 @@ export const updateAuthUserPassword = payload => {
                 })
             );
             return 200;
-        } else {
-            dispatch(showNotification({ type: 'error', message: res.message }));
+        } catch (err) {
+            dispatch(showNotification({ type: 'error', message: err.message }));
         }
     };
 };

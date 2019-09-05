@@ -2,7 +2,7 @@
 import initialState from './initialState';
 
 // Action Types
-import { SET_AUTH_USER_INFO, LOGOUT } from 'actionTypes';
+import { SET_AUTH_USER_INFO, UPDATE_USER_INFO, LOGOUT } from 'actionTypes';
 
 const authReducer = (state = initialState, { type, payload, ...action }) => {
     switch (type) {
@@ -18,6 +18,20 @@ const authReducer = (state = initialState, { type, payload, ...action }) => {
                 isTester: !!testerId,
                 testerId: testerId,
                 email,
+                firstName,
+                surname,
+                name: `${firstName ? firstName : '-'} ${
+                    surname ? surname : '-'
+                }`
+            };
+        }
+
+        case UPDATE_USER_INFO: {
+            const { firstName, surname } = payload;
+            return {
+                ...state,
+                firstName,
+                surname,
                 name: `${firstName ? firstName : '-'} ${
                     surname ? surname : '-'
                 }`

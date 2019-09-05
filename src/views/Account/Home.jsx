@@ -1,6 +1,6 @@
 import React, { Fragment, useState } from 'react';
 import { connect } from 'react-redux';
-import clsx from 'clsx';
+import { compose } from 'redux';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
@@ -16,12 +16,14 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import FormControl from '@material-ui/core/FormControl';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
+import EditIcon from '@material-ui/icons/Edit';
 
 import { makeStyles } from '@material-ui/core/styles';
 
-import { GridContainer, GridItem, NavigateButton } from 'components';
+import { GridContainer, GridItem, NavigateButton, withModal } from 'components';
 
 import { updateAuthUserPassword } from 'actions';
+import { UpdateProfile } from 'views/Modals';
 
 import DeleteAccount from './DeleteAccount';
 
@@ -35,6 +37,9 @@ const useStyles = makeStyles(theme => ({
 	form: {
 		width: '100%', // Fix IE 11 issue.
 		marginTop: theme.spacing(1)
+	},
+	editIcon: {
+		cursor: 'pointer'
 	}
 }));
 
@@ -49,7 +54,8 @@ const ProfileHome = props => {
 
 	const {
 		auth: { email, name, isTester },
-		updateAuthUserPassword
+		updateAuthUserPassword,
+		handleUpdateProfile
 	} = props;
 
 	const [values, setValues] = useState(initialState);
@@ -100,6 +106,12 @@ const ProfileHome = props => {
 							<UserIcon />
 						</ListItemIcon>
 						<ListItemText id='user-name' primary={name} />
+						<ListItemIcon
+							className={c.editIcon}
+							onClick={() => handleUpdateProfile()}
+						>
+							<EditIcon />
+						</ListItemIcon>
 					</ListItem>
 					<ListItem>
 						<ListItemIcon>
@@ -179,14 +191,21 @@ const ProfileHome = props => {
 	);
 };
 
+const mapModal = {
+	handleUpdateProfile: UpdateProfile
+};
+
 const mapState = ({ auth }) => ({ auth });
 const mapDispatch = {
 	updateAuthUserPassword
 };
 
-const _ProfileHome = connect(
-	mapState,
-	mapDispatch
+const _ProfileHome = compose(
+	connect(
+		mapState,
+		mapDispatch
+	),
+	withModal(mapModal)
 )(ProfileHome);
 
 export { _ProfileHome as default, _ProfileHome as ProfileHome };

@@ -8,3 +8,4 @@ export * from './SessionsEdit';
 export * from './ClientEdit';
 export * from './ContactNotesEdit';
 export * from './Confirmation';
+export * from './ChangeProfileName';

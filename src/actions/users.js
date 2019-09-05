@@ -4,7 +4,13 @@ import API, { graphqlOperation } from '@aws-amplify/api';
 import { normalizeUsers } from 'normalizers';
 
 // Graph QL
-import { CreateUser, DeleteUser, ListUsers } from 'graphql/users';
+import {
+    CreateUser,
+    DeleteUser,
+    UpdateUser,
+    ListUsers,
+    FetchUserByEmail
+} from 'graphql/users';
 
 // Action Types
 import {
@@ -36,6 +42,20 @@ export const listUsers = () => async dispatch => {
     }
 };
 
+export const fetchUserIdByEmail = email => async dispatch => {
+    const variables = { filter: { email: { eq: email } } };
+    const {
+        data: {
+            listUsers: { items }
+        },
+        error = null
+    } = await API.graphql(graphqlOperation(FetchUserByEmail, variables));
+    if (!error) {
+        return items;
+    }
+    return null;
+};
+
 const createUserAction = (async, payload = []) => ({
     type: CREATE_USER,
     async,
@@ -65,6 +85,19 @@ export const createUser = input => async dispatch => {
             })
         );
     }
+};
+
+export const updateUser = input => async dispatch => {
+    const {
+        data: {
+            updateUser: {},
+            error = null
+        }
+    } = await API.graphql(graphqlOperation(UpdateUser, { input }));
+    if (!error) {
+        return 200;
+    }
+    return null;
 };
 
 const deleteUserAction = (async, payload = []) => ({

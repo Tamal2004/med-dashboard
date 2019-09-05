@@ -8,3 +8,11 @@ export const ListUsers = `query listUsers {
         }       
     }
 }`;
+
+export const FetchUserByEmail = `query FetchUserByEmail($filter:ModelUserFilterInput){
+  listUsers(filter:$filter){
+    items{
+      id
+    }
+  }
+}`;

@@ -274,14 +274,13 @@ export const removeTester = id => async (dispatch, getState) => {
     } = await API.graphql(graphqlOperation(RemoveTester, { input: { id } }));
 
     if (!error) {
-        // Check if tester
-        if (selectIsTester(getState())) {
-            // Log them out and delete their user
-            // Use 'testerId' variable if needed
-        } else {
-            history.push('/tester');
-        }
         dispatch(removeTesterAction(SUCCESS));
+        dispatch(
+            showNotification({
+                type: 'success',
+                message: 'Successfully deleted!'
+            })
+        );
     } else {
         dispatch(removeTesterAction(FAIL));
         dispatch(
