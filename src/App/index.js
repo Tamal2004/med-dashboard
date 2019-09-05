@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import API from '@aws-amplify/api';
-import PubSub from '@aws-amplify/pubsub';
 import Auth from '@aws-amplify/auth';
 import { connect } from 'react-redux';
 import { Router } from 'react-router-dom';
@@ -31,7 +30,6 @@ import App from './App';
 
 Auth.configure(config);
 API.configure(config);
-PubSub.configure(config);
 
 class IndexApp extends Component {
     constructor(props) {
