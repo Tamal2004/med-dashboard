@@ -55,6 +55,7 @@ class ModalProvider extends Component {
 
         return Modals.reduce(
             (acm, { handlerName }) => ({
+                ...acm,
                 [handlerName]: handleModal(handlerName)
             }),
             {}

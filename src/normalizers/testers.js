@@ -101,7 +101,6 @@ export const normalizeTesterForm = (
             ...Object.splice(testerForm, [
                 'house',
                 'street',
-                'town',
                 'county',
                 'postcode',
                 'country'
@@ -110,7 +109,7 @@ export const normalizeTesterForm = (
     }
 
     const contactDetails = {
-        ...Object.splice(testerForm, ['email', 'phone']),
+        ...Object.splice(testerForm, ['email', 'phone', 'town']),
         ...addressDetails
     };
 

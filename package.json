@@ -31,10 +31,12 @@
         "redux": "^4.0.4",
         "redux-form": "^8.2.5",
         "redux-thunk": "^2.3.0",
-        "reselect": "^4.0.0"
+        "reselect": "^4.0.0",
+        "uuid": "^3.3.3"
     },
     "devDependencies": {
         "copy-webpack-plugin": "^4.5.2",
+        "eslint": "^6.3.0",
         "prettier": "^1.18.2",
         "webpack": "^4.17.1",
         "webpack-cli": "^3.1.0",
