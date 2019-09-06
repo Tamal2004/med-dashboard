@@ -8,7 +8,7 @@ export default ({ palette }) => ({
     icon: {
         color: palette.grey[500],
         '&:hover': {
-            color: palette.grey[700],
+            color: palette.grey[700]
         },
         transform: 'scale(1.3)'
     },

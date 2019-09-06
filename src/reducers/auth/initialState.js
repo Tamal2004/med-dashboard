@@ -1,7 +1,7 @@
 export default {
-	email: null,
-	name: '',
-	firstName: '',
-	surname: '',
-	isTester: true
+    email: null,
+    name: '',
+    firstName: '',
+    surname: '',
+    isTester: true
 };
