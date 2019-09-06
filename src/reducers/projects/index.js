@@ -54,7 +54,12 @@ const projectsReducer = (
         }
 
         case LIST_PROJECTS: {
-            return isSuccess ? { ...state, list: payload } : state;
+            return isSuccess
+                ? {
+                      ...state,
+                      list: payload
+                  }
+                : state;
         }
 
         case REMOVE_SESSION: {

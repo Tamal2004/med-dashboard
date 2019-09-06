@@ -16,13 +16,13 @@ const Input = ({ required, label, isCard, active, width, ...restProps }) => {
         root: clsx(c.root, isCard && cardRoot, !active && inactiveRoot)
     };
 
-    const controlProps = { required, label, isCard, width, error };
+    const controlProps = { required, label, isCard, width, error, active};
     return (
         <Control {...controlProps}>
             <InputBase
                 handleError={error => setError(error)}
                 styles={inputStyles}
-                normalize={value => (value === '' ? null : value)}
+                normalize={value => (value.trim() === '' ? null : value)}
                 {...restProps}
             />
         </Control>

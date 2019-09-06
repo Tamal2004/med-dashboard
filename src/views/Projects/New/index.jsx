@@ -143,6 +143,9 @@ const mapState = (state, { location }) => ({
 
 const mapDispatch = { listProjectClients, listProjectUsers };
 
+const onSubmit = ({ reference, ...values }, dispatch) =>
+    dispatch(createProject({ reference: reference.trim(), ...values }));
+
 const _ProjectNew = compose(
     connect(
         mapState,
@@ -153,7 +156,7 @@ const _ProjectNew = compose(
         validate,
         asyncValidate,
         asyncBlurFields: ['reference'],
-        onSubmit: async (values, dispatch) => dispatch(createProject(values))
+        onSubmit
     })
 )(ProjectNew);
 

@@ -1,20 +1,25 @@
 import React from 'react';
+import clsx from 'clsx';
 
 import { withStyles, Button } from '@material-ui/core';
 
 // Local
 import { styles } from './styles';
 import { composeClasses } from 'libs';
-import { CircularLoader } from 'components';
 
-const ButtonBase = ({ classes, styles, children, isLoading, ...restProps }) => {
+const ButtonBase = ({ classes, styles, children, loading, ...restProps }) => {
+    const { root, rootLoading, ...c } = composeClasses({ classes, styles });
+
     return (
         <Button
             variant='contained'
-            classes={composeClasses({ classes, styles })}
+            classes={{
+                root: clsx(root, loading && rootLoading),
+                ...c
+            }}
             {...restProps}
         >
-            {isLoading ? <CircularLoader /> : children}
+            {children}
         </Button>
     );
 };

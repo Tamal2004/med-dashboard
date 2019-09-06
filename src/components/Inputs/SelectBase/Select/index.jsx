@@ -49,11 +49,18 @@ class Select extends Component {
         initialData: this.props.data,
         queryValue: '',
         selectFocus: false,
+        textFocus: false,
         selectStyle: null,
         placeholderStyle: null,
-        showPlaceholder: Boolean(this.props.placeholder)
+        showPlaceholder: Boolean(this.props.placeholder),
+        isMouseInside: false
     };
-
+    handleScroll = () => {
+        const { selectFocus, isMouseInside } = this.state;
+        if (!isMouseInside) {
+            if (selectFocus) this.onBlur();
+        }
+    };
     componentDidMount() {
         const {
             input: { onChange },
@@ -62,8 +69,12 @@ class Select extends Component {
         } = this.props;
 
         if (displayFirst) onChange(data[0]);
+        window.addEventListener('scroll', this.handleScroll, true);
     }
 
+    componentWillUnmount() {
+        window.removeEventListener('scroll', this.handleScroll, true);
+    }
     static getDerivedStateFromProps(props, state) {
         const { queryValue } = state;
 
@@ -76,10 +87,8 @@ class Select extends Component {
             handleError
         } = props;
 
-        if (meta.touched && !!meta.error)
-            handleError(meta.error);
-        else
-            handleError('');
+        if (meta.touched && !!meta.error) handleError(meta.error);
+        else handleError('');
 
         const nextState = {
             selectStyle: classNames(select, styles.select),
@@ -112,20 +121,26 @@ class Select extends Component {
 
     onQuery = ({ target: { value: queryValue } }) => {
         const { state } = this;
-        const { initialData } = state;
+        const { initialData, selectFocus } = state;
 
-        const data = initialData.filter(({ label }) => {
-            return (
-                queryValue === '' ||
-                label.toLowerCase().includes(queryValue.toLowerCase())
-            );
-        });
+        if (selectFocus) {
+            const data = initialData.filter(({ label }) => {
+                return (
+                    queryValue === '' ||
+                    label.toLowerCase().includes(queryValue.toLowerCase())
+                );
+            });
 
-        this.setState({ data, queryValue, selectOpen: true });
+            this.setState({ data, queryValue });
+        } else this.setState({ selectFocus: true });
     };
 
     onBlur = () => {
-        this.setState({ selectFocus: false });
+        this.setState({
+            selectFocus: false,
+            queryValue: '',
+            data: this.state.initialData
+        });
         this.props.input.onBlur();
     };
 
@@ -155,7 +170,6 @@ class Select extends Component {
             />
         );
     };
-
     render() {
         const {
             state,
@@ -206,6 +220,9 @@ class Select extends Component {
 
         const selectProps = {
             MenuProps: {
+                onMouseEnter: () => this.setState({ isMouseInside: true }),
+                onMouseLeave: () => this.setState({ isMouseInside: false }),
+                autoFocus: false,
                 classes: { paper: c.list },
                 MenuListProps: {
                     disablePadding: true,
@@ -215,7 +232,8 @@ class Select extends Component {
                 disableAutoFocusItem: true,
                 disableAutoFocus: true,
                 disablePortal: true,
-                ModalClasses: { root: c.modal }
+                disableEnforceFocus: true,
+                BackdropProps: { style: { width: 0 }, invisible: true }
             },
             classes: { ...Object.splice(c, ['root', 'select', 'icon']) },
             IconComponent: renderDropdownIcon,
@@ -227,7 +245,8 @@ class Select extends Component {
             onClose: onBlur,
             onOpen: onFocus,
             onChange,
-            disabled
+            disabled,
+            onScroll: () => console.log('arstarst')
         };
         const id = `${form}-${name}`;
         const valid = isNaN(value) ? !!value : !!Number(value);
@@ -245,67 +264,73 @@ class Select extends Component {
             queryValue || valueIndex < 20 ? 20 : renderFloor + 20;
 
         return (
-            <FormControl className={c.container}>
-                {label && (
-                    <LabelBase
-                        label={label}
-                        disabled={disabled}
-                        required={required}
-                        success={success}
-                        htmlFor={id}
-                    />
-                )}
-                <FormControl
-                    className={classNames(
-                        c.control,
-                        className,
-                        error && c.error,
-                        success && c.success,
-                        disabled && c.disabled
-                    )}
-                >
-                    {/*Todo: Convert to InputBase element */}
-
-                    <TextField
-                        classes={{ root: c.inputRoot }}
-                        inputProps={{ className: c.input }}
-                        value={queryValue}
-                        onChange={onQuery}
-                        htmlFor={id}
-                        onClick={onFocus}
-                        disabled={disabled}
-                    />
-
-                    {showPlaceholder && !success && !disabled && (
-                        <SelectPlaceholder
-                            styles={Object.splice(c, ['placeholder'])}
+            <ClickAwayListener
+                onClickAway={() => this.state.selectFocus && onBlur()}
+            >
+                <FormControl className={c.container}>
+                    {label && (
+                        <LabelBase
+                            label={label}
+                            disabled={disabled}
+                            required={required}
+                            success={success}
                             htmlFor={id}
-                            placeholder={placeholderValue}
                         />
                     )}
-                    {isCancellable && success && (
-                        <SelectCancellableIcon
-                            styles={Object.splice(styles, [
-                                'cancellableRoot',
-                                'cancellableIcon'
-                            ])}
-                            onClick={() => onChange('')}
-                        />
-                    )}
-                    <MuiSelect {...selectProps}>
-                        {data.map(
-                            ({ value, label }, index) =>
-                                index >= renderFloor &&
-                                index < renderCeiling && (
-                                    <MenuItem key={id + index} value={value}>
-                                        {label}
-                                    </MenuItem>
-                                )
+                    <FormControl
+                        className={classNames(
+                            c.control,
+                            className,
+                            error && c.error,
+                            success && c.success,
+                            disabled && c.disabled
                         )}
-                    </MuiSelect>
+                    >
+                        {/*Todo: Convert to InputBase element */}
+
+                        <TextField
+                            classes={{ root: c.inputRoot }}
+                            inputProps={{ className: c.input }}
+                            value={queryValue}
+                            onChange={onQuery}
+                            htmlFor={id}
+                            onClick={onFocus}
+                            disabled={disabled}
+                        />
+
+                        {showPlaceholder && !success && !disabled && (
+                            <SelectPlaceholder
+                                styles={Object.splice(c, ['placeholder'])}
+                                htmlFor={id}
+                                placeholder={placeholderValue}
+                            />
+                        )}
+                        {isCancellable && success && (
+                            <SelectCancellableIcon
+                                styles={Object.splice(styles, [
+                                    'cancellableRoot',
+                                    'cancellableIcon'
+                                ])}
+                                onClick={() => onChange('')}
+                            />
+                        )}
+                        <MuiSelect {...selectProps}>
+                            {data.map(
+                                ({ value, label }, index) =>
+                                    index >= renderFloor &&
+                                    index < renderCeiling && (
+                                        <MenuItem
+                                            key={id + index}
+                                            value={value}
+                                        >
+                                            {label}
+                                        </MenuItem>
+                                    )
+                            )}
+                        </MuiSelect>
+                    </FormControl>
                 </FormControl>
-            </FormControl>
-            //</ClickAwayListener>
+            </ClickAwayListener>
         );
     }
 }

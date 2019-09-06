@@ -197,7 +197,7 @@ export const fetchTester = id => async dispatch => {
 };
 
 export const fetchPublicTester = id => async dispatch => {
-    dispatch(fetchTesterAction());
+    dispatch(fetchTesterAction(REQUEST));
 
     const {
         data: { getTester, error = null }
@@ -213,6 +213,9 @@ export const fetchPublicTester = id => async dispatch => {
         dispatch(initialize('TesterDetails', testerDetails));
         dispatch(initialize('ContactDetails', contactDetails));
         dispatch(initialize('EmploymentDetails', employmentDetails));
+        dispatch(fetchTesterAction(SUCCESS, { id }));
+    } else {
+        dispatch(fetchTesterAction(FAIL));
     }
 };
 
@@ -267,14 +270,15 @@ const removeTesterAction = (async, payload = []) => ({
     payload
 });
 
-export const removeTester = id => async (dispatch, getState) => {
+export const removeTester = id => async dispatch => {
     dispatch(removeTesterAction(REQUEST));
     const {
-        data: { deleteTester: { id: testerId } = {}, error = null }
+        data: { error = null }
     } = await API.graphql(graphqlOperation(RemoveTester, { input: { id } }));
 
     if (!error) {
         dispatch(removeTesterAction(SUCCESS));
+        history.push('/tester');
         dispatch(
             showNotification({
                 type: 'success',

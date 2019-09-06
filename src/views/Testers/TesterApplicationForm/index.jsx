@@ -13,10 +13,10 @@ import useStyles from './styles';
 import onSubmit from './onSubmit';
 import { validate, asyncValidate } from './validate';
 // Libs
-import { validateEmail, validateDate, validateNumber } from 'libs';
+import { validateEmail, validateDate } from 'libs';
 
 // Normalizers
-import { normalizeDob } from 'normalizers';
+import { normalizeDob, normalizePhone } from 'normalizers';
 
 // Components
 import {
@@ -130,14 +130,17 @@ const TesterApplication = ({
                     label='Phone Number'
                     name='phone'
                     required
-                    validate={validateNumber}
+                    normalize={normalizePhone}
                 />
                 {!hasManualAddress && (
-                    <Input
-                        label='Enter address or postcode'
-                        name='address'
-                        required
-                    />
+                    <Fragment>
+                        <Input
+                            label='Enter address or postcode'
+                            name='address'
+                            required
+                        />
+                        <Input label='Town' name='town' required />
+                    </Fragment>
                 )}
                 <GridItem md={12} sm={12} className={c.manualGrid}>
                     <AddressLink
@@ -155,7 +158,7 @@ const TesterApplication = ({
                     <Fragment>
                         <Input label='House name or number' name='house' />
                         <Input label='Street' name='street' />
-                        <Input label='Town' name='town' />
+                        <Input label='Town' name='town' required/>
                         <Input label='County' name='county' />
                         <Input label='Postcode' name='postcode' />
                         <Input label='Country' name='country' required />

@@ -1,5 +1,5 @@
 export const ListProjectClients = `query ListProjectClients {
-  listSortedClients(limit: 200 sortDirection: DESC) {
+  listSortedClients(limit: 5000 sortDirection: DESC) {
     items {
       id
       name

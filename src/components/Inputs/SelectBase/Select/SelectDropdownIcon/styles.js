@@ -3,7 +3,8 @@ export default ({ palette }) => ({
         display: 'flex',
         alignItems: 'center',
         height: 'inherit',
-        zIndex: 2
+        zIndex: 2,
+        cursor: 'pointer'
     },
     icon: {
         color: palette.grey[500],

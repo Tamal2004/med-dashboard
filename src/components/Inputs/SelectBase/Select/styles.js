@@ -103,7 +103,8 @@ export default ({ unitHeight, unitWidth, listMaxNumber, iconRight }) => ({
         },
 
         modal: {
-            width: 0
+            width: 0,
+            pointerEvents: 'none'
         },
         selectQuery: {
             color: palette.common.transparent
@@ -123,11 +124,17 @@ export default ({ unitHeight, unitWidth, listMaxNumber, iconRight }) => ({
                 fontSize: 'inherit',
                 height: 'inherit'
             },
+            '& > div [id^="menu-"]': {
+                // pointerEvents: 'none'
+                width: 0
+            },
             '&:hover': {
                 borderColor: palette.grey[400]
             }
         },
-
+        backdrop: {
+            backgroundColor: 'blue'
+        },
         success: {
             borderColor: `${palette.success.primary} !important`, // Focus override
             '&:hover': {

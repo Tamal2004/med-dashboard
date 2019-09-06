@@ -24,6 +24,7 @@ import {
 
 // Actions
 import { listProjectClients, listProjectUsers, updateProject } from 'actions';
+import { asyncValidate } from '../New/validate';
 
 const ProjectDetails = ({
     projectStatuses,
@@ -171,15 +172,17 @@ const validate = values => {
         'reference',
         'client',
         'principalContact',
+        'testingDate',
         'manager'
     ];
     return validateRequired(values, required);
 };
 
-const onSubmit = ({ client, ...values }, dispatch, { id }) => {
+const onSubmit = ({ reference, client, ...values }, dispatch, { id }) => {
     const project = {
         id,
         projectClientId: client,
+        reference: reference.trim(),
         ...values
     };
 
@@ -194,6 +197,8 @@ const _ProjectDetails = compose(
     reduxForm({
         form: 'ProjectDetails',
         validate,
+        asyncValidate,
+        asyncBlurFields: ['reference'],
         onSubmit
     })
 )(ProjectDetails);
