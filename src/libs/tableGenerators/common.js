@@ -39,3 +39,19 @@ export const composeEditData = (data, idx) => {
     }
     return { initialValues: {}, formData: [] };
 };
+
+export const composeSortableDate = (
+    date,
+    placeholder = 'No existing dates'
+) => {
+    if (!!date)
+        return {
+            Component: date,
+            value: serializeDate(date)
+        };
+    else
+        return {
+            Component: placeholder,
+            value: '1970-01-01'
+        };
+};

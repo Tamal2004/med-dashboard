@@ -1,7 +1,8 @@
 export default ({ unitHeight, unitWidth, listMaxNumber, iconRight }) => ({
     spacing,
     palette,
-    shape
+    shape,
+    zIndex
 }) => {
     const menuItemHeight = unitHeight / 2;
     const listItemNumber = listMaxNumber;
@@ -75,7 +76,6 @@ export default ({ unitHeight, unitWidth, listMaxNumber, iconRight }) => ({
 
         inputRoot: {
             width: '100%',
-            zIndex: 1301,
             position: 'absolute',
             fontSize: 'inherit',
             //left: Number(unitWidth) + spacing.unit,
@@ -91,6 +91,10 @@ export default ({ unitHeight, unitWidth, listMaxNumber, iconRight }) => ({
                     display: 'none'
                 }
             }
+        },
+
+        inputElevation: {
+            zIndex: zIndex.modal + 1
         },
 
         input: {

@@ -2,6 +2,7 @@ import React from 'react';
 
 import { Link } from 'components';
 import { normalizeTime } from 'normalizers';
+import { composeSortableDate } from './common';
 
 export const generateTestersSearch = testersSearch =>
     testersSearch.map(
@@ -47,8 +48,14 @@ export const generateTesterList = testerList =>
                       value: lastProjectReference
                   }
                 : 'No Projects',
-            'Last Testing Date': lastTestingDate || 'No Sessions',
-            'Last Contact Date': lastContactDate || 'No Contacts'
+            'Last Testing Date': composeSortableDate(
+                lastTestingDate,
+                'No Sessions'
+            ),
+            'Last Contact Date': composeSortableDate(
+                lastContactDate,
+                'No Contacts'
+            )
         })
     );
 
@@ -63,7 +70,11 @@ export const generateTesterSessions = testerSessions =>
             projectReference,
             notes
         }) => ({
-            Date: { editable: true, Component: date, type: 'DateInput' },
+            Date: {
+                editable: true,
+                Component: composeSortableDate(date),
+                type: 'DateInput'
+            },
             Time: {
                 editable: true,
                 Component: time,
@@ -96,7 +107,7 @@ export const generateTesterContactNotes = (testerContactNotes, contactTypes) =>
             note
         }) => ({
             id,
-            Date: date,
+            Date: composeSortableDate(date),
             Project: {
                 Component: (
                     <Link to={`/project/${projectId}`}>{projectReference}</Link>

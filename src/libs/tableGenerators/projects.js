@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { Link } from 'components';
+import { composeSortableDate } from './common';
 
 export const generateProjectList = projectList =>
     projectList.map(
@@ -26,7 +27,7 @@ export const generateProjectList = projectList =>
                 Component: <Link to={`/project/${id}`}>{title}</Link>,
                 value: title
             },
-            'Testing Date': testingDate,
+            'Testing Date': composeSortableDate(testingDate),
             'Project Status': status,
             'Project Manager': manager
         })
@@ -41,7 +42,7 @@ export const generateProjectSessions = projectSessions =>
                 value: testerName
             },
             Profile: profile,
-            'Testing Date': date,
+            'Testing Date': composeSortableDate(date),
             'Testing Time': time,
             Notes: notes
         })

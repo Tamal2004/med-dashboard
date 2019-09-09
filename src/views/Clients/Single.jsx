@@ -56,7 +56,7 @@ const ClientSingle = ({
 
     useEffect(() => {
         fetchClient(id).then(() => setLoading(false));
-    });
+    }, []);
 
     return (
         <GridContainer alignItems='center'>

@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
-import { reduxForm, formValueSelector } from 'redux-form';
+import API, { graphqlOperation } from '@aws-amplify/api';
+import { reduxForm,getFormInitialValues } from 'redux-form';
 
 // Local
+import { CheckProjectReference } from 'graphql/project';
 import { validateRequired, mapFromValue } from 'libs';
 import {
     Select,
@@ -27,7 +29,6 @@ import { normalizePounds } from 'normalizers';
 
 // Actions
 import { listProjectClients, listProjectUsers, updateProject } from 'actions';
-import { asyncValidate } from '../New/validate';
 
 const ProjectDetails = ({
     projectStatuses,
@@ -38,7 +39,7 @@ const ProjectDetails = ({
     listProjectUsers,
     handleSubmit,
     reset,
-    submitting
+    submitting, ...rest
 }) => {
     const [isEditing, setEditing] = useState(false);
 
@@ -46,7 +47,7 @@ const ProjectDetails = ({
         listProjectClients();
         listProjectUsers();
     }, []);
-
+    console.log(rest)
     return (
         <EditableCard
             title='Project Details'
@@ -113,7 +114,10 @@ const ProjectDetails = ({
                 isCard
                 active={isEditing}
                 normalize={normalizePounds}
-                format={v => {console.log(v); return v}}
+                format={v => {
+                    console.log(v);
+                    return v;
+                }}
             />
             <Input
                 label='Purchase Order Number'
@@ -170,7 +174,7 @@ const mapState = state => {
         clients: selectProjectClients(state),
         users: selectProjectUsers(state),
         projectStatuses: selectProjectStatuses(state),
-        initialValues: { reference: 'astarst' }
+        initialReference: getFormInitialValues('ProjectDetails')(state)
     };
 };
 
@@ -187,6 +191,7 @@ const validate = values => {
     ];
     return validateRequired(values, required);
 };
+
 
 const onSubmit = ({ reference, client, ...values }, dispatch, { id }) => {
     const project = {
@@ -207,8 +212,6 @@ const _ProjectDetails = compose(
     reduxForm({
         form: 'ProjectDetails',
         validate,
-        asyncValidate,
-        asyncBlurFields: ['reference'],
         onSubmit
     })
 )(ProjectDetails);

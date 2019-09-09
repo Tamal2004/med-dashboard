@@ -54,7 +54,6 @@ const Select = ({
 };
 
 Select.defaultProps = {
-    placeholder: '',
     isCard: false,
     active: true
 };

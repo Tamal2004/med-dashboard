@@ -2,6 +2,8 @@ import React from 'react';
 
 import { Link } from 'components';
 
+import { composeSortableDate } from './common';
+
 export const generateClientList = clientList =>
     clientList.map(
         ({
@@ -26,7 +28,10 @@ export const generateClientList = clientList =>
                       value: latestProjectReference
                   }
                 : 'No Projects',
-            'Latest Project Date': latestProjectDate || 'No Project Dates',
+            'Latest Project Date': composeSortableDate(
+                latestProjectDate,
+                'No Project Dates'
+            ),
             actions: {}
         })
     );
@@ -42,7 +47,7 @@ export const generateClientProjects = clientProjects =>
                 Component: <Link to={`/project/${id}`}>{title}</Link>,
                 value: title
             },
-            'Observed Date': testingDate,
+            'Observed Date': composeSortableDate(testingDate),
             'Project Status': status,
             'Principal Contact': principalContact
         })
