@@ -75,6 +75,7 @@ const ProjectNew = ({
                 <DateInput
                     label='Observed Testing Date'
                     name='testingDate'
+                    disablePast
                     required
                 />
                 <Input label='Project Cost' name='cost' />

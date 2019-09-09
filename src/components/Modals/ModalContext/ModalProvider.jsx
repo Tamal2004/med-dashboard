@@ -60,7 +60,6 @@ class ModalProvider extends Component {
             }),
             {}
         );
-
     };
 
     addModals = mapModalData => {
