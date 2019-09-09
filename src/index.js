@@ -1,3 +1,6 @@
+import 'react-app-polyfill/ie9';
+import 'react-app-polyfill/stable';
+import 'raf/polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
@@ -13,9 +16,9 @@ enhanceProtypes();
 startServices();
 
 const AppDom = () => (
-    <Provider store={store}>
-        <App />
-    </Provider>
+	<Provider store={store}>
+		<App />
+	</Provider>
 );
 
 ReactDOM.render(<AppDom />, document.getElementById('root'));
