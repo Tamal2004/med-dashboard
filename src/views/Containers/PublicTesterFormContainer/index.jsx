@@ -23,7 +23,7 @@ export default function TesterContainer({ gotoSignIn, gotoSignUp, children }) {
 
     return (
         <div className={c.root}>
-            <AppBar position='absolute' className={clsx(c.appBar)}>
+            <AppBar position='fixed' className={clsx(c.appBar)}>
                 <Toolbar classes={{ root: c.toolbarRoot }}>
                     <Link href='/' className={c.pointer}>
                         <img className={c.logo} src={Logo} alt='WUP' />

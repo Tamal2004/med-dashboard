@@ -291,12 +291,11 @@ export const getAuthUserInfo = () => {
 export const setAuthUserInfo = () => {
     return async dispatch => {
         const res = await getUser();
-        Object.prototype.hasOwnProperty.call(res, 'attributes')
-            ? dispatch({
-                  type: SET_AUTH_USER_INFO,
-                  payload: res.attributes
-              })
-            : dispatch(logoutUser());
+        Object.prototype.hasOwnProperty.call(res, 'attributes') &&
+            dispatch({
+                type: SET_AUTH_USER_INFO,
+                payload: res.attributes
+            });
 
         return res;
     };

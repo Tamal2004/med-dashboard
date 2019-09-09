@@ -8,6 +8,7 @@ export default makeStyles(({ palette, spacing, typography, breakpoints }) => ({
         width: 'auto',
         [breakpoints.down('sm')]: {
             margin: 0,
+            textAlign: 'left',
             padding: spacing()
         }
     },
