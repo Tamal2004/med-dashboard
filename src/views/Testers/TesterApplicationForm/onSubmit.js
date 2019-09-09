@@ -3,7 +3,7 @@ import { serializeDate, deserializeDate } from 'libs';
 // Actions
 import { createTester, createPublicTester } from 'actions';
 
-export default async (values, dispatch, { isStudent, isEmployed }) => {
+export default async (values, dispatch, { isStudent, isEmployed, reset }) => {
     const {
         manualAddress,
         termsChecked,
@@ -59,5 +59,5 @@ export default async (values, dispatch, { isStudent, isEmployed }) => {
         ? createPublicTester(tester)
         : createTester(tester);
 
-    return dispatch(Action);
+    return dispatch(Action).then(() => reset());
 };

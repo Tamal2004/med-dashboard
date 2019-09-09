@@ -84,7 +84,7 @@ export default ({ palette, spacing, transitions, typography }) => ({
         backgroundColor: palette.grey[50],
         textAlign: 'right',
         paddingRight: '21px !important',
-        minWidth: 'unset !important',
+        // minWidth: 'unset !important',
         width: spacing()
     },
     ripple: { color: 'yellow' }

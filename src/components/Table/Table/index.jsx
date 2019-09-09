@@ -353,7 +353,7 @@ class Table extends Component {
                                     const headerWidth = header.includes(
                                         'Reference'
                                     )
-                                        ? unitWidth * 1.5
+                                        ? unitWidth * 2
                                         : unitWidth * 2;
                                     const len = headers.length;
 
@@ -367,7 +367,8 @@ class Table extends Component {
                                             )}
                                             style={{
                                                 maxWidth: headerWidth,
-                                                minWidth: headerWidth
+                                                minWidth: headerWidth,
+                                                width: '100%'
                                             }}
                                             key={index}
                                             onClick={() =>

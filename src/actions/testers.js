@@ -198,7 +198,6 @@ export const fetchTester = id => async dispatch => {
 
 export const fetchPublicTester = id => async dispatch => {
     dispatch(fetchTesterAction(REQUEST));
-
     const {
         data: { getTester, error = null }
     } = await API.graphql(graphqlOperation(FetchPublicTester, { id }));

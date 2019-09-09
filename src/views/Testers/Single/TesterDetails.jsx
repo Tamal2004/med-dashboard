@@ -16,7 +16,7 @@ import {
     validateRequired,
     mapFromValue,
     serializeDate,
-    composeRequest
+    composeRequest,validateDate
 } from 'libs';
 import {
     Select,
@@ -94,7 +94,6 @@ const TesterDetails = ({
     testerId,
     submitting
 }) => {
-    console.log('this.props', handleMailModal);
     const [isEditing, setEditing] = useState(false);
     const c = useStyles();
 
@@ -182,6 +181,7 @@ const TesterDetails = ({
                 name='dob'
                 isCard
                 normalize={normalizeDob}
+                validate={validateDate}
                 active={isEditing}
                 required={isEditing}
             />

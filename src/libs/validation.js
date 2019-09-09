@@ -19,11 +19,18 @@ export const validateEmail = value =>
         ? 'Invalid email address'
         : undefined;
 
-export const validateDate = value =>
-    value &&
-    !/^([0-2][0-9]|(3)[0-1])(\/)(((0)[0-9])|((1)[0-2]))(\/)\d{4}$/i.test(value)
+const DateDiff = date => new Date() - new Date(date);
+
+export const validateDate = value => {
+    return value &&
+        !/^([0-2][0-9]|(3)[0-1])(\/)(((0)[0-9])|((1)[0-2]))(\/)\d{4}$/i.test(
+            value
+        )
         ? 'Invalid date'
+        : DateDiff(value) < 0
+        ? 'Invalid future date'
         : undefined;
+};
 
 export const validateNumber = value =>
     value && !/^[0-9]/i.test(value) ? 'Invalid number' : undefined;

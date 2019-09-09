@@ -145,18 +145,12 @@ export const createUserByAdmin = ({ email, family_name, given_name }) => {
                 };
                 dispatch(createUser(userParams));
                 dispatch(reset('CreateUser'));
-                dispatch(
-                    showNotification({
-                        type: 'success',
-                        message: 'New user created successfully!'
-                    })
-                );
             }
         });
     };
 };
 
-export const deleteWupUser = ({ id, email }) => {
+export const deleteWupUser = ({ id, email, ownAccount = false }) => {
     const payload = {
         UserPoolId: REACT_APP_COGNITO_USER_POOL_ID,
         Username: email
@@ -168,6 +162,7 @@ export const deleteWupUser = ({ id, email }) => {
                     showNotification({ type: 'error', message: err.message })
                 );
             } else {
+                if (ownAccount) dispatch(logoutUser());
                 dispatch(deleteUser({ id }));
                 dispatch(
                     showNotification({
