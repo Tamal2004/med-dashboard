@@ -16,7 +16,7 @@ import {
 } from 'components';
 
 // Selectors
-import { selectUserList } from 'selectors';
+import { selectUserList, selectEmail } from 'selectors';
 
 // Actions
 import { listUsers, deleteWupUser } from 'actions';
@@ -43,7 +43,8 @@ const AllUsers = ({
     handleClientEditModal,
     handleConfirmationModal,
     listUsers,
-    deleteWupUser
+    deleteWupUser,
+    currentUserEmail
 }) => {
     const c = useStyles();
     const [isLoading, setLoading] = useState(true);
@@ -67,10 +68,17 @@ const AllUsers = ({
         submitText: 'Delete'
     };
 
+    const isCurrentUser = email => email.trim() === currentUserEmail.trim();
+
     const allUsers = users.map(({ id, actions, Email, ...rest }) => {
         const composedConfirmationProps = {
             ...confirmationProps,
-            onSubmit: () => deleteWupUser({ id, email: Email.value })
+            onSubmit: () =>
+                deleteWupUser({
+                    id,
+                    email: Email.value,
+                    ownAccount: isCurrentUser(Email.value)
+                })
         };
         return {
             ...rest,
@@ -121,7 +129,8 @@ const AllUsers = ({
 };
 
 const mapState = state => ({
-    users: selectUserList(state)
+    users: selectUserList(state),
+    currentUserEmail: selectEmail(state)
 });
 
 const mapDispatch = { listUsers, deleteWupUser };
