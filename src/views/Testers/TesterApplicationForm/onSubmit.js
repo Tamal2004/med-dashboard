@@ -20,7 +20,6 @@ export default async (values, dispatch, { isStudent, isEmployed }) => {
         address = {
             house: null,
             street: null,
-            town: null,
             county: null,
             postcode: null,
             country: null

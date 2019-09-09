@@ -69,11 +69,11 @@ class Select extends Component {
         } = this.props;
 
         if (displayFirst) onChange(data[0]);
-        window.addEventListener('scroll', this.handleScroll, true);
+        // window.addEventListener('scroll', this.handleScroll, true);
     }
 
     componentWillUnmount() {
-        window.removeEventListener('scroll', this.handleScroll, true);
+        // window.removeEventListener('scroll', this.handleScroll, true);
     }
     static getDerivedStateFromProps(props, state) {
         const { queryValue } = state;
@@ -170,6 +170,8 @@ class Select extends Component {
             />
         );
     };
+
+    anchorEl = React.createRef();
     render() {
         const {
             state,
@@ -202,6 +204,7 @@ class Select extends Component {
             disabled,
             displayFirst, // Take out of restProps
             handleError,
+            unitHeight,
             ...restProps
         } = props;
 
@@ -220,20 +223,21 @@ class Select extends Component {
 
         const selectProps = {
             MenuProps: {
-                onMouseEnter: () => this.setState({ isMouseInside: true }),
-                onMouseLeave: () => this.setState({ isMouseInside: false }),
-                autoFocus: false,
+                // onMouseEnter: () => this.setState({ isMouseInside: true }),
+                // onMouseLeave: () => this.setState({ isMouseInside: false }),
                 classes: { paper: c.list },
                 MenuListProps: {
                     disablePadding: true,
                     className: c.listItem
                 },
                 getContentAnchorEl: null,
+                transformOrigin: { vertical: 1 - unitHeight },
                 disableAutoFocusItem: true,
                 disableAutoFocus: true,
                 disablePortal: true,
                 disableEnforceFocus: true,
-                BackdropProps: { style: { width: 0 }, invisible: true }
+                disableRestoreFocus: true,
+                disableScrollLock: true,
             },
             classes: { ...Object.splice(c, ['root', 'select', 'icon']) },
             IconComponent: renderDropdownIcon,
@@ -267,7 +271,7 @@ class Select extends Component {
             <ClickAwayListener
                 onClickAway={() => this.state.selectFocus && onBlur()}
             >
-                <FormControl className={c.container}>
+                <FormControl className={c.container} ref={this.anchorEl}>
                     {label && (
                         <LabelBase
                             label={label}
@@ -285,6 +289,7 @@ class Select extends Component {
                             success && c.success,
                             disabled && c.disabled
                         )}
+                        ref={this.anchorEl}
                     >
                         {/*Todo: Convert to InputBase element */}
 

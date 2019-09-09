@@ -20,6 +20,9 @@ import { selectProjectId, selectFacilities } from 'selectors';
 // Actions
 import { updateProject } from 'actions';
 
+// Normalizers
+import { normalizeNumber } from 'normalizers';
+
 const ProjectManagement = ({
     facilities,
     handleSubmit,
@@ -116,6 +119,7 @@ const ProjectManagement = ({
                 label='Invoice number'
                 name='invoiceNumber'
                 isCard
+                normalize={normalizeNumber}
                 active={isEditing}
             />
             {isEditing && (

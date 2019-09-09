@@ -22,6 +22,9 @@ import {
     selectProjectUsers
 } from 'selectors';
 
+// Normalizers
+import { normalizePounds } from 'normalizers';
+
 // Actions
 import { listProjectClients, listProjectUsers, updateProject } from 'actions';
 import { asyncValidate } from '../New/validate';
@@ -104,7 +107,14 @@ const ProjectDetails = ({
                 active={isEditing}
                 required={isEditing}
             />
-            <Input label='Project Cost' name='cost' isCard active={isEditing} />
+            <Input
+                label='Project Cost'
+                name='cost'
+                isCard
+                active={isEditing}
+                normalize={normalizePounds}
+                format={v => {console.log(v); return v}}
+            />
             <Input
                 label='Purchase Order Number'
                 name='purchaseOrderNumber'
