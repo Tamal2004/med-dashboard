@@ -94,7 +94,6 @@ const TesterDetails = ({
     testerId,
     submitting
 }) => {
-    console.log('this.props', handleMailModal);
     const [isEditing, setEditing] = useState(false);
     const c = useStyles();
 

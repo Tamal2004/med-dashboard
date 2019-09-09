@@ -158,7 +158,7 @@ const TesterApplication = ({
                     <Fragment>
                         <Input label='House name or number' name='house' />
                         <Input label='Street' name='street' />
-                        <Input label='Town' name='town' required/>
+                        <Input label='Town' name='town' required />
                         <Input label='County' name='county' />
                         <Input label='Postcode' name='postcode' />
                         <Input label='Country' name='country' required />
@@ -170,7 +170,7 @@ const TesterApplication = ({
                 <Select label='Gender' data={genders} name='gender' required />
                 <Input
                     label='Date of Birth'
-                    placeholder='31/12/1999'
+                    placeholder='MM/DD/YYYY'
                     name='dob'
                     required
                     validate={validateDate}

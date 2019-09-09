@@ -246,7 +246,7 @@ class Select extends Component {
             onOpen: onFocus,
             onChange,
             disabled,
-            onScroll: () => console.log('arstarst')
+            onScroll: () => {}
         };
         const id = `${form}-${name}`;
         const valid = isNaN(value) ? !!value : !!Number(value);
