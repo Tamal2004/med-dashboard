@@ -47,7 +47,13 @@ class SelectBase extends Component {
         )(Select);
 
         return (
-            unitHeight && <Field {...selectProps} component={SelectComponent} />
+            unitHeight && (
+                <Field
+                    {...selectProps}
+                    component={SelectComponent}
+                    unitHeight={unitHeight}
+                />
+            )
         );
     };
 

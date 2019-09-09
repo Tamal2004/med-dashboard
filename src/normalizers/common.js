@@ -74,3 +74,20 @@ export const normalizePhone = val => {
 
     return val;
 };
+
+export const normalizeNumber = val => {
+    // Prevent non-digit characters being entered
+    if (isNaN(parseInt(val[val.length - 1], 10))) {
+        return val.slice(0, -1);
+    }
+    return val;
+};
+
+export const normalizePounds = val => {
+    // Prevent non-digit characters being entered
+    if (isNaN(parseInt(val[val.length - 1], 10))) {
+        return val.slice(0, -1);
+    }
+
+    return val.replace(/,/g, '');
+};

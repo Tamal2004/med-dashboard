@@ -48,7 +48,6 @@ export default ({ unitHeight, unitWidth, listMaxNumber, iconRight }) => ({
             top: 0
         },
         list: {
-            marginTop: menuItemHeight * 2 + 2,
             maxHeight: listHeight,
             maxWidth: 0,
             borderTopLeftRadius: 'unset',
@@ -76,6 +75,7 @@ export default ({ unitHeight, unitWidth, listMaxNumber, iconRight }) => ({
 
         inputRoot: {
             width: '100%',
+            zIndex: 1301,
             position: 'absolute',
             fontSize: 'inherit',
             //left: Number(unitWidth) + spacing.unit,

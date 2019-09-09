@@ -13,6 +13,7 @@ const Select = ({
     isCard,
     active,
     width,
+    placeholder,
     ...restProps
 }) => {
     const {
@@ -45,6 +46,7 @@ const Select = ({
             <SelectBase
                 handleError={error => setError(error)}
                 styles={selectStyles}
+                placeholder={active ? placeholder : ''}
                 {...restProps}
             />
         </Control>
