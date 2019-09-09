@@ -16,7 +16,7 @@ import { composeClasses } from 'libs';
 const DateInputBase = ({
     classes,
     styles,
-    minDate = new Date(new Date().getFullYear() - 1 + '-01-01'), // limited to previous 1 year
+    minDate,
     maxDate = new Date('2100-01-01'),
     input: { value, ...input },
     meta: { form },
