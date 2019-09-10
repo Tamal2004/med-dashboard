@@ -1,5 +1,7 @@
+const { REACT_APP_QUERY_TABLE_LIMIT, REACT_APP_QUERY_LIST_LIMIT } = process.env;
+
 export const ListTesters = `query ListTesters {
-  listSortedTesters(sortDirection: DESC limit: 500) {
+  listSortedTesters(sortDirection: DESC limit: ${REACT_APP_QUERY_TABLE_LIMIT}) {
     items {
       id
       firstName
@@ -23,7 +25,7 @@ export const ListTesters = `query ListTesters {
 }`;
 
 export const ListTestersSearch = `query ListTestersSearch($filter: ModelTesterFilterInput) {
-    listSortedTesters(filter: $filter limit: 500 sortDirection: DESC) {
+    listSortedTesters(filter: $filter limit: ${REACT_APP_QUERY_TABLE_LIMIT} sortDirection: DESC) {
         items {
             id
             firstName
@@ -80,7 +82,7 @@ export const FetchTester = `query FetchTester($id: ID!) {
         clientNotes
         facilitatorComments
         lastUpdated
-        contactNotes {
+        contactNotes(limit: ${REACT_APP_QUERY_LIST_LIMIT}) {
             items {
                 id
                 date
@@ -93,7 +95,7 @@ export const FetchTester = `query FetchTester($id: ID!) {
                 note
             }
         }
-        sessions {
+        sessions(limit: ${REACT_APP_QUERY_LIST_LIMIT}) {
             items {
                 id
                 date
@@ -147,12 +149,12 @@ export const FetchPublicTester = `query FetchPublicTester($id: ID!) {
         educationStage
         institution
         lastUpdated
-        sessions {
+        sessions(limit: ${REACT_APP_QUERY_LIST_LIMIT}) {
             items {
                 id
             }
         }
-        contactNotes {
+        contactNotes(limit: ${REACT_APP_QUERY_LIST_LIMIT}) {
             items {
                 id
             }

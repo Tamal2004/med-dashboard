@@ -1,5 +1,7 @@
+const { REACT_APP_QUERY_TABLE_LIMIT, REACT_APP_QUERY_LIST_LIMIT } = process.env;
+
 export const ListClients = `query ListClients($filter: ModelClientFilterInput) {
-    listSortedClients(filter: $filter sortDirection: DESC limit: 200) {
+    listSortedClients(filter: $filter sortDirection: DESC limit: ${REACT_APP_QUERY_TABLE_LIMIT}) {
         items {
             id
             name
@@ -17,7 +19,7 @@ export const ListClients = `query ListClients($filter: ModelClientFilterInput) {
 export const FetchClient = `query FetchClient($id: ID!) {
     getClient(id: $id) {
         name
-        projects {
+        projects(limit: ${REACT_APP_QUERY_LIST_LIMIT}) {
             items {
                 id
                 reference
@@ -27,5 +29,25 @@ export const FetchClient = `query FetchClient($id: ID!) {
                 principalContact
             }
         } 
+    }
+}`;
+
+export const FetchClientProjects = `query FetchClientProjects($id: ID!) {
+    getClient(id: $id) {
+        projects(limit: ${REACT_APP_QUERY_LIST_LIMIT}) {
+            items {
+                id
+                sessions(limit: ${REACT_APP_QUERY_LIST_LIMIT}) {
+                    items {
+                        id
+                    }
+                }
+                contactNotes(limit: ${REACT_APP_QUERY_LIST_LIMIT}) {
+                    items {
+                        id
+                    }
+                }
+            }
+        }
     }
 }`;

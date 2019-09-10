@@ -1,5 +1,11 @@
+const {
+    REACT_APP_QUERY_TABLE_LIMIT,
+    REACT_APP_QUERY_SELECT_LIMIT,
+    REACT_APP_QUERY_LIST_LIMIT
+} = process.env;
+
 export const ListProjectClients = `query ListProjectClients {
-  listSortedClients(limit: 5000 sortDirection: DESC) {
+  listSortedClients(limit: ${REACT_APP_QUERY_SELECT_LIMIT} sortDirection: DESC) {
     items {
       id
       name
@@ -9,7 +15,7 @@ export const ListProjectClients = `query ListProjectClients {
 `;
 
 export const ListProjectUsers = `query ListProjectUsers {
-  listSortedUsers(limit: 200 sortDirection: DESC) {
+  listSortedUsers(limit: ${REACT_APP_QUERY_SELECT_LIMIT} sortDirection: DESC) {
     items {
       firstName
       lastName
@@ -62,7 +68,7 @@ export const FetchProject = `query FetchProject($id: ID!) {
         clientComments
         wuComments
         profiles
-        sessions {
+        sessions(limit: ${REACT_APP_QUERY_LIST_LIMIT}) {
             items {
                 id
                 profile
@@ -82,12 +88,12 @@ export const FetchProject = `query FetchProject($id: ID!) {
 export const FetchProjectLists = `query FetchProjectLists($id: ID!) {
     getProject(id: $id) {
         id
-        sessions {
+        sessions(limit: ${REACT_APP_QUERY_LIST_LIMIT}) {
             items {
                 id
             }
         }
-        contactNotes {
+        contactNotes(limit: ${REACT_APP_QUERY_LIST_LIMIT}) {
             items {
                 id
             }
@@ -96,7 +102,7 @@ export const FetchProjectLists = `query FetchProjectLists($id: ID!) {
 }`;
 
 export const ListProjects = `query ListProjects($filter: ModelProjectFilterInput) {
-    listSortedProjects(filter: $filter limit: 500 sortDirection: DESC) {
+    listSortedProjects(filter: $filter limit: ${REACT_APP_QUERY_TABLE_LIMIT} sortDirection: DESC) {
         items {
             id
             client {
@@ -118,7 +124,7 @@ export const ListIncompleteProjects = `query ListIncompleteProjects {
             { status: { contains: "In Progress" } }   
             { status: { contains: "Pending" } }   
         ]
-    } limit: 500 sortDirection: DESC) {
+    } limit: ${REACT_APP_QUERY_SELECT_LIMIT} sortDirection: DESC) {
         items {
             id
             reference
@@ -132,7 +138,7 @@ export const ListProjectReport = `query ListProjectReport($id: ID!) {
         id
         reference
         title
-        sessions {
+        sessions(limit: ${1000}) {
             items {
                 profile
                 location

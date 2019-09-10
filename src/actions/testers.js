@@ -304,11 +304,14 @@ export const removeTester = id => async (dispatch, getState) => {
     const {
         data: { error = null }
     } = await API.graphql(
-        graphqlOperation(RemoveTester, {
-            input: { id },
-            contactNoteIds,
-            sessionIds
-        })
+        graphqlOperation(
+            RemoveTester(!!sessionIds.length, !!contactNoteIds.length),
+            {
+                ...(sessionIds.length ? { sessionIds } : {}),
+                ...(contactNoteIds.length ? { contactNoteIds } : {}),
+                input: { id }
+            }
+        )
     );
 
     if (!error) {

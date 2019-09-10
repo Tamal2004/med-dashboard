@@ -9,12 +9,13 @@ import { NavigateButton, withModal } from 'components';
 import { ConfirmationModal } from 'views/Modals';
 import { deleteOwnAccount } from 'actions';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles(({ palette, spacing}) => ({
 	deleteBtn: {
-		backgroundColor: '#d43c31',
-		marginTop: 20,
+		backgroundColor: palette.error.main,
+		marginTop: spacing(2.5),
+		textTransform: 'none',
 		'&:hover': {
-			backgroundColor: '#af332a'
+			backgroundColor: palette.error.dark
 		}
 	}
 }));
@@ -27,7 +28,7 @@ const DeleteUser = ({
 }) => {
 	const c = useStyles();
 
-	const confirmationprops = {
+	const confirmationProps = {
 		title: 'Confirmation',
 		promptText:
 			'Are you sure you want to delete your account? This action is irreversible.',
@@ -40,7 +41,7 @@ const DeleteUser = ({
 		<NavigateButton
 			className={c.deleteBtn}
 			color='secondary'
-			onClick={() => handleConfirmationModal(confirmationprops)}
+			onClick={() => handleConfirmationModal(confirmationProps)}
 		>
 			DELETE ACCOUNT
 		</NavigateButton>
