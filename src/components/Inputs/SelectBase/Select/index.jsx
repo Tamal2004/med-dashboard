@@ -236,7 +236,7 @@ class Select extends Component {
                 disableAutoFocus: true,
                 disablePortal: true,
                 disableEnforceFocus: true,
-                disableRestoreFocus: true,
+                disableRestoreFocus: true
             },
             classes: { ...Object.splice(c, ['root', 'select', 'icon']) },
             IconComponent: renderDropdownIcon,
@@ -248,7 +248,7 @@ class Select extends Component {
             onClose: onBlur,
             onOpen: onFocus,
             onChange,
-            disabled,
+            disabled
         };
         const id = `${form}-${name}`;
         const valid = isNaN(value) ? !!value : !!Number(value);
@@ -292,7 +292,12 @@ class Select extends Component {
                         {/*Todo: Convert to InputBase element */}
 
                         <TextField
-                            classes={{ root: classNames(c.inputRoot, selectFocus && c.inputElevation) }}
+                            classes={{
+                                root: classNames(
+                                    c.inputRoot,
+                                    selectFocus && c.inputElevation
+                                )
+                            }}
                             inputProps={{ className: c.input }}
                             value={queryValue}
                             onChange={onQuery}

@@ -347,7 +347,7 @@ class Table extends Component {
             hasActions || (handleEditModal && handleEditModal !== void 0)
                 ? 1
                 : 0;
-        console.log('table', tableWidth);
+
         return (
             <Fragment>
                 {!data.length ? (

@@ -94,7 +94,7 @@ export default ({ unitHeight, unitWidth, listMaxNumber, iconRight }) => ({
         },
 
         inputElevation: {
-            zIndex: zIndex.modal + 1
+            // zIndex: zIndex.modal + 1
         },
 
         input: {
@@ -130,7 +130,8 @@ export default ({ unitHeight, unitWidth, listMaxNumber, iconRight }) => ({
             },
             '& > div [id^="menu-"]': {
                 // pointerEvents: 'none'
-                width: 0
+                width: 0,
+                '& > div': { width: 0 }
             },
             '&:hover': {
                 borderColor: palette.grey[400]

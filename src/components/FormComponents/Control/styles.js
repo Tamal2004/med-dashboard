@@ -8,6 +8,7 @@ export default makeStyles(({ breakpoints, palette, spacing }) => ({
     cardRoot: {
         margin: 0
     },
+    layerStyle: { zIndex: 1 },
     left: {
         paddingRight: spacing(4),
         paddingLeft: spacing(2),
