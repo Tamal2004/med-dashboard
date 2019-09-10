@@ -62,7 +62,7 @@ const ClientSingle = ({
         <GridContainer alignItems='center'>
             <GridItem md={3} />
             <GridItem md={6} className={c.title}>
-                <Typography variant='h3'>{name}</Typography>
+                <Typography variant='h4'>{name}</Typography>
             </GridItem>
             <GridItem md={3} className={c.buttonGridStyle}>
                 <Link to={`/project/new?client=${id}`} className={c.linkGap}>

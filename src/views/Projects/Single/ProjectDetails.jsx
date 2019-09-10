@@ -1,19 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
-import API, { graphqlOperation } from '@aws-amplify/api';
-import { reduxForm,getFormInitialValues } from 'redux-form';
+import { reduxForm, getFormInitialValues } from 'redux-form';
+
+// Material
+import { makeStyles } from '@material-ui/core';
+import EditIcon from '@material-ui/icons/Edit';
+import DeleteIcon from '@material-ui/icons/DeleteOutlined';
 
 // Local
-import { CheckProjectReference } from 'graphql/project';
-import { validateRequired, mapFromValue } from 'libs';
+import { validateRequired } from 'libs';
+import { ConfirmationModal } from 'views/Modals';
 import {
     Select,
     Input,
     DateInput,
     EditableCard,
     EditableFooter,
-    CardDivider
+    CardDivider,
+    IconedButton,
+    withModal
 } from 'components';
 
 // Selectors
@@ -28,9 +34,24 @@ import {
 import { normalizePounds } from 'normalizers';
 
 // Actions
-import { listProjectClients, listProjectUsers, updateProject } from 'actions';
+import {
+    listProjectClients,
+    listProjectUsers,
+    updateProject,
+    removeProject
+} from 'actions';
+
+const useStyles = makeStyles(({ spacing }) => ({
+    footer: {
+        paddingLeft: spacing(2),
+        paddingRight: spacing(2),
+        display: 'flex',
+        justifyContent: 'space-between'
+    }
+}));
 
 const ProjectDetails = ({
+    id,
     projectStatuses,
     clients,
     users,
@@ -39,15 +60,27 @@ const ProjectDetails = ({
     listProjectUsers,
     handleSubmit,
     reset,
-    submitting, ...rest
+    submitting,
+    handleConfirmationModal,
+    removeProject
 }) => {
+    const c = useStyles();
+
     const [isEditing, setEditing] = useState(false);
 
     useEffect(() => {
         listProjectClients();
         listProjectUsers();
     }, []);
-    console.log(rest)
+
+    const confirmationProps = {
+        title: 'Confirmation',
+        promptText: `Are you sure you want to delete this project?`,
+        cancelText: 'Cancel',
+        submitText: 'Delete',
+        onSubmit: () => removeProject(id)
+    };
+
     return (
         <EditableCard
             title='Project Details'
@@ -114,10 +147,6 @@ const ProjectDetails = ({
                 isCard
                 active={isEditing}
                 normalize={normalizePounds}
-                format={v => {
-                    console.log(v);
-                    return v;
-                }}
             />
             <Input
                 label='Purchase Order Number'
@@ -155,15 +184,32 @@ const ProjectDetails = ({
                 active={isEditing}
                 isCard
             />
-            {isEditing && (
-                <EditableFooter
-                    onClick={() => {
-                        handleSubmit();
-                        setEditing(!isEditing);
-                    }}
-                    disabled={invalid || submitting}
-                />
-            )}
+            <CardDivider />
+            <div className={c.footer}>
+                <div />
+                {isEditing ? (
+                    <IconedButton
+                        Icon={EditIcon}
+                        onClick={() => {
+                            handleSubmit();
+                            setEditing(!isEditing);
+                        }}
+                        disabled={invalid || submitting}
+                    >
+                        Save Edits
+                    </IconedButton>
+                ) : (
+                    <IconedButton
+                        onClick={() =>
+                            handleConfirmationModal(confirmationProps)
+                        }
+                        Icon={DeleteIcon}
+                        disabled={submitting}
+                    >
+                        Delete Project
+                    </IconedButton>
+                )}
+            </div>
         </EditableCard>
     );
 };
@@ -178,7 +224,7 @@ const mapState = state => {
     };
 };
 
-const mapDispatch = { listProjectClients, listProjectUsers };
+const mapDispatch = { listProjectClients, listProjectUsers, removeProject };
 
 const validate = values => {
     const required = [
@@ -192,7 +238,6 @@ const validate = values => {
     return validateRequired(values, required);
 };
 
-
 const onSubmit = ({ reference, client, ...values }, dispatch, { id }) => {
     const project = {
         id,
@@ -204,11 +249,15 @@ const onSubmit = ({ reference, client, ...values }, dispatch, { id }) => {
     return dispatch(updateProject(project));
 };
 
+const mapModal = {
+    handleConfirmationModal: ConfirmationModal
+};
 const _ProjectDetails = compose(
     connect(
         mapState,
         mapDispatch
     ),
+    withModal(mapModal),
     reduxForm({
         form: 'ProjectDetails',
         validate,

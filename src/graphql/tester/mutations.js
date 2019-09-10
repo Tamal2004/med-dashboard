@@ -37,11 +37,15 @@ export const UpdateTester = `mutation UpdateTester($input: UpdateTesterInput!) {
     }
 }`;
 
-export const RemoveTester = `mutation RemoveTester($input: DeleteTesterInput!) {
-  deleteTester(input: $input) {
-    id
-  }
-}
+export const RemoveTester = `mutation RemoveTester(
+        $input: DeleteTesterInput! 
+        $sessionIds: [ID!]!
+        $contactNoteIds: [ID!]!
+    ) {
+        deleteSessions(ids: $sessionIds) { id }
+        deleteContactNotes(ids: $contactNoteIds) { id }
+        deleteTester(input: $input) { id }    
+    }
 `;
 
 export const CreateTester = `mutation CreateTester($input: CreateTesterInput!) {
@@ -52,4 +56,3 @@ export const CreateTester = `mutation CreateTester($input: CreateTesterInput!) {
     email
   }
 }`;
-

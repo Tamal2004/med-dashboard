@@ -42,11 +42,10 @@ export default ({ palette, spacing, transitions, typography }) => ({
         padding: `${spacing(2)}px ${spacing(2)}px ${spacing(
             2
         )}px ${spacing()}px`,
-        minWidth: spacing(10.5),
-        maxWidth: spacing(31.5),
+        // minWidth: spacing(10.5),
+        maxWidth: 188,
         whiteSpace: 'nowrap',
         overflow: 'hidden',
-        textOverflow: 'ellipsis',
         borderColor: '#eeeeee'
     },
     cellHeader: {

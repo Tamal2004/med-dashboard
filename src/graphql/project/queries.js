@@ -79,6 +79,22 @@ export const FetchProject = `query FetchProject($id: ID!) {
     }
 }`;
 
+export const FetchProjectLists = `query FetchProjectLists($id: ID!) {
+    getProject(id: $id) {
+        id
+        sessions {
+            items {
+                id
+            }
+        }
+        contactNotes {
+            items {
+                id
+            }
+        }
+    }
+}`;
+
 export const ListProjects = `query ListProjects($filter: ModelProjectFilterInput) {
     listSortedProjects(filter: $filter limit: 500 sortDirection: DESC) {
         items {

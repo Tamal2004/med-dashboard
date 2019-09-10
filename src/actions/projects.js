@@ -8,6 +8,7 @@ import { history } from 'libs';
 import { createProject as gQLCreateProject } from 'graphql/mutations';
 import {
     FetchProject,
+    FetchProjectLists,
     UpdateProject,
     ListProjects,
     ListProjectClients,
@@ -32,6 +33,7 @@ import {
     CREATE_PROJECT,
     FETCH_PROJECT,
     UPDATE_PROJECT,
+    REMOVE_PROJECT,
     LIST_PROJECTS,
     LIST_PROJECT_CLIENTS,
     LIST_PROJECT_USERS,
@@ -277,3 +279,35 @@ export const fetchProjectReport = (
 export const resetProjectReport = () => ({
     type: RESET_PROJECT_REPORT
 });
+
+const removeProjectAction = (async, payload = []) => ({
+    type: REMOVE_PROJECT,
+    async
+});
+
+export const removeProject = id => async dispatch => {
+    dispatch(removeProjectAction(REQUEST));
+
+    console.log('remove project', id);
+    const {
+        data: {
+            getProject: {
+                sessions: { items: sessions = [] },
+                contactNotes: { items: contactNotes = [] }
+            },
+            error = null
+        }
+    } = await API.graphql(graphqlOperation(FetchProjectLists, { id }));
+
+    console.log('getProject', sessions, contactNotes);
+    //
+    // if (!error) {
+    //     dispatch(
+    //         removeProjectAction(
+    //             SUCCESS,
+    //         )
+    //     );
+    // } else {
+    //     dispatch(removeProjectAction(FAIL));
+    // }
+};
