@@ -4,6 +4,7 @@ import classNames from 'classnames';
 
 // Material
 import {
+    Backdrop,
     Select as MuiSelect,
     MenuItem,
     TextField,
@@ -56,9 +57,9 @@ class Select extends Component {
         isMouseInside: false
     };
     handleScroll = () => {
-        const { selectFocus, isMouseInside } = this.state;
-        if (!isMouseInside) {
-            if (selectFocus) this.onBlur();
+        const { selectFocus } = this.state;
+        if (selectFocus) {
+            this.onBlur();
         }
     };
     componentDidMount() {
@@ -69,12 +70,8 @@ class Select extends Component {
         } = this.props;
 
         if (displayFirst) onChange(data[0]);
-        // window.addEventListener('scroll', this.handleScroll, true);
     }
 
-    componentWillUnmount() {
-        // window.removeEventListener('scroll', this.handleScroll, true);
-    }
     static getDerivedStateFromProps(props, state) {
         const { queryValue } = state;
 
@@ -293,10 +290,7 @@ class Select extends Component {
 
                         <TextField
                             classes={{
-                                root: classNames(
-                                    c.inputRoot,
-                                    selectFocus && c.inputElevation
-                                )
+                                root: classNames(c.inputRoot, selectFocus)
                             }}
                             inputProps={{ className: c.input }}
                             value={queryValue}
@@ -305,7 +299,12 @@ class Select extends Component {
                             onClick={onFocus}
                             disabled={disabled}
                         />
-
+                        <Backdrop
+                            classes={{ root: c.backdrop }}
+                            open={this.state.selectFocus}
+                            invisible
+                            onClick={() => onBlur()}
+                        />
                         {showPlaceholder && !success && !disabled && (
                             <SelectPlaceholder
                                 styles={Object.splice(c, ['placeholder'])}

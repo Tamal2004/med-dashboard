@@ -92,18 +92,13 @@ export default ({ unitHeight, unitWidth, listMaxNumber, iconRight }) => ({
                 }
             }
         },
-
-        inputElevation: {
-            // zIndex: zIndex.modal + 1
-        },
-
         input: {
             height: 'inherit',
             paddingLeft: spacing(2),
             paddingRight: Number(iconRight) + spacing(3),
             paddingTop: 0,
             paddingBottom: 0,
-            zIndex: 1
+            zIndex: 3
         },
 
         modal: {
@@ -137,9 +132,6 @@ export default ({ unitHeight, unitWidth, listMaxNumber, iconRight }) => ({
                 borderColor: palette.grey[400]
             }
         },
-        backdrop: {
-            backgroundColor: 'blue'
-        },
         success: {
             borderColor: `${palette.success.primary} !important`, // Focus override
             '&:hover': {
@@ -162,6 +154,11 @@ export default ({ unitHeight, unitWidth, listMaxNumber, iconRight }) => ({
         container: {
             position: 'unset',
             width: '100%'
+        },
+        backdrop: {
+            height: '100% !important',
+            zIndex: 1,
+            overflow: 'hidden'
         }
     };
 };
