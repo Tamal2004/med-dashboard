@@ -6,7 +6,7 @@ import { reset } from 'redux-form';
 //Local
 import { SET_AUTH_USER_INFO, UPDATE_USER_INFO, LOGOUT } from 'actionTypes';
 import { showNotification } from '../notification';
-import { removeTester, unsubscribeTester } from '../testers';
+import { removeTester } from '../testers';
 import {
     createUser,
     updateUser,
@@ -262,6 +262,7 @@ export const changeUserInfo = ({
 };
 
 export const changCongnitoUserInfo = ({ email, firstName, surname }) => {
+    console.log('changCongnitoUserInfo', email, firstName, surname);
     const payload = {
         UserPoolId: REACT_APP_COGNITO_USER_POOL_ID,
         Username: email,
@@ -288,6 +289,7 @@ export const changCongnitoUserInfo = ({ email, firstName, surname }) => {
                             message: err.message
                         })
                     );
+                    return null;
                 } else {
                     dispatch({
                         type: UPDATE_USER_INFO,

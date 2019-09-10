@@ -394,6 +394,7 @@ const onSubmit = (
     const tester = {
         id,
         dob: serializeDate(dob),
+        email,
         hasChildren: hasChildren === 'Yes',
         ...values
     };

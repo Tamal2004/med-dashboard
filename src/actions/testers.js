@@ -50,7 +50,7 @@ import {
     MAIL_TESTERS
 } from 'actionTypes';
 import { showNotification } from './notification';
-import { unsubscribeUser } from './auth';
+import { unsubscribeUser, changCongnitoUserInfo } from './auth';
 
 // Selectors
 import { selectTesterId, selectFullName } from 'selectors';
@@ -227,11 +227,17 @@ const updateTesterAction = async => ({
     async
 });
 
-export const updateTester = ({ lastUpdated, ...tester }) => async dispatch => {
+export const updateTester = ({
+    lastUpdated,
+    email = void 0,
+    ...tester
+}) => async dispatch => {
     const datedTester = {
         lastUpdated: today(),
         ...tester
     };
+
+    const { firstName, surname } = tester;
 
     dispatch(updateTesterAction(REQUEST));
     const {
@@ -250,12 +256,14 @@ export const updateTester = ({ lastUpdated, ...tester }) => async dispatch => {
         dispatch(initialize('TesterDetails', testerDetails));
         dispatch(initialize('ContactDetails', contactDetails));
         dispatch(initialize('EmploymentDetails', employmentDetails));
+        email && dispatch(changCongnitoUserInfo({ email, firstName, surname }));
         dispatch(
             showNotification({
                 type: 'success',
                 message: 'Updated successfully'
             })
         );
+        return 200;
     } else {
         dispatch(
             showNotification({
@@ -263,6 +271,7 @@ export const updateTester = ({ lastUpdated, ...tester }) => async dispatch => {
                 message: 'Failed! Something went wrong!'
             })
         );
+        return null;
     }
 };
 
@@ -312,8 +321,6 @@ const publicFetchTesterEmail = id => async dispatch => {
 };
 
 const publicRemoveTester = (id, email) => async dispatch => {
-    console.log('publicRemoveTester', id, email);
-
     return client2
         .mutate({
             mutation: gql(RemoveTester),
@@ -323,7 +330,6 @@ const publicRemoveTester = (id, email) => async dispatch => {
         })
         .then(({ data: { error = null } }) => {
             if (!error && email) {
-                console.log('yes email');
                 dispatch(unsubscribeUser(email));
             } else {
                 dispatch(
@@ -340,7 +346,7 @@ export const unsubscribeTester = id => async dispatch => {
     dispatch(publicFetchTesterEmail(id))
         .then(async res => {
             const { email } = res;
-            console.log('unsubscribeUser db ', email);
+
             if (!email) {
                 history.replace('/');
                 window.location.href = '/';
