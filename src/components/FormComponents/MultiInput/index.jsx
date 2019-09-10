@@ -20,7 +20,12 @@ const MultiInput = ({
     const [error, setError] = useState(false);
     const multiInputStyles = {
         ...c,
-        root: clsx(c.root, isCard && cardRoot, !active && inactiveRoot)
+        root: clsx(
+            c.root,
+            isCard && cardRoot,
+            !active && inactiveRoot,
+            active && c.scrollEnable
+        )
     };
     const controlProps = { required, label, isCard, memo, width, error };
 

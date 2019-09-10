@@ -10,6 +10,9 @@ export default makeStyles(({ palette, spacing, typography }) => ({
         marginTop: spacing(0.5),
         marginBottom: spacing(0.5)
     },
+    scrollEnable: {
+        overflowY: 'scroll'
+    },
     inactiveRoot: {
         border: 'unset',
         pointerEvents: 'none'
