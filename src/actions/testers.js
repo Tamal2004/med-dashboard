@@ -27,6 +27,7 @@ import {
     CreateTester,
     FetchTester,
     FetchPublicTester,
+    FetchTesterEmail,
     ListTesters,
     ListTestersSearch,
     UpdateTester,
@@ -49,6 +50,7 @@ import {
     MAIL_TESTERS
 } from 'actionTypes';
 import { showNotification } from './notification';
+import { unsubscribeUser, changCongnitoUserInfo } from './auth';
 
 // Selectors
 import {
@@ -237,11 +239,17 @@ const updateTesterAction = async => ({
     async
 });
 
-export const updateTester = ({ lastUpdated, ...tester }) => async dispatch => {
+export const updateTester = ({
+    lastUpdated,
+    email = void 0,
+    ...tester
+}) => async dispatch => {
     const datedTester = {
         lastUpdated: today(),
         ...tester
     };
+
+    const { firstName, surname } = tester;
 
     dispatch(updateTesterAction(REQUEST));
     const {
@@ -260,12 +268,14 @@ export const updateTester = ({ lastUpdated, ...tester }) => async dispatch => {
         dispatch(initialize('TesterDetails', testerDetails));
         dispatch(initialize('ContactDetails', contactDetails));
         dispatch(initialize('EmploymentDetails', employmentDetails));
+        email && dispatch(changCongnitoUserInfo({ email, firstName, surname }));
         dispatch(
             showNotification({
                 type: 'success',
                 message: 'Updated successfully'
             })
         );
+        return 200;
     } else {
         dispatch(
             showNotification({
@@ -273,6 +283,7 @@ export const updateTester = ({ lastUpdated, ...tester }) => async dispatch => {
                 message: 'Failed! Something went wrong!'
             })
         );
+        return null;
     }
 };
 
@@ -318,6 +329,71 @@ export const removeTester = id => async (dispatch, getState) => {
             })
         );
     }
+};
+
+const publicFetchTesterEmail = id => async dispatch => {
+    return client2
+        .query({
+            query: gql(FetchTesterEmail),
+            variables: {
+                id
+            }
+        })
+        .then(({ data: { getTester: { email = null } = {} } = {} }) => ({
+            email
+        }));
+};
+
+const publicRemoveTester = (id, email) => async dispatch => {
+    return client2
+        .mutate({
+            mutation: gql(RemoveTester),
+            variables: {
+                input: { id }
+            }
+        })
+        .then(({ data: { error = null } }) => {
+            if (!error && email) {
+                dispatch(unsubscribeUser(email));
+            } else {
+                dispatch(
+                    showNotification({
+                        type: 'error',
+                        message: error.message
+                    })
+                );
+            }
+        });
+};
+
+export const unsubscribeTester = id => async dispatch => {
+    dispatch(publicFetchTesterEmail(id))
+        .then(async res => {
+            const { email } = res;
+
+            if (!email) {
+                history.replace('/');
+                window.location.href = '/';
+                dispatch(
+                    showNotification({
+                        type: 'error',
+                        message: "User doesn't exists"
+                    })
+                );
+            } else {
+                dispatch(publicRemoveTester(id, email));
+            }
+        })
+        .catch(error => {
+            history.replace('/');
+            window.location.href = '/';
+            dispatch(
+                showNotification({
+                    type: 'error',
+                    message: "User doesn't exists"
+                })
+            );
+        });
 };
 
 const mailTesterAction = (async, payload) => ({

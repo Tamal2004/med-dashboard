@@ -18,9 +18,15 @@ import {
 import { validateRequired } from 'libs';
 
 // Actions
-import { changeUserInfo } from 'actions';
+import { changeUserInfo, updateTester } from 'actions';
 
-const UpdateProfile = ({ onClose, handleSubmit, invalid, submitting }) => {
+const UpdateProfile = ({
+    onClose,
+    handleSubmit,
+    invalid,
+    submitting,
+    isTester
+}) => {
     const c = useStyles();
 
     return (
@@ -58,10 +64,12 @@ const UpdateProfile = ({ onClose, handleSubmit, invalid, submitting }) => {
 
 const mapState = state => {
     const {
-        auth: { email, firstName, surname }
+        auth: { email, firstName, surname, isTester, testerId }
     } = state;
     return {
+        isTester,
         initialValues: {
+            id: testerId || void 0,
             email,
             firstName,
             surname
@@ -71,8 +79,10 @@ const mapState = state => {
 
 const mapDispatch = {};
 
-const onSubmit = (values, dispatch, { onClose }) =>
-    dispatch(changeUserInfo(values)).then(res => res === 200 && onClose());
+const onSubmit = (values, dispatch, { onClose, isTester }) => {
+    const ACTION = isTester ? updateTester(values) : changeUserInfo(values);
+    dispatch(ACTION).then(res => res === 200 && onClose());
+};
 
 const _UpdateProfile = compose(
     connect(

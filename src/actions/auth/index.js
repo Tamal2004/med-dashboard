@@ -90,7 +90,7 @@ export const testerSignUp = ({ id, email, firstName, surname }) => {
                 dispatch(
                     showNotification({
                         type: 'success',
-                        message: 'Tester created successfully!'
+                        message: 'Tester account creation successful!'
                     })
                 );
             })
@@ -194,6 +194,32 @@ export const deleteUserByAdmin = (email, testerId) => {
     };
 };
 
+export const unsubscribeUser = email => {
+    const payload = {
+        UserPoolId: REACT_APP_COGNITO_USER_POOL_ID,
+        Username: email
+    };
+    return async dispatch => {
+        console.log('unsubscribeUser cognito', email);
+        return await COGNITO_CLIENT.adminDeleteUser(payload, (err, data) => {
+            if (err) {
+                dispatch(
+                    showNotification({ type: 'error', message: err.message })
+                );
+            } else {
+                history.replace('/');
+                window.location.href = '/';
+                dispatch(
+                    showNotification({
+                        type: 'success',
+                        message: 'You have successfully unsubscribed!'
+                    })
+                );
+            }
+        });
+    };
+};
+
 export const deleteOwnAccount = (email, testerId) => {
     const payload = {
         UserPoolId: REACT_APP_COGNITO_USER_POOL_ID,
@@ -236,6 +262,7 @@ export const changeUserInfo = ({
 };
 
 export const changCongnitoUserInfo = ({ email, firstName, surname }) => {
+    console.log('changCongnitoUserInfo', email, firstName, surname);
     const payload = {
         UserPoolId: REACT_APP_COGNITO_USER_POOL_ID,
         Username: email,
@@ -262,6 +289,7 @@ export const changCongnitoUserInfo = ({ email, firstName, surname }) => {
                             message: err.message
                         })
                     );
+                    return null;
                 } else {
                     dispatch({
                         type: UPDATE_USER_INFO,

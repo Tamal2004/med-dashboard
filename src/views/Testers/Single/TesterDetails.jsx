@@ -76,6 +76,7 @@ const useStyles = makeStyles(({ spacing, typography }) => ({
 }));
 
 const TesterDetails = ({
+    id,
     titles,
     genders,
     martitalStatuses,
@@ -122,7 +123,8 @@ const TesterDetails = ({
         ...composeRequest({
             firstName,
             surname,
-            userFullName
+            userFullName,
+            testerId: id
         })
     };
 
@@ -390,6 +392,7 @@ const onSubmit = (
     const tester = {
         id,
         dob: serializeDate(dob),
+        email,
         hasChildren: hasChildren === 'Yes',
         ...values
     };
