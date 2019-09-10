@@ -200,7 +200,6 @@ export const unsubscribeUser = email => {
         Username: email
     };
     return async dispatch => {
-        console.log('unsubscribeUser cognito', email);
         return await COGNITO_CLIENT.adminDeleteUser(payload, (err, data) => {
             if (err) {
                 dispatch(
@@ -262,7 +261,6 @@ export const changeUserInfo = ({
 };
 
 export const changCongnitoUserInfo = ({ email, firstName, surname }) => {
-    console.log('changCongnitoUserInfo', email, firstName, surname);
     const payload = {
         UserPoolId: REACT_APP_COGNITO_USER_POOL_ID,
         Username: email,
