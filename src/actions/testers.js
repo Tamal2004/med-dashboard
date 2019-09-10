@@ -18,7 +18,8 @@ import {
     normalizeTestersList,
     normalizeTestersSearch,
     normalizeTester,
-    normalizeTesterForm
+    normalizeTesterForm,
+    normalizeContactNote
 } from 'normalizers';
 
 // Graph QL
@@ -31,7 +32,7 @@ import {
     UpdateTester,
     RemoveTester
 } from 'graphql/tester';
-import { CreateContactNotes } from 'graphql/contactNotes';
+import { CreateContactNotes, CreateContactNote } from 'graphql/contactNotes';
 
 // Action Types
 import {
@@ -50,7 +51,7 @@ import {
 import { showNotification } from './notification';
 
 // Selectors
-import { selectIsTester, selectFullName } from 'selectors';
+import { selectTesterId, selectFullName } from 'selectors';
 
 import { testerSignUp } from './auth';
 
@@ -295,12 +296,55 @@ export const removeTester = id => async dispatch => {
     }
 };
 
-const mailTesterAction = () => ({
-    type: MAIL_TESTER
+const mailTesterAction = (async, payload) => ({
+    type: MAIL_TESTER,
+    async,
+    payload
 });
 
-export const mailTester = ({ from, to, subject, body }) => async dispatch => {
-    // dispatch(mailTesterAction());
+export const mailTester = ({ project, contactType, ...mail }) => async (
+    dispatch,
+    getState
+) => {
+    dispatch(mailTesterAction(REQUEST));
+
+    const store = getState();
+    const contactNote = {
+        contactNoteTesterId: selectTesterId(store),
+        contactNoteProjectId: project,
+        type: contactType,
+        note: mail.body.replace(/<\/?[^>]+>/gi, ' '),
+        date: today(),
+        contactedBy: selectFullName(store)
+    };
+
+    await sendMail(mail);
+
+    const {
+        data: { createContactNote, error = null }
+    } = await API.graphql(
+        graphqlOperation(CreateContactNote, { input: contactNote })
+    );
+
+    if (!error) {
+        dispatch(
+            mailTesterAction(SUCCESS, normalizeContactNote(createContactNote))
+        );
+        dispatch(
+            showNotification({
+                type: 'success',
+                message: 'Mail sent successfully!'
+            })
+        );
+    } else {
+        dispatch(mailTesterAction(FAIL));
+        dispatch(
+            showNotification({
+                type: 'error',
+                message: 'Mail did not send!'
+            })
+        );
+    }
 };
 
 const mailTestersAction = async => ({
@@ -350,5 +394,24 @@ export const mailTesters = ({ project, contactType, ...mail }, ids) => async (
                 message: 'Mails not sent'
             })
         );
+    }
+};
+
+export const requestMail = mail => async dispatch => {
+    try {
+        await sendMail(mail);
+        dispatch(
+            showNotification({
+                type: 'success',
+                message: 'Mail sent successfully!'
+            })
+        );
+    } catch {
+        dispatch(
+            showNotification({
+                type: 'error',
+                message: 'Request failed to send.'
+            })
+        )
     }
 };

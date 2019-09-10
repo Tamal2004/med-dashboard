@@ -6,6 +6,7 @@ import {
     SUCCESS,
     CREATE_SESSION,
     UPDATE_SESSION,
+    MAIL_TESTER,
     CREATE_CONTACT_NOTE,
     UPDATE_CONTACT_NOTE,
     REMOVE_CONTACT_NOTE,
@@ -42,6 +43,7 @@ const testersReducer = (
                 : state;
         }
 
+        case MAIL_TESTER:
         case CREATE_CONTACT_NOTE: {
             return isSuccess
                 ? {

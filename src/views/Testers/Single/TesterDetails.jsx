@@ -16,7 +16,8 @@ import {
     validateRequired,
     mapFromValue,
     serializeDate,
-    composeRequest,validateDate
+    composeRequest,
+    validateDate
 } from 'libs';
 import {
     Select,
@@ -46,7 +47,12 @@ import {
 } from 'selectors';
 
 // Actions
-import { updateTester, deleteUserByAdmin } from 'actions';
+import {
+    updateTester,
+    deleteUserByAdmin,
+    mailTester,
+    requestMail
+} from 'actions';
 
 // Normalizers
 import { normalizeDob } from 'normalizers';
@@ -92,7 +98,9 @@ const TesterDetails = ({
     handleConfirmationModal,
     deleteUserByAdmin,
     testerId,
-    submitting
+    submitting,
+    mailTester,
+    requestMail
 }) => {
     const [isEditing, setEditing] = useState(false);
     const c = useStyles();
@@ -107,17 +115,24 @@ const TesterDetails = ({
 
     const mailProps = {
         from: userEmail,
-        to: [email],
-        handleMail: sendMail
+        to: [email]
     };
 
     const requestMailProps = {
         ...mailProps,
+        handleMail: requestMail,
         ...composeRequest({
             firstName,
             surname,
             userFullName
         })
+    };
+
+    const regularMailProps = {
+        ...mailProps,
+        handleMail: mailTester,
+        needsProject: true,
+        needsContactType: true
     };
 
     const shownTitle = title === 'Other' ? '' : `${title} `;
@@ -278,9 +293,10 @@ const TesterDetails = ({
                         >
                             Request Update
                         </IconedButton>
+                        w
                         <IconedButton
                             color='secondary'
-                            onClick={() => handleMailModal(mailProps)}
+                            onClick={() => handleMailModal(regularMailProps)}
                             Icon={MailIcon}
                             size='small'
                         >
@@ -341,7 +357,9 @@ const mapState = state => {
 };
 
 const mapDispatch = {
-    deleteUserByAdmin
+    deleteUserByAdmin,
+    mailTester,
+    requestMail
 };
 
 const mapModal = {

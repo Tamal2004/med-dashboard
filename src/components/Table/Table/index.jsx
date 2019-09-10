@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from 'react';
+import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 
@@ -36,7 +37,8 @@ class Table extends Component {
         data: this.props.data,
         sortIndices: Array.range(0, this.props.data.length - 1),
         checked: [],
-        selectAll: false
+        selectAll: false,
+        tableWidth: null
     };
 
     // Classes
@@ -44,6 +46,13 @@ class Table extends Component {
         classes: this.props.classes,
         styles: this.props.styles
     });
+    //
+    componentDidMount() {
+        this.setState({
+            tableWidth:
+                this.tableRef && ReactDOM.findDOMNode(this.tableRef).offsetWidth
+        });
+    }
 
     componentDidUpdate({ data: prevData = [] }, s, c) {
         const { data = [] } = this.props;
@@ -51,7 +60,10 @@ class Table extends Component {
             this.setState({
                 data,
                 initialData: data,
-                sortIndices: Array.range(0, data.length - 1)
+                sortIndices: Array.range(0, data.length - 1),
+                tableWidth:
+                    this.tableRef &&
+                    ReactDOM.findDOMNode(this.tableRef).offsetWidth
             });
     }
 
@@ -308,7 +320,7 @@ class Table extends Component {
                 checkAll,
                 noResultsText
             },
-            state: { data },
+            state: { data, tableWidth },
             c,
             handleSort,
             renderSortIcon,
@@ -335,7 +347,7 @@ class Table extends Component {
             hasActions || (handleEditModal && handleEditModal !== void 0)
                 ? 1
                 : 0;
-
+        console.log('table', tableWidth);
         return (
             <Fragment>
                 {!data.length ? (
@@ -347,7 +359,10 @@ class Table extends Component {
                 ) : (
                     <MuiTable className={c.root}>
                         <TableHead>
-                            <TableRow className={clsx(c.row, c.header)}>
+                            <TableRow
+                                className={clsx(c.row, c.header)}
+                                ref={ref => (this.tableRef = ref)}
+                            >
                                 {headers.map((header, index) => {
                                     const unitWidth = 8 * 8;
                                     const headerWidth = header.includes(
@@ -366,9 +381,9 @@ class Table extends Component {
                                                 c.cell
                                             )}
                                             style={{
-                                                maxWidth: headerWidth,
-                                                minWidth: headerWidth,
-                                                width: '100%'
+                                                width:
+                                                    tableWidth &&
+                                                    tableWidth / headers.length
                                             }}
                                             key={index}
                                             onClick={() =>

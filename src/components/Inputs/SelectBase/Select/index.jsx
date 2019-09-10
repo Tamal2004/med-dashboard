@@ -231,7 +231,7 @@ class Select extends Component {
                     className: c.listItem
                 },
                 getContentAnchorEl: null,
-                transformOrigin: { vertical: 1 - unitHeight },
+                transformOrigin: { vertical: 1 - unitHeight, horizontal: 0 },
                 disableAutoFocusItem: true,
                 disableAutoFocus: true,
                 disablePortal: true,
