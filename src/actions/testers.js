@@ -27,6 +27,7 @@ import {
     CreateTester,
     FetchTester,
     FetchPublicTester,
+    FetchTesterEmail,
     ListTesters,
     ListTestersSearch,
     UpdateTester,
@@ -49,6 +50,7 @@ import {
     MAIL_TESTERS
 } from 'actionTypes';
 import { showNotification } from './notification';
+import { unsubscribeUser } from './auth';
 
 // Selectors
 import { selectTesterId, selectFullName } from 'selectors';
@@ -296,6 +298,74 @@ export const removeTester = id => async dispatch => {
     }
 };
 
+const publicFetchTesterEmail = id => async dispatch => {
+    return client2
+        .query({
+            query: gql(FetchTesterEmail),
+            variables: {
+                id
+            }
+        })
+        .then(({ data: { getTester: { email = null } = {} } = {} }) => ({
+            email
+        }));
+};
+
+const publicRemoveTester = (id, email) => async dispatch => {
+    console.log('publicRemoveTester', id, email);
+
+    return client2
+        .mutate({
+            mutation: gql(RemoveTester),
+            variables: {
+                input: { id }
+            }
+        })
+        .then(({ data: { error = null } }) => {
+            if (!error && email) {
+                console.log('yes email');
+                dispatch(unsubscribeUser(email));
+            } else {
+                dispatch(
+                    showNotification({
+                        type: 'error',
+                        message: error.message
+                    })
+                );
+            }
+        });
+};
+
+export const unsubscribeTester = id => async dispatch => {
+    dispatch(publicFetchTesterEmail(id))
+        .then(async res => {
+            const { email } = res;
+            console.log('unsubscribeUser db ', email);
+            if (!email) {
+                history.replace('/');
+                window.location.href = '/';
+                dispatch(
+                    showNotification({
+                        type: 'error',
+                        message: "User doesn't exists"
+                    })
+                );
+            } else {
+                dispatch(publicRemoveTester(id, email));
+            }
+        })
+        .catch(error => {
+            history.replace('/');
+            window.location.href = '/';
+            dispatch(
+                showNotification({
+                    type: 'error',
+                    message: "User doesn't exists"
+                })
+            );
+        });
+};
+
 const mailTesterAction = (async, payload) => ({
     type: MAIL_TESTER,
     async,
@@ -412,6 +482,6 @@ export const requestMail = mail => async dispatch => {
                 type: 'error',
                 message: 'Request failed to send.'
             })
-        )
+        );
     }
 };

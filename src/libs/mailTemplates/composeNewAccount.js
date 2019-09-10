@@ -1,4 +1,4 @@
-const { REACT_APP_SES_ADMIN_EMAIL } = process.env;
+const { REACT_APP_DOMAIN, REACT_APP_SES_ADMIN_EMAIL } = process.env;
 
 export const composeNewAccount = ({ firstName, email, password }) => ({
     from: REACT_APP_SES_ADMIN_EMAIL,
@@ -14,7 +14,7 @@ export const composeNewAccount = ({ firstName, email, password }) => ({
         <p>Email: ${email}</p>
         <p>Temporary password: ${password}</p>
         </br>
-        <p><a href="mailto:www.google.com">Please click here to go to the login page.</a></p>
+        <p><a href="${REACT_APP_DOMAIN}/sign-in">Please click here to go to the login page.</a></p>
         </br>
         </br>
         <p>Phone 01249-444-757 / 

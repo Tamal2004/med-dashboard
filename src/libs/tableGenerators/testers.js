@@ -72,7 +72,7 @@ export const generateTesterSessions = testerSessions =>
         }) => ({
             Date: {
                 editable: true,
-                Component: composeSortableDate(date),
+                Component: date,
                 type: 'DateInput'
             },
             Time: {

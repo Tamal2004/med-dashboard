@@ -6,7 +6,7 @@ import { reset } from 'redux-form';
 //Local
 import { SET_AUTH_USER_INFO, UPDATE_USER_INFO, LOGOUT } from 'actionTypes';
 import { showNotification } from '../notification';
-import { removeTester } from '../testers';
+import { removeTester, unsubscribeTester } from '../testers';
 import {
     createUser,
     updateUser,
@@ -90,7 +90,7 @@ export const testerSignUp = ({ id, email, firstName, surname }) => {
                 dispatch(
                     showNotification({
                         type: 'success',
-                        message: 'Tester created successfully!'
+                        message: 'Tester account creation successful!'
                     })
                 );
             })
@@ -189,6 +189,32 @@ export const deleteUserByAdmin = (email, testerId) => {
             } else {
                 dispatch(removeTester(testerId));
                 history.push('/tester');
+            }
+        });
+    };
+};
+
+export const unsubscribeUser = email => {
+    const payload = {
+        UserPoolId: REACT_APP_COGNITO_USER_POOL_ID,
+        Username: email
+    };
+    return async dispatch => {
+        console.log('unsubscribeUser cognito', email);
+        return await COGNITO_CLIENT.adminDeleteUser(payload, (err, data) => {
+            if (err) {
+                dispatch(
+                    showNotification({ type: 'error', message: err.message })
+                );
+            } else {
+                history.replace('/');
+                window.location.href = '/';
+                dispatch(
+                    showNotification({
+                        type: 'success',
+                        message: 'You have successfully unsubscribed!'
+                    })
+                );
             }
         });
     };

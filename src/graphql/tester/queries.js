@@ -153,3 +153,10 @@ export const FetchPublicTester = `query FetchPublicTester($id: ID!) {
     }
 }
 `;
+
+export const FetchTesterEmail = `query FetchTesterEmail($id: ID!) {
+    getTester(id: $id) {
+        email
+    }
+}
+`;

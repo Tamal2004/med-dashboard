@@ -38,13 +38,14 @@ class IndexApp extends Component {
     }
 
     render() {
+        const isSignInPage = history.location.pathname === '/sign-in';
         const { setAuthUserInfo } = this.props;
         return (
             <Router history={history}>
                 <MuiThemeProvider theme={theme}>
                     <CssBaseline />
                     <Authenticator
-                        authState={'signUp'}
+                        authState={isSignInPage ? 'signIn' : 'signUp'}
                         amplifyConfig={config}
                         onStateChange={authState =>
                             authState === 'signedIn' && setAuthUserInfo()
