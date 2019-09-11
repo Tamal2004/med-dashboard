@@ -51,7 +51,9 @@ export const asyncValidate = ({ email, isPublicUser }) => {
                     } = {}
                 }) => {
                     if (existingTesters.length)
-                        throw { email: 'This email already exists' };
+                        return Promise.reject({
+                            email: 'This email already exists'
+                        });
                 }
             );
     } else {
@@ -64,7 +66,9 @@ export const asyncValidate = ({ email, isPublicUser }) => {
                 data: { listTesters: { items: existingTesters = [] } = {} } = {}
             }) => {
                 if (existingTesters.length)
-                    throw { email: 'This email already exists' };
+                    return Promise.reject({
+                        email: 'This email already exists'
+                    });
             }
         );
     }
