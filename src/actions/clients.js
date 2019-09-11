@@ -1,10 +1,14 @@
 import API, { graphqlOperation } from '@aws-amplify/api';
 
+// Libs
+import { history } from 'libs';
+
 // Normalizers
 import {
     normalizeClientSingle,
     normalizeClient,
-    normalizeClients
+    normalizeClients,
+    normalizeProjectsLists
 } from 'normalizers';
 
 // Graph QL
@@ -12,6 +16,8 @@ import {
     CreateClient,
     UpdateClient,
     FetchClient,
+    RemoveClient,
+    FetchClientProjects,
     ListClients
 } from 'graphql/clients';
 
@@ -23,7 +29,8 @@ import {
     FETCH_CLIENT,
     LIST_CLIENTS,
     CREATE_CLIENT,
-    UPDATE_CLIENT
+    UPDATE_CLIENT,
+    REMOVE_CLIENT
 } from 'actionTypes';
 
 import { showNotification } from './notification';
@@ -140,4 +147,87 @@ export const updateClient = input => async dispatch => {
             })
         );
     }
+};
+
+const removeClientAction = (async, payload = []) => ({
+    type: REMOVE_CLIENT,
+    async
+});
+
+export const removeClient = id => async dispatch => {
+    dispatch(removeClientAction(REQUEST));
+
+    try {
+        const {
+            data: {
+                getClient: {
+                    projects: { items: projects = [] }
+                }
+            }
+        } = await API.graphql(graphqlOperation(FetchClientProjects, { id }));
+
+        const {
+            sessionIds,
+            contactNoteIds,
+            projectIds
+        } = normalizeProjectsLists(projects);
+
+        const {
+            data: { error: removeError = null }
+        } = await API.graphql(
+            graphqlOperation(
+                RemoveClient(
+                    !!sessionIds.length,
+                    !!contactNoteIds.length,
+                    !!projectIds.length
+                ),
+                {
+                    ...(sessionIds.length ? { sessionIds } : {}),
+                    ...(contactNoteIds.length ? { contactNoteIds } : {}),
+                    ...(projectIds.length ? { projectIds } : {}),
+                    input: { id }
+                }
+            )
+        );
+
+        dispatch(removeClientAction(SUCCESS));
+        history.push('/client');
+        dispatch(
+            showNotification({
+                type: 'success',
+                message: 'Successfully deleted client!'
+            })
+        );
+    } catch {
+        dispatch(removeClientAction(FAIL));
+        dispatch(
+            showNotification({
+                type: 'error',
+                message: 'Delete failed'
+            })
+        );
+    }
+
+    // normalizeProjectsLists
+    // const {
+    //     data: { updateClient, error = null }
+    // } = await API.graphql(graphqlOperation(UpdateClient, { input }));
+    //
+    // if (!error) {
+    //     dispatch(removeClientAction(SUCCESS));
+    //     dispatch(
+    //         showNotification({
+    //             type: 'success',
+    //             message: 'Successfully deleted client!'
+    //         })
+    //     );
+    // } else {
+    //     dispatch(removeClientAction(FAIL));
+    //     dispatch(
+    //         showNotification({
+    //             type: 'error',
+    //             message: 'Delete failed'
+    //         })
+    //     );
+    // }
 };

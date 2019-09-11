@@ -8,7 +8,7 @@ export default {
         main: '#313639'
     },
     error: {
-        main: '#ED4337'
+        main: '#d43c31'
     },
     common: {
         transparent: 'rgba(0, 0, 0, 0)',

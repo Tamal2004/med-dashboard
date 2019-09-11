@@ -33,7 +33,7 @@ const useStyles = makeStyles(({ palette, spacing }) => ({
         justifyContent: 'flex-end',
         alignContent: 'flex-end',
         '& a + a': {
-            marginLeft: 10
+            marginLeft: spacing(1.5)
         }
     },
     footer: {

@@ -1,5 +1,7 @@
+const { REACT_APP_QUERY_TABLE_LIMIT } = process.env;
+
 export const ListUsers = `query listUsers {
-    listUsers(limit: 500) {
+    listUsers(limit: ${REACT_APP_QUERY_TABLE_LIMIT}) {
         items{
           id,
           email,
@@ -10,7 +12,7 @@ export const ListUsers = `query listUsers {
 }`;
 
 export const FetchUserByEmail = `query FetchUserByEmail($filter:ModelUserFilterInput){
-  listUsers(filter:$filter){
+  listUsers(filter:$filter limit: 1){
     items{
       id
     }

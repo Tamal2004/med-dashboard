@@ -10,6 +10,7 @@ import {
     FetchProject,
     FetchProjectLists,
     UpdateProject,
+    RemoveProject,
     ListProjects,
     ListProjectClients,
     ListProjectUsers,
@@ -22,7 +23,8 @@ import {
     normalizeProject,
     normalizeUpdatedProject,
     normalizeProjectUsers,
-    normalizeProjectReport
+    normalizeProjectReport,
+    normalizeProjectsLists
 } from 'normalizers';
 
 // Action Types
@@ -288,26 +290,41 @@ const removeProjectAction = (async, payload = []) => ({
 export const removeProject = id => async dispatch => {
     dispatch(removeProjectAction(REQUEST));
 
-    console.log('remove project', id);
-    const {
-        data: {
-            getProject: {
-                sessions: { items: sessions = [] },
-                contactNotes: { items: contactNotes = [] }
-            },
-            error = null
-        }
-    } = await API.graphql(graphqlOperation(FetchProjectLists, { id }));
+    try {
+        const {
+            data: { getProject }
+        } = await API.graphql(graphqlOperation(FetchProjectLists, { id }));
 
-    console.log('getProject', sessions, contactNotes);
-    //
-    // if (!error) {
-    //     dispatch(
-    //         removeProjectAction(
-    //             SUCCESS,
-    //         )
-    //     );
-    // } else {
-    //     dispatch(removeProjectAction(FAIL));
-    // }
+        const { sessionIds, contactNoteIds } = normalizeProjectsLists([
+            getProject
+        ]);
+
+        await API.graphql(
+            graphqlOperation(
+                RemoveProject(!!sessionIds.length, !!contactNoteIds.length),
+                {
+                    ...(sessionIds.length ? { sessionIds } : {}),
+                    ...(contactNoteIds.length ? { contactNoteIds } : {}),
+                    input: { id }
+                }
+            )
+        );
+
+        dispatch(removeProjectAction(SUCCESS));
+        history.push('/project');
+        dispatch(
+            showNotification({
+                type: 'success',
+                message: 'Successfully deleted project!'
+            })
+        );
+    } catch {
+        dispatch(removeProjectAction(FAIL));
+        dispatch(
+            showNotification({
+                type: 'error',
+                message: 'Delete failed'
+            })
+        );
+    }
 };

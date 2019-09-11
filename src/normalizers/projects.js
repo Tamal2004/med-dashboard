@@ -139,3 +139,27 @@ export const normalizeProjectReport = (
 
     return { id, reference, title, reportData };
 };
+
+export const normalizeProjectsLists = projects =>
+    projects.reduce(
+        (
+            acm,
+            {
+                id,
+                sessions: { items: sessions = [] },
+                contactNotes: { items: contactNotes = [] }
+            }
+        ) => ({
+            sessionIds: [...acm.sessionIds, ...sessions.map(({ id }) => id)],
+            contactNoteIds: [
+                ...acm.contactNoteIds,
+                ...contactNotes.map(({ id }) => id)
+            ],
+            projectIds: [...acm.projectIds, id]
+        }),
+        {
+            sessionIds: [],
+            contactNoteIds: [],
+            projectIds: []
+        }
+    );

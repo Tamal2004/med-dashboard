@@ -34,3 +34,17 @@ export const UpdateProject = `mutation UpdateProject($input: UpdateProjectInput!
         profiles
     }
 }`;
+
+export const RemoveProject = (
+    sessions = true,
+    contactNotes = true
+) => `mutation RemoveProject(
+        $input: DeleteProjectInput! 
+        ${sessions ? '$sessionIds: [ID!]!' : ''}
+        ${contactNotes ? '$contactNoteIds: [ID!]!' : ''}
+    ) {
+        ${sessions ? 'deleteSessions(ids: $sessionIds) { id }' : ''}
+        ${contactNotes ? 'deleteContactNotes(ids: $contactNoteIds) { id }' : ''}
+        deleteProject(input: $input) { id }    
+    }
+`;
