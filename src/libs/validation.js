@@ -22,7 +22,7 @@ export const validateEmail = value =>
 const DateRangeCheck = date => {
     let result = undefined;
     const splitDate = date.split('/');
-    [splitDate[0], splitDate[1]] = [splitDate[1], splitDate[0]]; //swap first two value
+    [splitDate[0], splitDate[1]] = [splitDate[1], splitDate[0]]; //swap first two value, because JavaScript expect MM/DD/YYYY format
     const newDate = splitDate.join('/');
     const isInFuture =
         new Date(newDate).setHours(0, 0, 0, 0) >
