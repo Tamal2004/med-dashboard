@@ -26,6 +26,6 @@ export const asyncValidate = ({ reference }) =>
             data: { listProjects: { items: existingTesters = [] } = {} } = {}
         }) => {
             if (existingTesters.length)
-                throw { reference: 'This reference already exists' };
+                return throw { reference: 'This reference already exists' };
         }
     );

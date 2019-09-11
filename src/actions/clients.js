@@ -172,9 +172,7 @@ export const removeClient = id => async dispatch => {
             projectIds
         } = normalizeProjectsLists(projects);
 
-        const {
-            data: { error: removeError = null }
-        } = await API.graphql(
+        await API.graphql(
             graphqlOperation(
                 RemoveClient(
                     !!sessionIds.length,

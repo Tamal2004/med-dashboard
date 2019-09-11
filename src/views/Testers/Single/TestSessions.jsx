@@ -13,7 +13,6 @@ import {
     PaginationBase,
     IconedButton,
     EditableCard,
-    Link,
     withModal
 } from 'components';
 
@@ -28,7 +27,11 @@ const useStyles = makeStyles(({ palette, spacing }) => ({
     }
 }));
 
-const TestSessions = ({ sessions, handleSessionsModal, handleSessionsEditModal }) => {
+const TestSessions = ({
+    sessions,
+    handleSessionsModal,
+    handleSessionsEditModal
+}) => {
     const [page, setPage] = useState(1);
     const c = useStyles();
     const totalPages =

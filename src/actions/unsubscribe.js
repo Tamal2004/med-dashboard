@@ -1,4 +1,3 @@
-import { history } from 'libs/history';
 import { showNotification } from './notification';
 import { unsubscribeTester } from './testers';
 

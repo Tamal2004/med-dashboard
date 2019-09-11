@@ -59,7 +59,7 @@ const AllUsers = ({
         listUsers().then(() => !shouldCancel && setLoading(false));
 
         return () => (shouldCancel = true);
-    }, []);
+    }, [listUsers]);
 
     const confirmationProps = {
         title: 'Confirmation',

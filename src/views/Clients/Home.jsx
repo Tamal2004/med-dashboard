@@ -50,30 +50,29 @@ const ClientHome = ({
 
     const pageStep = 10;
     const totalPages =
-        Math.floor(clients.length / pageStep) +
-            !!(clients.length % pageStep) || 1;
+        Math.floor(clients.length / pageStep) + !!(clients.length % pageStep) ||
+        1;
 
     useEffect(() => {
         let shouldCancel = false;
         listClients().then(() => !shouldCancel && setLoading(false));
 
         return () => (shouldCancel = true);
-    }, []);
+    }, [listClients]);
 
-
-    const handleSearch = (search) => {
+    const handleSearch = search => {
         setLoading(true);
         listClients(search).then(() => setLoading(false));
     };
-
-
 
     return (
         <GridContainer alignItems='center'>
             <GridItem md={4} />
             <GridItem md={4}>
-                <SearchInput placeholder='Search by client name'
-                             handleClick={handleSearch}/>
+                <SearchInput
+                    placeholder='Search by client name'
+                    handleClick={handleSearch}
+                />
             </GridItem>
             <GridItem md={4} className={c.buttonGridStyle}>
                 <NavigateButton

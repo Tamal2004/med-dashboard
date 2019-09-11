@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 
 // Material
-import { Divider, makeStyles } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
 
 // Local

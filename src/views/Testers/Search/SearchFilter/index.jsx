@@ -107,7 +107,7 @@ const SearchFilter = ({ handleFilter }) => {
 
     useEffect(() => {
         handleFilter(filterValues);
-    }, [filterValues]);
+    }, [filterValues, handleFilter]);
 
     return (
         <FilterProvider
@@ -135,7 +135,7 @@ const SearchFilter = ({ handleFilter }) => {
                             onChange={(e, value) =>
                                 onChange(e, FILTER_KEY['age'], 'range', value)
                             }
-							onBlur={() => console.log('blurred age')}
+                            onBlur={() => console.log('blurred age')}
                             value={[0, 80]}
                             step={1}
                         />

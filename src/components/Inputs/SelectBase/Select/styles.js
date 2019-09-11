@@ -12,7 +12,7 @@ export default ({ unitHeight, unitWidth, listMaxNumber, iconRight }) => ({
     const listHeight = listItemHeight * listItemNumber;
 
     // Padding = 2 + 2 ------ ScrollBar = 3 |||| spacing.units
-    const listItemWidth = unitWidth - spacing(7);
+    // const listItemWidth = unitWidth - spacing(7);
 
     return {
         root: {

@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import classNames from 'classnames';
 import { Field } from 'redux-form';
-import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
 
 // Material

@@ -16,7 +16,6 @@ import {
     Input,
     DateInput,
     EditableCard,
-    EditableFooter,
     CardDivider,
     IconedButton,
     withModal
@@ -71,7 +70,7 @@ const ProjectDetails = ({
     useEffect(() => {
         listProjectClients();
         listProjectUsers();
-    }, []);
+    }, [listProjectClients, listProjectUsers]);
 
     const confirmationProps = {
         title: 'Confirmation',

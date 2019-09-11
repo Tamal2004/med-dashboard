@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import clsx from 'clsx';
 
 // Material
-import { withStyles, Button, Card, Slide } from '@material-ui/core';
+import { withStyles, Card, Slide } from '@material-ui/core';
 
 // Local
 import styles from './styles';

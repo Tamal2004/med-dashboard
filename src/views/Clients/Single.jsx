@@ -75,7 +75,7 @@ const ClientSingle = ({
 
     useEffect(() => {
         fetchClient(id).then(() => setLoading(false));
-    }, []);
+    }, [fetchClient, id]);
 
     const confirmationProps = {
         title: 'Confirmation',

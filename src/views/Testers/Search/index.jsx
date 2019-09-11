@@ -8,7 +8,6 @@ import { SearchFilter } from './SearchFilter';
 import {
     GridContainer,
     GridItem,
-    Link,
     NavigateButton,
     Table,
     SearchInput,
@@ -84,15 +83,13 @@ const TesterSearch = ({
         Math.floor(testers.length / pageStep) + !!(testers.length % pageStep) ||
         1;
 
-    const search = () => {
-        setLoading(true);
-        listTestersSearch(filters, input).then(() => setLoading(false));
-    };
-
     useEffect(() => {
         if (filterCounter < 3) setFilterCounter(filterCounter + 1);
-        else search();
-    }, [filters, input]);
+        else {
+            setLoading(true);
+            listTestersSearch(filters, input).then(() => setLoading(false));
+        }
+    }, [filterCounter, filters, input, listTestersSearch]);
 
     const handleFilters = filters => {
         setFilters(filters);
@@ -101,8 +98,6 @@ const TesterSearch = ({
     const handleSearch = text => {
         setInput(text);
     };
-
-
 
     const { addresses, ids } = selectedTesters.reduce(
         (acm, testerIdx) => ({

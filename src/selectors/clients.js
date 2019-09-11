@@ -1,12 +1,7 @@
 import createCachedSelector from 're-reselect';
 
 // Local
-import {
-    mapArray,
-    mapToSelect,
-    generateClientProjects,
-    generateClientList
-} from 'libs';
+import { generateClientProjects, generateClientList } from 'libs';
 
 const selectClients = state => state.clients;
 

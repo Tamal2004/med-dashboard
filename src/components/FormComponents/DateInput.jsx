@@ -5,13 +5,7 @@ import PropTypes from 'prop-types';
 import { change } from 'redux-form';
 
 // Material
-import {
-    makeStyles,
-    Grid,
-    ButtonGroup,
-    IconButton,
-    Button
-} from '@material-ui/core';
+import { makeStyles, Grid, ButtonGroup } from '@material-ui/core';
 import TodayIcon from '@material-ui/icons/Today';
 import RemoveIcon from '@material-ui/icons/Delete';
 
@@ -121,7 +115,15 @@ const DateInput = ({
                             <IconedButton
                                 Icon={TodayIcon}
                                 styles={{ icon: c.icon }}
-                                onClick={() => change(form, name, serializeDate(deserializeDate(new Date())))}
+                                onClick={() =>
+                                    change(
+                                        form,
+                                        name,
+                                        serializeDate(
+                                            deserializeDate(new Date())
+                                        )
+                                    )
+                                }
                             />
                             <IconedButton
                                 Icon={RemoveIcon}

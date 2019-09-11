@@ -89,10 +89,7 @@ export const createUser = input => async dispatch => {
 
 export const updateUser = input => async dispatch => {
     const {
-        data: {
-            updateUser: {},
-            error = null
-        }
+        data: { error = null }
     } = await API.graphql(graphqlOperation(UpdateUser, { input }));
     if (!error) {
         return 200;

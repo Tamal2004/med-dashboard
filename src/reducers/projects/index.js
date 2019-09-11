@@ -4,7 +4,6 @@ import initialState from './initialState';
 // Action Types
 import {
     SUCCESS,
-    REQUEST,
     FETCH_PROJECT,
     UPDATE_PROJECT,
     LIST_PROJECTS,

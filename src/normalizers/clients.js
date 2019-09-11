@@ -1,4 +1,4 @@
-import { deserializeDate, calculateAge } from 'libs';
+import { deserializeDate } from 'libs';
 
 export const normalizeClientSingle = ({
     name,

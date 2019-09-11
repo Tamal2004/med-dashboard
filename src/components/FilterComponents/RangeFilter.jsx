@@ -2,11 +2,11 @@
 IMPLEMENTATION
 
 <RangeFilter
-	title={FILTER_KEY['age']}
-	onChange={(e, value) =>
-		onChange(e, FILTER_KEY['age'], 'range', value)
-	}
-	value={getFilterValues(FILTER_KEY['age'])}
+    title={FILTER_KEY['age']}
+    onChange={(e, value) =>
+        onChange(e, FILTER_KEY['age'], 'range', value)
+    }
+    value={getFilterValues(FILTER_KEY['age'])}
 />
 ********************************************************/
 
@@ -16,8 +16,6 @@ import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 
 import Slider from '@material-ui/core/Slider';
-
-import Input from '@material-ui/core/Input';
 
 import { AccordionFilterContainer } from './FilterContainer';
 
@@ -47,7 +45,7 @@ const RangeFilter = ({ value, onChange, title, step, min, max }) => {
 
     useEffect(() => {
         onChange(null, committedRangeValue);
-    }, [committedRangeValue]);
+    }, [onChange, committedRangeValue]);
 
     return (
         <AccordionFilterContainer title={title}>
@@ -64,7 +62,7 @@ const RangeFilter = ({ value, onChange, title, step, min, max }) => {
                     <Slider
                         value={rangeValue}
                         onChange={handleChange}
-						onChangeCommitted={handleCommittedChange}
+                        onChangeCommitted={handleCommittedChange}
                         valueLabelDisplay='auto'
                         aria-labelledby={title}
                         marks

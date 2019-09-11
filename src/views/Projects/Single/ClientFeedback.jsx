@@ -1,17 +1,10 @@
-import React, { Fragment, useState } from 'react';
+import React, { useState } from 'react';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
-import { reduxForm, formValueSelector } from 'redux-form';
+import { reduxForm } from 'redux-form';
 
 // Local
-import { validateRequired } from 'libs';
-import {
-    Input,
-    EditableCard,
-    EditableFooter,
-    Control,
-    MultiInput
-} from 'components';
+import { EditableCard, EditableFooter, Control, MultiInput } from 'components';
 
 // Selectors
 import { selectProjectId } from 'selectors';

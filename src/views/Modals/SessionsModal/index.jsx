@@ -50,7 +50,7 @@ const SessionsModal = ({
 
     useEffect(() => {
         listIncompleteProjects().then(() => setProjectsLoading(false));
-    }, []);
+    }, [listIncompleteProjects]);
 
     return (
         <Fragment>

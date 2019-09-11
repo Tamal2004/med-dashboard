@@ -299,7 +299,6 @@ class Table extends Component {
             props: { page, itemsPerPage },
             state: { data },
             c,
-            handleClick,
             renderRow
         } = this;
 

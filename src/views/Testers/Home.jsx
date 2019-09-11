@@ -64,7 +64,7 @@ const TesterHome = ({ testers, listTesters }) => {
 
     useEffect(() => {
         listTesters().then(() => setLoading(false));
-    }, []);
+    }, [listTesters]);
 
     return (
         <Fragment>

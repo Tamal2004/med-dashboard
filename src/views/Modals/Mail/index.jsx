@@ -16,7 +16,6 @@ import {
     Button,
     Select,
     Input,
-    MultiInput,
     Editor
 } from 'components';
 
@@ -72,7 +71,7 @@ const MailModal = ({
     useEffect(() => {
         needsProject &&
             listIncompleteProjects().then(() => setProjectsLoading(false));
-    }, []);
+    }, [needsProject, listIncompleteProjects]);
 
     console.log('invalid', invalid);
     console.log('submitting', submitting);

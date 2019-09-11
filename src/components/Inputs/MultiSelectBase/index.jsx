@@ -51,10 +51,6 @@ const MultiSelectBase = ({
             className: c.menuItem
         }
     };
-    const selectClasses = {
-        root: clsx(c.select, !!value.length && c.success),
-        icon: c.icon
-    };
 
     return (
         <FormControl

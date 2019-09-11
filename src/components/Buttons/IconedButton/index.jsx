@@ -1,4 +1,4 @@
-import React, {Fragment} from 'react';
+import React, { Fragment } from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
@@ -7,7 +7,7 @@ import { Button } from '@material-ui/core';
 
 // Local
 import useStyles from './styles';
-import { validateRequired, composeClasses } from 'libs';
+import { composeClasses } from 'libs';
 
 const IconedButton = ({ styles, Icon, children, loading, ...props }) => {
     const c = composeClasses({ classes: useStyles(), styles });
@@ -23,7 +23,7 @@ const IconedButton = ({ styles, Icon, children, loading, ...props }) => {
 IconedButton.defaultProps = {
     color: 'primary',
     variant: 'outlined',
-    children: <Fragment/>,
+    children: <Fragment />,
     loading: false
 };
 

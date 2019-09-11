@@ -1,13 +1,10 @@
-import React, { Fragment, useState } from 'react';
+import React, { useState } from 'react';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { change, reduxForm, formValueSelector } from 'redux-form';
-import Link from '@material-ui/core/Link';
-import { makeStyles } from '@material-ui/core/styles';
-
 // Local
 import { validateRequired } from 'libs';
-import { GridItem, Input, EditableCard, EditableFooter } from 'components';
+import { Input, EditableCard, EditableFooter } from 'components';
 
 // Selectors
 import { selectTesterId } from 'selectors';
@@ -18,16 +15,6 @@ import { updateTester } from 'actions';
 // Normalizers
 import { normalizePhone } from 'normalizers';
 
-const useStyles = makeStyles(theme => ({
-    manualGrid: {
-        textAlign: 'right',
-        padding: theme.spacing(2)
-    },
-    manualLink: {
-        paddingLeft: theme.spacing(2)
-    }
-}));
-
 const ContactDetails = ({
     invalid,
     change,
@@ -35,7 +22,6 @@ const ContactDetails = ({
     handleSubmit,
     submitting
 }) => {
-    const c = useStyles();
     const [isEditing, setEditing] = useState(false);
     return (
         <EditableCard
@@ -115,11 +101,7 @@ const validate = values => {
     return { ...validateRequired(values, required) };
 };
 
-const onSubmit = (
-    { email, ...values },
-    dispatch,
-    { id }
-) => {
+const onSubmit = ({ email, ...values }, dispatch, { id }) => {
     const tester = {
         id,
         ...values

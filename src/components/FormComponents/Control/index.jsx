@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 // Local
 import useStyles from './styles';
 import { Grid, FormLabel, Typography } from '@material-ui/core';
-import { SelectBase } from 'components';
 
 const Control = ({
     required = false,

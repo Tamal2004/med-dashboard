@@ -44,7 +44,7 @@ const ProjectNew = ({
     useEffect(() => {
         listProjectClients();
         listProjectUsers();
-    }, []);
+    }, [listProjectClients, listProjectUsers]);
     const c = useStyles();
 
     return (

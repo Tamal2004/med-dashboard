@@ -1,5 +1,4 @@
 import AWS from 'aws-sdk';
-import htmlTemplate from './htmlTemplate';
 
 export const sendMail = ({ from, to, subject, body }) => {
     console.log('sendmail', from, to, subject, body);

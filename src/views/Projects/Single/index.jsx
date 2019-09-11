@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core';
 
 // Local
-import { validateRequired } from 'libs';
 import ProjectDetails from './ProjectDetails';
 import ProjectManagement from './ProjectManagement';
 import ClientFeedback from './ClientFeedback';

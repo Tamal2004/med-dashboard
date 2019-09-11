@@ -206,7 +206,7 @@ export const unsubscribeUser = email => {
                     showNotification({ type: 'error', message: err.message })
                 );
             } else {
-                // window.location.href = '/';
+                window.location.href = '/';
                 dispatch(
                     showNotification({
                         type: 'success',

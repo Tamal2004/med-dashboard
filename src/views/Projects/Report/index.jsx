@@ -15,6 +15,7 @@ import {
     Link,
     BarLoader
 } from 'components';
+/*eslint-disable-next-line no-unused-vars*/
 import print from './print.css';
 
 // Selectors
@@ -59,8 +60,8 @@ const ProjectReport = ({
         }
         return () => {
             resetProjectReport();
-        }
-    }, []);
+        };
+    }, [fetchProjectReport, params, resetProjectReport, testers]);
 
     return (
         <GridContainer alignItems='center'>

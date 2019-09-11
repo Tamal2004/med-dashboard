@@ -1,20 +1,16 @@
-import React from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { reduxForm } from 'redux-form';
 
 // Local
 import { composeEditData } from 'libs';
-import {
-    EditModal
-} from 'components';
+import { EditModal } from 'components';
 
 // Selectors
 import { selectProjectId, selectProjectProfiles } from 'selectors';
 
 // Actions
 import { updateProject } from 'actions';
-
 
 const mapState = (state, { editIndex }) => {
     const profiles = selectProjectProfiles(state);
@@ -27,7 +23,11 @@ const mapState = (state, { editIndex }) => {
     };
 };
 
-const onSubmit = ({ Profile }, dispatch, { id, profiles, editIndex, onClose }) => {
+const onSubmit = (
+    { Profile },
+    dispatch,
+    { id, profiles, editIndex, onClose }
+) => {
     profiles[editIndex] = Profile;
     dispatch(updateProject({ id, profiles })).then(() => onClose());
 };

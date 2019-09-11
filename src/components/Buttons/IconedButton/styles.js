@@ -1,5 +1,4 @@
 import { makeStyles } from '@material-ui/core';
-import { lime } from '@material-ui/core/colors';
 
 export default makeStyles(({ palette, spacing }) => ({
     root: {

@@ -9,15 +9,14 @@ import NamedIcon from '@material-ui/icons/Person';
 import AnonymousIcon from '@material-ui/icons/PersonOutline';
 
 // Local
-import { validateRequired, history } from 'libs';
+import { history } from 'libs';
 import { SessionsModal } from 'views/Modals';
 import {
     Table,
     PaginationBase,
     IconedButton,
     EditableCard,
-    withModal,
-    Link
+    withModal
 } from 'components';
 
 // Selectors

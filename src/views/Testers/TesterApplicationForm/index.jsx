@@ -25,8 +25,7 @@ import {
     Input,
     MultiInput,
     CheckboxBase,
-    NavigateButton,
-    GridItem
+    NavigateButton
 } from 'components';
 
 // Selectors

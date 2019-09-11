@@ -3,13 +3,7 @@ import { initialize } from 'redux-form';
 import { gql } from 'apollo-boost';
 
 // Local
-import {
-    history,
-    today,
-    deserializeDate,
-    composeSearch,
-    composeFilters
-} from 'libs';
+import { history, today, composeSearch, composeFilters } from 'libs';
 import { client2 } from '../App/client';
 import { sendMail } from 'services';
 
@@ -401,7 +395,6 @@ export const unsubscribeTester = id => async dispatch => {
             const { email, sessionIds, contactNoteIds } = res;
 
             if (!email) {
-                // window.location.href = '/';
                 dispatch(
                     showNotification({
                         type: 'error',
@@ -415,7 +408,6 @@ export const unsubscribeTester = id => async dispatch => {
             }
         })
         .catch(error => {
-            // window.location.href = '/';
             dispatch(
                 showNotification({
                     type: 'error',
@@ -502,7 +494,7 @@ export const mailTesters = ({ project, contactType, ...mail }, ids) => async (
     await sendMail(mail);
 
     const {
-        data: { createContactNotes, error = null }
+        data: { error = null }
     } = await API.graphql(
         graphqlOperation(CreateContactNotes, { contactNotes })
     );

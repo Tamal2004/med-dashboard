@@ -23,6 +23,7 @@ export const mapToSelect = (dataset, value = void 0, label = void 0) => {
 };
 
 export const mapFromValue = (data, id = null) => {
+    /*eslint-disable-next-line eqeqeq */
     const [{ label = '' } = {}] = data.filter(({ value }) => value == id);
     return label;
 };

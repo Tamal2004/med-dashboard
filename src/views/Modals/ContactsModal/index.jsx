@@ -43,7 +43,7 @@ const ContactsModal = ({
 
     useEffect(() => {
         listIncompleteProjects().then(() => setProjectsLoading(false));
-    }, []);
+    }, [listIncompleteProjects]);
 
     return (
         <Fragment>
