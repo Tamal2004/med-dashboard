@@ -9,7 +9,11 @@ export default makeStyles(({ palette, spacing, typography, breakpoints }) => ({
         [breakpoints.down('sm')]: {
             margin: 0,
             textAlign: 'left',
-            padding: spacing()
+            padding: spacing(),
+            overflowY: 'scroll',
+            overflowX: 'hidden',
+            height: '100%',
+            '-webkit-overflow-scrolling': 'touch'
         }
     },
     noauthRoot: {
