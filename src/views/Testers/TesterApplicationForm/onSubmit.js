@@ -13,19 +13,6 @@ export default async (values, dispatch, { isStudent, isEmployed, reset }) => {
         ...pruned
     } = values;
 
-    let address = {};
-    if (manualAddress) {
-        address = { address: null };
-    } else {
-        address = {
-            house: null,
-            street: null,
-            county: null,
-            postcode: null,
-            country: null
-        };
-    }
-
     const regularEmployment = {
         jobTitle: null,
         businessName: null,
@@ -49,7 +36,6 @@ export default async (values, dispatch, { isStudent, isEmployed, reset }) => {
 
     const tester = {
         ...pruned,
-        ...address,
         ...employment,
         dob: serializeDate(dob),
         hasChildren: hasChildren === 'Yes',

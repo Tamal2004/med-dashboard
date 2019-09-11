@@ -61,12 +61,10 @@ const TesterApplication = ({
     isStudent,
     isEmployed,
     isRetired,
-    hasManualAddress,
     invalid,
     handleSubmit,
     submitting,
     isTester,
-    change
 }) => {
     const c = useStyles();
     return (
@@ -132,38 +130,13 @@ const TesterApplication = ({
                     required
                     normalize={normalizePhone}
                 />
-                {!hasManualAddress && (
-                    <Fragment>
-                        <Input
-                            label='Enter address or postcode'
-                            name='address'
-                            required
-                        />
-                        <Input label='Town' name='town' required />
-                    </Fragment>
-                )}
-                <GridItem md={12} sm={12} className={c.manualGrid}>
-                    <AddressLink
-                        className={c.manualLink}
-                        href='#'
-                        onClick={() =>
-                            change('manualAddress', !hasManualAddress)
-                        }
-                    >
-                        {hasManualAddress ? 'Close' : 'Enter address manually?'}
-                    </AddressLink>
-                </GridItem>
 
-                {hasManualAddress && (
-                    <Fragment>
                         <Input label='House name or number' name='house' />
                         <Input label='Street' name='street' />
                         <Input label='Town' name='town' required />
                         <Input label='County' name='county' />
                         <Input label='Postcode' name='postcode' />
                         <Input label='Country' name='country' required />
-                    </Fragment>
-                )}
             </Container>
 
             <Container title='Personal Details'>
@@ -339,7 +312,6 @@ const mapState = (state, ownProps) => {
             employmentStatus === 'Full-time employment' ||
             employmentStatus === 'Retired',
         isRetired: employmentStatus === 'Retired',
-        hasManualAddress: formSelector(state, 'manualAddress'),
         initialValues: {
             isPublicUser: noauth //required
         }

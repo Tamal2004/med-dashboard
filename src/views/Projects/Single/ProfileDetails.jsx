@@ -61,10 +61,7 @@ const ProfileDetails = ({
         if (!profileData.includes(input.trim())) {
             const profiles = {
                 id,
-                profiles: [
-                    input.trim(),
-                    ...profileData,
-                ]
+                profiles: [input.trim(), ...profileData]
             };
             updateProject(profiles);
         }
@@ -110,6 +107,7 @@ const ProfileDetails = ({
                         placeholder='Profile...'
                         color='secondary'
                         handleClick={addProfile}
+                        resetOnSubmit
                     />
                 )}
 

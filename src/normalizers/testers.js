@@ -93,24 +93,17 @@ export const normalizeTesterForm = (
               ])
           };
 
-    let addressDetails = {};
-    if (address) addressDetails = { manualAddress: false, address };
-    else {
-        addressDetails = {
-            manualAddress: true,
-            ...Object.splice(testerForm, [
-                'house',
-                'street',
-                'county',
-                'postcode',
-                'country'
-            ])
-        };
-    }
-
     const contactDetails = {
-        ...Object.splice(testerForm, ['email', 'phone', 'town']),
-        ...addressDetails
+        ...Object.splice(testerForm, [
+            'email',
+            'phone',
+            'town',
+            'house',
+            'street',
+            'county',
+            'postcode',
+            'country'
+        ])
     };
 
     const employmentDetails = Object.splice(testerForm, [
