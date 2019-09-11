@@ -342,16 +342,42 @@ const publicFetchTesterEmail = id => async dispatch => {
                 id
             }
         })
-        .then(({ data: { getTester: { email = null } = {} } = {} }) => ({
-            email
-        }));
+        .then(
+            ({
+                data: {
+                    getTester: {
+                        email = null,
+                        sessions: { items: sessionIds = [] },
+                        contactNotes: { items: contactNoteIds = [] }
+                    } = {}
+                } = {}
+            }) => ({
+                email,
+                sessionIds,
+                contactNoteIds
+            })
+        );
 };
 
-const publicRemoveTester = (id, email) => async dispatch => {
+const publicRemoveTester = (
+    id,
+    email,
+    sessionIds,
+    contactNoteIds
+) => async dispatch => {
+    const sessionList = sessionIds.map(({ id }) => id);
+    const contactNoteList = contactNoteIds.map(({ id }) => id);
+
     return client2
         .mutate({
-            mutation: gql(RemoveTester),
+            mutation: gql(
+                RemoveTester(!!sessionList.length, !!contactNoteList.length)
+            ),
             variables: {
+                ...(sessionList.length ? { sessionIds: sessionList } : {}),
+                ...(contactNoteList.length
+                    ? { contactNoteIds: contactNoteList }
+                    : {}),
                 input: { id }
             }
         })
@@ -372,11 +398,10 @@ const publicRemoveTester = (id, email) => async dispatch => {
 export const unsubscribeTester = id => async dispatch => {
     dispatch(publicFetchTesterEmail(id))
         .then(async res => {
-            const { email } = res;
+            const { email, sessionIds, contactNoteIds } = res;
 
             if (!email) {
-                history.replace('/');
-                window.location.href = '/';
+                // window.location.href = '/';
                 dispatch(
                     showNotification({
                         type: 'error',
@@ -384,12 +409,13 @@ export const unsubscribeTester = id => async dispatch => {
                     })
                 );
             } else {
-                dispatch(publicRemoveTester(id, email));
+                dispatch(
+                    publicRemoveTester(id, email, sessionIds, contactNoteIds)
+                );
             }
         })
         .catch(error => {
-            history.replace('/');
-            window.location.href = '/';
+            // window.location.href = '/';
             dispatch(
                 showNotification({
                     type: 'error',
