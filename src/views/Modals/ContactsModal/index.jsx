@@ -102,7 +102,7 @@ const mapState = state => ({
 const mapDispatch = { listIncompleteProjects };
 
 export const validate = values => {
-    const required = ['type', 'project'];
+    const required = ['type', 'project', 'note'];
 
     return { ...validateRequired(values, required) };
 };

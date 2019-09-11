@@ -42,3 +42,8 @@ export const validateDate = value => {
 
 export const validateNumber = value =>
     value && !/^[0-9]/i.test(value) ? 'Invalid number' : undefined;
+
+export const validateTime = value =>
+    value && !/([01]\d|2[0123]):(?:[012345]\d)/i.test(value)
+        ? 'Invalid time'
+        : undefined;
