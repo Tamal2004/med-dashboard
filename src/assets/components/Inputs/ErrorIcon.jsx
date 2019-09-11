@@ -7,20 +7,15 @@ import ErrorIconRounded from '@material-ui/icons/ErrorOutlineRounded';
 
 const styles = ({ palette, spacing }) => ({
     root: {
-        width: spacing.unit * 3,
-        height: spacing.unit * 3,
+        width: spacing.unit(3),
+        height: spacing.unit(3),
         color: palette.error.light
     }
 });
 
-const ErrorIcon = ({
-    classes: c,
-    className
-}) => {
+const ErrorIcon = ({ classes: c, className }) => {
     const root = classNames(c.root, className);
-    return (
-        <ErrorIconRounded className={root}/>
-    );
+    return <ErrorIconRounded className={root} />;
 };
 
 const _ErrorIcon = withStyles(styles)(ErrorIcon);

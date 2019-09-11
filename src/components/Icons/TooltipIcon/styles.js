@@ -6,8 +6,8 @@ export default ({ palette, spacing }) => ({
         display: 'flex',
         alignItems: 'center',
         boxShadow: 'unset',
-        paddingLeft: spacing.unit,
-        paddingRight: spacing.unit,
+        paddingLeft: spacing.unit(),
+        paddingRight: spacing.unit(),
         height: '100%'
     },
     container: {

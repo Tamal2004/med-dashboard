@@ -5,8 +5,8 @@ export default ({ spacing, palette, shape }) => ({
         border: '1px solid',
         borderColor: palette.grey[300],
         borderRadius: shape.borderRadius,
-        paddingLeft: spacing.unit * 2,
-        paddingRight: spacing.unit * 2,
+        paddingLeft: spacing(2),
+        paddingRight: spacing(2),
         '&:hover': {
             borderColor: palette.grey[400]
         }
@@ -38,13 +38,13 @@ export default ({ spacing, palette, shape }) => ({
         display: 'flex',
         alignItems: 'flex-start',
         overflow: 'hidden',
-        paddingTop: spacing.unit,
-        paddingBottom: spacing.unit,
-        paddingLeft: spacing.unit * 2,
-        paddingRight: spacing.unit * 2
+        paddingTop: spacing(),
+        paddingBottom: spacing(),
+        paddingLeft: spacing(2),
+        paddingRight: spacing(2)
     },
     inputMultiline: {
-        paddingRight: spacing.unit * 2
+        paddingRight: spacing(2)
     },
     disabled: {
         display: 'flex',

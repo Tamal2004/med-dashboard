@@ -2,10 +2,10 @@ import React, { useEffect } from 'react';
 import classNames from 'classnames';
 import { Field } from 'redux-form';
 import PropTypes from 'prop-types';
+import { makeStyles } from '@material-ui/styles';
 
 // Material
 import {
-    withStyles,
     InputBase as MuiInputBase,
     InputAdornment,
     FormControl
@@ -23,8 +23,9 @@ const LockAdornment = props => (
     </InputAdornment>
 );
 
+const useStyles = makeStyles(styles);
+
 const InputBase = ({
-    classes,
     styles,
     className,
     meta: { form, ...meta },
@@ -37,7 +38,7 @@ const InputBase = ({
     handleError,
     ...restProps
 }) => {
-    const c = composeClasses({ classes, styles });
+    const c = composeClasses({ classes: useStyles(), styles });
     const id = `${form}-${fieldName}`;
 
     const success = !disabled && Boolean(input.value);
@@ -90,10 +91,10 @@ InputBase.propTypes = {
     handleForm: () => {}
 };
 
-const _InputBase = withStyles(styles)(InputBase);
+// const _InputBase = withStyles(styles)(InputBase);
 
 const __InputBase = props => (
-    <Field fieldName={props.name} component={_InputBase} {...props} />
+    <Field fieldName={props.name} component={InputBase} {...props} />
 );
 
 export { __InputBase as default, __InputBase as InputBase };

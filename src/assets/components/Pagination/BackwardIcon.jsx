@@ -8,15 +8,15 @@ import { withStyles } from '@material-ui/core';
 import ForwardIcon from './ForwardIcon';
 
 const styles = ({ spacing }) => ({
-    root: {
-        transform: 'rotate(180deg)',
-        marginLeft: spacing.unit / 4,
-        fill: 'inherit',
-    }
+	root: {
+		transform: 'rotate(180deg)',
+		marginLeft: spacing.unit() / 4,
+		fill: 'inherit'
+	}
 });
 
 const BackwardIcon = ({ classes: c, className }) => (
-    <ForwardIcon className={clsx(c.root, className)} />
+	<ForwardIcon className={clsx(c.root, className)} />
 );
 
 const _BackwardIcon = withStyles(styles)(BackwardIcon);

@@ -6,14 +6,14 @@ export default ({ spacing, palette }) => ({
         color: palette.grey[800]
     },
     focused: {
-        color: `${palette.grey[800]} !important`,
+        color: `${palette.grey[800]} !important`
     },
     disabled: {
         color: palette.grey[400]
     },
     icon: {
         position: 'absolute',
-        transform: `translateX(${spacing.unit * 4}px)`,
-        height: spacing.unit * 1.5
+        transform: `translateX(${spacing.unit(4)}px)`,
+        height: spacing.unit(1.5)
     }
 });

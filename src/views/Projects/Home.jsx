@@ -62,6 +62,7 @@ const ProjectHome = ({ projects, listProjects }) => {
 
         return () => (shouldCancel = true);
     }, []);
+
     useEffect(() => {
         setLoading(true);
         listProjects(checkFilter, searchInput).then(() => setLoading(false));
