@@ -30,7 +30,7 @@ const DateRangeCheck = date => {
 
     const isInPast =
         new Date(newDate).setHours(0, 0, 0, 0) <
-        new Date('01/01/1970').setHours(0, 0, 0, 0);
+        new Date('01/01/1930').setHours(0, 0, 0, 0);
 
     if (isInFuture) result = 'Invalid future date';
     if (isInPast) result = 'Invalid past date';
