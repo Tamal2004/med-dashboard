@@ -23,14 +23,12 @@ import {
     Select,
     Input,
     MultiInput,
-    Switch,
     IconedButton,
     EditableCard,
     CardDivider,
     withModal
 } from 'components';
 import { MailModal, ConfirmationModal } from 'views/Modals';
-import { sendMail } from 'services';
 
 // Selectors
 import {

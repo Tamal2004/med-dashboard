@@ -1,4 +1,9 @@
 import React, { Component } from 'react';
+import {
+    disableBodyScroll,
+    enableBodyScroll,
+    clearAllBodyScrollLocks
+} from 'body-scroll-lock';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
@@ -28,6 +33,8 @@ import SelectPlaceholder from './SelectPlaceholder';
  * SelectBase
  */
 class Select extends Component {
+    targetRef = React.createRef();
+    targetElement = null;
     // Set prop types
     static propTypes = {
         classes: PropTypes.object.isRequired,
@@ -70,6 +77,12 @@ class Select extends Component {
         } = this.props;
 
         if (displayFirst) onChange(data[0]);
+
+        this.targetElement = this.targetRef.current;
+    }
+
+    componentWillUnmount() {
+        clearAllBodyScrollLocks();
     }
 
     static getDerivedStateFromProps(props, state) {
@@ -139,15 +152,16 @@ class Select extends Component {
             data: this.state.initialData
         });
         this.props.input.onBlur();
+        enableBodyScroll(this.targetElement);
     };
 
     onFocus = () => {
         this.setState({ selectFocus: true });
         this.props.input.onFocus();
+        disableBodyScroll(this.targetElement);
     };
 
     onChange = value => {
-        // Todo: handle input focus
         this.setState({ queryValue: '', data: this.state.initialData });
         this.props.input.onChange(value);
     };
@@ -300,6 +314,7 @@ class Select extends Component {
                             disabled={disabled}
                         />
                         <Backdrop
+                            ref={this.targetRef}
                             classes={{ root: c.backdrop }}
                             open={this.state.selectFocus}
                             invisible

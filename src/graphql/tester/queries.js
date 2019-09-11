@@ -29,10 +29,7 @@ export const ListTestersSearch = `query ListTestersSearch($filter: ModelTesterFi
             firstName
             surname
             dob
-            gender
             email
-            about
-            clientNotes
         }
     }
 }`;
@@ -150,6 +147,16 @@ export const FetchPublicTester = `query FetchPublicTester($id: ID!) {
         educationStage
         institution
         lastUpdated
+        sessions {
+            items {
+                id
+            }
+        }
+        contactNotes {
+            items {
+                id
+            }
+        }
     }
 }
 `;

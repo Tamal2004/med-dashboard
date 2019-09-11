@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
-import { formValueSelector } from 'redux-form';
 import PropTypes from 'prop-types';
 
 // Material

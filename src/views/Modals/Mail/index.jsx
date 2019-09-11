@@ -74,23 +74,24 @@ const MailModal = ({
             listIncompleteProjects().then(() => setProjectsLoading(false));
     }, []);
 
+    console.log('invalid', invalid);
+    console.log('submitting', submitting);
+
     return (
         <Fragment>
             <ModalHeader onClose={onClose}>{`Mail Tester${
-                to.length > 1 ? '(s)' : ''
+                to.length > 1 ? 's' : ''
             }`}</ModalHeader>
             <ModalContent className={c.root}>
-                {/*conditionally disabled if has data*/}
-                <Input label='From' name='from' active={false} width={9} />
-                {/*conditionally disabled if has data*/}
-                <Input label='To' name='to' active={false} width={9} />
+                <Input label='From' name='from' active={false} width={8} />
+                <Input label='To' name='to' active={false} width={8} />
 
                 <Input
                     label='Subject'
                     name='subject'
                     placeholder='Subject'
                     required
-                    width={9}
+                    width={8}
                 />
 
                 {needsProject && (
@@ -99,7 +100,7 @@ const MailModal = ({
                         name='project'
                         data={projects}
                         disabled={projectsLoading}
-                        width={9}
+                        width={8}
                         required
                     />
                 )}
@@ -108,7 +109,7 @@ const MailModal = ({
                         label='Contact type'
                         name='contactType'
                         data={contactTypes}
-                        width={9}
+                        width={8}
                         required
                     />
                 )}
@@ -130,13 +131,16 @@ const MailModal = ({
     );
 };
 
-const validate = (values, { needsProject, needsContactType }) => {
+const validate = ({ body, ...values }, { needsProject, needsContactType }) => {
     const required = ['subject', 'body'];
+
+    // Check empty body
+    const trimmedBody = body && body === '<p><br></p>' ? '' : body;
 
     if (needsProject) required.push('project');
     if (needsContactType) required.push('contactType');
 
-    return { ...validateRequired(values, required) };
+    return { ...validateRequired({ body: trimmedBody, ...values }, required) };
 };
 
 const mapState = (state, { from, to, body, subject }) => {
@@ -146,8 +150,8 @@ const mapState = (state, { from, to, body, subject }) => {
         initialValues: {
             from,
             to: to.length > 1 ? `${to.length} Testers` : to[0] || '',
-            body,
-            subject
+            body: body || '',
+            subject: subject || ''
         }
     };
 };
@@ -184,7 +188,9 @@ const _MailModal = compose(
     reduxForm({
         form: 'MailModal',
         validate,
-        onSubmit
+        onSubmit,
+        enableReinitialize: true,
+        keepDirtyOnReinitialize: true
     })
 )(MailModal);
 

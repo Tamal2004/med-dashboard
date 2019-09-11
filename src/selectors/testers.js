@@ -29,6 +29,16 @@ export const selectTesterId = createCachedSelector(
     ({ id }) => id
 )(() => 'placeholder');
 
+export const selectTesterSessionIds = createCachedSelector(
+    selectIndividual,
+    ({ sessions }) => sessions.map(({ id }) => id)
+)(() => 'placeholder');
+
+export const selectTesterContactNoteIds = createCachedSelector(
+    selectIndividual,
+    ({ contactNotes }) => contactNotes.map(({ id }) => id)
+)(() => 'placeholder');
+
 export const selectTesterSessions = createCachedSelector(
     selectIndividual,
     ({ sessions }) => generateTesterSessions(sessions)

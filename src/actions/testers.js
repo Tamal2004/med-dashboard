@@ -53,7 +53,12 @@ import { showNotification } from './notification';
 import { unsubscribeUser, changCongnitoUserInfo } from './auth';
 
 // Selectors
-import { selectTesterId, selectFullName } from 'selectors';
+import {
+    selectTesterId,
+    selectFullName,
+    selectTesterSessionIds,
+    selectTesterContactNoteIds
+} from 'selectors';
 
 import { testerSignUp } from './auth';
 
@@ -202,7 +207,14 @@ export const fetchTester = id => async dispatch => {
 export const fetchPublicTester = id => async dispatch => {
     dispatch(fetchTesterAction(REQUEST));
     const {
-        data: { getTester, error = null }
+        data: {
+            getTester: {
+                sessions: { items: sessions = [] },
+                contactNotes: { items: contactNotes = [] },
+                ...getTester
+            },
+            error = null
+        }
     } = await API.graphql(graphqlOperation(FetchPublicTester, { id }));
 
     const {
@@ -215,7 +227,7 @@ export const fetchPublicTester = id => async dispatch => {
         dispatch(initialize('TesterDetails', testerDetails));
         dispatch(initialize('ContactDetails', contactDetails));
         dispatch(initialize('EmploymentDetails', employmentDetails));
-        dispatch(fetchTesterAction(SUCCESS, { id }));
+        dispatch(fetchTesterAction(SUCCESS, { id, sessions, contactNotes }));
     } else {
         dispatch(fetchTesterAction(FAIL));
     }
@@ -281,11 +293,23 @@ const removeTesterAction = (async, payload = []) => ({
     payload
 });
 
-export const removeTester = id => async dispatch => {
+export const removeTester = id => async (dispatch, getState) => {
     dispatch(removeTesterAction(REQUEST));
+
+    const store = getState();
+
+    const sessionIds = selectTesterSessionIds(store);
+    const contactNoteIds = selectTesterContactNoteIds(store);
+
     const {
         data: { error = null }
-    } = await API.graphql(graphqlOperation(RemoveTester, { input: { id } }));
+    } = await API.graphql(
+        graphqlOperation(RemoveTester, {
+            input: { id },
+            contactNoteIds,
+            sessionIds
+        })
+    );
 
     if (!error) {
         dispatch(removeTesterAction(SUCCESS));

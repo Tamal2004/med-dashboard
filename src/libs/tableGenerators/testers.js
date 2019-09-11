@@ -1,26 +1,22 @@
 import React from 'react';
 
 import { Link } from 'components';
+
 import { normalizeTime } from 'normalizers';
 import { composeSortableDate } from './common';
 
 export const generateTestersSearch = testersSearch =>
-    testersSearch.map(
-        ({ id, name, age, gender, email, about, clientNotes }) => ({
-            'Tester Name': {
-                Component: <Link to={`/tester/${id}`}>{name}</Link>,
-                value: name
-            },
-            Age: age,
-            Sex: gender,
-            Email: email,
-            Details: about,
-            'Client Notes': clientNotes,
-            actions: {
-                checkAction: id => console.log('checked', id)
-            }
-        })
-    );
+    testersSearch.map(({ id, name, age, gender, email }) => ({
+        'Tester Name': {
+            Component: <Link to={`/tester/${id}`}>{name}</Link>,
+            value: name
+        },
+        Age: age,
+        Email: email,
+        actions: {
+            checkAction: id => console.log('checked', id)
+        }
+    }));
 
 export const generateTesterList = testerList =>
     testerList.map(
@@ -72,8 +68,8 @@ export const generateTesterSessions = testerSessions =>
         }) => ({
             Date: {
                 editable: true,
-                Component: date,
-                type: 'DateInput'
+                type: 'DateInput',
+                ...composeSortableDate(date)
             },
             Time: {
                 editable: true,

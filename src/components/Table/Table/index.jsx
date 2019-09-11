@@ -212,7 +212,7 @@ class Table extends Component {
         </IconButton>
     );
 
-    renderCell = (value = '', idx) => {
+    renderCell = (value = '', idx, headerWidth) => {
         const isExists = key =>
             Object.prototype.hasOwnProperty.call(value, key);
 
@@ -253,7 +253,11 @@ class Table extends Component {
                 title={this.rawValue(value || '')}
                 dark
             >
-                <div className={this.c.titleWrapper} ref={ref}>
+                <div
+                    className={this.c.titleWrapper}
+                    style={{ maxWidth: headerWidth - 32 }}
+                    ref={ref}
+                >
                     {composeValue()}
                 </div>
             </Tooltip>
@@ -262,16 +266,33 @@ class Table extends Component {
 
     rawValue = obj => (obj && typeof obj === 'object' ? obj.value : obj);
 
-    renderRow = (row, index) =>
-        Object.entries(row).map(([category, value]) => (
+    renderRow = (row, index) => {
+        const {
+            props: { data: [datum = {}] = [] },
+            state: { tableWidth }
+        } = this;
+
+        const rowKeys = Object.keys(datum);
+
+        const hasActions = rowKeys.includes('actions');
+
+        const len = rowKeys.length;
+        const actionsWidth = 95;
+        const headerWidth = hasActions
+            ? (tableWidth - actionsWidth) / (len - 1)
+            : tableWidth / len;
+
+        return Object.entries(row).map(([category, value]) => (
             <TableCell
                 className={this.c.cell}
+                style={{ maxWidth: Math.floor(headerWidth) }}
                 align={isActionColumn(category) ? 'right' : 'inherit'}
                 key={category}
             >
-                {this.renderCell(value, index)}
+                {this.renderCell(value, index, headerWidth)}
             </TableCell>
         ));
+    };
 
     renderTable = () => {
         const {
@@ -348,6 +369,12 @@ class Table extends Component {
                 ? 1
                 : 0;
 
+        const len = headers.length;
+        const actionsWidth = 95;
+        const headerWidth = hasActions
+            ? (tableWidth - actionsWidth) / (len - 1)
+            : tableWidth / len;
+
         return (
             <Fragment>
                 {!data.length ? (
@@ -364,14 +391,10 @@ class Table extends Component {
                                 ref={ref => (this.tableRef = ref)}
                             >
                                 {headers.map((header, index) => {
-                                    const unitWidth = 8 * 8;
-                                    const headerWidth = header.includes(
-                                        'Reference'
-                                    )
-                                        ? unitWidth * 2
-                                        : unitWidth * 2;
-                                    const len = headers.length;
-
+                                    const cellWidth =
+                                        hasActions && index === len - 1
+                                            ? 'unset'
+                                            : headerWidth;
                                     return (
                                         <TableCell
                                             className={clsx(
@@ -381,9 +404,8 @@ class Table extends Component {
                                                 c.cell
                                             )}
                                             style={{
-                                                width:
-                                                    tableWidth &&
-                                                    tableWidth / headers.length
+                                                maxWidth: cellWidth,
+                                                width: cellWidth
                                             }}
                                             key={index}
                                             onClick={() =>
