@@ -19,14 +19,23 @@ export const validateEmail = value =>
         ? 'Invalid email address'
         : undefined;
 
-const DateInFuture = date => {
+const DateRangeCheck = date => {
+    let result = undefined;
     const splitDate = date.split('/');
     [splitDate[0], splitDate[1]] = [splitDate[1], splitDate[0]]; //swap first two value
     const newDate = splitDate.join('/');
-    const diff =
+    const isInFuture =
         new Date(newDate).setHours(0, 0, 0, 0) >
         new Date().setHours(0, 0, 0, 0);
-    return diff;
+
+    const isInPast =
+        new Date(newDate).setHours(0, 0, 0, 0) <
+        new Date('01/01/1970').setHours(0, 0, 0, 0);
+
+    if (isInFuture) result = 'Invalid future date';
+    if (isInPast) result = 'Invalid past date';
+
+    return result;
 };
 
 export const validateDate = value => {
@@ -35,9 +44,7 @@ export const validateDate = value => {
             value
         )
         ? 'Invalid date'
-        : value && DateInFuture(value)
-        ? 'Invalid future date'
-        : undefined;
+        : value && DateRangeCheck(value);
 };
 
 export const validateNumber = value =>
