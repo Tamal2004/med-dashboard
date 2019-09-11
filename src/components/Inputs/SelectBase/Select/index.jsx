@@ -1,9 +1,15 @@
 import React, { Component } from 'react';
+import {
+    disableBodyScroll,
+    enableBodyScroll,
+    clearAllBodyScrollLocks
+} from 'body-scroll-lock';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 // Material
 import {
+    Backdrop,
     Select as MuiSelect,
     MenuItem,
     TextField,
@@ -27,6 +33,8 @@ import SelectPlaceholder from './SelectPlaceholder';
  * SelectBase
  */
 class Select extends Component {
+    targetRef = React.createRef();
+    targetElement = null;
     // Set prop types
     static propTypes = {
         classes: PropTypes.object.isRequired,
@@ -56,9 +64,9 @@ class Select extends Component {
         isMouseInside: false
     };
     handleScroll = () => {
-        const { selectFocus, isMouseInside } = this.state;
-        if (!isMouseInside) {
-            if (selectFocus) this.onBlur();
+        const { selectFocus } = this.state;
+        if (selectFocus) {
+            this.onBlur();
         }
     };
     componentDidMount() {
@@ -69,12 +77,14 @@ class Select extends Component {
         } = this.props;
 
         if (displayFirst) onChange(data[0]);
-        // window.addEventListener('scroll', this.handleScroll, true);
+
+        this.targetElement = this.targetRef.current;
     }
 
     componentWillUnmount() {
-        // window.removeEventListener('scroll', this.handleScroll, true);
+        clearAllBodyScrollLocks();
     }
+
     static getDerivedStateFromProps(props, state) {
         const { queryValue } = state;
 
@@ -142,15 +152,16 @@ class Select extends Component {
             data: this.state.initialData
         });
         this.props.input.onBlur();
+        enableBodyScroll(this.targetElement);
     };
 
     onFocus = () => {
         this.setState({ selectFocus: true });
         this.props.input.onFocus();
+        disableBodyScroll(this.targetElement);
     };
 
     onChange = value => {
-        // Todo: handle input focus
         this.setState({ queryValue: '', data: this.state.initialData });
         this.props.input.onChange(value);
     };
@@ -236,7 +247,7 @@ class Select extends Component {
                 disableAutoFocus: true,
                 disablePortal: true,
                 disableEnforceFocus: true,
-                disableRestoreFocus: true,
+                disableRestoreFocus: true
             },
             classes: { ...Object.splice(c, ['root', 'select', 'icon']) },
             IconComponent: renderDropdownIcon,
@@ -248,7 +259,7 @@ class Select extends Component {
             onClose: onBlur,
             onOpen: onFocus,
             onChange,
-            disabled,
+            disabled
         };
         const id = `${form}-${name}`;
         const valid = isNaN(value) ? !!value : !!Number(value);
@@ -292,7 +303,9 @@ class Select extends Component {
                         {/*Todo: Convert to InputBase element */}
 
                         <TextField
-                            classes={{ root: classNames(c.inputRoot, selectFocus && c.inputElevation) }}
+                            classes={{
+                                root: classNames(c.inputRoot, selectFocus)
+                            }}
                             inputProps={{ className: c.input }}
                             value={queryValue}
                             onChange={onQuery}
@@ -300,7 +313,13 @@ class Select extends Component {
                             onClick={onFocus}
                             disabled={disabled}
                         />
-
+                        <Backdrop
+                            ref={this.targetRef}
+                            classes={{ root: c.backdrop }}
+                            open={this.state.selectFocus}
+                            invisible
+                            onClick={() => onBlur()}
+                        />
                         {showPlaceholder && !success && !disabled && (
                             <SelectPlaceholder
                                 styles={Object.splice(c, ['placeholder'])}
