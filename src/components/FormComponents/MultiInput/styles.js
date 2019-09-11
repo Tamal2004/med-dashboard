@@ -16,5 +16,8 @@ export default makeStyles(({ palette, spacing, typography }) => ({
     inactiveRoot: {
         border: 'unset',
         pointerEvents: 'none'
+    },
+    inputMultiline: {
+        overflow: 'hidden'
     }
 }));

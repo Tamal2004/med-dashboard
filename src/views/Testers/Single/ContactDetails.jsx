@@ -29,7 +29,6 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const ContactDetails = ({
-    hasManualAddress,
     invalid,
     change,
     reset,
@@ -63,80 +62,30 @@ const ContactDetails = ({
                 active={isEditing}
                 required={isEditing}
             />
-            {!hasManualAddress && (
-                <Fragment>
-                    <Input
-                        label='Address or postcode'
-                        name='address'
-                        isCard
-                        active={isEditing}
-                        required={isEditing}
-                    />
-                    <Input
-                        label='Town'
-                        name='town'
-                        isCard
-                        active={isEditing}
-                        required={isEditing}
-                    />
-                </Fragment>
-            )}
-            {isEditing && (
-                <GridItem md={12} className={c.manualGrid}>
-                    <Link
-                        className={c.manualLink}
-                        href='#'
-                        onClick={() =>
-                            change('manualAddress', !hasManualAddress)
-                        }
-                    >
-                        {hasManualAddress ? 'Close' : 'Enter address manually?'}
-                    </Link>
-                </GridItem>
-            )}
 
-            {hasManualAddress && (
-                <Fragment>
-                    <Input
-                        label='House name or number'
-                        name='house'
-                        isCard
-                        active={isEditing}
-                    />
-                    <Input
-                        label='Street'
-                        name='street'
-                        isCard
-                        active={isEditing}
-                    />
-                    <Input
-                        label='Town'
-                        name='town'
-                        isCard
-                        active={isEditing}
-                        required={isEditing}
-                    />
-                    <Input
-                        label='County'
-                        name='county'
-                        isCard
-                        active={isEditing}
-                    />
-                    <Input
-                        label='Country'
-                        name='country'
-                        isCard
-                        active={isEditing}
-                        required={isEditing}
-                    />
-                    <Input
-                        label='Postcode'
-                        name='postcode'
-                        isCard
-                        active={isEditing}
-                    />
-                </Fragment>
-            )}
+            <Input
+                label='House name or number'
+                name='house'
+                isCard
+                active={isEditing}
+            />
+            <Input label='Street' name='street' isCard active={isEditing} />
+            <Input
+                label='Town'
+                name='town'
+                isCard
+                active={isEditing}
+                required={isEditing}
+            />
+            <Input label='County' name='county' isCard active={isEditing} />
+            <Input
+                label='Country'
+                name='country'
+                isCard
+                active={isEditing}
+                required={isEditing}
+            />
+            <Input label='Postcode' name='postcode' isCard active={isEditing} />
             {isEditing && (
                 <EditableFooter
                     onClick={() => {
@@ -160,49 +109,20 @@ const mapState = state => ({
 
 const mapDispatch = { change };
 
-const validate = (values, { hasManualAddress }) => {
-    const required = ['email', 'phone', 'town'];
-
-    if (!hasManualAddress) required.push('address');
-    else required.push('country');
+const validate = values => {
+    const required = ['email', 'phone', 'town', 'country'];
 
     return { ...validateRequired(values, required) };
 };
 
 const onSubmit = (
-    { email, manualAddress, phone, address, town, ...values },
+    { email, ...values },
     dispatch,
     { id }
 ) => {
-    let addressDetails = {};
-
-    if (manualAddress) {
-        addressDetails = {
-            address: null,
-            ...Object.splice(values, [
-                'house',
-                'street',
-                'county',
-                'country',
-                'postcode'
-            ])
-        };
-    } else {
-        addressDetails = {
-            address,
-            house: null,
-            street: null,
-            county: null,
-            country: null,
-            postcode: null
-        };
-    }
-
     const tester = {
         id,
-        phone,
-        town,
-        ...addressDetails
+        ...values
     };
 
     return dispatch(updateTester(tester));

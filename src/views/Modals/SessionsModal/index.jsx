@@ -8,7 +8,7 @@ import { Divider } from '@material-ui/core';
 
 // Local
 import useStyles from './styles';
-import { validateRequired } from 'libs';
+import { validateRequired, validateTime } from 'libs';
 import {
     ModalHeader,
     ModalFooter,
@@ -88,6 +88,7 @@ const SessionsModal = ({
                     placeholder='e.g. 16:30'
                     required
                     normalize={normalizeTime}
+                    validate={validateTime}
                 />
                 <MultiInput name='notes' placeholder='Notes' />
             </ModalContent>

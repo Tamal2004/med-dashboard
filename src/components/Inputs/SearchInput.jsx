@@ -16,15 +16,16 @@ function SearchInput({ ...props }) {
         placeholder,
         inputType,
         isDisabled,
-        handleChange = () => {},
+        handleChange,
         isAmend,
         required,
         multiline,
         textArea,
         rows,
         Adornment,
-        handleClick = () => {},
-        color
+        handleClick,
+        color,
+        resetOnSubmit
     } = props;
     const [value, setValue] = useState('');
     const handleText = ({ target: { value = '' } } = {}) => setValue(value);
@@ -32,6 +33,7 @@ function SearchInput({ ...props }) {
     const keyPressed = e => {
         if (e.which === 13) {
             handleClick(value);
+            if (resetOnSubmit) setValue('');
         }
     };
 
@@ -59,7 +61,10 @@ function SearchInput({ ...props }) {
                 endAdornment: (
                     <InputAdornment
                         position='end'
-                        onClick={() => handleClick(value)}
+                        onClick={() => {
+                            handleClick(value);
+                            if (resetOnSubmit) setValue('');
+                        }}
                     >
                         <IconButton color={color} edge='end'>
                             <Adornment color={color} />
@@ -103,7 +108,10 @@ SearchInput.defaultProps = {
     multiline: false,
     textArea: false,
     Adornment: SearchIcon,
-    color: 'primary'
+    color: 'primary',
+    resetOnSubmit: false,
+    handleClick: () => {},
+    handleChange: () => {},
 };
 
 SearchInput.propTypes = {

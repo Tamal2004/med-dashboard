@@ -5,10 +5,7 @@ import { CheckTesterEmail } from 'graphql/tester';
 import { client2 } from '../../../App/client';
 import { gql } from 'apollo-boost';
 
-export const validate = (
-    values,
-    { isStudent, isEmployed, hasManualAddress, isTester }
-) => {
+export const validate = (values, { isStudent, isEmployed, isTester }) => {
     const required = [
         'title',
         'firstName',
@@ -25,7 +22,8 @@ export const validate = (
         'employmentStatus',
         'hasChildren',
         'firstLanguage',
-        'town'
+        'town',
+        'country'
     ];
 
     if (isTester) required.push('termsChecked');
@@ -33,9 +31,6 @@ export const validate = (
     if (isStudent) required.push('subject', 'educationStage', 'institution');
 
     if (isEmployed) required.push('employeeCount');
-
-    if (hasManualAddress) required.push('country');
-    else required.push('address');
 
     return { ...validateRequired(values, required) };
 };
