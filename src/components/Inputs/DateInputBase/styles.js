@@ -9,8 +9,8 @@ export default ({ spacing, palette, shape }) => ({
         border: '1px solid',
         borderColor: palette.grey[300],
         borderRadius: shape.borderRadius,
-        paddingLeft: spacing.unit(2),
-        paddingRight: spacing.unit(2),
+        paddingLeft: spacing(2),
+        paddingRight: spacing(2),
         '&:hover': {
             borderColor: palette.grey[400]
         },

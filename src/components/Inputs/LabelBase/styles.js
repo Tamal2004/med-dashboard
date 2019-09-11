@@ -13,7 +13,7 @@ export default ({ spacing, palette }) => ({
     },
     icon: {
         position: 'absolute',
-        transform: `translateX(${spacing.unit(4)}px)`,
-        height: spacing.unit(1.5)
+        transform: `translateX(${spacing(4)}px)`,
+        height: spacing(1.5)
     }
 });

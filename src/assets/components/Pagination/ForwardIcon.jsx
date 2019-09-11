@@ -8,7 +8,7 @@ const styles = ({ spacing, palette, typography }) => ({
     root: {
         width: typography.fontSize,
         height: typography.fontSize,
-        marginLeft: spacing.unit() / 4,
+        marginLeft: spacing() / 4,
         fill: 'inherit'
     },
     polygon: {

@@ -10,7 +10,7 @@ import ForwardIcon from './ForwardIcon';
 const styles = ({ spacing }) => ({
 	root: {
 		transform: 'rotate(180deg)',
-		marginLeft: spacing.unit() / 4,
+		marginLeft: spacing() / 4,
 		fill: 'inherit'
 	}
 });
