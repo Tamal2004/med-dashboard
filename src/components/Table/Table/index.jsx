@@ -376,7 +376,7 @@ class Table extends Component {
             : tableWidth / len;
 
         return (
-            <Fragment>
+            <div ref={ref => (this.tableRef = ref)}>
                 {!data.length ? (
                     <div className={c.nullRoot}>
                         <Typography variant='subtitle2'>
@@ -386,10 +386,7 @@ class Table extends Component {
                 ) : (
                     <MuiTable className={c.root}>
                         <TableHead>
-                            <TableRow
-                                className={clsx(c.row, c.header)}
-                                ref={ref => (this.tableRef = ref)}
-                            >
+                            <TableRow className={clsx(c.row, c.header)}>
                                 {headers.map((header, index) => {
                                     const cellWidth =
                                         hasActions && index === len - 1
@@ -433,7 +430,7 @@ class Table extends Component {
                         </TableBody>
                     </MuiTable>
                 )}
-            </Fragment>
+            </div>
         );
     }
 }

@@ -68,7 +68,6 @@ const TesterApplication = memo(
         change
     }) => {
         const c = useStyles();
-        console.log('rendering');
         return (
             <Paper className={c.root}>
                 <Typography

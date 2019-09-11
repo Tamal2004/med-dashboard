@@ -33,7 +33,11 @@ const useStyles = makeStyles(({ spacing, palette }) => ({
     },
     title: {
         display: 'flex',
-        justifyContent: 'center'
+        justifyContent: 'flex-start',
+        textTransform: 'uppercase'
+    },
+    titleTypography: {
+        fontWeight: 700
     },
     linkGap: {
         textDecoration: 'none'
@@ -84,7 +88,13 @@ const ClientSingle = ({
     return (
         <GridContainer alignItems='center' className={c.header}>
             <GridItem md={6} className={c.title}>
-                <Typography variant='h4'>{name}</Typography>
+                <Typography
+                    className={c.titleTypography}
+                    variant='h6'
+                    align='left'
+                >
+                    {name}
+                </Typography>
             </GridItem>
             <GridItem md={6} className={c.buttonGridStyle}>
                 <NavigateButton
