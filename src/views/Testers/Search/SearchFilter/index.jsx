@@ -135,7 +135,7 @@ const SearchFilter = ({ handleFilter }) => {
                             onChange={(e, value) =>
                                 onChange(e, FILTER_KEY['age'], 'range', value)
                             }
-                            onBlur={() => console.log('blurred age')}
+                            onBlur={() => {}}
                             value={[0, 80]}
                             step={1}
                         />

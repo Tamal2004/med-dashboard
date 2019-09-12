@@ -14,7 +14,7 @@ export const generateTestersSearch = testersSearch =>
         Age: age,
         Email: email,
         actions: {
-            checkAction: id => console.log('checked', id)
+            checkAction: id => {}
         }
     }));
 

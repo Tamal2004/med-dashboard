@@ -3,7 +3,6 @@ import { unsubscribeTester } from './testers';
 
 export const unsubscribe = payload => {
     return async dispatch => {
-        console.log('action/unsubscribe => payload => ', payload, !payload);
         if (!payload) {
             window.location.href('/');
             dispatch(

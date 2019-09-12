@@ -42,9 +42,7 @@ class ModalProvider extends Component {
             props.openModal(passedHandlerName);
 
             this.setState({ Modals });
-        } catch (error) {
-            console.error(error);
-        }
+        } catch (error) {}
     };
 
     composeHandlers = () => {
