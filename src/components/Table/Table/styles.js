@@ -9,6 +9,7 @@ export default ({ palette, spacing, transitions, typography }) => ({
         alignItems: 'center',
         borderTop: '1px solid',
         borderColor: palette.grey[200],
+        width: '100%',
         height: spacing(6),
         backgroundColor: palette.grey[50],
         marginTop: spacing(3)
