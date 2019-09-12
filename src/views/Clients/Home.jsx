@@ -58,7 +58,8 @@ const ClientHome = ({
         listClients().then(() => !shouldCancel && setLoading(false));
 
         return () => (shouldCancel = true);
-    }, [listClients]);
+        /*eslint-disable-next-line*/
+    }, []);
 
     const handleSearch = search => {
         setLoading(true);

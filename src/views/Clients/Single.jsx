@@ -75,7 +75,8 @@ const ClientSingle = ({
 
     useEffect(() => {
         fetchClient(id).then(() => setLoading(false));
-    }, [fetchClient, id]);
+        // eslint-disable-next-line
+    }, []);
 
     const confirmationProps = {
         title: 'Confirmation',

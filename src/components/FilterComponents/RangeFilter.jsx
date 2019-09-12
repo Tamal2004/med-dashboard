@@ -45,7 +45,8 @@ const RangeFilter = ({ value, onChange, title, step, min, max }) => {
 
     useEffect(() => {
         onChange(null, committedRangeValue);
-    }, [onChange, committedRangeValue]);
+        // eslint-disable-next-line
+    }, [committedRangeValue]);
 
     return (
         <AccordionFilterContainer title={title}>

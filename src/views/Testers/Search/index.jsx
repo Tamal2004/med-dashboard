@@ -89,7 +89,8 @@ const TesterSearch = ({
             setLoading(true);
             listTestersSearch(filters, input).then(() => setLoading(false));
         }
-    }, [filterCounter, filters, input, listTestersSearch]);
+        // eslint-disable-next-line
+    }, [filters, input]);
 
     const handleFilters = filters => {
         setFilters(filters);

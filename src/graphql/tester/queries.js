@@ -166,12 +166,12 @@ export const FetchPublicTester = `query FetchPublicTester($id: ID!) {
 export const FetchTesterEmail = `query FetchTesterEmail($id: ID!) {
     getTester(id: $id) {
         email
-        sessions{
+        sessions(limit: ${REACT_APP_QUERY_LIST_LIMIT}){
             items{
                 id
             }
         }
-        contactNotes{
+        contactNotes(limit: ${REACT_APP_QUERY_LIST_LIMIT}){
             items{
                 id
             }

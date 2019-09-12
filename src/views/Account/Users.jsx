@@ -59,7 +59,8 @@ const AllUsers = ({
         listUsers().then(() => !shouldCancel && setLoading(false));
 
         return () => (shouldCancel = true);
-    }, [listUsers]);
+        // eslint-disable-next-line
+    }, []);
 
     const confirmationProps = {
         title: 'Confirmation',

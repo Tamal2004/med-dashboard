@@ -43,7 +43,8 @@ const ContactsModal = ({
 
     useEffect(() => {
         listIncompleteProjects().then(() => setProjectsLoading(false));
-    }, [listIncompleteProjects]);
+        // eslint-disable-next-line
+    }, []);
 
     return (
         <Fragment>
