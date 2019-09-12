@@ -40,7 +40,8 @@ const TesterSingle = ({
             testerId &&
                 fetchPublicTester(testerId).then(() => setLoading(false));
         else id && fetchTester(id).then(() => setLoading(false));
-    }, [fetchPublicTester, fetchTester, isTester, id, testerId]);
+        /*eslint-disable-next-line*/
+    }, []);
 
     return (
         <Fragment>

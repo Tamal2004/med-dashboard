@@ -61,7 +61,8 @@ const ProjectHome = ({ projects, listProjects }) => {
         listProjects().then(() => !shouldCancel && setLoading(false));
 
         return () => (shouldCancel = true);
-    }, [listProjects]);
+        /*eslint-disable-next-line*/
+    }, []);
 
     useEffect(() => {
         let shouldCancel = false;
@@ -71,7 +72,8 @@ const ProjectHome = ({ projects, listProjects }) => {
         );
 
         return () => (shouldCancel = true);
-    }, [listProjects, checkFilter, searchInput]);
+        /*eslint-disable-next-line*/
+    }, [checkFilter, searchInput]);
 
     return (
         <GridContainer alignItems='center'>

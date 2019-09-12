@@ -70,7 +70,8 @@ const ProjectDetails = ({
     useEffect(() => {
         listProjectClients();
         listProjectUsers();
-    }, [listProjectClients, listProjectUsers]);
+        /*eslint-disable-next-line*/
+    }, []);
 
     const confirmationProps = {
         title: 'Confirmation',

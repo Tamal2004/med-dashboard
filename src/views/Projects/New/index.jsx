@@ -44,7 +44,8 @@ const ProjectNew = ({
     useEffect(() => {
         listProjectClients();
         listProjectUsers();
-    }, [listProjectClients, listProjectUsers]);
+        /*eslint-disable-next-line*/
+    }, []);
     const c = useStyles();
 
     return (

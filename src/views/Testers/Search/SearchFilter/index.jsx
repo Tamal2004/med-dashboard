@@ -107,7 +107,8 @@ const SearchFilter = ({ handleFilter }) => {
 
     useEffect(() => {
         handleFilter(filterValues);
-    }, [filterValues, handleFilter]);
+        /*eslint-disable-next-line*/
+    }, [filterValues]);
 
     return (
         <FilterProvider

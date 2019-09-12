@@ -64,7 +64,8 @@ const TesterHome = ({ testers, listTesters }) => {
 
     useEffect(() => {
         listTesters().then(() => setLoading(false));
-    }, [listTesters]);
+        /*eslint-disable-next-line*/
+    }, []);
 
     return (
         <Fragment>

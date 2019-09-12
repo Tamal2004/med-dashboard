@@ -61,7 +61,8 @@ const ProjectReport = ({
         return () => {
             resetProjectReport();
         };
-    }, [fetchProjectReport, params, resetProjectReport, testers]);
+        /*eslint-disable-next-line*/
+    }, []);
 
     return (
         <GridContainer alignItems='center'>
