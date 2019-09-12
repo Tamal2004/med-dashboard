@@ -133,6 +133,52 @@ export const listTesters = () => async dispatch => {
     }
 };
 
+//COGNITO
+
+export const getTestersForCognito = () => async dispatch => {
+    let DATA = [];
+
+    const getList = async (token = null) => {
+        const {
+            data: {
+                listTesters: { items, nextToken = token }
+            }
+        } = await API.graphql(
+            graphqlOperation(`query{
+              listTesters(limit: 100 nextToken: null){
+                items{
+                  id
+                  firstName
+                  surname
+                  email
+                }
+                nextToken
+                
+              }
+            }`)
+        );
+
+        return { items, nextToken };
+    };
+
+    const hello = (token = null) =>
+        getList(token).then(({ items, nextToken }) => {
+            console.log('getList');
+            const mapItems = items.map(
+                ({ email, id, firstName, surname }) =>
+                    `- - - - - - - - - - ${email} TRUE - - - - - FALSE - - ${id} ${firstName} ${surname} FALSE ${email}`
+            );
+            if (nextToken) {
+                DATA = [...DATA, ...mapItems];
+                hello(nextToken);
+            } else {
+                console.log('final', DATA);
+            }
+        });
+
+    hello();
+};
+
 // List Testers Search
 const listTestersSearchAction = (async, payload = []) => ({
     type: LIST_TESTERS_SEARCH,

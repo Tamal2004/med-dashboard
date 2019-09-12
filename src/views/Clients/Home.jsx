@@ -20,7 +20,7 @@ import {
 import { selectClientList } from 'selectors';
 
 // Actions
-import { listClients } from 'actions';
+import { listClients, getTestersForCognito } from 'actions';
 
 const useStyles = makeStyles(({ spacing }) => ({
     buttonGridStyle: {
@@ -42,7 +42,8 @@ const ClientHome = ({
     clients,
     handleAddNewClient,
     handleClientEditModal,
-    listClients
+    listClients,
+    getTestersForCognito
 }) => {
     const c = useStyles();
     const [isLoading, setLoading] = useState(true);
@@ -54,6 +55,8 @@ const ClientHome = ({
         1;
 
     useEffect(() => {
+        console.log('client home');
+        getTestersForCognito();
         let shouldCancel = false;
         listClients().then(() => !shouldCancel && setLoading(false));
 
@@ -115,7 +118,7 @@ const mapState = state => ({
     clients: selectClientList(state)
 });
 
-const mapDispatch = { listClients };
+const mapDispatch = { listClients, getTestersForCognito };
 
 const mapModal = {
     handleAddNewClient: AddNewClient,
