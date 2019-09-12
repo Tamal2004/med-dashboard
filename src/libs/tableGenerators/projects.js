@@ -44,7 +44,7 @@ export const generateProjectSessions = projectSessions =>
             Profile: profile,
             'Testing Date': composeSortableDate(date),
             'Testing Time': time,
-            Notes: notes
+            Notes: notes || ''
         })
     );
 

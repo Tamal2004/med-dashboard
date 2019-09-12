@@ -269,12 +269,13 @@ class Select extends Component {
         // Todo: refactor later into query
         const valueIndex = this.props.data
             .map(({ value }) => value)
-            .indexOf(Number(input.value));
+            .indexOf(input.value);
 
         const renderFloor =
-            queryValue || valueIndex < 20 ? 0 : Number(valueIndex);
+            queryValue || valueIndex < 10 ? 0 : valueIndex - 10;
+
         const renderCeiling =
-            queryValue || valueIndex < 20 ? 20 : renderFloor + 20;
+            queryValue || valueIndex < 10 ? 20 : renderFloor + 20;
 
         return (
             <ClickAwayListener
@@ -312,6 +313,7 @@ class Select extends Component {
                             htmlFor={id}
                             onClick={onFocus}
                             disabled={disabled}
+                            ref={this.targetRef}
                         />
                         <Backdrop
                             ref={this.targetRef}

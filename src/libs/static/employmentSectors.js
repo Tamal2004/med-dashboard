@@ -31,5 +31,6 @@ export default [
     'Clerical & Administration',
     'Sales, Retail & Purchasing',
     'Tourism & Hospitality',
-    'Transport & Logistics'
+    'Transport & Logistics',
+    'Other'
 ];

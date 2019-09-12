@@ -90,7 +90,7 @@ export const generateTesterSessions = testerSessions =>
             Notes: {
                 editable: true,
                 Component: notes,
-                value: notes,
+                value: notes || '',
                 type: 'MultiInput'
             },
             actions: {}

@@ -87,7 +87,10 @@ const TesterSearch = ({
         if (filterCounter < 3) setFilterCounter(filterCounter + 1);
         else {
             setLoading(true);
-            listTestersSearch(filters, input).then(() => setLoading(false));
+            listTestersSearch(filters, input).then(() => {
+                setPage(1);
+                setLoading(false);
+            });
         }
         // eslint-disable-next-line
     }, [filters, input]);
