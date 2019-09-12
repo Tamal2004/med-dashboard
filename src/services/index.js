@@ -1,7 +1,7 @@
 import configMailer from './mailer';
 
 export default () => {
-	configMailer();
+    configMailer();
 };
 
 export * from './mailer';
