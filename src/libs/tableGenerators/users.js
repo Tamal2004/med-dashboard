@@ -10,6 +10,6 @@ export const generateuserList = userList =>
             value: email
         },
         actions: {
-            deleteAction: idx => console.log('delete', idx)
+            deleteAction: idx => {}
         }
     }));

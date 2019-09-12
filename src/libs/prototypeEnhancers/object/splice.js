@@ -11,12 +11,12 @@ export default (data, mapping) => {
                 if (mappingIsObject && mapKeys[index] !== '') {
                     return {
                         ...accumulator,
-                        [mapKeys[index]]: data[key],
+                        [mapKeys[index]]: data[key]
                     };
                 } else {
                     return {
                         ...accumulator,
-                        [key]: data[key],
+                        [key]: data[key]
                     };
                 }
             } else {
@@ -25,7 +25,5 @@ export default (data, mapping) => {
             }
         }, {});
         return res;
-    } catch (error) {
-        console.error(error);
-    }
+    } catch (error) {}
 };

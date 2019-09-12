@@ -107,7 +107,8 @@ const SearchFilter = ({ handleFilter }) => {
 
     useEffect(() => {
         handleFilter(filterValues);
-    }, [filterValues, handleFilter]);
+        /*eslint-disable-next-line*/
+    }, [filterValues]);
 
     return (
         <FilterProvider
@@ -135,7 +136,7 @@ const SearchFilter = ({ handleFilter }) => {
                             onChange={(e, value) =>
                                 onChange(e, FILTER_KEY['age'], 'range', value)
                             }
-                            onBlur={() => console.log('blurred age')}
+                            onBlur={() => {}}
                             value={[0, 80]}
                             step={1}
                         />

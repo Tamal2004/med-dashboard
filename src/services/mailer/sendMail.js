@@ -1,7 +1,6 @@
 import AWS from 'aws-sdk';
 
 export const sendMail = ({ from, to, subject, body }) => {
-    console.log('sendmail', from, to, subject, body);
     const params = {
         Destination: {
             BccAddresses: to
