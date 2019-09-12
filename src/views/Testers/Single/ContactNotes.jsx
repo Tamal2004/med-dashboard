@@ -7,7 +7,11 @@ import { makeStyles } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/AddBox';
 
 // Local
-import { ContactsModal, ContactNotesEditModal } from 'views/Modals';
+import {
+    ContactsModal,
+    ContactNotesEditModal,
+    ConfirmationModal
+} from 'views/Modals';
 
 // Components
 import {
@@ -36,6 +40,7 @@ const ContactNotes = ({
     contactNotes,
     handleContactsModal,
     handleContactNotesEditModal,
+    handleContactNoteConfirmationModal,
     removeContactNote
 }) => {
     const [page, setPage] = useState(1);
@@ -44,11 +49,25 @@ const ContactNotes = ({
     const totalPages =
         Math.floor(contactNotes.length / 5) + !!(contactNotes.length % 5) || 1;
 
+    const confirmationProps = {
+        title: 'Confirmation',
+        promptText: `Are you sure you want to delete this contact note?`,
+        cancelText: 'Cancel',
+        submitText: 'Delete'
+    };
+
     // Inject removeContactNote
     const composedContactNotes = contactNotes.map(
         ({ id, actions, ...rest }) => ({
             ...rest,
-            actions: { ...actions, deleteAction: () => removeContactNote(id) }
+            actions: {
+                ...actions,
+                deleteAction: () =>
+                    handleContactNoteConfirmationModal({
+                        ...confirmationProps,
+                        onSubmit: () => removeContactNote(id)
+                    })
+            }
         })
     );
 
@@ -86,6 +105,7 @@ const mapState = state => ({
 const mapDispatch = { removeContactNote };
 
 const mapModal = {
+    handleContactNoteConfirmationModal: ConfirmationModal,
     handleContactsModal: ContactsModal,
     handleContactNotesEditModal: ContactNotesEditModal
 };

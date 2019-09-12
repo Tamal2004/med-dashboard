@@ -10,7 +10,7 @@ import AnonymousIcon from '@material-ui/icons/PersonOutline';
 
 // Local
 import { history } from 'libs';
-import { SessionsModal } from 'views/Modals';
+import { SessionsModal, ConfirmationModal } from 'views/Modals';
 import {
     Table,
     PaginationBase,
@@ -43,6 +43,7 @@ const useStyles = makeStyles(({ palette, spacing }) => ({
 const TesterDetails = ({
     testerDetails,
     handleSessionsModal,
+    handleSessionConfirmationModal,
     projectId,
     removeSession
 }) => {
@@ -53,12 +54,22 @@ const TesterDetails = ({
         Math.floor(testerDetails.length / 5) + !!(testerDetails.length % 5) ||
         1;
 
+    const confirmationProps = {
+        title: 'Confirmation',
+        promptText: `Are you sure you want to delete this session?`,
+        cancelText: 'Cancel',
+        submitText: 'Delete'
+    };
     // Inject removeProfile
     const composedTesterDetails = testerDetails.map(({ id, ...rest }) => ({
         ...rest,
         actions: {
             checkAction: value => setSelectedTesters(value),
-            deleteAction: () => removeSession(id)
+            deleteAction: () =>
+                handleSessionConfirmationModal({
+                    ...confirmationProps,
+                    onSubmit: () => removeSession(id)
+                })
         }
     }));
 
@@ -125,6 +136,7 @@ const mapState = state => ({
 const mapDispatch = { removeSession };
 
 const mapModal = {
+    handleSessionConfirmationModal: ConfirmationModal,
     handleSessionsModal: SessionsModal
 };
 

@@ -74,6 +74,7 @@ export const generateTesterSessions = testerSessions =>
             Time: {
                 editable: true,
                 Component: time,
+                value: time,
                 props: { normalize: normalizeTime }
             },
             Client: {
@@ -86,7 +87,12 @@ export const generateTesterSessions = testerSessions =>
                 ),
                 value: projectReference
             },
-            Notes: { editable: true, Component: notes, type: 'MultiInput' },
+            Notes: {
+                editable: true,
+                Component: notes,
+                value: notes,
+                type: 'MultiInput'
+            },
             actions: {}
         })
     );
@@ -113,6 +119,7 @@ export const generateTesterContactNotes = (testerContactNotes, contactTypes) =>
             'Contact Type': {
                 editable: true,
                 Component: type,
+                value: type,
                 type: 'Select',
                 props: { data: contactTypes }
             },
@@ -120,6 +127,7 @@ export const generateTesterContactNotes = (testerContactNotes, contactTypes) =>
             Details: {
                 editable: true,
                 Component: note,
+                value: note,
                 type: 'MultiInput',
                 props: { placeholder: 'Message details' }
             }

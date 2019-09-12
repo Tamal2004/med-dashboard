@@ -1,7 +1,27 @@
-const { REACT_APP_QUERY_TABLE_LIMIT, REACT_APP_QUERY_LIST_LIMIT } = process.env;
+const {
+    REACT_APP_QUERY_TABLE_LIMIT,
+    REACT_APP_QUERY_LIST_LIMIT,
+    REACT_APP_QUERY_SEARCH_LIMIT
+} = process.env;
 
 export const ListClients = `query ListClients($filter: ModelClientFilterInput) {
     listSortedClients(filter: $filter sortDirection: DESC limit: ${REACT_APP_QUERY_TABLE_LIMIT}) {
+        items {
+            id
+            name
+            projects {
+                items {
+                    id
+                    reference
+                    testingDate
+                }
+            }
+        }       
+    }
+}`;
+
+export const SearchClients = `query ListClients($filter: ModelClientFilterInput) {
+    listSortedClients(filter: $filter sortDirection: DESC limit: ${REACT_APP_QUERY_SEARCH_LIMIT}) {
         items {
             id
             name

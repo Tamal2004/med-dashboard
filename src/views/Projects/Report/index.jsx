@@ -61,7 +61,7 @@ const ProjectReport = ({
         return () => {
             resetProjectReport();
         };
-    }, [fetchProjectReport, params, resetProjectReport, testers]);
+    }, []);
 
     return (
         <GridContainer alignItems='center'>

@@ -50,5 +50,5 @@ export const generateProjectSessions = projectSessions =>
 
 export const generateProjectProfiles = projectProfiles =>
     projectProfiles.map(({ profile }) => ({
-        Profile: { editable: true, Component: profile }
+        Profile: { editable: true, Component: profile, value: profile }
     }));

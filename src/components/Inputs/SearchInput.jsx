@@ -32,8 +32,10 @@ function SearchInput({ ...props }) {
 
     const keyPressed = e => {
         if (e.which === 13) {
-            handleClick(value);
-            if (resetOnSubmit) setValue('');
+            if (value) {
+                handleClick(value);
+                if (resetOnSubmit) setValue('');
+            }
         }
     };
 
@@ -62,8 +64,10 @@ function SearchInput({ ...props }) {
                     <InputAdornment
                         position='end'
                         onClick={() => {
-                            handleClick(value);
-                            if (resetOnSubmit) setValue('');
+                            if (value) {
+                                handleClick(value);
+                                if (resetOnSubmit) setValue('');
+                            }
                         }}
                     >
                         <IconButton color={color} edge='end'>
@@ -91,7 +95,7 @@ function SearchInput({ ...props }) {
             onChange={handleText}
             onKeyPress={keyPressed}
             onBlur={() => handleChange(value)}
-            disabled={isDisabled || !value}
+            disabled={isDisabled}
         />
     );
 }

@@ -12,6 +12,7 @@ import {
     UpdateProject,
     RemoveProject,
     ListProjects,
+    SearchProjects,
     ListProjectClients,
     ListProjectUsers,
     ListProjectReport
@@ -184,6 +185,7 @@ export const listProjects = (
     };
 
     const variables = statuses.length || search ? { filter } : {};
+    const query = statuses.length || search ? SearchProjects : ListProjects;
 
     dispatch(listProjectsAction(REQUEST));
     const {
@@ -191,7 +193,7 @@ export const listProjects = (
             listSortedProjects: { items: listSortedProjects = [] },
             error = null
         }
-    } = await API.graphql(graphqlOperation(ListProjects, variables));
+    } = await API.graphql(graphqlOperation(query, variables));
 
     if (!error) {
         dispatch(

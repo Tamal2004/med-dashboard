@@ -1,4 +1,8 @@
-const { REACT_APP_QUERY_TABLE_LIMIT, REACT_APP_QUERY_LIST_LIMIT } = process.env;
+const {
+    REACT_APP_QUERY_TABLE_LIMIT,
+    REACT_APP_QUERY_LIST_LIMIT,
+    REACT_APP_QUERY_SEARCH_LIMIT
+} = process.env;
 
 export const ListTesters = `query ListTesters {
   listSortedTesters(sortDirection: DESC limit: ${REACT_APP_QUERY_TABLE_LIMIT}) {
@@ -25,7 +29,7 @@ export const ListTesters = `query ListTesters {
 }`;
 
 export const ListTestersSearch = `query ListTestersSearch($filter: ModelTesterFilterInput) {
-    listSortedTesters(filter: $filter limit: ${REACT_APP_QUERY_TABLE_LIMIT} sortDirection: DESC) {
+    listSortedTesters(filter: $filter limit: ${REACT_APP_QUERY_SEARCH_LIMIT} sortDirection: DESC) {
         items {
             id
             firstName
@@ -39,7 +43,7 @@ export const ListTestersSearch = `query ListTestersSearch($filter: ModelTesterFi
 export const CheckTesterEmail = `query CheckTesterEmail(
     $filter: ModelTesterFilterInput
 ) {
-    listTesters(filter: $filter limit: 1) {
+    listTesters(filter: $filter limit: ${REACT_APP_QUERY_SEARCH_LIMIT}) {
         items {
             email
         }

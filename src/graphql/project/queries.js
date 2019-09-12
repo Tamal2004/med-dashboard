@@ -1,11 +1,12 @@
 const {
     REACT_APP_QUERY_TABLE_LIMIT,
     REACT_APP_QUERY_SELECT_LIMIT,
-    REACT_APP_QUERY_LIST_LIMIT
+    REACT_APP_QUERY_LIST_LIMIT,
+    REACT_APP_QUERY_SEARCH_LIMIT
 } = process.env;
 
 export const ListProjectClients = `query ListProjectClients {
-  listSortedClients(limit: ${REACT_APP_QUERY_SELECT_LIMIT} sortDirection: DESC) {
+  listSortedClients(limit: ${REACT_APP_QUERY_SEARCH_LIMIT} sortDirection: DESC) {
     items {
       id
       name
@@ -27,7 +28,7 @@ export const ListProjectUsers = `query ListProjectUsers {
 export const CheckProjectReference = `query CheckProjectReference(
     $filter: ModelProjectFilterInput
 ) {
-    listProjects(filter: $filter limit: 1) {
+    listProjects(filter: $filter limit: ${REACT_APP_QUERY_SEARCH_LIMIT}) {
         items {
             reference
         }
@@ -118,13 +119,30 @@ export const ListProjects = `query ListProjects($filter: ModelProjectFilterInput
     }
 }`;
 
+export const SearchProjects = `query ListProjects($filter: ModelProjectFilterInput) {
+    listSortedProjects(filter: $filter limit: ${REACT_APP_QUERY_SEARCH_LIMIT} sortDirection: DESC) {
+        items {
+            id
+            client {
+                id
+                name
+            }
+            reference
+            title
+            testingDate
+            status
+            manager
+        }
+    }
+}`;
+
 export const ListIncompleteProjects = `query ListIncompleteProjects {
     listSortedProjects(filter: {
         or: [
             { status: { contains: "In Progress" } }   
             { status: { contains: "Pending" } }   
         ]
-    } limit: ${REACT_APP_QUERY_SELECT_LIMIT} sortDirection: DESC) {
+    } limit: ${REACT_APP_QUERY_SEARCH_LIMIT} sortDirection: DESC) {
         items {
             id
             reference
@@ -138,7 +156,7 @@ export const ListProjectReport = `query ListProjectReport($id: ID!) {
         id
         reference
         title
-        sessions(limit: ${1000}) {
+        sessions(limit: ${REACT_APP_QUERY_LIST_LIMIT}) {
             items {
                 profile
                 location

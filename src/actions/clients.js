@@ -18,7 +18,8 @@ import {
     FetchClient,
     RemoveClient,
     FetchClientProjects,
-    ListClients
+    ListClients,
+    SearchClients
 } from 'graphql/clients';
 
 // Action Types
@@ -69,14 +70,14 @@ export const listClients = (search = null) => async dispatch => {
               }
           }
         : {};
-
+    const query = !!search ? SearchClients : ListClients;
     dispatch(listClientsAction(REQUEST));
     const {
         data: {
             listSortedClients: { items: listSortedClients = [] } = {},
             error = null
         }
-    } = await API.graphql(graphqlOperation(ListClients, filter));
+    } = await API.graphql(graphqlOperation(query, filter));
 
     if (!error) {
         dispatch(
