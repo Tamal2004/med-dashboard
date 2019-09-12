@@ -91,7 +91,7 @@ function SearchInput({ ...props }) {
             onChange={handleText}
             onKeyPress={keyPressed}
             onBlur={() => handleChange(value)}
-            disabled={isDisabled}
+            disabled={isDisabled || !value}
         />
     );
 }
@@ -111,7 +111,7 @@ SearchInput.defaultProps = {
     color: 'primary',
     resetOnSubmit: false,
     handleClick: () => {},
-    handleChange: () => {},
+    handleChange: () => {}
 };
 
 SearchInput.propTypes = {
