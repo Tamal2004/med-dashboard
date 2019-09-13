@@ -18,7 +18,7 @@ import { selectProjectList } from 'selectors';
 import { CheckFilterBar } from 'components/FilterComponents';
 
 // Actions
-import { listProjects } from 'actions';
+import { listProjects, listProjectsSearch } from 'actions';
 
 const useStyles = makeStyles(({ spacing }) => ({
     buttonGridStyle: {
@@ -33,7 +33,7 @@ const useStyles = makeStyles(({ spacing }) => ({
     }
 }));
 
-const ProjectHome = ({ projects, listProjects }) => {
+const ProjectHome = ({ projects, listProjects, listProjectsSearch }) => {
     const c = useStyles();
     const [searchInput, setSearchInput] = useState('');
     const [checkFilter, setCheckFilter] = useState([]);
@@ -52,24 +52,21 @@ const ProjectHome = ({ projects, listProjects }) => {
         valueIndex === -1 && filters.push(value);
         valueIndex !== -1 && filters.splice(valueIndex, 1);
         setCheckFilter(filters);
-        setLoading(true);
-        listProjects(filters, searchInput).then(() => setLoading(false));
     };
 
-    useEffect(() => {
-        let shouldCancel = false;
-        listProjects().then(() => !shouldCancel && setLoading(false));
-
-        return () => (shouldCancel = true);
-        /*eslint-disable-next-line*/
-    }, []);
 
     useEffect(() => {
         let shouldCancel = false;
         setLoading(true);
-        listProjects(checkFilter, searchInput).then(
-            () => !shouldCancel && setLoading(false)
-        );
+        if (checkFilter.length || searchInput) {
+            listProjectsSearch(checkFilter, searchInput).then(
+                () => !shouldCancel && setLoading(false)
+            );
+        } else {
+            listProjects(checkFilter, searchInput).then(
+                () => !shouldCancel && setLoading(false)
+            );
+        }
 
         return () => (shouldCancel = true);
         /*eslint-disable-next-line*/
@@ -126,7 +123,7 @@ const mapState = state => ({
     projects: selectProjectList(state)
 });
 
-const mapDispatch = { listProjects };
+const mapDispatch = { listProjects, listProjectsSearch };
 
 const _ProjectHome = connect(
     mapState,

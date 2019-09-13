@@ -119,8 +119,8 @@ export const ListProjects = `query ListProjects($filter: ModelProjectFilterInput
     }
 }`;
 
-export const SearchProjects = `query ListProjects($filter: ModelProjectFilterInput) {
-    listSortedProjects(filter: $filter limit: ${REACT_APP_QUERY_SEARCH_LIMIT} sortDirection: DESC) {
+export const SearchProjects = `query ListProjects($filter: ModelProjectFilterInput $nextToken: String) {
+    listSortedProjects(filter: $filter limit: ${REACT_APP_QUERY_SEARCH_LIMIT} sortDirection: DESC nextToken: $nextToken) {
         items {
             id
             client {

@@ -1,5 +1,6 @@
 import API, { graphqlOperation } from '@aws-amplify/api';
 import { initialize } from 'redux-form';
+import uuid from 'uuid/v4';
 
 // Libs
 import { history } from 'libs';
@@ -38,12 +39,16 @@ import {
     UPDATE_PROJECT,
     REMOVE_PROJECT,
     LIST_PROJECTS,
+    LIST_PROJECTS_SEARCH,
     LIST_PROJECT_CLIENTS,
     LIST_PROJECT_USERS,
     FETCH_PROJECT_REPORT,
     RESET_PROJECT_REPORT
 } from 'actionTypes';
 import { showNotification } from './notification';
+
+// Selectors
+import { selectIsValidProjectQuery } from 'selectors';
 
 const createProjectAction = async => ({
     type: CREATE_PROJECT,
@@ -146,16 +151,17 @@ export const updateProject = project => async dispatch => {
     }
 };
 
-const listProjectsAction = (async, payload = []) => ({
-    type: LIST_PROJECTS,
+const listProjectsSearchAction = (async, payload = [], queryId = null) => ({
+    type: LIST_PROJECTS_SEARCH,
     async,
-    payload
+    payload,
+    meta: { queryId }
 });
 
-export const listProjects = (
-    statuses = [],
-    search = null
-) => async dispatch => {
+export const listProjectsSearch = (statuses = [], search = null) => async (
+    dispatch,
+    getState
+) => {
     const searchFilter = search
         ? [
               {
@@ -184,16 +190,61 @@ export const listProjects = (
         and: [...statusFilter, ...searchFilter]
     };
 
-    const variables = statuses.length || search ? { filter } : {};
-    const query = statuses.length || search ? SearchProjects : ListProjects;
+    const queryId = uuid();
 
+    dispatch(listProjectsSearchAction(REQUEST, [], queryId));
+
+    const runQuery = async (pageToken = null, firstTime = true) => {
+        if (
+            selectIsValidProjectQuery(getState(), queryId) &&
+            (firstTime || pageToken)
+        ) {
+            const variables = {
+                filter,
+                ...(pageToken ? { nextToken: pageToken } : {})
+            };
+            const {
+                data: {
+                    listSortedProjects: {
+                        items: listSortedProjects = [],
+                        nextToken
+                    } = {},
+                    error = null
+                }
+            } = await API.graphql(graphqlOperation(SearchProjects, variables));
+
+            if (!error) {
+                dispatch(
+                    listProjectsSearchAction(
+                        SUCCESS,
+                        normalizeProjects(listSortedProjects),
+                        queryId
+                    )
+                );
+            } else {
+                dispatch(listProjectsSearchAction(FAIL));
+            }
+            return runQuery(nextToken, false);
+        }
+    };
+
+    return runQuery();
+};
+
+const listProjectsAction = (async, payload = []) => ({
+    type: LIST_PROJECTS,
+    async,
+    payload
+});
+
+export const listProjects = () => async dispatch => {
     dispatch(listProjectsAction(REQUEST));
     const {
         data: {
             listSortedProjects: { items: listSortedProjects = [] },
             error = null
         }
-    } = await API.graphql(graphqlOperation(query, variables));
+    } = await API.graphql(graphqlOperation(ListProjects));
 
     if (!error) {
         dispatch(

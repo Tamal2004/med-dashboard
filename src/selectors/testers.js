@@ -67,3 +67,9 @@ export const selectTestersSearchInfo = createCachedSelector(
     selectTesters,
     ({ search }) => search.map(({ id, email }) => ({ id, email }))
 )(() => 'placeholder');
+
+export const selectIsValidTesterQuery = createCachedSelector(
+    selectTesters,
+    (state, id) => id,
+    ({ queryId }, id) => queryId === id
+)(() => 'placeholder');

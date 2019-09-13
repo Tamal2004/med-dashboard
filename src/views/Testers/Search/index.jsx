@@ -176,6 +176,7 @@ const TesterSearch = ({
                                     <PaginationBase
                                         handlePage={page => setPage(page)}
                                         totalPages={totalPages}
+                                        items
                                     />
                                 </div>
                             )}

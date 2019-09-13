@@ -1,5 +1,6 @@
 export default {
     individual: { sessions: [], contactNotes: [], projects: [] },
     list: [],
-    search: []
+    search: [],
+    queryId: null
 };

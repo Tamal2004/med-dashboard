@@ -28,8 +28,8 @@ export const ListTesters = `query ListTesters {
   }
 }`;
 
-export const ListTestersSearch = `query ListTestersSearch($filter: ModelTesterFilterInput) {
-    listSortedTesters(filter: $filter limit: ${REACT_APP_QUERY_SEARCH_LIMIT} sortDirection: DESC) {
+export const ListTestersSearch = `query ListTestersSearch($filter: ModelTesterFilterInput $nextToken: String) {
+    listSortedTesters(filter: $filter limit: ${REACT_APP_QUERY_SEARCH_LIMIT} sortDirection: DESC nextToken: $nextToken) {
         items {
             id
             firstName
@@ -37,6 +37,7 @@ export const ListTestersSearch = `query ListTestersSearch($filter: ModelTesterFi
             dob
             email
         }
+        nextToken
     }
 }`;
 

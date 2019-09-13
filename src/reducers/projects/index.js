@@ -3,10 +3,12 @@ import initialState from './initialState';
 
 // Action Types
 import {
+    REQUEST,
     SUCCESS,
     FETCH_PROJECT,
     UPDATE_PROJECT,
     LIST_PROJECTS,
+    LIST_PROJECTS_SEARCH,
     LIST_PROJECT_CLIENTS,
     LIST_PROJECT_USERS,
     REMOVE_SESSION,
@@ -16,7 +18,7 @@ import {
 
 const projectsReducer = (
     state = initialState,
-    { type, payload, async, ...action }
+    { type, payload, async, meta, ...action }
 ) => {
     const isSuccess = async === SUCCESS;
     switch (type) {
@@ -50,6 +52,23 @@ const projectsReducer = (
 
         case LIST_PROJECT_USERS: {
             return isSuccess ? { ...state, users: payload } : state;
+        }
+
+        case LIST_PROJECTS_SEARCH: {
+            const { queryId } = meta;
+            switch (async) {
+                case REQUEST: {
+                    return { ...state, list: [], queryId };
+                }
+                case SUCCESS: {
+                    return state.queryId === queryId
+                        ? { ...state, list: [...state.list, ...payload] }
+                        : state;
+                }
+                default: {
+                    return state;
+                }
+            }
         }
 
         case LIST_PROJECTS: {

@@ -4,5 +4,6 @@ export default {
     search: [],
     clients: [],
     users: [],
-    report: {}
+    report: {},
+    queryId: null
 };

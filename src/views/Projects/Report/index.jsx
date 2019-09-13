@@ -61,7 +61,7 @@ const ProjectReport = ({
         return () => {
             resetProjectReport();
         };
-    }, []);
+    }, []); // eslint-disable-line
 
     return (
         <GridContainer alignItems='center'>

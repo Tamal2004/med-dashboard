@@ -3,6 +3,7 @@ import initialState from './initialState';
 
 // Action Types
 import {
+    REQUEST,
     SUCCESS,
     CREATE_SESSION,
     UPDATE_SESSION,
@@ -18,7 +19,7 @@ import {
 
 const testersReducer = (
     state = initialState,
-    { type, payload, async, ...action }
+    { type, payload, async, meta, ...action }
 ) => {
     const isSuccess = async === SUCCESS;
     switch (type) {
@@ -31,7 +32,20 @@ const testersReducer = (
         }
 
         case LIST_TESTERS_SEARCH: {
-            return isSuccess ? { ...state, search: payload } : state;
+            const { queryId } = meta;
+            switch (async) {
+                case REQUEST: {
+                    return { ...state, search: [], queryId };
+                }
+                case SUCCESS: {
+                    return state.queryId === queryId
+                        ? { ...state, search: [...state.search, ...payload] }
+                        : state;
+                }
+                default: {
+                    return state;
+                }
+            }
         }
 
         case LIST_INCOMPLETE_PROJECTS: {

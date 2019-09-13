@@ -1,6 +1,7 @@
 import API, { graphqlOperation } from '@aws-amplify/api';
 import { initialize } from 'redux-form';
 import { gql } from 'apollo-boost';
+import uuid from 'uuid/v4';
 
 // Local
 import { history, today, composeSearch, composeFilters } from 'libs';
@@ -51,7 +52,8 @@ import {
     selectTesterId,
     selectFullName,
     selectTesterSessionIds,
-    selectTesterContactNoteIds
+    selectTesterContactNoteIds,
+    selectIsValidTesterQuery
 } from 'selectors';
 
 import { testerSignUp } from './auth';
@@ -134,36 +136,63 @@ export const listTesters = () => async dispatch => {
 };
 
 // List Testers Search
-const listTestersSearchAction = (async, payload = []) => ({
+const listTestersSearchAction = (async, payload = [], queryId = null) => ({
     type: LIST_TESTERS_SEARCH,
     async,
-    payload
+    payload,
+    meta: { queryId }
 });
 
-export const listTestersSearch = (filters, search) => async dispatch => {
+export const listTestersSearch = (filters, search) => async (
+    dispatch,
+    getState
+) => {
     // Compose filters
     const filter = {
         and: [...composeSearch(search), ...composeFilters(filters)]
     };
+    const queryId = uuid();
 
-    dispatch(listTestersSearchAction(REQUEST));
-    const {
-        data: {
-            listSortedTesters: { items: listSortedTesters = [] } = {},
-            error = null
+    dispatch(listTestersSearchAction(REQUEST, [], queryId));
+
+    const runQuery = async (pageToken = null, firstTime = true) => {
+        if (
+            selectIsValidTesterQuery(getState(), queryId) &&
+            (firstTime || pageToken)
+        ) {
+            const variables = {
+                filter,
+                ...(pageToken ? { nextToken: pageToken } : {})
+            };
+
+            const {
+                data: {
+                    listSortedTesters: {
+                        items: listSortedTesters = [],
+                        nextToken
+                    } = {},
+                    error = null
+                }
+            } = await API.graphql(
+                graphqlOperation(ListTestersSearch, variables)
+            );
+
+            if (!error) {
+                dispatch(
+                    listTestersSearchAction(
+                        SUCCESS,
+                        normalizeTestersSearch(listSortedTesters),
+                        queryId
+                    )
+                );
+            } else {
+                dispatch(listTestersSearchAction(FAIL));
+            }
+            runQuery(nextToken, false);
         }
-    } = await API.graphql(graphqlOperation(ListTestersSearch, { filter }));
+    };
 
-    if (!error) {
-        dispatch(
-            listTestersSearchAction(
-                SUCCESS,
-                normalizeTestersSearch(listSortedTesters)
-            )
-        );
-    } else {
-        dispatch(listTestersSearchAction(FAIL));
-    }
+    return runQuery();
 };
 
 // Fetch Tester
