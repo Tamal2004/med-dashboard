@@ -104,10 +104,16 @@ const TesterSearch = ({
     };
 
     const { addresses, ids } = selectedTesters.reduce(
-        (acm, testerIdx) => ({
-            ids: [...acm.ids, testersInfo[testerIdx].id],
-            addresses: [...acm.addresses, testersInfo[testerIdx].email]
-        }),
+        (acm, testerIdx) =>
+            testersInfo[testerIdx]
+                ? {
+                      ids: [...acm.ids, testersInfo[testerIdx].id],
+                      addresses: [
+                          ...acm.addresses,
+                          testersInfo[testerIdx].email
+                      ]
+                  }
+                : acm,
         {
             addresses: [],
             ids: []
