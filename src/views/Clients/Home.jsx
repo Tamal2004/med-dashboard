@@ -79,7 +79,7 @@ const ClientHome = ({
                 <NavigateButton
                     onClick={() => handleAddNewClient()}
                     variant='outlined'
-                    color='secondary'
+                    color='primary'
                 >
                     Add new client
                 </NavigateButton>

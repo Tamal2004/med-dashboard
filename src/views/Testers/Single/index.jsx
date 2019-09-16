@@ -41,7 +41,7 @@ const TesterSingle = ({
                 fetchPublicTester(testerId).then(() => setLoading(false));
         else id && fetchTester(id).then(() => setLoading(false));
         /*eslint-disable-next-line*/
-    }, []);
+    }, [testerId]);
 
     return (
         <Fragment>
