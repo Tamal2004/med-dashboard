@@ -14,7 +14,7 @@ import {
     fetchUserIdByEmail
 } from '../users';
 import config from '../../aws-exports';
-import { composeNewAccount } from 'libs';
+import { composeNewAccount, composeNewTesterBulk } from 'libs';
 import { sendMail } from 'services';
 
 const {
@@ -148,6 +148,64 @@ export const createUserByAdmin = ({ email, family_name, given_name }) => {
             }
         });
     };
+};
+
+export const bulkCreateTesterUsers = ({
+    email = 'matthew.tamal@gmail.com',
+    firstName = 'Matt',
+    surname = 'Tamal',
+    testerId = '568349cd-91b8-48c5-b82d-73253ffeaa84'
+}) => async dispatch => {
+    const adminPayload = {
+        UserPoolId: REACT_APP_COGNITO_USER_POOL_ID,
+        Username: email
+    };
+
+    const password = TEMP_PASSWORD();
+
+    const payload = {
+        ...adminPayload,
+        DesiredDeliveryMediums: ['EMAIL'],
+        TemporaryPassword: password,
+        MessageAction: 'SUPPRESS',
+        UserAttributes: [
+            {
+                Name: 'email_verified',
+                Value: 'true'
+            },
+            {
+                Name: 'email',
+                Value: email
+            },
+            {
+                Name: 'custom:firstName',
+                Value: firstName
+            },
+            {
+                Name: 'custom:surname',
+                Value: surname
+            },
+            {
+                Name: 'custom:testerId',
+                Value: testerId
+            }
+        ]
+    };
+
+    const createUserCallback = (err, data) => {
+        if (err) {
+            dispatch(showNotification({ type: 'error', message: err.message }));
+        } else {
+            sendMail(
+                composeNewTesterBulk({ firstName, email, password, testerId })
+            );
+            dispatch(
+                showNotification({ type: 'success', message: 'User created' })
+            );
+        }
+    };
+
+    return await COGNITO_CLIENT.adminCreateUser(payload, createUserCallback);
 };
 
 export const deleteWupUser = ({ id, email, ownAccount = false }) => {

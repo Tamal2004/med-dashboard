@@ -20,7 +20,7 @@ import {
 import { selectClientList } from 'selectors';
 
 // Actions
-import { listClients } from 'actions';
+import { listClients, bulkCreateTesterUsers } from 'actions';
 
 const useStyles = makeStyles(({ spacing }) => ({
     buttonGridStyle: {
@@ -41,7 +41,7 @@ const useStyles = makeStyles(({ spacing }) => ({
 const ClientHome = ({
     clients,
     handleAddNewClient,
-    handleClientEditModal,
+    handleClientEditModal,bulkCreateTesterUsers,
     listClients
 }) => {
     const c = useStyles();
@@ -83,6 +83,13 @@ const ClientHome = ({
                 >
                     Add new client
                 </NavigateButton>
+                <NavigateButton
+                    onClick={bulkCreateTesterUsers}
+                    variant='outlined'
+                    color='primary'
+                >
+                    Create User (Temp)
+                </NavigateButton>
             </GridItem>
             <GridItem md={12}>
                 {isLoading ? (
@@ -115,7 +122,7 @@ const mapState = state => ({
     clients: selectClientList(state)
 });
 
-const mapDispatch = { listClients };
+const mapDispatch = { listClients ,bulkCreateTesterUsers};
 
 const mapModal = {
     handleAddNewClient: AddNewClient,
