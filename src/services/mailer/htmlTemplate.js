@@ -26,6 +26,10 @@ export default (
         .footer {padding: 20px 30px 15px 30px;}
         .footercopy {font-family: sans-serif; font-size: 14px; color: #ffffff;}
         .footercopy a {color: #ffffff; text-decoration: underline;}
+        .delink a {
+            color: white;
+            text-decoration: none;
+        }
 
         @media only screen and (max-width: 550px), screen and (max-device-width: 550px) {
             body[yahoo] .hide {display: none!important;}
@@ -59,7 +63,7 @@ export default (
                         <table width="270" align="left" border="0" cellpadding="0" cellspacing="0">
                             <tr>
                                 <td height="30" style="padding: 0 20px 20px 0;">
-                                    <img class="fix" src="https://dd07wye6bx2kv.cloudfront.net/static/media/logo.06fb31ee.png" width="270" height="70" border="0" alt="" />
+                                    <img class="fix" src="https://wupdb-production.s3-eu-west-1.amazonaws.com/static/media/logo.png" width="270" height="70" border="0" alt="" />
                                 </td>
                             </tr>
                         </table>
@@ -88,18 +92,20 @@ export default (
                                     : ''
                             }
                             <tr>
-                                <td align="center" style="padding: 20px 0 0 0;">
+                                <td align="left" style="padding: 20px 0 0 0;">
                                     <table border="0" cellspacing="0" cellpadding="0">
                                         <tr>
-                                            <td width="37" style="text-align: center; padding: 0 10px 0 10px;">
+                                            <td width="37" style="text-align: center; padding: 0 10px 0 14px; display: flex; align-items: center;">
                                                 <a href="tel:01249-444-757">
                                                     <img src="https://icon-library.net/images/phone-icon-transparent/phone-icon-transparent-13.jpg" width="28" height="28" alt="Facebook" border="0" />
                                                 </a>
+                                                <span style="color: white; white-space: nowrap; padding: 4px 4px 4px 9px;">01249-444-757</span>
                                             </td>
-                                            <td width="37" style="text-align: center; padding: 0 10px 0 10px;">
+                                            <td width="37" style="text-align: center; padding: 0 10px 0 10px; display: flex; align-items: center;">
                                                 <a href="mailto:avril@webusability.co.uk">
                                                     <img src="https://png.pngtree.com/svg/20160617/mail_122991.png" width="37" height="37" alt="Twitter" border="0" />
                                                 </a>
+                                                <span class="delink" style="color: white; white-space: nowrap; padding: 4px; line-height: 1.6rem; text-decoration: none;">avril@webusability.co.uk</span>
                                             </td>
                                         </tr>
                                     </table>
