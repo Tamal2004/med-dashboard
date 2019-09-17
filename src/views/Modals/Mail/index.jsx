@@ -157,8 +157,8 @@ const mapDispatch = {
     listIncompleteProjects
 };
 
-const onSubmit = (values, d, { to, handleMail, onClose }) =>
-    handleMail({ ...values, to }).then(() => onClose());
+const onSubmit = (values, d, { to, handleMail, onClose, testerId = null }) =>
+    handleMail({ ...values, to, testerId }).then(() => onClose());
 
 MailModal.defaultProps = {
     to: [],

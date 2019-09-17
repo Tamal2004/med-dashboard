@@ -548,6 +548,7 @@ export const mailTesters = ({ project, contactType, ...mail }, ids) => async (
 };
 
 export const requestMail = mail => async dispatch => {
+    console.log('mail', mail);
     try {
         await sendMail(mail);
         dispatch(

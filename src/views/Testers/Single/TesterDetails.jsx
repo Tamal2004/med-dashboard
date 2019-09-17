@@ -114,7 +114,8 @@ const TesterDetails = ({
 
     const mailProps = {
         from: userEmail,
-        to: [email]
+        to: [email],
+        testerId: id
     };
 
     const requestMailProps = {
@@ -124,7 +125,6 @@ const TesterDetails = ({
             firstName,
             surname,
             userFullName,
-            testerId: id
         })
     };
 

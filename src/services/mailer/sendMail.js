@@ -1,6 +1,8 @@
 import AWS from 'aws-sdk';
 
-export const sendMail = ({ from, to, subject, body }) => {
+import htmlTemplate from './htmlTemplate';
+
+export const sendMail = ({ from, to, subject, body, testerId = null }) => {
     const params = {
         Destination: {
             BccAddresses: to
@@ -13,7 +15,7 @@ export const sendMail = ({ from, to, subject, body }) => {
             Body: {
                 Html: {
                     Charset: 'UTF-8',
-                    Data: body
+                    Data: htmlTemplate(body, testerId)
                 }
             }
         },
