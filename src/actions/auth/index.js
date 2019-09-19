@@ -154,7 +154,7 @@ export const bulkCreateTesterUsers = ({
     email = 'matthew.tamal@gmail.com',
     firstName = 'Matt',
     surname = 'Tamal',
-    testerId = '568349cd-91b8-48c5-b82d-73253ffeaa84'
+    testerId = '07886fcc-b10e-48d7-a2c1-ba093ff5479e'
 }) => async dispatch => {
     const adminPayload = {
         UserPoolId: REACT_APP_COGNITO_USER_POOL_ID,
