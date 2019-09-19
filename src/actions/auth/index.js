@@ -70,8 +70,6 @@ const changePassword = ({ oldPassword, newPassword }) => {
  ***********/
 
 export const testerSignUp = ({ id, email, firstName, surname }) => {
-    const PASS = TEMP_PASSWORD();
-
     return async dispatch => {
         return Auth.signUp({
             username: email,
