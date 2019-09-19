@@ -3,7 +3,9 @@ import initialState from './initialState';
 
 // Action Types
 import {
+    REQUEST,
     SUCCESS,
+    FAIL,
     LIST_CLIENTS,
     CREATE_CLIENT,
     UPDATE_CLIENT,
@@ -12,7 +14,7 @@ import {
 
 const clientsReducer = (
     state = initialState,
-    { type, payload, async, ...action }
+    { type, payload, async, meta, ...action }
 ) => {
     const isSuccess = async === SUCCESS;
     switch (type) {
@@ -45,7 +47,11 @@ const clientsReducer = (
         }
 
         case LIST_CLIENTS: {
-            return isSuccess ? { ...state, list: payload } : state;
+            return {
+                ...state,
+                ...(isSuccess ? { ...state, list: payload } : {}),
+                isSearching: meta.isSearching
+            };
         }
 
         default: {

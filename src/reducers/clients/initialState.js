@@ -1,4 +1,5 @@
 export default {
     individual: { projects: [] },
-    list: []
+    list: [],
+    isSearching: false
 };

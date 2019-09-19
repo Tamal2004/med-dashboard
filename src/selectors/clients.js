@@ -35,3 +35,8 @@ export const selectClientList = createCachedSelector(
     selectClients,
     ({ list }) => generateClientList(list)
 )(() => 'placeholder');
+
+export const selectAreClientsSearching = createCachedSelector(
+    selectClients,
+    ({ isSearching }) => isSearching
+)(() => 'placeholder');

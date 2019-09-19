@@ -1,7 +1,8 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
-import { makeStyles } from '@material-ui/core/styles';
+
+import { makeStyles, LinearProgress } from '@material-ui/core';
 
 // Local
 import { AddNewClient, ClientEditModal } from 'views/Modals';
@@ -17,12 +18,12 @@ import {
 } from 'components';
 
 // Selectors
-import { selectClientList } from 'selectors';
+import { selectClientList, selectAreClientsSearching } from 'selectors';
 
 // Actions
 import { listClients } from 'actions';
 
-const useStyles = makeStyles(({ spacing }) => ({
+const useStyles = makeStyles(({ shape, spacing }) => ({
     buttonGridStyle: {
         display: 'flex',
         justifyContent: 'flex-end',
@@ -35,6 +36,11 @@ const useStyles = makeStyles(({ spacing }) => ({
         marginTop: spacing(3),
         display: 'flex',
         justifyContent: 'center'
+    },
+    loader: {
+        marginTop: spacing(-0.5),
+        borderBottomLeftRadius: shape.borderRadius,
+        borderBottomRightRadius: shape.borderRadius
     }
 }));
 
@@ -42,7 +48,8 @@ const ClientHome = ({
     clients,
     handleAddNewClient,
     handleClientEditModal,
-    listClients
+    listClients,
+    isSearching
 }) => {
     const c = useStyles();
     const [isLoading, setLoading] = useState(true);
@@ -74,6 +81,7 @@ const ClientHome = ({
                     placeholder='Search by client name'
                     handleClick={handleSearch}
                 />
+                {isSearching && <LinearProgress className={c.loader} />}
             </GridItem>
             <GridItem md={4} className={c.buttonGridStyle}>
                 <NavigateButton
@@ -112,7 +120,8 @@ const ClientHome = ({
 };
 
 const mapState = state => ({
-    clients: selectClientList(state)
+    clients: selectClientList(state),
+    isSearching: selectAreClientsSearching(state)
 });
 
 const mapDispatch = { listClients };

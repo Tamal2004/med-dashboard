@@ -55,10 +55,11 @@ export const fetchClient = id => async dispatch => {
     }
 };
 
-const listClientsAction = (async, payload = []) => ({
+const listClientsAction = (async, payload = [], isSearching = false) => ({
     type: LIST_CLIENTS,
     async,
-    payload
+    payload,
+    meta: { isSearching }
 });
 
 export const listClients = (search = null) => async dispatch => {
@@ -71,7 +72,7 @@ export const listClients = (search = null) => async dispatch => {
           }
         : {};
     const query = !!search ? SearchClients : ListClients;
-    dispatch(listClientsAction(REQUEST));
+    dispatch(listClientsAction(REQUEST, [], !!search));
     const {
         data: {
             listSortedClients: { items: listSortedClients = [] } = {},
