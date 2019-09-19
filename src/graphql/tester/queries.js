@@ -43,11 +43,18 @@ export const ListTestersSearch = `query ListTestersSearch($filter: ModelTesterFi
 
 export const CheckTesterEmail = `query CheckTesterEmail(
     $filter: ModelTesterFilterInput
+    $nextToken: String
 ) {
-    listTesters(filter: $filter limit: ${REACT_APP_QUERY_SEARCH_LIMIT}) {
+    listSortedTesters(
+        filter: $filter 
+        limit: ${REACT_APP_QUERY_SEARCH_LIMIT} 
+        nextToken: $nextToken
+        sortDirection: DESC
+    ) {
         items {
             email
         }
+        nextToken
     }
 }`;
 

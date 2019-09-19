@@ -1,6 +1,6 @@
 import API, { graphqlOperation } from '@aws-amplify/api';
 
-import { validateRequired } from 'libs';
+import { validateRequired, checkEmailQuery } from 'libs';
 import { CheckTesterEmail } from 'graphql/tester';
 import { client2 } from '../../../App/client';
 import { gql } from 'apollo-boost';
@@ -35,41 +35,6 @@ export const validate = (values, { isStudent, isEmployed, isTester }) => {
     return { ...validateRequired(values, required) };
 };
 
-export const asyncValidate = ({ email, isPublicUser }) => {
-    if (isPublicUser) {
-        return client2
-            .query({
-                query: gql(CheckTesterEmail),
-                variables: {
-                    filter: { email: { eq: email } }
-                }
-            })
-            .then(
-                ({
-                    data: {
-                        listTesters: { items: existingTesters = [] } = {}
-                    } = {}
-                }) => {
-                    if (existingTesters.length)
-                        return Promise.reject({
-                            email: 'This email already exists'
-                        });
-                }
-            );
-    } else {
-        return API.graphql(
-            graphqlOperation(CheckTesterEmail, {
-                filter: { email: { eq: email } }
-            })
-        ).then(
-            ({
-                data: { listTesters: { items: existingTesters = [] } = {} } = {}
-            }) => {
-                if (existingTesters.length)
-                    return Promise.reject({
-                        email: 'This email already exists'
-                    });
-            }
-        );
-    }
+export const asyncValidate = async ({ email, isPublicUser }) => {
+    return await checkEmailQuery(email, isPublicUser);
 };

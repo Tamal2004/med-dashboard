@@ -2,7 +2,9 @@ import React, { Fragment, useState, useEffect } from 'react';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import classNames from 'clsx';
-import { makeStyles } from '@material-ui/core/styles';
+
+// Material
+import { makeStyles, Typography, LinearProgress } from '@material-ui/core';
 import { SearchFilter } from './SearchFilter';
 
 import {
@@ -21,13 +23,14 @@ import { MailModal } from 'views/Modals';
 import {
     selectTestersSearch,
     selectEmail,
-    selectTestersSearchInfo
+    selectTestersSearchInfo,
+    selectAreTestersSearching
 } from 'selectors';
 
 // Actions
 import { listTestersSearch, mailTesters } from 'actions';
 
-const useStyles = makeStyles(({ spacing }) => ({
+const useStyles = makeStyles(({ shape, spacing, typography }) => ({
     gridDistance: {
         marginBottom: spacing(4)
     },
@@ -44,9 +47,24 @@ const useStyles = makeStyles(({ spacing }) => ({
         marginBottom: 20
     },
     footer: {
-        marginTop: spacing(3),
+        marginTop: spacing(3)
+    },
+    pagination: {
         display: 'flex',
         justifyContent: 'center'
+    },
+    total: {
+        display: 'flex'
+    },
+    totalText: {
+        fontWeight: typography.fontWeightBold,
+        alignSelf: 'center',
+        paddingLeft: spacing()
+    },
+    loader: {
+        marginTop: spacing(-0.5),
+        borderBottomLeftRadius: shape.borderRadius,
+        borderBottomRightRadius: shape.borderRadius
     }
 }));
 
@@ -68,7 +86,8 @@ const TesterSearch = ({
     listTestersSearch,
     userEmail,
     testersInfo,
-    mailTesters
+    mailTesters,
+    isSearching
 }) => {
     const c = useStyles();
     const [input, setInput] = useState('');
@@ -146,6 +165,7 @@ const TesterSearch = ({
                         handleClick={handleSearch}
                         handleChange={value => setInput(value)}
                     />
+                    {isSearching && <LinearProgress className={c.loader} />}
                 </GridItem>
                 <GridItem md={3}>
                     <div className={c.filterButtonWrapper}>
@@ -178,13 +198,24 @@ const TesterSearch = ({
                                 checkAll={value => setSelectedTesters(value)}
                             />
                             {!!testers.length && (
-                                <div className={c.footer}>
-                                    <PaginationBase
-                                        handlePage={page => setPage(page)}
-                                        totalPages={totalPages}
-                                        items
-                                    />
-                                </div>
+                                <GridContainer className={c.footer}>
+                                    <GridItem md={3} className={c.total}>
+                                        <Typography
+                                            variant='subtitle1'
+                                            className={c.totalText}
+                                        >
+                                            {`Total Items: ${testers.length}`}
+                                        </Typography>
+                                    </GridItem>
+                                    <GridItem md={6} className={c.pagination}>
+                                        <PaginationBase
+                                            handlePage={page => setPage(page)}
+                                            totalPages={totalPages}
+                                            items
+                                        />
+                                    </GridItem>
+                                    <GridItem md={3} />
+                                </GridContainer>
                             )}
                         </Fragment>
                     )}
@@ -197,7 +228,8 @@ const TesterSearch = ({
 const mapState = state => ({
     testers: selectTestersSearch(state),
     testersInfo: selectTestersSearchInfo(state),
-    userEmail: selectEmail(state)
+    userEmail: selectEmail(state),
+    isSearching: selectAreTestersSearching(state)
 });
 
 const mapDispatch = { listTestersSearch, mailTesters };

@@ -17,13 +17,13 @@ const FILTER_KEY = {
     county: 'County',
     country: 'Country',
     disability: 'Disability',
-    education: 'Education Stages',
-    'employee-counts': 'Employee Counts',
-    'business-sectors': 'Business Sectors',
-    'employment-statuses': 'Employment Statuses',
-    ethnicities: 'Ethnicities',
-    'marital-statuses': 'Marital Statuses',
-    titles: 'Titles',
+    education: 'Education Stage',
+    'employee-counts': 'Employee Count',
+    'business-sectors': 'Business Sector',
+    'employment-statuses': 'Employment Status',
+    ethnicities: 'Ethnicity',
+    'marital-statuses': 'Marital Status',
+    titles: 'Title',
     gender: 'Gender'
 };
 

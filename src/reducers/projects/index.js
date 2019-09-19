@@ -5,6 +5,7 @@ import initialState from './initialState';
 import {
     REQUEST,
     SUCCESS,
+    FAIL,
     FETCH_PROJECT,
     UPDATE_PROJECT,
     LIST_PROJECTS,
@@ -55,15 +56,22 @@ const projectsReducer = (
         }
 
         case LIST_PROJECTS_SEARCH: {
-            const { queryId } = meta;
+            const { queryId, isFinal } = meta;
             switch (async) {
                 case REQUEST: {
-                    return { ...state, list: [], queryId };
+                    return { ...state, list: [], queryId, isSearching: true };
                 }
                 case SUCCESS: {
                     return state.queryId === queryId
-                        ? { ...state, list: [...state.list, ...payload] }
+                        ? {
+                              ...state,
+                              list: [...state.list, ...payload],
+                              isSearching: !isFinal
+                          }
                         : state;
+                }
+                case FAIL: {
+                    return { ...state, isSearching: false };
                 }
                 default: {
                     return state;

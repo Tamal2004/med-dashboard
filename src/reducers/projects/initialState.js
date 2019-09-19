@@ -5,5 +5,6 @@ export default {
     clients: [],
     users: [],
     report: {},
-    queryId: null
+    queryId: null,
+    isSearching: false
 };

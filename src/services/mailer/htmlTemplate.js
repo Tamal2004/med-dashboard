@@ -60,10 +60,12 @@ export default (
             <table bgcolor="#ffffff" class="content" align="center" cellpadding="0" cellspacing="0" border="0">
                 <tr>
                     <td bgcolor="#ffebcd" class="header">
-                        <table width="270" align="left" border="0" cellpadding="0" cellspacing="0">
+                        <table width="100%" align="left" border="0" cellpadding="0" cellspacing="0">
                             <tr>
-                                <td height="30" style="padding: 0 20px 20px 0;">
-                                    <img class="fix" src="https://wupdb-production.s3-eu-west-1.amazonaws.com/static/media/logo.png" width="270" height="70" border="0" alt="" />
+                                <td height="30" style="padding: 0 20px 20px 0;" align="center">
+                                    <a href="www.webusability.co.uk">
+                                        <img class="fix" src="https://wupdb-production.s3-eu-west-1.amazonaws.com/static/media/logo.png" width="270" height="45" border="0" alt="" />
+                                    </a>
                                 </td>
                             </tr>
                         </table>
@@ -95,17 +97,29 @@ export default (
                                 <td align="left" style="padding: 20px 0 0 0;">
                                     <table border="0" cellspacing="0" cellpadding="0">
                                         <tr>
-                                            <td width="37" style="text-align: center; padding: 0 10px 0 14px; display: flex; align-items: center;">
-                                                <a href="tel:01249-444-757">
-                                                    <img src="https://icon-library.net/images/phone-icon-transparent/phone-icon-transparent-13.jpg" width="28" height="28" alt="Facebook" border="0" />
-                                                </a>
-                                                <span style="color: white; white-space: nowrap; padding: 4px 4px 4px 9px;">01249-444-757</span>
-                                            </td>
-                                            <td width="37" style="text-align: center; padding: 0 10px 0 10px; display: flex; align-items: center;">
-                                                <a href="mailto:avril@webusability.co.uk">
-                                                    <img src="https://png.pngtree.com/svg/20160617/mail_122991.png" width="37" height="37" alt="Twitter" border="0" />
-                                                </a>
-                                                <span class="delink" style="color: white; white-space: nowrap; padding: 4px; line-height: 1.6rem; text-decoration: none;">avril@webusability.co.uk</span>
+                                            <td align="left" style="padding: 12px 0 0 0;">
+                                                <table border="0" cellspacing="0" cellpadding="0">
+                                                    <tr>
+                                                        <td width="100" style="text-align: center; padding: 0 10px 0 17px; display: flex; align-items: center;">
+                                                            <a href="tel:01249-444-757">
+                                                                <img src="https://wupdb-production.s3-eu-west-1.amazonaws.com/static/media/phoneIcon.png" width="22" height="22" alt="Phone" border="0" />
+                                                            </a>
+                                                            <a href="tel:01249-444-757" style="text-decoration: none;"><span style="color: white; white-space: nowrap; padding-left: 12px;">01249 444 757</span></a>
+                                                        </td>
+                                                        <td width="100" style="text-align: center; padding: 0 10px 0 16px; display: flex; align-items: center; line-height: 1.6rem; text-decoration: none;">
+                                                            <a href="mailto:info@webusability.co.uk">
+                                                                <img src="https://wupdb-production.s3-eu-west-1.amazonaws.com/static/media/mailIcon.png" width="24" height="24" alt="Email" border="0" />
+                                                            </a>
+                                                            <span class="delink" style="color: white; white-space: nowrap; padding-left: 11px;">info@webusability.co.uk</span>
+                                                        </td>
+                                                        <td width="100" style="text-align: center; padding: 0 10px 0 16px; display: flex; align-items: center; line-height: 1.6rem; text-decoration: none;">
+                                                            <a href="${REACT_APP_DOMAIN}">
+                                                                <img src="https://wupdb-production.s3-eu-west-1.amazonaws.com/static/media/internetIcon.png" width="24" height="24" alt="Website" border="0" />
+                                                            </a>
+                                                            <span class="delink" style="color: white; white-space: nowrap; padding-left: 11px;">${REACT_APP_DOMAIN}</span>
+                                                        </td>
+                                                    </tr>
+                                                </table>
                                             </td>
                                         </tr>
                                     </table>

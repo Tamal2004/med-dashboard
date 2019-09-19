@@ -1,6 +1,7 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { makeStyles } from '@material-ui/core/styles';
+
+import { makeStyles, LinearProgress } from '@material-ui/core';
 
 import {
     GridContainer,
@@ -14,13 +15,13 @@ import {
 } from 'components';
 
 // Selectors
-import { selectProjectList } from 'selectors';
+import { selectProjectList, selectAreProjectsSearching } from 'selectors';
 import { CheckFilterBar } from 'components/FilterComponents';
 
 // Actions
 import { listProjects, listProjectsSearch } from 'actions';
 
-const useStyles = makeStyles(({ spacing }) => ({
+const useStyles = makeStyles(({ shape, spacing }) => ({
     buttonGridStyle: {
         display: 'flex',
         justifyContent: 'flex-end',
@@ -30,10 +31,20 @@ const useStyles = makeStyles(({ spacing }) => ({
         marginTop: spacing(3),
         display: 'flex',
         justifyContent: 'center'
+    },
+    loader: {
+        marginTop: spacing(-0.5),
+        borderBottomLeftRadius: shape.borderRadius,
+        borderBottomRightRadius: shape.borderRadius
     }
 }));
 
-const ProjectHome = ({ projects, listProjects, listProjectsSearch }) => {
+const ProjectHome = ({
+    projects,
+    listProjects,
+    listProjectsSearch,
+    isSearching
+}) => {
     const c = useStyles();
     const [searchInput, setSearchInput] = useState('');
     const [checkFilter, setCheckFilter] = useState([]);
@@ -53,7 +64,6 @@ const ProjectHome = ({ projects, listProjects, listProjectsSearch }) => {
         valueIndex !== -1 && filters.splice(valueIndex, 1);
         setCheckFilter(filters);
     };
-
 
     useEffect(() => {
         let shouldCancel = false;
@@ -87,6 +97,7 @@ const ProjectHome = ({ projects, listProjects, listProjectsSearch }) => {
                     handleChange={value => setSearchInput(value)}
                     handleClick={value => setSearchInput(value)}
                 />
+                {isSearching && <LinearProgress className={c.loader} />}
             </GridItem>
             <GridItem md={4} className={c.buttonGridStyle}>
                 <Link to={'/project/new'}>
@@ -120,7 +131,8 @@ const ProjectHome = ({ projects, listProjects, listProjectsSearch }) => {
 };
 
 const mapState = state => ({
-    projects: selectProjectList(state)
+    projects: selectProjectList(state),
+    isSearching: selectAreProjectsSearching(state)
 });
 
 const mapDispatch = { listProjects, listProjectsSearch };

@@ -136,11 +136,16 @@ export const listTesters = () => async dispatch => {
 };
 
 // List Testers Search
-const listTestersSearchAction = (async, payload = [], queryId = null) => ({
+const listTestersSearchAction = (
+    async,
+    payload = [],
+    queryId = null,
+    isFinal = false
+) => ({
     type: LIST_TESTERS_SEARCH,
     async,
     payload,
-    meta: { queryId }
+    meta: { queryId, isFinal }
 });
 
 export const listTestersSearch = (filters, search) => async (
@@ -182,7 +187,8 @@ export const listTestersSearch = (filters, search) => async (
                     listTestersSearchAction(
                         SUCCESS,
                         normalizeTestersSearch(listSortedTesters),
-                        queryId
+                        queryId,
+                        !nextToken
                     )
                 );
             } else {

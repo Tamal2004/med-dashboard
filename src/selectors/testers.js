@@ -73,3 +73,8 @@ export const selectIsValidTesterQuery = createCachedSelector(
     (state, id) => id,
     ({ queryId }, id) => queryId === id
 )(() => 'placeholder');
+
+export const selectAreTestersSearching = createCachedSelector(
+    selectTesters,
+    ({ isSearching }) => isSearching
+)(() => 'placeholder');

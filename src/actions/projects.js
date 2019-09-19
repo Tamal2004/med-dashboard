@@ -151,11 +151,16 @@ export const updateProject = project => async dispatch => {
     }
 };
 
-const listProjectsSearchAction = (async, payload = [], queryId = null) => ({
+const listProjectsSearchAction = (
+    async,
+    payload = [],
+    queryId = null,
+    isFinal = false
+) => ({
     type: LIST_PROJECTS_SEARCH,
     async,
     payload,
-    meta: { queryId }
+    meta: { queryId, isFinal }
 });
 
 export const listProjectsSearch = (statuses = [], search = null) => async (
@@ -218,7 +223,8 @@ export const listProjectsSearch = (statuses = [], search = null) => async (
                     listProjectsSearchAction(
                         SUCCESS,
                         normalizeProjects(listSortedProjects),
-                        queryId
+                        queryId,
+                        !nextToken
                     )
                 );
             } else {

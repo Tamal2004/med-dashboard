@@ -17,6 +17,9 @@ import config from '../../aws-exports';
 import { composeNewAccount } from 'libs';
 import { sendMail } from 'services';
 
+// Selectors
+import { selectIsTester, selectEmail, selectFullName } from 'selectors';
+
 const {
     REACT_APP_COGNITO_USER_POOL_ID,
     REACT_APP_SES_ACCESS_KEY_ID,
@@ -69,38 +72,74 @@ const changePassword = ({ oldPassword, newPassword }) => {
  * ACTIONS *
  ***********/
 
-export const testerSignUp = ({ id, email, firstName, surname }) => {
-    return async dispatch => {
-        return Auth.signUp({
-            username: email,
-            password: PASS,
-            attributes: {
-                email,
-                'custom:firstName': firstName,
-                'custom:surname': surname,
-                'custom:testerId': id
+export const testerSignUp = ({ id, email, firstName, surname }) => async (
+    dispatch,
+    getState
+) => {
+    const password = TEMP_PASSWORD();
+
+    const payload = {
+        UserPoolId: REACT_APP_COGNITO_USER_POOL_ID,
+        Username: email,
+        DesiredDeliveryMediums: ['EMAIL'],
+        TemporaryPassword: password,
+        MessageAction: 'SUPPRESS',
+        UserAttributes: [
+            {
+                Name: 'email_verified',
+                Value: 'true'
+            },
+            {
+                Name: 'email',
+                Value: email
+            },
+            {
+                Name: 'custom:firstName',
+                Value: firstName
+            },
+            {
+                Name: 'custom:surname',
+                Value: surname
+            },
+            {
+                Name: 'custom:testerId',
+                Value: id
             }
-        })
-            .then(res => {
-                sendMail(
-                    composeNewAccount({ firstName, email, password: PASS })
-                );
-                dispatch(
-                    showNotification({
-                        type: 'success',
-                        message: 'Tester account creation successful!'
-                    })
-                );
-            })
-            .catch(err =>
-                dispatch(
-                    showNotification({
-                        type: 'error',
-                        message: err.message
-                    })
-                )
-            );
+        ]
     };
+
+    const createUserCallback = err => {
+        if (err) {
+            dispatch(showNotification({ type: 'error', message: err.message }));
+        } else {
+            const store = getState();
+            let internalUserDetails = {};
+            if (!selectIsTester(store)) {
+                internalUserDetails = {
+                    from: selectEmail(store),
+                    userFullName: selectFullName(store)
+                };
+            }
+
+            sendMail(
+                composeNewAccount({
+                    ...internalUserDetails,
+                    firstName,
+                    email,
+                    password,
+                    testerId: id
+                })
+            );
+            dispatch(
+                showNotification({
+                    type: 'success',
+                    message: 'Tester account creation successful!'
+                })
+            );
+        }
+    };
+
+    return await COGNITO_CLIENT.adminCreateUser(payload, createUserCallback);
 };
 
 export const createUserByAdmin = ({ email, family_name, given_name }) => {

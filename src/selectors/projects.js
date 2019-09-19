@@ -57,6 +57,11 @@ export const selectIsValidProjectQuery = createCachedSelector(
     ({ queryId }, id) => queryId === id
 )(() => 'placeholder');
 
+export const selectAreProjectsSearching = createCachedSelector(
+    selectProjects,
+    ({ isSearching }) => isSearching
+)(() => 'placeholder');
+
 // Project Report
 export const selectProjectReport = createCachedSelector(
     selectProjects,

@@ -5,6 +5,7 @@ import initialState from './initialState';
 import {
     REQUEST,
     SUCCESS,
+    FAIL,
     CREATE_SESSION,
     UPDATE_SESSION,
     MAIL_TESTER,
@@ -32,15 +33,22 @@ const testersReducer = (
         }
 
         case LIST_TESTERS_SEARCH: {
-            const { queryId } = meta;
+            const { queryId, isFinal } = meta;
             switch (async) {
                 case REQUEST: {
-                    return { ...state, search: [], queryId };
+                    return { ...state, search: [], queryId, isSearching: true };
                 }
                 case SUCCESS: {
                     return state.queryId === queryId
-                        ? { ...state, search: [...state.search, ...payload] }
+                        ? {
+                              ...state,
+                              search: [...state.search, ...payload],
+                              isSearching: !isFinal
+                          }
                         : state;
+                }
+                case FAIL: {
+                    return { ...state, isSearching: false };
                 }
                 default: {
                     return state;
