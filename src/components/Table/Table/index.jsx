@@ -48,6 +48,7 @@ class Table extends Component {
     });
     //
     componentDidMount() {
+        console.log('remounting');
         this.setState({
             tableWidth:
                 this.tableRef && ReactDOM.findDOMNode(this.tableRef).offsetWidth
@@ -56,7 +57,9 @@ class Table extends Component {
 
     componentDidUpdate({ data: prevData = [] }, s, c) {
         const { data = [] } = this.props;
-        if (prevData !== data)
+
+        if (prevData !== data) {
+            console.log('updating');
             this.setState({
                 data,
                 initialData: data,
@@ -65,6 +68,7 @@ class Table extends Component {
                     this.tableRef &&
                     ReactDOM.findDOMNode(this.tableRef).offsetWidth
             });
+        }
     }
 
     handleSort = idx => {
