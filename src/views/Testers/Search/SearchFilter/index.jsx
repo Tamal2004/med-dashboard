@@ -17,13 +17,13 @@ const FILTER_KEY = {
     county: 'County',
     country: 'Country',
     disability: 'Disability',
-    education: 'Education Stage',
-    'employee-counts': 'Employee Count',
-    'business-sectors': 'Business Sector',
-    'employment-statuses': 'Employment Status',
-    ethnicities: 'Ethnicity',
-    'marital-statuses': 'Marital Status',
-    titles: 'Title',
+    education: 'Education Stages',
+    'employee-counts': 'Employee Counts',
+    'business-sectors': 'Business Sectors',
+    'employment-statuses': 'Employment Statuses',
+    ethnicities: 'Ethnicities',
+    'marital-statuses': 'Marital Statuses',
+    titles: 'Titles',
     gender: 'Gender'
 };
 
@@ -150,7 +150,7 @@ const SearchFilter = ({ handleFilter }) => {
                                     'checkbox'
                                 )
                             }
-                            title={FILTER_KEY['marital-statuses']}
+                            title={'Marital Status'}
                             checked={getFilterValues(
                                 FILTER_KEY['marital-statuses'],
                                 'checkbox'
@@ -178,7 +178,7 @@ const SearchFilter = ({ handleFilter }) => {
                                     'checkbox'
                                 )
                             }
-                            title={FILTER_KEY['ethnicities']}
+                            title={'Ethnicity'}
                             checked={getFilterValues(
                                 FILTER_KEY['ethnicities'],
                                 'checkbox'
@@ -210,7 +210,7 @@ const SearchFilter = ({ handleFilter }) => {
                                     'checkbox'
                                 )
                             }
-                            title={FILTER_KEY['employment-statuses']}
+                            title={'Employment Status'}
                             checked={getFilterValues(
                                 FILTER_KEY['employment-statuses'],
                                 'checkbox'
@@ -226,7 +226,7 @@ const SearchFilter = ({ handleFilter }) => {
                                     'checkbox'
                                 )
                             }
-                            title={FILTER_KEY['business-sectors']}
+                            title={'Business Sector'}
                             checked={getFilterValues(
                                 FILTER_KEY['business-sectors'],
                                 'checkbox'
@@ -242,7 +242,7 @@ const SearchFilter = ({ handleFilter }) => {
                                     'checkbox'
                                 )
                             }
-                            title={FILTER_KEY['employee-counts']}
+                            title={'Employee Count'}
                             checked={getFilterValues(
                                 FILTER_KEY['employee-counts'],
                                 'checkbox'
