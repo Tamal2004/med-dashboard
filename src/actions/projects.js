@@ -88,32 +88,38 @@ const fetchProjectAction = (async, payload) => ({
 });
 
 export const fetchProject = id => async dispatch => {
-    try {
-        dispatch(fetchProjectAction(REQUEST));
-        const {
-            data: { getProject }
-        } = await API.graphql(graphqlOperation(FetchProject, { id }));
-
+    const dispatchSuccess = project => {
         const {
             projectDetails,
             projectManagement,
             clientFeedback,
             projectData
-        } = normalizeProject(getProject);
+        } = normalizeProject(project);
 
         dispatch(initialize('ProjectDetails', projectDetails));
         dispatch(initialize('ProjectManagement', projectManagement));
         dispatch(initialize('ClientFeedback', clientFeedback));
         dispatch(fetchProjectAction(SUCCESS, projectData));
-    } catch {
-        dispatch(fetchProjectAction(FAIL));
-        dispatch(
-            showNotification({
-                type: 'error',
-                message: 'Something went wrong fetching the project!'
-            })
-        );
-        history.push('/project');
+    };
+    try {
+        dispatch(fetchProjectAction(REQUEST));
+        const {
+            data: { getProject }
+        } = await API.graphql(graphqlOperation(FetchProject, { id }));
+        dispatchSuccess(getProject);
+    } catch ({ data: { getProject } = {} }) {
+        if (!!getProject) {
+            dispatchSuccess(getProject);
+        } else {
+            dispatch(fetchProjectAction(FAIL));
+            dispatch(
+                showNotification({
+                    type: 'error',
+                    message: 'Something went wrong fetching the project!'
+                })
+            );
+            history.push('/project');
+        }
     }
 };
 
@@ -327,20 +333,34 @@ export const fetchProjectReport = (
     id,
     testerIndices = []
 ) => async dispatch => {
-    dispatch(fetchProjectReportAction(REQUEST));
-    const {
-        data: { getProject = {}, error = null }
-    } = await API.graphql(graphqlOperation(ListProjectReport, { id }));
-
-    if (!error) {
+    const dispatchSuccess = project => {
         dispatch(
             fetchProjectReportAction(
                 SUCCESS,
-                normalizeProjectReport(getProject, testerIndices)
+                normalizeProjectReport(project, testerIndices)
             )
         );
-    } else {
-        dispatch(fetchProjectReportAction(FAIL));
+    };
+
+    try {
+        dispatch(fetchProjectReportAction(REQUEST));
+        const {
+            data: { getProject }
+        } = await API.graphql(graphqlOperation(ListProjectReport, { id }));
+        dispatchSuccess(getProject);
+    } catch ({ data: { getProject } = {} }) {
+        if (!!getProject) {
+            dispatchSuccess(getProject);
+        } else {
+            dispatch(fetchProjectReportAction(FAIL));
+            dispatch(
+                showNotification({
+                    type: 'error',
+                    message: 'Something went wrong fetching the project report!'
+                })
+            );
+            history.push('/project');
+        }
     }
 };
 

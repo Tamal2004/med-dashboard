@@ -20,31 +20,35 @@ export const normalizeTestersList = testers =>
             sessions: { items: sessions = [] },
             contactNotes: { items: contactNotes = [] }
         }) => {
-            const lastContactDate = contactNotes.reduce((acm, { date }) => {
-                if (!acm) return new Date(date);
+            const lastContactDate = contactNotes
+                .filter(contactNote => !!contactNote)
+                .reduce((acm, { date }) => {
+                    if (!acm) return new Date(date);
 
-                const formattedDate = new Date(date);
-                return acm < formattedDate ? formattedDate : acm;
-            }, null);
+                    const formattedDate = new Date(date);
+                    return acm < formattedDate ? formattedDate : acm;
+                }, null);
 
             const {
                 date: lastTestingDate,
                 reference: lastProjectReference,
                 id: lastProjectId
-            } = sessions.reduce(
-                (
-                    acm,
-                    { date, project: { reference = null, id = null } = {} }
-                ) => {
-                    if (!acm.date)
-                        return { date: new Date(date), reference, id };
-                    const formattedDate = new Date(date);
-                    return acm.date < formattedDate
-                        ? { date: formattedDate, reference, id }
-                        : acm;
-                },
-                { date: null }
-            );
+            } = sessions
+                .filter(session => !!session)
+                .reduce(
+                    (
+                        acm,
+                        { date, project: { reference = null, id = null } = {} }
+                    ) => {
+                        if (!acm.date)
+                            return { date: new Date(date), reference, id };
+                        const formattedDate = new Date(date);
+                        return acm.date < formattedDate
+                            ? { date: formattedDate, reference, id }
+                            : acm;
+                    },
+                    { date: null }
+                );
 
             return {
                 testerName: `${firstName} ${surname}`,
@@ -126,9 +130,13 @@ export const normalizeTester = ({
     contactNotes: { items: contactNotesData = [] } = {},
     ...testerData
 }) => {
-    const sessions = sessionsData.map(normalizeSessionTester);
+    const sessions = sessionsData
+        .filter(session => !!session)
+        .map(normalizeSessionTester);
 
-    const contactNotes = contactNotesData.map(normalizeContactNote);
+    const contactNotes = contactNotesData
+        .filter(contactNote => !!contactNote)
+        .map(normalizeContactNote);
 
     return {
         ...normalizeTesterForm(testerData, false),

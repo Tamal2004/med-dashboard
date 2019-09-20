@@ -79,18 +79,20 @@ export const normalizeProject = ({
     sessions: { items: sessionsData = [] } = {},
     ...projectData
 }) => {
-    const sessions = sessionsData.map(
-        ({
-            date,
-            tester: { id: testerId, firstName, surname } = {},
-            ...rest
-        }) => ({
-            date: deserializeDate(date),
-            testerId,
-            testerName: `${firstName} ${surname}`,
-            ...rest
-        })
-    );
+    const sessions = sessionsData
+        .filter(session => !!session)
+        .map(
+            ({
+                date,
+                tester: { id: testerId, firstName, surname } = {},
+                ...rest
+            }) => ({
+                date: deserializeDate(date),
+                testerId,
+                testerName: `${firstName} ${surname}`,
+                ...rest
+            })
+        );
 
     return {
         ...normalizeProjectForm(projectData),
@@ -111,6 +113,7 @@ export const normalizeProjectReport = (
     testerIndices
 ) => {
     const reportData = sessions
+        .filter(session => !!session)
         .map(
             ({
                 tester: {

@@ -209,50 +209,50 @@ const fetchTesterAction = (async, payload = []) => ({
 });
 
 export const fetchTester = id => async dispatch => {
-    try {
-        dispatch(fetchTesterAction(REQUEST));
-
-        const {
-            data: { getTester, error = null }
-        } = await API.graphql(graphqlOperation(FetchTester, { id }));
-
+    const dispatchSuccess = tester => {
         const {
             testerDetails,
             contactDetails,
             employmentDetails,
             testerData
-        } = normalizeTester(getTester);
+        } = normalizeTester(tester);
 
         dispatch(initialize('TesterDetails', testerDetails));
         dispatch(initialize('ContactDetails', contactDetails));
         dispatch(initialize('EmploymentDetails', employmentDetails));
 
         dispatch(fetchTesterAction(SUCCESS, testerData));
-    } catch {
-        dispatch(fetchTesterAction(FAIL));
-        dispatch(
-            showNotification({
-                type: 'error',
-                message: 'Something went wrong fetching the tester!'
-            })
-        );
-        history.push('/tester');
+    };
+
+    try {
+        dispatch(fetchTesterAction(REQUEST));
+
+        const {
+            data: { getTester }
+        } = await API.graphql(graphqlOperation(FetchTester, { id }));
+        dispatchSuccess(getTester);
+    } catch ({ data: { getTester } = {} }) {
+        if (!!getTester) {
+            dispatchSuccess(getTester);
+        } else {
+            dispatch(fetchTesterAction(FAIL));
+            dispatch(
+                showNotification({
+                    type: 'error',
+                    message: 'Something went wrong fetching the tester!'
+                })
+            );
+            history.push('/tester');
+        }
     }
 };
 
 export const fetchPublicTester = id => async dispatch => {
-    try {
-        dispatch(fetchTesterAction(REQUEST));
-        const {
-            data: {
-                getTester: {
-                    sessions: { items: sessions = [] },
-                    contactNotes: { items: contactNotes = [] },
-                    ...getTester
-                }
-            }
-        } = await API.graphql(graphqlOperation(FetchPublicTester, { id }));
-
+    const dispatchSuccess = ({
+        sessions: { items: sessions = [] },
+        contactNotes: { items: contactNotes = [] },
+        ...getTester
+    }) => {
         const {
             testerDetails,
             contactDetails,
@@ -263,15 +263,27 @@ export const fetchPublicTester = id => async dispatch => {
         dispatch(initialize('ContactDetails', contactDetails));
         dispatch(initialize('EmploymentDetails', employmentDetails));
         dispatch(fetchTesterAction(SUCCESS, { id, sessions, contactNotes }));
-    } catch {
-        dispatch(fetchTesterAction(FAIL));
-        dispatch(
-            showNotification({
-                type: 'error',
-                message: 'Something went wrong fetching your record!'
-            })
-        );
-        history.push('/invalid');
+    };
+
+    try {
+        dispatch(fetchTesterAction(REQUEST));
+        const {
+            data: { getTester }
+        } = await API.graphql(graphqlOperation(FetchPublicTester, { id }));
+        dispatchSuccess(getTester);
+    } catch ({ data: { getTester } = {} }) {
+        if (!!getTester) {
+            dispatchSuccess(getTester);
+        } else {
+            dispatch(fetchTesterAction(FAIL));
+            dispatch(
+                showNotification({
+                    type: 'error',
+                    message: 'Something went wrong fetching your record!'
+                })
+            );
+            history.push('/invalid');
+        }
     }
 };
 

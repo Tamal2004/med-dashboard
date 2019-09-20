@@ -50,16 +50,18 @@ const ProjectReport = ({
     const testers = params.get('testers');
 
     useEffect(() => {
+        let cancelled = false;
         const id = params.get('id');
 
         if (testers) {
             const testerIndices = testers.split('||');
-            fetchProjectReport(id, testerIndices).then(() => setLoading(false));
+            fetchProjectReport(id, testerIndices).then(() => !cancelled && setLoading(false));
         } else {
             setLoading(false);
         }
         return () => {
             resetProjectReport();
+            cancelled = true;
         };
     }, []); // eslint-disable-line
 
