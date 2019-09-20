@@ -29,7 +29,9 @@ const ProjectSingle = ({
     const [isLoading, setLoading] = useState(true);
 
     useEffect(() => {
-        fetchProject(id).then(() => setLoading(false));
+        let cancelled = false;
+        fetchProject(id).then(() => !cancelled && setLoading(false));
+        return () => (cancelled = true);
     });
 
     return (

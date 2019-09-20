@@ -209,56 +209,69 @@ const fetchTesterAction = (async, payload = []) => ({
 });
 
 export const fetchTester = id => async dispatch => {
-    dispatch(fetchTesterAction(REQUEST));
+    try {
+        dispatch(fetchTesterAction(REQUEST));
 
-    const {
-        data: { getTester, error = null }
-    } = await API.graphql(graphqlOperation(FetchTester, { id }));
+        const {
+            data: { getTester, error = null }
+        } = await API.graphql(graphqlOperation(FetchTester, { id }));
 
-    const {
-        testerDetails,
-        contactDetails,
-        employmentDetails,
-        testerData
-    } = normalizeTester(getTester);
+        const {
+            testerDetails,
+            contactDetails,
+            employmentDetails,
+            testerData
+        } = normalizeTester(getTester);
 
-    if (!error) {
         dispatch(initialize('TesterDetails', testerDetails));
         dispatch(initialize('ContactDetails', contactDetails));
         dispatch(initialize('EmploymentDetails', employmentDetails));
 
         dispatch(fetchTesterAction(SUCCESS, testerData));
-    } else {
+    } catch {
         dispatch(fetchTesterAction(FAIL));
+        dispatch(
+            showNotification({
+                type: 'error',
+                message: 'Something went wrong fetching the tester!'
+            })
+        );
+        history.push('/tester');
     }
 };
 
 export const fetchPublicTester = id => async dispatch => {
-    dispatch(fetchTesterAction(REQUEST));
-    const {
-        data: {
-            getTester: {
-                sessions: { items: sessions = [] },
-                contactNotes: { items: contactNotes = [] },
-                ...getTester
-            },
-            error = null
-        }
-    } = await API.graphql(graphqlOperation(FetchPublicTester, { id }));
+    try {
+        dispatch(fetchTesterAction(REQUEST));
+        const {
+            data: {
+                getTester: {
+                    sessions: { items: sessions = [] },
+                    contactNotes: { items: contactNotes = [] },
+                    ...getTester
+                }
+            }
+        } = await API.graphql(graphqlOperation(FetchPublicTester, { id }));
 
-    const {
-        testerDetails,
-        contactDetails,
-        employmentDetails
-    } = normalizeTesterForm(getTester);
+        const {
+            testerDetails,
+            contactDetails,
+            employmentDetails
+        } = normalizeTesterForm(getTester);
 
-    if (!error) {
         dispatch(initialize('TesterDetails', testerDetails));
         dispatch(initialize('ContactDetails', contactDetails));
         dispatch(initialize('EmploymentDetails', employmentDetails));
         dispatch(fetchTesterAction(SUCCESS, { id, sessions, contactNotes }));
-    } else {
+    } catch {
         dispatch(fetchTesterAction(FAIL));
+        dispatch(
+            showNotification({
+                type: 'error',
+                message: 'Something went wrong fetching your record!'
+            })
+        );
+        history.push('/invalid');
     }
 };
 

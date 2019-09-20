@@ -74,7 +74,9 @@ const ClientSingle = ({
             !!(projects.length % pageStep) || 1;
 
     useEffect(() => {
-        fetchClient(id).then(() => setLoading(false));
+        let cancelled = false;
+        fetchClient(id).then(() => !cancelled && setLoading(false));
+        return () => (cancelled = true);
         // eslint-disable-next-line
     }, []);
 

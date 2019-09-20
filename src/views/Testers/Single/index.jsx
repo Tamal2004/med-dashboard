@@ -36,10 +36,14 @@ const TesterSingle = ({
     const c = useStyles();
     const [isLoading, setLoading] = useState(true);
     useEffect(() => {
+        let cancelled = false;
         if (isTester)
             testerId &&
-                fetchPublicTester(testerId).then(() => setLoading(false));
-        else id && fetchTester(id).then(() => setLoading(false));
+                fetchPublicTester(testerId).then(
+                    () => !cancelled && setLoading(false)
+                );
+        else id && fetchTester(id).then(() => !cancelled && setLoading(false));
+        return () => (cancelled = true);
         /*eslint-disable-next-line*/
     }, [testerId]);
 

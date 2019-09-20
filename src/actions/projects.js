@@ -88,12 +88,12 @@ const fetchProjectAction = (async, payload) => ({
 });
 
 export const fetchProject = id => async dispatch => {
-    dispatch(fetchProjectAction(REQUEST));
-    const {
-        data: { getProject, error = null }
-    } = await API.graphql(graphqlOperation(FetchProject, { id }));
+    try {
+        dispatch(fetchProjectAction(REQUEST));
+        const {
+            data: { getProject }
+        } = await API.graphql(graphqlOperation(FetchProject, { id }));
 
-    if (!error) {
         const {
             projectDetails,
             projectManagement,
@@ -105,8 +105,15 @@ export const fetchProject = id => async dispatch => {
         dispatch(initialize('ProjectManagement', projectManagement));
         dispatch(initialize('ClientFeedback', clientFeedback));
         dispatch(fetchProjectAction(SUCCESS, projectData));
-    } else {
+    } catch {
         dispatch(fetchProjectAction(FAIL));
+        dispatch(
+            showNotification({
+                type: 'error',
+                message: 'Something went wrong fetching the project!'
+            })
+        );
+        history.push('/project');
     }
 };
 

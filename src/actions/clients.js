@@ -43,15 +43,22 @@ const fetchClientAction = (async, payload = []) => ({
 });
 
 export const fetchClient = id => async dispatch => {
-    dispatch(fetchClientAction(REQUEST));
-    const {
-        data: { getClient, error = null }
-    } = await API.graphql(graphqlOperation(FetchClient, { id }));
+    try {
+        dispatch(fetchClientAction(REQUEST));
+        const {
+            data: { getClient }
+        } = await API.graphql(graphqlOperation(FetchClient, { id }));
 
-    if (!error) {
         dispatch(fetchClientAction(SUCCESS, normalizeClientSingle(getClient)));
-    } else {
+    } catch {
         dispatch(fetchClientAction(FAIL));
+        dispatch(
+            showNotification({
+                type: 'error',
+                message: 'Something went wrong fetching the client!'
+            })
+        );
+        history.push('/client');
     }
 };
 
