@@ -533,25 +533,46 @@ const mailTestersAction = async => ({
     async
 });
 
-export const mailTesters = ({ project, contactType, ...mail }, ids) => async (
-    dispatch,
-    getState
-) => {
+export const mailTesters = (
+    { project, contactType, ...mail },
+    mailData
+) => async (dispatch, getState) => {
     dispatch(mailTestersAction(REQUEST));
 
     const username = selectFullName(getState());
-    const contactNotes = ids.map(id => {
-        return {
-            contactNoteTesterId: id,
-            contactNoteProjectId: project,
-            type: contactType,
-            note: mail.body.replace(/<\/?[^>]+>/gi, ' '),
-            date: today(),
-            contactedBy: username
-        };
-    });
+    // const contactNotes = ids.map(id => {
+    //     return {
+    //         contactNoteTesterId: id,
+    //         contactNoteProjectId: project,
+    //         type: contactType,
+    //         note: mail.body.replace(/<\/?[^>]+>/gi, ' '),
+    //         date: today(),
+    //         contactedBy: username
+    //     };
+    // });
 
-    await sendMail(mail);
+    const composeSend = async ({ email, id }) =>
+        await sendMail({ ...mail, to: [email], testerId: id });
+
+    const { contactNotes, sendMails } = mailData.reduce(
+        ({ contactNotes, sendMails }, { email, id }) => ({
+            contactNotes: [
+                ...contactNotes,
+                {
+                    contactNoteTesterId: id,
+                    contactNoteProjectId: project,
+                    type: contactType,
+                    note: mail.body.replace(/<\/?[^>]+>/gi, ' '),
+                    date: today(),
+                    contactedBy: username
+                }
+            ],
+            sendMails: [...sendMails, composeSend({ email, id })]
+        }),
+        { contactNotes: [], sendMails: [] }
+    );
+
+    await Promise.all(sendMails);
 
     const {
         data: { error = null }

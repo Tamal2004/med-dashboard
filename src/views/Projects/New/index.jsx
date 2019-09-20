@@ -29,6 +29,9 @@ import {
 // Actions
 import { createProject, listProjectClients, listProjectUsers } from 'actions';
 
+// Normalizers
+import { normalizePounds } from 'normalizers';
+
 const ProjectNew = ({
     projectStatuses,
     clients,
@@ -79,7 +82,7 @@ const ProjectNew = ({
                     disablePast
                     required
                 />
-                <Input label='Project Cost' name='cost' />
+                <Input label='Project Cost' name='cost' normalize={normalizePounds}/>
                 <Input
                     label='Purchase Order Number'
                     name='purchaseOrderNumber'

@@ -122,11 +122,17 @@ const TesterSearch = ({
         setInput(text);
     };
 
-    const { addresses, ids } = selectedTesters.reduce(
+    const { addresses, mailData } = selectedTesters.reduce(
         (acm, testerIdx) =>
             testersInfo[testerIdx]
                 ? {
-                      ids: [...acm.ids, testersInfo[testerIdx].id],
+                      mailData: [
+                          ...acm.mailData,
+                          {
+                              id: testersInfo[testerIdx].id,
+                              email: testersInfo[testerIdx].email
+                          }
+                      ],
                       addresses: [
                           ...acm.addresses,
                           testersInfo[testerIdx].email
@@ -135,14 +141,14 @@ const TesterSearch = ({
                 : acm,
         {
             addresses: [],
-            ids: []
+            mailData: []
         }
     );
 
     const mailProps = {
         from: userEmail,
         to: addresses,
-        handleMail: mail => mailTesters(mail, ids),
+        handleMail: mail => mailTesters(mail, mailData),
         needsProject: true,
         needsContactType: true
     };
