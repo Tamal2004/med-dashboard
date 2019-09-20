@@ -4,12 +4,14 @@ export const normalizeProjectUsers = users =>
     users.map(({ firstName, lastName }) => `${firstName} ${lastName}`);
 
 export const normalizeProjects = projects =>
-    projects.map(({ client: { id, name }, testingDate, ...project }) => ({
-        ...project,
-        clientId: id,
-        clientName: name,
-        testingDate: deserializeDate(testingDate)
-    }));
+    projects
+        .filter(project => !!project)
+        .map(({ client: { id, name }, testingDate, ...project }) => ({
+            ...project,
+            clientId: id,
+            clientName: name,
+            testingDate: deserializeDate(testingDate)
+        }));
 
 export const normalizeProjectForm = ({
     client: { id: clientId = null } = {},
@@ -153,10 +155,15 @@ export const normalizeProjectsLists = projects =>
                 contactNotes: { items: contactNotes = [] }
             }
         ) => ({
-            sessionIds: [...acm.sessionIds, ...sessions.map(({ id }) => id)],
+            sessionIds: [
+                ...acm.sessionIds,
+                ...sessions.filter(session => !!session).map(({ id }) => id)
+            ],
             contactNoteIds: [
                 ...acm.contactNoteIds,
-                ...contactNotes.map(({ id }) => id)
+                ...contactNotes
+                    .filter(contactNote => !!contactNote)
+                    .map(({ id }) => id)
             ],
             projectIds: [...acm.projectIds, id]
         }),
