@@ -42,9 +42,18 @@ const useStyles = makeStyles(({ shape, spacing, typography }) => ({
         justifyContent: 'flex-start',
         alignItems: 'flex-start'
     },
-    filterButtonWrapper: {
-        float: 'right',
-        marginBottom: 20
+    emailButtonWrapper: {
+        display: 'flex',
+        justifyContent: 'flex-end'
+    },
+    searchButtonWrapper: {
+        display: 'flex',
+        justifyContent: 'center'
+    },
+    searchButton: {
+        width: '100%',
+        height: spacing(6),
+        marginBottom: spacing()
     },
     footer: {
         marginTop: spacing(3)
@@ -164,7 +173,7 @@ const TesterSearch = ({
     return (
         <Fragment>
             <GridWrapper>
-                <GridItem md={3} />
+                <GridItem md={3}/>
                 <GridItem md={6}>
                     <SearchInput
                         placeholder='Search by Tester Name, Email or Town'
@@ -173,20 +182,26 @@ const TesterSearch = ({
                     />
                     {isSearching && <LinearProgress className={c.loader} />}
                 </GridItem>
-                <GridItem md={3}>
-                    <div className={c.filterButtonWrapper}>
+                <GridItem md={3} className={c.emailButtonWrapper}>
                         <NavigateButton
                             onClick={() => handleMailModal(mailProps)}
                             disabled={!selectedTesters.length}
                         >
                             Email Testers
                         </NavigateButton>
-                    </div>
                 </GridItem>
             </GridWrapper>
 
             <GridWrapper className={c.filterGridWrapper}>
                 <GridItem md={3}>
+                        <NavigateButton
+                            className={c.searchButton}
+                            color='primary'
+                            onClick={() => console.log('haha')}
+                            //disabled={!selectedTesters.length}
+                        >
+                            Run Filters
+                        </NavigateButton>
                     <SearchFilter
                         handleFilter={filters => handleFilters(filters)}
                     />
