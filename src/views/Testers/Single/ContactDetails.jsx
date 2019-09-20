@@ -4,10 +4,10 @@ import { connect } from 'react-redux';
 import { change, reduxForm, formValueSelector } from 'redux-form';
 // Local
 import { validateRequired } from 'libs';
-import { Input, EditableCard, EditableFooter } from 'components';
+import { Input, EditableCard, EditableFooter, Select } from 'components';
 
 // Selectors
-import { selectTesterId } from 'selectors';
+import { selectTesterId, selectCountries } from 'selectors';
 
 // Actions
 import { updateTester } from 'actions';
@@ -16,6 +16,7 @@ import { updateTester } from 'actions';
 import { normalizePhone } from 'normalizers';
 
 const ContactDetails = ({
+    countries,
     invalid,
     change,
     reset,
@@ -64,9 +65,10 @@ const ContactDetails = ({
                 required={isEditing}
             />
             <Input label='County' name='county' isCard active={isEditing} />
-            <Input
+            <Select
                 label='Country'
                 name='country'
+                data={countries}
                 isCard
                 active={isEditing}
                 required={isEditing}
@@ -87,6 +89,7 @@ const ContactDetails = ({
 
 const mapState = state => ({
     id: selectTesterId(state),
+    countries: selectCountries(state),
     hasManualAddress: formValueSelector('ContactDetails')(
         state,
         'manualAddress'

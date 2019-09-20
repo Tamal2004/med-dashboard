@@ -89,5 +89,10 @@ export const normalizePounds = val => {
         return val.slice(0, -1);
     }
 
+    if (!isNaN(parseInt(val[0]))) {
+        const v = val.replace(/,/g, '').split('');
+        v.unshift('£');
+        return v.join('');
+    }
     return val.replace(/,/g, '');
 };

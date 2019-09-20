@@ -49,7 +49,8 @@ class Select extends Component {
         styles: {},
         displayFirst: false,
         isCancellable: false,
-        placeholder: null
+        placeholder: null,
+        disableRenderLimit: false
     };
 
     state = {
@@ -216,6 +217,7 @@ class Select extends Component {
             displayFirst, // Take out of restProps
             handleError,
             unitHeight,
+            disableRenderLimit,
             ...restProps
         } = props;
 
@@ -267,16 +269,20 @@ class Select extends Component {
         const error = meta.touched && !!meta.error;
 
         // Todo: refactor later into query
-        const valueIndex = this.props.data
-            .map(({ value }) => value)
-            .indexOf(input.value);
+        let renderFloor = 0;
+        let renderCeiling = this.props.data.length;
 
-        const renderFloor =
-            queryValue || valueIndex < 10 ? 0 : valueIndex - 10;
+        if (!disableRenderLimit) {
+            const valueIndex = this.props.data
+                .map(({value}) => value)
+                .indexOf(input.value);
 
-        const renderCeiling =
-            queryValue || valueIndex < 10 ? 20 : renderFloor + 20;
+            renderFloor =
+                queryValue || valueIndex < 10 ? 0 : valueIndex - 10;
 
+            renderCeiling =
+                queryValue || valueIndex < 10 ? 20 : renderFloor + 20;
+        }
         return (
             <ClickAwayListener
                 onClickAway={() => this.state.selectFocus && onBlur()}

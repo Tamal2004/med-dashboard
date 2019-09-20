@@ -64,6 +64,12 @@ export const selectNationalities = createCachedSelector(
     ({ nationalities }) => mapArray(nationalities)
 )(() => 'placeholder');
 
+// Countries
+export const selectCountries = createCachedSelector(
+    selectDatasets,
+    ({ nationalities }) => mapArray([...nationalities, 'Unknown'])
+)(() => 'placeholder');
+
 // Titles
 export const selectTitles = createCachedSelector(selectDatasets, ({ titles }) =>
     mapArray(titles)

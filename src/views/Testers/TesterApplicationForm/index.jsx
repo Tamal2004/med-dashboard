@@ -31,7 +31,7 @@ import {
 
 // Selectors
 import {
-    selectCounties,
+    selectCountries,
     selectEducationStages,
     selectEmployeeCounts,
     selectEmploymentSectors,
@@ -48,6 +48,7 @@ import {
 const TesterApplication = memo(
     ({
         nationalities,
+        countries,
         educationStages,
         employeeCounts,
         employmentSectors,
@@ -136,7 +137,13 @@ const TesterApplication = memo(
                     <Input label='Town' name='town' required />
                     <Input label='County' name='county' />
                     <Input label='Postcode' name='postcode' />
-                    <Input label='Country' name='country' required />
+                    <Select
+                        label='Country'
+                        name='country'
+                        data={countries}
+                        required
+                        disableRenderLimit
+                    />
                 </Container>
 
                 <Container title='Personal Details'>
@@ -171,6 +178,7 @@ const TesterApplication = memo(
                         name='nationality'
                         data={nationalities}
                         required
+                        disableRenderLimit
                     />
                     <Select
                         label='Ethnic Background'
@@ -231,7 +239,7 @@ const TesterApplication = memo(
                                 }Sector`}
                                 data={employmentSectors}
                                 name='employmentSector'
-                                placeholder='Please select...'
+                                disableRenderLimit
                             />
                             <Select
                                 label={`${
@@ -315,7 +323,7 @@ const mapState = (state, ownProps) => {
     return {
         isTester: selectIsTester(state),
         hasChildren: selectHasChildren(state),
-        counties: selectCounties(state),
+        countries: selectCountries(state),
         nationalities: selectNationalities(state),
         educationStages: selectEducationStages(state),
         employeeCounts: selectEmployeeCounts(state),

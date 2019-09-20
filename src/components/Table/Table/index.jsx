@@ -48,7 +48,6 @@ class Table extends Component {
     });
     //
     componentDidMount() {
-        console.log('remounting');
         this.setState({
             tableWidth:
                 this.tableRef && ReactDOM.findDOMNode(this.tableRef).offsetWidth
