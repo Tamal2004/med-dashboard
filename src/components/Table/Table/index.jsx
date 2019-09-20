@@ -55,11 +55,10 @@ class Table extends Component {
         });
     }
 
-    componentDidUpdate({ data: prevData = [] }, s, c) {
-        const { data = [] } = this.props;
+    componentDidUpdate({ data: prevData = [], page: prevPage }, s, c) {
+        const { data = [], page = 1 } = this.props;
 
-        if (prevData !== data) {
-            console.log('updating');
+        if (prevPage === page && prevData !== data) {
             this.setState({
                 data,
                 initialData: data,
