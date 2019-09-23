@@ -1,4 +1,7 @@
-const styles = ({ shadows, palette }) => ({
+const styles = ({ shadows, shape, palette }) => ({
+    container: {
+        position: 'relative'
+    },
     root: {
         boxShadow: shadows[0]
     },
@@ -18,7 +21,13 @@ const styles = ({ shadows, palette }) => ({
     containedPrimary: {
         color: palette.common.offWhite
     },
-    disabled: {}
+    disabled: {},
+    loader: {
+        position: 'absolute',
+        width: '100%',
+        borderBottomLeftRadius: shape.borderRadius,
+        borderBottomRightRadius: shape.borderRadius
+    }
 });
 
 export { styles as default, styles };

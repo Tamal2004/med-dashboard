@@ -280,10 +280,12 @@ class Table extends Component {
 
         const len = rowKeys.length;
         const actionsWidth = 95;
-        const headerWidth = hasActions
-            ? (tableWidth - actionsWidth) / (len - 1)
-            : tableWidth / len;
-
+        const headerWidth =
+            len === 0
+                ? actionsWidth
+                : hasActions
+                ? (tableWidth - actionsWidth) / (len - 1)
+                : tableWidth / len;
         return Object.entries(row).map(([category, value]) => (
             <TableCell
                 className={this.c.cell}

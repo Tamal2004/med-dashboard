@@ -112,7 +112,7 @@ const ProjectNew = ({
             <Grid container className={c.footer}>
                 <Grid item xs={6}>
                     <NavigateButton
-                        className={c.submit}
+                        styles={{ root: c.submit}}
                         variant='contained'
                         color='secondary'
                         onClick={reset}
@@ -123,7 +123,7 @@ const ProjectNew = ({
                 </Grid>
                 <Grid item xs={6}>
                     <NavigateButton
-                        className={c.submit}
+                        styles={{ root: c.submit}}
                         variant='contained'
                         color='primary'
                         onClick={handleSubmit}

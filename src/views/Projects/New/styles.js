@@ -21,5 +21,5 @@ export default makeStyles(({ palette, spacing }) => ({
         height: spacing(6),
         marginLeft: spacing(3),
         marginRight: spacing(3)
-    }
+    },
 }));

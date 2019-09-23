@@ -1,9 +1,4 @@
-import API, { graphqlOperation } from '@aws-amplify/api';
-
 import { validateRequired, checkEmailQuery } from 'libs';
-import { CheckTesterEmail } from 'graphql/tester';
-import { client2 } from '../../../App/client';
-import { gql } from 'apollo-boost';
 
 export const validate = (values, { isStudent, isEmployed, isTester }) => {
     const required = [

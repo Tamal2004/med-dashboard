@@ -4,7 +4,11 @@ import { connect } from 'react-redux';
 import classNames from 'clsx';
 
 // Material
-import { makeStyles, Typography, LinearProgress } from '@material-ui/core';
+import {
+    makeStyles,
+    Typography,
+    LinearProgress,
+} from '@material-ui/core';
 import { SearchFilter } from './SearchFilter';
 
 import {
@@ -50,9 +54,11 @@ const useStyles = makeStyles(({ shape, spacing, typography }) => ({
         display: 'flex',
         justifyContent: 'center'
     },
-    searchButton: {
+    searchButtonRoot: {
         width: '100%',
-        height: spacing(6),
+        height: spacing(6)
+    },
+    searchButtonContainer: {
         marginBottom: spacing()
     },
     footer: {
@@ -173,7 +179,7 @@ const TesterSearch = ({
     return (
         <Fragment>
             <GridWrapper>
-                <GridItem md={3}/>
+                <GridItem md={3} />
                 <GridItem md={6}>
                     <SearchInput
                         placeholder='Search by Tester Name, Email or Town'
@@ -183,25 +189,38 @@ const TesterSearch = ({
                     {isSearching && <LinearProgress className={c.loader} />}
                 </GridItem>
                 <GridItem md={3} className={c.emailButtonWrapper}>
-                        <NavigateButton
-                            onClick={() => handleMailModal(mailProps)}
-                            disabled={!selectedTesters.length}
-                        >
-                            Email Testers
-                        </NavigateButton>
+                    <NavigateButton
+                        onClick={() => handleMailModal(mailProps)}
+                        disabled={!selectedTesters.length}
+                    >
+                        Email Testers
+                    </NavigateButton>
                 </GridItem>
             </GridWrapper>
 
             <GridWrapper className={c.filterGridWrapper}>
                 <GridItem md={3}>
-                        <NavigateButton
-                            className={c.searchButton}
-                            color='primary'
-                            onClick={() => console.log('haha')}
-                            //disabled={!selectedTesters.length}
-                        >
-                            Run Filters
-                        </NavigateButton>
+                    <NavigateButton
+                        styles={{
+                            container: c.searchButtonContainer,
+                            root: c.searchButtonRoot
+                        }}
+                        color='primary'
+                        // onClick={async () => await listTestersSearch(filters, input)}
+                        onClick={({ setLoading }) => {
+                            setLoading(1);
+                            setTimeout(() => setLoading(20), 200)
+                            setTimeout(() => setLoading(40), 400)
+                            setTimeout(() => setLoading(60), 600)
+                            setTimeout(() => setLoading(80), 800)
+                            setTimeout(() => setLoading(100), 1000)
+                            setTimeout(() => setLoading(false), 1200)
+                        }}
+                        enableLoader
+                        //disabled={!selectedTesters.length}
+                    >
+                        Run Filters
+                    </NavigateButton>
                     <SearchFilter
                         handleFilter={filters => handleFilters(filters)}
                     />

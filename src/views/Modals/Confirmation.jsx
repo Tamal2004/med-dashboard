@@ -52,7 +52,7 @@ const ConfirmationModal = ({
                     variant='contained'
                     color='primary'
                     size='large'
-                    onClick={e => {
+                    onClick={() => {
                         onSubmit();
                         onClose();
                     }}

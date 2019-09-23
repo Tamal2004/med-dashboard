@@ -69,10 +69,12 @@ const MailModal = ({
     const [projectsLoading, setProjectsLoading] = useState(true);
 
     useEffect(() => {
+        let cancelled = false;
         needsProject &&
-            listIncompleteProjects().then(() => setProjectsLoading(false));
+            listIncompleteProjects().then(() => !cancelled && setProjectsLoading(false));
+        return () => cancelled = true;
         // eslint-disable-next-line
-    }, []);
+    }, [needsProject]);
 
     return (
         <Fragment>
