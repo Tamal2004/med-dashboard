@@ -74,8 +74,8 @@ const AllUsers = ({
     const allUsers = users.map(({ id, actions, Email, ...rest }) => {
         const composedConfirmationProps = {
             ...confirmationProps,
-            onSubmit: () =>
-                deleteWupUser({
+            onSubmit: async () =>
+                await deleteWupUser({
                     id,
                     email: Email.value,
                     ownAccount: isCurrentUser(Email.value)

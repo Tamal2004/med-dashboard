@@ -1,5 +1,5 @@
 import AWS from 'aws-sdk';
-import { Auth } from 'aws-amplify';
+import { Auth, graphqlOperation } from 'aws-amplify';
 import { history } from 'libs/history';
 import { reset } from 'redux-form';
 
@@ -7,18 +7,17 @@ import { reset } from 'redux-form';
 import { SET_AUTH_USER_INFO, UPDATE_USER_INFO, LOGOUT } from 'actionTypes';
 import { showNotification } from '../notification';
 import { removeTester } from '../testers';
-import {
-    createUser,
-    updateUser,
-    deleteUser,
-    fetchUserIdByEmail
-} from '../users';
+import { createUser, deleteUser } from '../users';
+
+// Graph QL
+import { UpdateUser, FetchUserByEmail } from 'graphql/users';
 import config from '../../aws-exports';
 import { composeNewAccount } from 'libs';
 import { sendMail } from 'services';
 
 // Selectors
 import { selectIsTester, selectEmail, selectFullName } from 'selectors';
+import API from '@aws-amplify/api';
 
 const {
     REACT_APP_COGNITO_USER_POOL_ID,
@@ -75,101 +74,102 @@ const changePassword = ({ oldPassword, newPassword }) => {
 export const testerSignUp = ({ id, email, firstName, surname }) => async (
     dispatch,
     getState
-) => {
-    const password = TEMP_PASSWORD();
+) =>
+    await new Promise(resolve => {
+        const password = TEMP_PASSWORD();
 
-    const payload = {
-        UserPoolId: REACT_APP_COGNITO_USER_POOL_ID,
-        Username: email,
-        DesiredDeliveryMediums: ['EMAIL'],
-        TemporaryPassword: password,
-        MessageAction: 'SUPPRESS',
-        UserAttributes: [
-            {
-                Name: 'email_verified',
-                Value: 'true'
-            },
-            {
-                Name: 'email',
-                Value: email
-            },
-            {
-                Name: 'custom:firstName',
-                Value: firstName
-            },
-            {
-                Name: 'custom:surname',
-                Value: surname
-            },
-            {
-                Name: 'custom:testerId',
-                Value: id
+        const payload = {
+            UserPoolId: REACT_APP_COGNITO_USER_POOL_ID,
+            Username: email,
+            DesiredDeliveryMediums: ['EMAIL'],
+            TemporaryPassword: password,
+            MessageAction: 'SUPPRESS',
+            UserAttributes: [
+                {
+                    Name: 'email_verified',
+                    Value: 'true'
+                },
+                {
+                    Name: 'email',
+                    Value: email
+                },
+                {
+                    Name: 'custom:firstName',
+                    Value: firstName
+                },
+                {
+                    Name: 'custom:surname',
+                    Value: surname
+                },
+                {
+                    Name: 'custom:testerId',
+                    Value: id
+                }
+            ]
+        };
+
+        COGNITO_CLIENT.adminCreateUser(payload, async err => {
+            if (err) {
+                dispatch(
+                    showNotification({ type: 'error', message: err.message })
+                );
+            } else {
+                const store = getState();
+                let internalUserDetails = {};
+                if (!selectIsTester(store)) {
+                    internalUserDetails = {
+                        from: selectEmail(store),
+                        userFullName: selectFullName(store)
+                    };
+                }
+
+                await sendMail(
+                    composeNewAccount({
+                        ...internalUserDetails,
+                        firstName,
+                        email,
+                        password,
+                        testerId: id
+                    })
+                );
+                dispatch(
+                    showNotification({
+                        type: 'success',
+                        message: 'Tester account creation successful!'
+                    })
+                );
             }
-        ]
-    };
+            return resolve();
+        });
+    });
 
-    const createUserCallback = err => {
-        if (err) {
-            dispatch(showNotification({ type: 'error', message: err.message }));
-        } else {
-            const store = getState();
-            let internalUserDetails = {};
-            if (!selectIsTester(store)) {
-                internalUserDetails = {
-                    from: selectEmail(store),
-                    userFullName: selectFullName(store)
-                };
-            }
-
-            sendMail(
-                composeNewAccount({
-                    ...internalUserDetails,
-                    firstName,
-                    email,
-                    password,
-                    testerId: id
-                })
-            );
-            dispatch(
-                showNotification({
-                    type: 'success',
-                    message: 'Tester account creation successful!'
-                })
-            );
-        }
-    };
-
-    return await COGNITO_CLIENT.adminCreateUser(payload, createUserCallback);
-};
-
-export const createUserByAdmin = ({ email, family_name, given_name }) => {
-    const adminPayload = {
-        UserPoolId: REACT_APP_COGNITO_USER_POOL_ID,
-        Username: email
-    };
-
-    const payload = {
-        ...adminPayload,
-        DesiredDeliveryMediums: ['EMAIL'],
-        TemporaryPassword: TEMP_PASSWORD(),
-        UserAttributes: [
-            {
-                Name: 'email',
-                Value: email
-            },
-            {
-                Name: 'custom:firstName',
-                Value: family_name
-            },
-            {
-                Name: 'custom:surname',
-                Value: given_name
-            }
-        ]
-    };
-
-    return async dispatch => {
-        return await COGNITO_CLIENT.adminCreateUser(payload, (err, data) => {
+export const createUserByAdmin = ({
+    email,
+    family_name,
+    given_name
+}) => async dispatch =>
+    await new Promise(resolve => {
+        const payload = {
+            UserPoolId: REACT_APP_COGNITO_USER_POOL_ID,
+            Username: email,
+            DesiredDeliveryMediums: ['EMAIL'],
+            TemporaryPassword: TEMP_PASSWORD(),
+            UserAttributes: [
+                {
+                    Name: 'email',
+                    Value: email
+                },
+                {
+                    Name: 'custom:firstName',
+                    Value: family_name
+                },
+                {
+                    Name: 'custom:surname',
+                    Value: given_name
+                }
+            ]
+        };
+        COGNITO_CLIENT.adminCreateUser(payload, async err => {
             if (err) {
                 dispatch(
                     showNotification({ type: 'error', message: err.message })
@@ -180,27 +180,31 @@ export const createUserByAdmin = ({ email, family_name, given_name }) => {
                     firstName: family_name,
                     lastName: given_name
                 };
-                dispatch(createUser(userParams));
+                await dispatch(createUser(userParams));
                 dispatch(reset('CreateUser'));
             }
+            return resolve();
         });
-    };
-};
+    });
 
-export const deleteWupUser = ({ id, email, ownAccount = false }) => {
-    const payload = {
-        UserPoolId: REACT_APP_COGNITO_USER_POOL_ID,
-        Username: email
-    };
-    return async dispatch => {
-        return await COGNITO_CLIENT.adminDeleteUser(payload, (err, data) => {
+export const deleteWupUser = ({
+    id,
+    email,
+    ownAccount = false
+}) => async dispatch =>
+    await new Promise(resolve => {
+        const payload = {
+            UserPoolId: REACT_APP_COGNITO_USER_POOL_ID,
+            Username: email
+        };
+        COGNITO_CLIENT.adminDeleteUser(payload, async err => {
             if (err) {
                 dispatch(
                     showNotification({ type: 'error', message: err.message })
                 );
             } else {
                 if (ownAccount) dispatch(logoutUser());
-                dispatch(deleteUser({ id }));
+                await dispatch(deleteUser({ id }));
                 dispatch(
                     showNotification({
                         type: 'success',
@@ -208,36 +212,36 @@ export const deleteWupUser = ({ id, email, ownAccount = false }) => {
                     })
                 );
             }
+            return resolve();
         });
-    };
-};
+    });
 
-export const deleteUserByAdmin = (email, testerId) => {
-    const payload = {
-        UserPoolId: REACT_APP_COGNITO_USER_POOL_ID,
-        Username: email
-    };
-    return async dispatch => {
-        return await COGNITO_CLIENT.adminDeleteUser(payload, (err, data) => {
+export const deleteUserByAdmin = (email, testerId) => async dispatch =>
+    await new Promise(resolve => {
+        const payload = {
+            UserPoolId: REACT_APP_COGNITO_USER_POOL_ID,
+            Username: email
+        };
+        COGNITO_CLIENT.adminDeleteUser(payload, async err => {
             if (err) {
                 dispatch(
                     showNotification({ type: 'error', message: err.message })
                 );
             } else {
-                dispatch(removeTester(testerId));
+                await dispatch(removeTester(testerId));
                 history.push('/tester');
             }
+            return resolve();
         });
-    };
-};
+    });
 
-export const unsubscribeUser = email => {
-    const payload = {
-        UserPoolId: REACT_APP_COGNITO_USER_POOL_ID,
-        Username: email
-    };
-    return async dispatch => {
-        return await COGNITO_CLIENT.adminDeleteUser(payload, (err, data) => {
+export const unsubscribeUser = email => async dispatch =>
+    await new Promise(resolve => {
+        const payload = {
+            UserPoolId: REACT_APP_COGNITO_USER_POOL_ID,
+            Username: email
+        };
+        COGNITO_CLIENT.adminDeleteUser(payload, (err, data) => {
             if (err) {
                 dispatch(
                     showNotification({ type: 'error', message: err.message })
@@ -247,100 +251,101 @@ export const unsubscribeUser = email => {
                 dispatch(
                     showNotification({
                         type: 'success',
-                        message: 'You have successfully unsubscribed!'
+                        message: 'You have been successfully unsubscribed!'
                     })
                 );
             }
+            return resolve();
         });
-    };
-};
+    });
 
-export const deleteOwnAccount = (email, testerId) => {
-    const payload = {
-        UserPoolId: REACT_APP_COGNITO_USER_POOL_ID,
-        Username: email
-    };
-    return async dispatch => {
-        return await COGNITO_CLIENT.adminDeleteUser(payload, (err, data) => {
+// Check
+export const deleteOwnAccount = (email, testerId) => async dispatch =>
+    await new Promise(resolve => {
+        const payload = {
+            UserPoolId: REACT_APP_COGNITO_USER_POOL_ID,
+            Username: email
+        };
+        COGNITO_CLIENT.adminDeleteUser(payload, async (err, data) => {
             if (err) {
                 dispatch(
                     showNotification({ type: 'error', message: err.message })
                 );
             } else {
-                dispatch(removeTester(testerId));
+                await dispatch(removeTester(testerId));
                 dispatch(logoutUser());
             }
+            return resolve();
         });
-    };
-};
+    });
 
 export const changeUserInfo = ({
     email,
     firstName,
     surname
 }) => async dispatch => {
-    const userIdArr = await dispatch(fetchUserIdByEmail(email));
-
-    if (userIdArr.length) {
-        const id = userIdArr[0].id;
-        const updateUserSuccess = await dispatch(
-            updateUser({ id, firstName, lastName: surname })
-        );
-
-        if (updateUserSuccess === 200) {
-            await dispatch(
-                changCongnitoUserInfo({ email, firstName, surname })
-            );
-            return 200;
+    const {
+        data: {
+            listUsers: {
+                items: [{ id }]
+            }
         }
-    }
+    } = await API.graphql(
+        graphqlOperation(FetchUserByEmail, { filter: { email: { eq: email } } })
+    );
+
+    await API.graphql(
+        graphqlOperation(UpdateUser, {
+            input: { id, firstName, lastName: surname }
+        })
+    );
+    await dispatch(changCongnitoUserInfo({ email, firstName, surname }));
 };
 
-export const changCongnitoUserInfo = ({ email, firstName, surname }) => {
-    const payload = {
-        UserPoolId: REACT_APP_COGNITO_USER_POOL_ID,
-        Username: email,
-        UserAttributes: [
-            {
-                Name: 'custom:firstName',
-                Value: firstName
-            },
-            {
-                Name: 'custom:surname',
-                Value: surname
-            }
-        ]
-    };
-
-    return async dispatch => {
-        return await COGNITO_CLIENT.adminUpdateUserAttributes(
-            payload,
-            (err, data) => {
-                if (err) {
-                    dispatch(
-                        showNotification({
-                            type: 'error',
-                            message: err.message
-                        })
-                    );
-                    return null;
-                } else {
-                    dispatch({
-                        type: UPDATE_USER_INFO,
-                        payload: { firstName, surname }
-                    });
-                    dispatch(
-                        showNotification({
-                            type: 'success',
-                            message: 'Update successful!'
-                        })
-                    );
-                    return 200;
+export const changCongnitoUserInfo = ({
+    email,
+    firstName,
+    surname
+}) => async dispatch =>
+    await new Promise((resolve, reject) => {
+        const payload = {
+            UserPoolId: REACT_APP_COGNITO_USER_POOL_ID,
+            Username: email,
+            UserAttributes: [
+                {
+                    Name: 'custom:firstName',
+                    Value: firstName
+                },
+                {
+                    Name: 'custom:surname',
+                    Value: surname
                 }
+            ]
+        };
+        COGNITO_CLIENT.adminUpdateUserAttributes(payload, err => {
+            if (err) {
+                dispatch(
+                    showNotification({
+                        type: 'error',
+                        message: err.message
+                    })
+                );
+                return reject();
+            } else {
+                dispatch({
+                    type: UPDATE_USER_INFO,
+                    payload: { firstName, surname }
+                });
+                dispatch(
+                    showNotification({
+                        type: 'success',
+                        message: 'Update successful!'
+                    })
+                );
+                return resolve();
             }
-        );
-    };
-};
+        });
+    });
 
 export const getAuthUserInfo = () => {
     return async dispatch => {
@@ -373,7 +378,6 @@ export const updateAuthUserPassword = payload => {
                     message: 'Password changed successfully!'
                 })
             );
-            return 200;
         } catch (err) {
             dispatch(showNotification({ type: 'error', message: err.message }));
         }

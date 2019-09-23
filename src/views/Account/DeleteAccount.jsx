@@ -34,7 +34,7 @@ const DeleteUser = ({
 			'Are you sure you want to delete your account? This action is irreversible.',
 		cancelText: 'Cancel',
 		submitText: 'Delete',
-		onSubmit: () => deleteOwnAccount(email, testerId)
+		onSubmit: async () => await deleteOwnAccount(email, testerId)
 	};
 
 	return (

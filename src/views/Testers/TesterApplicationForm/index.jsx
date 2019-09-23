@@ -301,11 +301,13 @@ const TesterApplication = memo(
                     </Grid>
                     <Grid item xs={12} sm={6}>
                         <NavigateButton
-                            classes={{
-                                root: c.submit
+                            styles={{
+                                root: c.submit,
+                                container: c.submitContainer
                             }}
-                            onClick={() => handleSubmit()}
-                            disabled={invalid || submitting}
+                            onClick={async () => await handleSubmit()}
+                            enableLoader
+                            disabled={invalid}
                         >
                             Submit
                         </NavigateButton>

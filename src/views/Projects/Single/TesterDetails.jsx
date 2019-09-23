@@ -68,7 +68,7 @@ const TesterDetails = ({
             deleteAction: () =>
                 handleSessionConfirmationModal({
                     ...confirmationProps,
-                    onSubmit: () => removeSession(id)
+                    onSubmit: async () => await removeSession(id)
                 })
         }
     }));

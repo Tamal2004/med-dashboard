@@ -78,7 +78,7 @@ const ProjectDetails = ({
         promptText: `Are you sure you want to delete this project?`,
         cancelText: 'Cancel',
         submitText: 'Delete',
-        onSubmit: () => removeProject(id)
+        onSubmit: async () => await removeProject(id)
     };
 
     return (

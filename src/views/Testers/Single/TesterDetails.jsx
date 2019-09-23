@@ -109,7 +109,7 @@ const TesterDetails = ({
         promptText: `Are you sure you want to delete ${email}?`,
         cancelText: 'Cancel',
         submitText: 'Delete',
-        onSubmit: () => deleteUserByAdmin(email, testerId)
+        onSubmit: async () => await deleteUserByAdmin(email, testerId)
     };
 
     const mailProps = {
@@ -124,7 +124,7 @@ const TesterDetails = ({
         ...composeRequest({
             firstName,
             surname,
-            userFullName,
+            userFullName
         })
     };
 

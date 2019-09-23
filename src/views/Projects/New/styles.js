@@ -18,8 +18,10 @@ export default makeStyles(({ palette, spacing }) => ({
     },
     submit: {
         width: `calc(100% - ${spacing(6)}px)`,
-        height: spacing(6),
-        marginLeft: spacing(3),
-        marginRight: spacing(3)
+        height: spacing(6)
     },
+    submitContainer: {
+        marginLeft: spacing(4),
+        marginRight: spacing()
+    }
 }));

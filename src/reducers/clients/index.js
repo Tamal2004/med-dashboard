@@ -31,7 +31,7 @@ const clientsReducer = (
             return isSuccess
                 ? {
                       ...state,
-                      list: [...state.list, payload]
+                      list: [payload, ...state.list]
                   }
                 : state;
         }

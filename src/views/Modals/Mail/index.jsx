@@ -71,8 +71,10 @@ const MailModal = ({
     useEffect(() => {
         let cancelled = false;
         needsProject &&
-            listIncompleteProjects().then(() => !cancelled && setProjectsLoading(false));
-        return () => cancelled = true;
+            listIncompleteProjects().then(
+                () => !cancelled && setProjectsLoading(false)
+            );
+        return () => (cancelled = true);
         // eslint-disable-next-line
     }, [needsProject]);
 
@@ -120,8 +122,11 @@ const MailModal = ({
             <ModalFooter className={c.footer}>
                 <Button
                     size='large'
-                    disabled={invalid || submitting}
-                    onClick={handleSubmit}
+                    disabled={invalid}
+                    onClick={async ({ setLoading }) =>
+                        await handleSubmit()(setLoading)
+                    }
+                    enableLoader
                 >
                     Send Mail
                 </Button>
@@ -159,8 +164,15 @@ const mapDispatch = {
     listIncompleteProjects
 };
 
-const onSubmit = (values, d, { to, handleMail, onClose, testerId = null }) =>
-    handleMail({ ...values, to, testerId }).then(() => onClose());
+const onSubmit = (
+    values,
+    dispatch,
+    { to, handleMail, onClose, testerId = null }
+) => async setLoading => {
+    return await handleMail({ ...values, to, testerId }, setLoading).then(() =>
+        onClose()
+    );
+};
 
 MailModal.defaultProps = {
     to: [],

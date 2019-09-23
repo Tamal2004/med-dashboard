@@ -52,8 +52,9 @@ const UpdateProfile = ({
                     variant='contained'
                     color='primary'
                     size='large'
-                    onClick={handleSubmit}
-                    disabled={invalid || submitting}
+                    onClick={async () => await handleSubmit()}
+                    enableLoader
+                    disabled={invalid}
                 >
                     Update
                 </Button>
@@ -79,9 +80,9 @@ const mapState = state => {
 
 const mapDispatch = {};
 
-const onSubmit = (values, dispatch, { onClose, isTester }) => {
+const onSubmit = async (values, dispatch, { onClose, isTester }) => {
     const ACTION = isTester ? updateTester(values) : changeUserInfo(values);
-    dispatch(ACTION).then(res => res === 200 && onClose());
+    await dispatch(ACTION).then(() => onClose());
 };
 
 const _UpdateProfile = compose(

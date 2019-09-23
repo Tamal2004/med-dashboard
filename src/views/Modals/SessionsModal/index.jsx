@@ -107,8 +107,9 @@ const SessionsModal = ({
                     variant='contained'
                     color='primary'
                     size='large'
-                    onClick={handleSubmit}
-                    disabled={invalid || submitting}
+                    onClick={async () => await handleSubmit()}
+                    disabled={invalid}
+                    enableLoader
                 >
                     Add Session
                 </Button>

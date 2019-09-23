@@ -163,7 +163,7 @@ const TesterSearch = ({
     const mailProps = {
         from: userEmail,
         to: addresses,
-        handleMail: mail => mailTesters(mail, mailData),
+        handleMail: (mail, setLoading) => mailTesters(mail, mailData, setLoading),
         needsProject: true,
         needsContactType: true
     };
@@ -206,17 +206,16 @@ const TesterSearch = ({
                             root: c.searchButtonRoot
                         }}
                         color='primary'
-                        // onClick={async () => await listTestersSearch(filters, input)}
-                        onClick={({ setLoading }) => {
-                            setLoading(1);
-                            setTimeout(() => setLoading(20), 200)
-                            setTimeout(() => setLoading(40), 400)
-                            setTimeout(() => setLoading(60), 600)
-                            setTimeout(() => setLoading(80), 800)
-                            setTimeout(() => setLoading(100), 1000)
-                            setTimeout(() => setLoading(false), 1200)
-                        }}
-                        enableLoader
+                        onClick={async ({ setLoading }) => await listTestersSearch(filters, input, setLoading)}
+                        // onClick={({ setLoading }) => {
+                        //     setTimeout(() => setLoading(1), 1)
+                        //     setTimeout(() => setLoading(20), 2000)
+                        //     setTimeout(() => setLoading(40), 4000)
+                        //     setTimeout(() => setLoading(60), 6000)
+                        //     setTimeout(() => setLoading(80), 8000)
+                        //     setTimeout(() => setLoading(100), 10000)
+                        // }}
+                        // enableLoader
                         //disabled={!selectedTesters.length}
                     >
                         Run Filters

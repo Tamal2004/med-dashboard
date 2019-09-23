@@ -43,8 +43,9 @@ const AddNewClient = ({ onClose, handleSubmit, invalid, submitting }) => {
                     variant='contained'
                     color='primary'
                     size='large'
-                    onClick={handleSubmit}
-                    disabled={invalid || submitting}
+                    onClick={async () => await handleSubmit()}
+                    enableLoader
+                    disabled={invalid}
                 >
                     Create
                 </Button>

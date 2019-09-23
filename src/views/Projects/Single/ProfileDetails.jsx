@@ -43,6 +43,9 @@ const useStyles = makeStyles(({ palette, spacing, typography }) => ({
         marginTop: spacing(3),
         display: 'flex',
         justifyContent: 'flex-end'
+    },
+    inputContainer: {
+        marginTop: spacing(2)
     }
 }));
 
@@ -102,13 +105,15 @@ const ProfileDetails = ({
                 </NavigateButton>
 
                 {newProfile && (
-                    <SearchInput
-                        Adornment={AddIcon}
-                        placeholder='Profile...'
-                        color='secondary'
-                        handleClick={addProfile}
-                        resetOnSubmit
-                    />
+                    <div className={c.inputContainer}>
+                        <SearchInput
+                            Adornment={AddIcon}
+                            placeholder='Profile...'
+                            color='secondary'
+                            handleClick={addProfile}
+                            resetOnSubmit
+                        />
+                    </div>
                 )}
 
                 <Table

@@ -112,7 +112,7 @@ const ProjectNew = ({
             <Grid container className={c.footer}>
                 <Grid item xs={6}>
                     <NavigateButton
-                        styles={{ root: c.submit}}
+                        styles={{ root: c.submit, container: c.submitContainer}}
                         variant='contained'
                         color='secondary'
                         onClick={reset}
@@ -123,11 +123,12 @@ const ProjectNew = ({
                 </Grid>
                 <Grid item xs={6}>
                     <NavigateButton
-                        styles={{ root: c.submit}}
+                        styles={{ root: c.submit, container: c.submitContainer}}
                         variant='contained'
                         color='primary'
-                        onClick={handleSubmit}
-                        disabled={invalid || submitting}
+                        onClick={async () => await handleSubmit()}
+                        enableLoader
+                        disabled={invalid}
                     >
                         Submit
                     </NavigateButton>

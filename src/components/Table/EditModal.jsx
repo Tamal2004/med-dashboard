@@ -32,7 +32,7 @@ const useStyles = makeStyles(({ palette, spacing, breakpoints }) => ({
     }
 }));
 
-const EditModal = ({ formData, onClose, handleSubmit, dirty, title }) => {
+const EditModal = ({ formData, onClose, handleSubmit, dirty, title,pristine }) => {
     const c = useStyles();
 
     const rows = formData.map(({ label, key, type, props }, index) => {
@@ -82,10 +82,12 @@ const EditModal = ({ formData, onClose, handleSubmit, dirty, title }) => {
                     variant='contained'
                     color='primary'
                     size='large'
-                    onClick={() => {
-                        if (dirty) handleSubmit();
-                        else onClose();
+                    onClick={async () => {
+                        if (dirty) return await handleSubmit();
+                        else return onClose();
                     }}
+                    enableLoader
+                    disabled={pristine}
                 >
                     Update
                 </Button>

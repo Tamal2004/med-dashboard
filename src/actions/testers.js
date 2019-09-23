@@ -72,7 +72,7 @@ export const createTester = tester => async dispatch => {
 
     if (!error) {
         dispatch(createTesterAction(SUCCESS));
-        dispatch(testerSignUp(createTester));
+        await dispatch(testerSignUp(createTester));
         history.push('/tester');
     } else {
         dispatch(createTesterAction(FAIL));
@@ -88,18 +88,17 @@ export const createTester = tester => async dispatch => {
 // PUBLIC
 export const createPublicTester = tester => async dispatch => {
     dispatch(createTesterAction(REQUEST));
-    const res = client2
-        .mutate({
+    try {
+        const {
+            data: { createTester }
+        } = await client2.mutate({
             mutation: gql(CreateTester),
             variables: { input: tester }
-        })
-        .then(({ data: { createTester } }) =>
-            dispatch(testerSignUp(createTester))
-        );
+        });
 
-    if (!res.error) {
+        await dispatch(testerSignUp(createTester));
         dispatch(createTesterAction(SUCCESS));
-    } else {
+    } catch {
         dispatch(createTesterAction(FAIL));
         dispatch(
             showNotification({
@@ -322,14 +321,17 @@ export const updateTester = ({
         dispatch(initialize('TesterDetails', testerDetails));
         dispatch(initialize('ContactDetails', contactDetails));
         dispatch(initialize('EmploymentDetails', employmentDetails));
-        email && dispatch(changCongnitoUserInfo({ email, firstName, surname }));
+        if (email)
+            await dispatch(
+                changCongnitoUserInfo({ email, firstName, surname })
+            );
+
         dispatch(
             showNotification({
                 type: 'success',
                 message: 'Updated successfully'
             })
         );
-        return 200;
     } else {
         dispatch(
             showNotification({
@@ -337,7 +339,6 @@ export const updateTester = ({
                 message: 'Failed! Something went wrong!'
             })
         );
-        return null;
     }
 };
 
@@ -388,29 +389,27 @@ export const removeTester = id => async (dispatch, getState) => {
     }
 };
 
-const publicFetchTesterEmail = id => async dispatch => {
-    return client2
-        .query({
-            query: gql(FetchTesterEmail),
-            variables: {
-                id
-            }
-        })
-        .then(
-            ({
-                data: {
-                    getTester: {
-                        email = null,
-                        sessions: { items: sessionIds = [] },
-                        contactNotes: { items: contactNoteIds = [] }
-                    } = {}
-                } = {}
-            }) => ({
-                email,
-                sessionIds,
-                contactNoteIds
-            })
-        );
+const publicFetchTesterEmail = async id => {
+    const {
+        data: {
+            getTester: {
+                email = null,
+                sessions: { items: sessionIds = [] },
+                contactNotes: { items: contactNoteIds = [] }
+            } = {}
+        } = {}
+    } = await client2.query({
+        query: gql(FetchTesterEmail),
+        variables: {
+            id
+        }
+    });
+
+    return {
+        email,
+        sessionIds,
+        contactNoteIds
+    };
 };
 
 const publicRemoveTester = (
@@ -450,31 +449,34 @@ const publicRemoveTester = (
 };
 
 export const unsubscribeTester = id => async dispatch => {
-    dispatch(publicFetchTesterEmail(id))
-        .then(async res => {
-            const { email, sessionIds, contactNoteIds } = res;
-
-            if (!email) {
-                dispatch(
-                    showNotification({
-                        type: 'error',
-                        message: "User doesn't exists"
-                    })
-                );
-            } else {
-                dispatch(
-                    publicRemoveTester(id, email, sessionIds, contactNoteIds)
-                );
-            }
-        })
-        .catch(error => {
+    console.log('artars');
+    try {
+        const {
+            email,
+            sessionIds,
+            contactNoteIds
+        } = await publicFetchTesterEmail(id);
+        console.log(email);
+        if (!email) {
             dispatch(
                 showNotification({
                     type: 'error',
-                    message: "User doesn't exists"
+                    message: "User doesn't exist"
                 })
             );
-        });
+        } else {
+            await dispatch(
+                publicRemoveTester(id, email, sessionIds, contactNoteIds)
+            );
+        }
+    } catch {
+        dispatch(
+            showNotification({
+                type: 'error',
+                message: "User doesn't exist"
+            })
+        );
+    }
 };
 
 const mailTesterAction = (async, payload) => ({
@@ -535,24 +537,27 @@ const mailTestersAction = async => ({
 
 export const mailTesters = (
     { project, contactType, ...mail },
-    mailData
+    mailData,
+    setLoading
 ) => async (dispatch, getState) => {
     dispatch(mailTestersAction(REQUEST));
 
-    const username = selectFullName(getState());
-    // const contactNotes = ids.map(id => {
-    //     return {
-    //         contactNoteTesterId: id,
-    //         contactNoteProjectId: project,
-    //         type: contactType,
-    //         note: mail.body.replace(/<\/?[^>]+>/gi, ' '),
-    //         date: today(),
-    //         contactedBy: username
-    //     };
-    // });
+    const generateLoading = data => {
+        let count = 0;
+        return () => {
+            count++;
+            setLoading(Math.ceil((count / data.length) * 100));
+        };
+    };
+    const updateLoading = generateLoading(mailData);
+    setLoading(1);
 
-    const composeSend = async ({ email, id }) =>
-        await sendMail({ ...mail, to: [email], testerId: id });
+    const username = selectFullName(getState());
+    const composeSend = async ({ email, id }) => {
+        const response = await sendMail({ ...mail, to: [email], testerId: id });
+        updateLoading();
+        return response;
+    };
 
     const { contactNotes, sendMails } = mailData.reduce(
         ({ contactNotes, sendMails }, { email, id }) => ({
@@ -600,7 +605,6 @@ export const mailTesters = (
 };
 
 export const requestMail = mail => async dispatch => {
-    console.log('mail', mail);
     try {
         await sendMail(mail);
         dispatch(

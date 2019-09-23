@@ -77,7 +77,7 @@ const ProfileHome = props => {
 		updateAuthUserPassword({
 			oldPassword: values.oldPassword,
 			newPassword: values.newPassword
-		}).then(res => res === 200 && resetState());
+		}).then(() => resetState());
 
 	const isValid = () =>
 		values.oldPassword.length >= 6 && values.newPassword.length >= 6;
@@ -178,7 +178,8 @@ const ProfileHome = props => {
 							<ListItem>
 								<NavigateButton
 									disabled={!isValid()}
-									onClick={submitPassword}
+									onClick={async () => await submitPassword()}
+									enableLoader
 								>
 									Update Password
 								</NavigateButton>

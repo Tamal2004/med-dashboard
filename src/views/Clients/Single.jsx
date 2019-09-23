@@ -47,9 +47,11 @@ const useStyles = makeStyles(({ spacing, palette }) => ({
         justifyContent: 'flex-end',
         alignContent: 'flex-end'
     },
+    clientDeleteContainer: {
+        marginRight: spacing(1.5)
+    },
     clientDelete: {
         backgroundColor: palette.error.main,
-        marginRight: spacing(1.5),
         '&:hover': {
             backgroundColor: palette.error.dark
         }
@@ -85,7 +87,7 @@ const ClientSingle = ({
         promptText: `Are you sure you want to delete this client?`,
         cancelText: 'Cancel',
         submitText: 'Delete',
-        onSubmit: () => removeClient(id)
+        onSubmit: async () => await removeClient(id)
     };
 
     return (
@@ -101,7 +103,10 @@ const ClientSingle = ({
             </GridItem>
             <GridItem md={6} className={c.buttonGridStyle}>
                 <NavigateButton
-                    className={c.clientDelete}
+                    styles={{
+                        root: c.clientDelete,
+                        container: c.clientDeleteContainer
+                    }}
                     color='secondary'
                     onClick={() => handleConfirmationModal(confirmationProps)}
                 >

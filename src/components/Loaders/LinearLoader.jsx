@@ -25,8 +25,8 @@ const LinearLoader = ({ value, className, ...props }) => {
     const isValueNumber = typeof value === 'number';
 
     useEffect(() => {
-        bufferProgress.current(() => {
-            if (isValueNumber) {
+        bufferProgress.current = () => {
+            if (typeof value === 'number') {
                 if (value >= 100) {
                     setCompleted(true);
                 } else {
@@ -34,27 +34,19 @@ const LinearLoader = ({ value, className, ...props }) => {
                     const buffer = Math.random() * 10;
                     setBuffer(value + buffer);
                 }
-            } else {
-                setCompleted(false);
             }
-        });
+        };
     });
 
     useEffect(() => {
-        if (isValueNumber) {
-            const progress = () => bufferProgress.current();
-            const bufferInterval = () => setInterval(progress, 200);
-            return () => {q
-                clearInterval(bufferInterval);
-            };
-        }
+        const progress = () => {
+            bufferProgress.current();
+        };
+        const bufferInterval = setInterval(progress, 250);
+        return () => {
+            clearInterval(bufferInterval);
+        };
     }, []);
-    //
-    // useEffect(() => {
-    //     let cancelled = false;
-    //     !cancelled && setCompleted(value >= 100);
-    //     return () => (cancelled = true);
-    // });
 
     const isProgressLoader = isValueNumber && !completed;
 
@@ -64,7 +56,7 @@ const LinearLoader = ({ value, className, ...props }) => {
             ? {
                   variant: 'buffer',
                   value,
-                  valueBuffer: 76
+                  valueBuffer
               }
             : {}),
         ...props

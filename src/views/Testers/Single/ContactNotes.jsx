@@ -65,7 +65,7 @@ const ContactNotes = ({
                 deleteAction: () =>
                     handleContactNoteConfirmationModal({
                         ...confirmationProps,
-                        onSubmit: () => removeContactNote(id)
+                        onSubmit: async () => await removeContactNote(id)
                     })
             }
         })

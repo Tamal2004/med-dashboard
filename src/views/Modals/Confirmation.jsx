@@ -52,10 +52,12 @@ const ConfirmationModal = ({
                     variant='contained'
                     color='primary'
                     size='large'
-                    onClick={() => {
-                        onSubmit();
+                    onClick={async () => {
+                        const response = await onSubmit();
                         onClose();
+                        return response;
                     }}
+                    enableLoader
                 >
                     {submitText}
                 </Button>

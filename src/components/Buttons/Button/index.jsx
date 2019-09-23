@@ -7,9 +7,10 @@ import { styles } from './styles';
 import { ButtonBase } from '../ButtonBase';
 import { composeClasses } from 'libs';
 
-const Button = ({ classes, styles, ...restProps }) => (
+const Button = ({ classes, styles, size, ...restProps }) => (
     <ButtonBase
         styles={composeClasses({ classes, styles })}
+        style={{ height: size === 'large' ? 42 : 24}}
         color='primary'
         {...restProps}
     />

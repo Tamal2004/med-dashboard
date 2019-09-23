@@ -28,7 +28,8 @@ const ButtonBase = ({
 
     useEffect(() => {
         let cancelled = false;
-        setLoading.current = progress => !cancelled && unscopedSetLoading(progress);
+        setLoading.current = progress =>
+            !cancelled && unscopedSetLoading(progress);
 
         const { offsetHeight = 36, offsetWidth = 0 } = buttonRef.current;
         setDimensions({ height: offsetHeight, width: offsetWidth });
@@ -36,7 +37,11 @@ const ButtonBase = ({
         return () => (cancelled = true);
     }, []);
 
-    const { root, rootLoading, loader, container, ...c } = composeClasses({
+    useEffect(() => {
+        loading >= 100 && unscopedSetLoading(false);
+    });
+
+    const { loader, container, ...c } = composeClasses({
         classes,
         styles
     });
@@ -72,10 +77,7 @@ const ButtonBase = ({
                 ref={buttonRef}
                 variant={isLoading ? 'outlined' : variant}
                 onClick={isLoading ? () => {} : handleClick}
-                classes={{
-                    root: clsx(root),
-                    ...c
-                }}
+                classes={c}
                 {...restProps}
             >
                 {children}

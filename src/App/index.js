@@ -15,7 +15,7 @@ import {
     Loading
 } from 'aws-amplify-react';
 
-import { OpenTesterForm } from 'views';
+import { OpenTesterForm, UnsubscribeUser } from 'views';
 
 // Material
 import { MuiThemeProvider } from '@material-ui/core/styles';
@@ -42,7 +42,7 @@ class IndexApp extends Component {
             const path = history.location.pathname;
             let authState;
 
-            if (path === '/application') {
+            if (path === '/application' || path === '/unsubscribe') {
                 authState = 'signUp';
             } else if (path === '/') {
                 authState = 'signIn';
@@ -61,8 +61,11 @@ class IndexApp extends Component {
                         authState={composePath()}
                         amplifyConfig={config}
                         onStateChange={authState => {
-                            if (authState === 'signUp')
-                                history.push('/application');
+                            if (authState === 'signUp') {
+                                const path = history.location.pathname;
+                                if (path === '/application' || path === '/')
+                                    history.push('/application');
+                            }
                             return (
                                 authState === 'signedIn' && setAuthUserInfo()
                             );
@@ -76,6 +79,7 @@ class IndexApp extends Component {
                         ]}
                     >
                         <OpenTesterForm override={'SignUp'} />
+
                         <App />
                     </Authenticator>
                     <Notification />
