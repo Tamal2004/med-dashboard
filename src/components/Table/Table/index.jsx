@@ -38,7 +38,8 @@ class Table extends Component {
         sortIndices: Array.range(0, this.props.data.length - 1),
         checked: [],
         selectAll: false,
-        tableWidth: null
+        tableWidth: null,
+        firstTime: true
     };
 
     // Classes
@@ -54,8 +55,15 @@ class Table extends Component {
         });
     }
 
-    componentDidUpdate({ data: prevData = [], page: prevPage }, s, c) {
-        const { data = [], page = 1 } = this.props;
+    componentDidUpdate(
+        { data: prevData = [], page: prevPage },
+        { sortIndex: prevSortIndex },
+        c
+    ) {
+        const {
+            state: { firstTime },
+            props: { data = [], page = 1, sortIndex }
+        } = this;
 
         if (prevPage === page && prevData !== data) {
             this.setState({
@@ -67,6 +75,32 @@ class Table extends Component {
                     ReactDOM.findDOMNode(this.tableRef).offsetWidth
             });
         }
+
+        // ???????
+        if (
+            (!!sortIndex && firstTime && sortIndex === prevSortIndex) ||
+            (prevSortIndex === null && !!sortIndex)
+        ) {
+            if (!firstTime) {
+                if (sortIndex < 0) {
+                    this.handleSort(sortIndex * -1 - 1);
+                } else {
+                    this.handleSort(sortIndex - 1);
+                    this.setState({ firstTime: true });
+                }
+            } else {
+                this.setState({ firstTime: false });
+                if (sortIndex < 0) this.handleSort(sortIndex * -1 - 1);
+            }
+        }
+    }
+
+    componentWillUnmount() {
+        const {
+            state: { sortIndex },
+            props: { handleSortIndex }
+        } = this;
+        handleSortIndex(sortIndex);
     }
 
     handleSort = idx => {
@@ -440,7 +474,9 @@ class Table extends Component {
 
 Table.defaultProps = {
     itemsPerPage: 10,
-    noResultsText: 'No results'
+    noResultsText: 'No results',
+    sortIndex: null,
+    handleSortIndex: () => {}
 };
 
 Table.propTypes = {

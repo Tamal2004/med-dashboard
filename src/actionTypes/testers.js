@@ -8,3 +8,7 @@ export const LIST_TESTERS = '@@GQL__list-testers';
 
 export const MAIL_TESTER = '@@SES__mail-tester';
 export const MAIL_TESTERS = '@@GQL__mail-testers';
+
+export const SET_FILTERS = '@@REACT__set-filters';
+export const SET_PAGE = '@@REACT__set-page';
+export const SET_SORT_INDEX = '@@REACT__set-sort-index';

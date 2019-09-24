@@ -27,7 +27,8 @@ class PaginationBase extends Component {
 
     componentDidMount() {
         this.setState({
-            activePages: this.composeInitialPages()
+            activePages: this.composeInitialPages(),
+            currentPage: this.props.page || this.FIRST_PAGE
         });
     }
 

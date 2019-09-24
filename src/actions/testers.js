@@ -42,7 +42,10 @@ import {
     UPDATE_TESTER,
     REMOVE_TESTER,
     MAIL_TESTER,
-    MAIL_TESTERS
+    MAIL_TESTERS,
+    SET_FILTERS,
+    SET_PAGE,
+    SET_SORT_INDEX
 } from 'actionTypes';
 import { showNotification } from './notification';
 import { unsubscribeUser, changCongnitoUserInfo } from './auth';
@@ -622,3 +625,18 @@ export const requestMail = mail => async dispatch => {
         );
     }
 };
+
+export const setFilter = filters => ({
+    type: SET_FILTERS,
+    payload: filters
+});
+
+export const setPage = page => ({
+    type: SET_PAGE,
+    payload: page
+});
+
+export const setSortIndex = sortIndex => ({
+    type: SET_SORT_INDEX,
+    payload: sortIndex
+});

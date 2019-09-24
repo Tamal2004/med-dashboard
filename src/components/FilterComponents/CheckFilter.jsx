@@ -24,9 +24,9 @@ import FormControl from '@material-ui/core/FormControl';
 import { AccordionFilterContainer } from './FilterContainer';
 import { CheckControlLabel } from './ControlLabel';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles(({spacing}) => ({
 	controlPadding: {
-		paddingLeft: 16
+		paddingLeft: spacing(2)
 	}
 }));
 
@@ -37,7 +37,7 @@ const CheckFilter = ({ checked, data, onChange, title }) => {
 
 	return (
 		<AccordionFilterContainer title={title}>
-			<FormControl className={c.controlPadding} fullWidth={true}>
+			<FormControl className={c.controlPadding} fullWidth>
 				<FormGroup aria-label={title} name={title} onChange={onChange}>
 					{data.map((datum, idx) => (
 						<CheckControlLabel

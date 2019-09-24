@@ -1,5 +1,7 @@
 import React, { Fragment, useState, useEffect } from 'react';
+import { connect } from 'react-redux';
 import { FilterProvider, FilterConsumer } from './context';
+
 import {
     EMPLOYEE_COUNTS,
     EMPLOYMENT_SECTORS,
@@ -10,6 +12,12 @@ import {
 } from 'libs';
 
 import { CheckFilter, RangeFilter } from 'components/FilterComponents';
+
+// Selectors
+import { selectFilters } from 'selectors';
+
+// Actions
+import { setFilter } from 'actions';
 
 const FILTER_KEY = {
     age: 'Age',
@@ -29,9 +37,9 @@ const FILTER_KEY = {
 
 const TOGGLE_DATA = ['Yes', 'No'];
 
-const SearchFilter = ({ handleFilter }) => {
-    const [filterValues, setFilter] = useState({});
-
+const SearchFilter = ({ handleFilter, filterValues, setFilter }) => {
+    // const [filterValues, setFilter] = useState({});
+    console.log(filterValues);
     const storeKey = key =>
         key
             .split(' ')
@@ -104,11 +112,11 @@ const SearchFilter = ({ handleFilter }) => {
 
         setFilter({ ...filterValues, ...keyValue });
     };
-
-    useEffect(() => {
-        handleFilter(filterValues);
-        /*eslint-disable-next-line*/
-    }, [filterValues]);
+    //
+    // useEffect(() => {
+    //     handleFilter(filterValues);
+    //     /*eslint-disable-next-line*/
+    // }, [filterValues]);
 
     return (
         <FilterProvider
@@ -255,4 +263,15 @@ const SearchFilter = ({ handleFilter }) => {
     );
 };
 
-export { SearchFilter as default, SearchFilter };
+const mapState = state => ({
+    filterValues: selectFilters(state)
+});
+
+const mapDispatch = { setFilter };
+
+const _SearchFilter = connect(
+    mapState,
+    mapDispatch
+)(SearchFilter);
+
+export { _SearchFilter as default, _SearchFilter as SearchFilter };

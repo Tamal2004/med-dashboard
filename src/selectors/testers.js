@@ -78,3 +78,20 @@ export const selectAreTestersSearching = createCachedSelector(
     selectTesters,
     ({ isSearching }) => isSearching
 )(() => 'placeholder');
+
+export const selectFilters = createCachedSelector(
+    selectTesters,
+    ({ filters }) => filters
+)(() => 'placeholder');
+
+export const selectPage = createCachedSelector(
+    selectTesters,
+    ({ page }) => page
+)(() => 'placeholder');
+
+export const selectSortIndex = createCachedSelector(
+    selectTesters,
+    ({ sortIndex }) => sortIndex
+)(() => 'placeholder');
+
+

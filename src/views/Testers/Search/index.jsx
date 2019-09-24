@@ -4,11 +4,7 @@ import { connect } from 'react-redux';
 import classNames from 'clsx';
 
 // Material
-import {
-    makeStyles,
-    Typography,
-    LinearProgress,
-} from '@material-ui/core';
+import { makeStyles, Typography, LinearProgress } from '@material-ui/core';
 import { SearchFilter } from './SearchFilter';
 
 import {
@@ -28,11 +24,14 @@ import {
     selectTestersSearch,
     selectEmail,
     selectTestersSearchInfo,
-    selectAreTestersSearching
+    selectAreTestersSearching,
+    selectFilters,
+    selectPage,
+    selectSortIndex
 } from 'selectors';
 
 // Actions
-import { listTestersSearch, mailTesters } from 'actions';
+import { listTestersSearch, mailTesters, setPage, setSortIndex } from 'actions';
 
 const useStyles = makeStyles(({ shape, spacing, typography }) => ({
     gridDistance: {
@@ -102,14 +101,16 @@ const TesterSearch = ({
     userEmail,
     testersInfo,
     mailTesters,
-    isSearching
+    isSearching,
+    filters,
+    page,
+    setPage,
+    sortIndex,
+    setSortIndex
 }) => {
     const c = useStyles();
     const [input, setInput] = useState('');
-    const [filterCounter, setFilterCounter] = useState(0); // Initial calls
-    const [filters, setFilters] = useState('');
     const [isLoading, setLoading] = useState(false);
-    const [page, setPage] = useState(1);
     const [selectedTesters, setSelectedTesters] = useState([]);
 
     const pageStep = 10;
@@ -117,24 +118,19 @@ const TesterSearch = ({
         Math.floor(testers.length / pageStep) + !!(testers.length % pageStep) ||
         1;
 
-    useEffect(() => {
-        if (filterCounter < 3) setFilterCounter(filterCounter + 1);
-        else {
-            setLoading(true);
-            listTestersSearch(filters, input).then(() => {
-                setPage(1);
-                setLoading(false);
-            });
-        }
-        // eslint-disable-next-line
-    }, [filters, input]);
-
-    const handleFilters = filters => {
-        setFilters(filters);
+    const handleFilter = async () => {
+        setLoading(true);
+        await listTestersSearch(filters, input);
+        setPage(1);
+        setLoading(false);
     };
 
-    const handleSearch = text => {
+    const handleSearch = async text => {
         setInput(text);
+        setLoading(true);
+        await listTestersSearch(filters, text);
+        setPage(1);
+        setLoading(false);
     };
 
     const { addresses, mailData } = selectedTesters.reduce(
@@ -163,7 +159,8 @@ const TesterSearch = ({
     const mailProps = {
         from: userEmail,
         to: addresses,
-        handleMail: (mail, setLoading) => mailTesters(mail, mailData, setLoading),
+        handleMail: (mail, setLoading) =>
+            mailTesters(mail, mailData, setLoading),
         needsProject: true,
         needsContactType: true
     };
@@ -206,23 +203,11 @@ const TesterSearch = ({
                             root: c.searchButtonRoot
                         }}
                         color='primary'
-                        onClick={async ({ setLoading }) => await listTestersSearch(filters, input, setLoading)}
-                        // onClick={({ setLoading }) => {
-                        //     setTimeout(() => setLoading(1), 1)
-                        //     setTimeout(() => setLoading(20), 2000)
-                        //     setTimeout(() => setLoading(40), 4000)
-                        //     setTimeout(() => setLoading(60), 6000)
-                        //     setTimeout(() => setLoading(80), 8000)
-                        //     setTimeout(() => setLoading(100), 10000)
-                        // }}
-                        // enableLoader
-                        //disabled={!selectedTesters.length}
+                        onClick={handleFilter}
                     >
-                        Run Filters
+                        Filter
                     </NavigateButton>
-                    <SearchFilter
-                        handleFilter={filters => handleFilters(filters)}
-                    />
+                    <SearchFilter />
                 </GridItem>
                 <GridItem md={9}>
                     {isLoading ? (
@@ -235,6 +220,8 @@ const TesterSearch = ({
                                 noResultText='No Testers'
                                 itemsPerPage={pageStep}
                                 checkAll={value => setSelectedTesters(value)}
+                                sortIndex={sortIndex}
+                                handleSortIndex={(idx) => setSortIndex(idx)}
                             />
                             {!!testers.length && (
                                 <GridContainer className={c.footer}>
@@ -248,6 +235,7 @@ const TesterSearch = ({
                                     </GridItem>
                                     <GridItem md={6} className={c.pagination}>
                                         <PaginationBase
+                                            page={page}
                                             handlePage={page => setPage(page)}
                                             totalPages={totalPages}
                                             items
@@ -268,10 +256,13 @@ const mapState = state => ({
     testers: selectTestersSearch(state),
     testersInfo: selectTestersSearchInfo(state),
     userEmail: selectEmail(state),
-    isSearching: selectAreTestersSearching(state)
+    isSearching: selectAreTestersSearching(state),
+    filters: selectFilters(state),
+    page: selectPage(state),
+    sortIndex: selectSortIndex(state)
 });
 
-const mapDispatch = { listTestersSearch, mailTesters };
+const mapDispatch = { listTestersSearch, mailTesters, setPage, setSortIndex };
 
 const mapModal = {
     handleMailModal: MailModal

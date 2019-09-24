@@ -15,7 +15,10 @@ import {
     FETCH_TESTER,
     LIST_TESTERS,
     LIST_TESTERS_SEARCH,
-    LIST_INCOMPLETE_PROJECTS
+    LIST_INCOMPLETE_PROJECTS,
+    SET_FILTERS,
+    SET_PAGE,
+    SET_SORT_INDEX
 } from 'actionTypes';
 
 const testersReducer = (
@@ -136,6 +139,18 @@ const testersReducer = (
                       }
                   }
                 : state;
+        }
+
+        case SET_FILTERS: {
+            return { ...state, filters: payload };
+        }
+
+        case SET_PAGE: {
+            return { ...state, page: payload };
+        }
+
+        case SET_SORT_INDEX: {
+            return { ...state, sortIndex: payload };
         }
 
         default: {
