@@ -15,8 +15,10 @@ import {
     FETCH_TESTER,
     LIST_TESTERS,
     LIST_TESTERS_SEARCH,
+    LIST_TESTER_TOWNS,
     LIST_INCOMPLETE_PROJECTS,
     SET_FILTERS,
+    RESET_FILTERS,
     SET_PAGE,
     SET_SORT_INDEX
 } from 'actionTypes';
@@ -25,6 +27,10 @@ const testersReducer = (
     state = initialState,
     { type, payload, async, meta, ...action }
 ) => {
+    const {
+        search,
+        search: { results }
+    } = state;
     const isSuccess = async === SUCCESS;
     switch (type) {
         case FETCH_TESTER: {
@@ -33,30 +39,6 @@ const testersReducer = (
 
         case LIST_TESTERS: {
             return isSuccess ? { ...state, list: payload } : state;
-        }
-
-        case LIST_TESTERS_SEARCH: {
-            const { queryId, isFinal } = meta;
-            switch (async) {
-                case REQUEST: {
-                    return { ...state, search: [], queryId, isSearching: true };
-                }
-                case SUCCESS: {
-                    return state.queryId === queryId
-                        ? {
-                              ...state,
-                              search: [...state.search, ...payload],
-                              isSearching: !isFinal
-                          }
-                        : state;
-                }
-                case FAIL: {
-                    return { ...state, isSearching: false };
-                }
-                default: {
-                    return state;
-                }
-            }
         }
 
         case LIST_INCOMPLETE_PROJECTS: {
@@ -141,16 +123,80 @@ const testersReducer = (
                 : state;
         }
 
+        case LIST_TESTERS_SEARCH: {
+            const { queryId, isFinal } = meta;
+            switch (async) {
+                case REQUEST: {
+                    return {
+                        ...state,
+                        search: {
+                            ...search,
+                            results: [],
+                            queryId,
+                            isSearching: true
+                        },
+                        queryId,
+                        isSearching: true
+                    };
+                }
+                case SUCCESS: {
+                    return state.queryId === queryId
+                        ? {
+                              ...state,
+                              search: {
+                                  ...search,
+                                  results: [...results, ...payload],
+                                  isSearching: !isFinal
+                              },
+                              isSearching: !isFinal
+                          }
+                        : state;
+                }
+                case FAIL: {
+                    return {
+                        ...state,
+                        isSearching: false,
+                        search: { ...search, isSearching: false }
+                    };
+                }
+                default: {
+                    return state;
+                }
+            }
+        }
+
+        case LIST_TESTER_TOWNS: {
+            if (isSuccess) {
+                const towns = payload
+                    ? [...new Set([...search.towns, ...payload])]
+                    : [];
+                return {
+                    ...state,
+                    search: {
+                        ...search,
+                        towns
+                    }
+                };
+            } else return state;
+        }
+
         case SET_FILTERS: {
-            return { ...state, filters: payload };
+            return { ...state, search: { ...search, filters: payload } };
+        }
+
+        case RESET_FILTERS: {
+            return {
+                ...state,
+                search: { ...search, filters: initialState.search.filters }
+            };
         }
 
         case SET_PAGE: {
-            return { ...state, page: payload };
+            return { ...state, search: { ...search, page: payload } };
         }
 
         case SET_SORT_INDEX: {
-            return { ...state, sortIndex: payload };
+            return { ...state, search: { ...search, sortIndex: payload } };
         }
 
         default: {

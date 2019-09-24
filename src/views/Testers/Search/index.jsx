@@ -1,10 +1,13 @@
-import React, { Fragment, useState, useEffect } from 'react';
+import React, { Fragment, useState } from 'react';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import classNames from 'clsx';
 
 // Material
 import { makeStyles, Typography, LinearProgress } from '@material-ui/core';
+import HelpIcon from '@material-ui/icons/HelpRounded';
+
+// Local
 import { SearchFilter } from './SearchFilter';
 
 import {
@@ -15,13 +18,14 @@ import {
     SearchInput,
     withModal,
     BarLoader,
-    PaginationBase
+    PaginationBase,
+    Tooltip
 } from 'components';
 import { MailModal } from 'views/Modals';
 
 // Selectors
 import {
-    selectTestersSearch,
+    selectTesterResults,
     selectEmail,
     selectTestersSearchInfo,
     selectAreTestersSearching,
@@ -31,7 +35,13 @@ import {
 } from 'selectors';
 
 // Actions
-import { listTestersSearch, mailTesters, setPage, setSortIndex } from 'actions';
+import {
+    listTestersSearch,
+    mailTesters,
+    setPage,
+    setSortIndex,
+    resetFilters
+} from 'actions';
 
 const useStyles = makeStyles(({ shape, spacing, typography }) => ({
     gridDistance: {
@@ -79,7 +89,13 @@ const useStyles = makeStyles(({ shape, spacing, typography }) => ({
         marginTop: spacing(-0.5),
         borderBottomLeftRadius: shape.borderRadius,
         borderBottomRightRadius: shape.borderRadius
-    }
+    },
+    searchWrapper: {
+        display: 'flex',
+        alignItems: 'center'
+    },
+    search: { width: '95%' },
+    tooltip: { width: '5%', display: 'flex', marginLeft: spacing() }
 }));
 
 const GridWrapper = ({ className, children }) => {
@@ -106,7 +122,8 @@ const TesterSearch = ({
     page,
     setPage,
     sortIndex,
-    setSortIndex
+    setSortIndex,
+    resetFilters
 }) => {
     const c = useStyles();
     const [input, setInput] = useState('');
@@ -178,12 +195,27 @@ const TesterSearch = ({
             <GridWrapper>
                 <GridItem md={3} />
                 <GridItem md={6}>
-                    <SearchInput
-                        placeholder='Search by Tester Name, Email or Town'
-                        handleClick={handleSearch}
-                        handleChange={value => setInput(value)}
-                    />
-                    {isSearching && <LinearProgress className={c.loader} />}
+                    <div className={c.searchWrapper}>
+                        <div className={c.search}>
+                            <SearchInput
+                                placeholder='Search by Tester Name, Email or Town'
+                                handleClick={handleSearch}
+                                handleChange={value => setInput(value)}
+                            />
+                            {isSearching && (
+                                <LinearProgress className={c.loader} />
+                            )}
+                        </div>
+                        <div className={c.tooltip}>
+                            <Tooltip
+                                title="All words separated by 'or' are simultaneously searched!"
+                                dark
+                                placement='right'
+                            >
+                                <HelpIcon color='secondary' />
+                            </Tooltip>
+                        </div>
+                    </div>
                 </GridItem>
                 <GridItem md={3} className={c.emailButtonWrapper}>
                     <NavigateButton
@@ -207,6 +239,16 @@ const TesterSearch = ({
                     >
                         Filter
                     </NavigateButton>
+                    <NavigateButton
+                        styles={{
+                            container: c.searchButtonContainer,
+                            root: c.searchButtonRoot
+                        }}
+                        color='secondary'
+                        onClick={() => resetFilters()}
+                    >
+                        Reset
+                    </NavigateButton>
                     <SearchFilter />
                 </GridItem>
                 <GridItem md={9}>
@@ -221,7 +263,7 @@ const TesterSearch = ({
                                 itemsPerPage={pageStep}
                                 checkAll={value => setSelectedTesters(value)}
                                 sortIndex={sortIndex}
-                                handleSortIndex={(idx) => setSortIndex(idx)}
+                                handleSortIndex={idx => setSortIndex(idx)}
                             />
                             {!!testers.length && (
                                 <GridContainer className={c.footer}>
@@ -253,7 +295,7 @@ const TesterSearch = ({
 };
 
 const mapState = state => ({
-    testers: selectTestersSearch(state),
+    testers: selectTesterResults(state),
     testersInfo: selectTestersSearchInfo(state),
     userEmail: selectEmail(state),
     isSearching: selectAreTestersSearching(state),
@@ -262,7 +304,13 @@ const mapState = state => ({
     sortIndex: selectSortIndex(state)
 });
 
-const mapDispatch = { listTestersSearch, mailTesters, setPage, setSortIndex };
+const mapDispatch = {
+    listTestersSearch,
+    mailTesters,
+    setPage,
+    setSortIndex,
+    resetFilters
+};
 
 const mapModal = {
     handleMailModal: MailModal

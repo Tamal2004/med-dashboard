@@ -41,6 +41,15 @@ export const ListTestersSearch = `query ListTestersSearch($filter: ModelTesterFi
     }
 }`;
 
+export const ListTesterTowns = `query ListTesterTowns($nextToken: String) {
+    listSortedTesters(limit: ${REACT_APP_QUERY_SEARCH_LIMIT} sortDirection: DESC nextToken: $nextToken) {
+        items {
+            town
+        }
+        nextToken
+    }
+}`;
+
 export const CheckTesterEmail = `query CheckTesterEmail(
     $filter: ModelTesterFilterInput
     $nextToken: String

@@ -60,38 +60,46 @@ export const selectTesterList = createCachedSelector(
 // Tester Search
 export const selectTestersSearch = createCachedSelector(
     selectTesters,
-    ({ search }) => generateTestersSearch(search)
+    ({ search }) => search
+)(() => 'placeholder');
+
+export const selectTesterResults = createCachedSelector(
+    selectTestersSearch,
+    ({ results }) => generateTestersSearch(results)
 )(() => 'placeholder');
 
 export const selectTestersSearchInfo = createCachedSelector(
-    selectTesters,
-    ({ search }) => search.map(({ id, email }) => ({ id, email }))
+    selectTestersSearch,
+    ({ results }) => results.map(({ id, email }) => ({ id, email }))
 )(() => 'placeholder');
 
 export const selectIsValidTesterQuery = createCachedSelector(
-    selectTesters,
+    selectTestersSearch,
     (state, id) => id,
     ({ queryId }, id) => queryId === id
 )(() => 'placeholder');
 
 export const selectAreTestersSearching = createCachedSelector(
-    selectTesters,
+    selectTestersSearch,
     ({ isSearching }) => isSearching
 )(() => 'placeholder');
 
 export const selectFilters = createCachedSelector(
-    selectTesters,
+    selectTestersSearch,
     ({ filters }) => filters
 )(() => 'placeholder');
 
 export const selectPage = createCachedSelector(
-    selectTesters,
+    selectTestersSearch,
     ({ page }) => page
 )(() => 'placeholder');
 
 export const selectSortIndex = createCachedSelector(
-    selectTesters,
+    selectTestersSearch,
     ({ sortIndex }) => sortIndex
 )(() => 'placeholder');
 
-
+export const selectTowns = createCachedSelector(
+    selectTestersSearch,
+    ({ towns }) => towns
+)(() => 'placeholder');

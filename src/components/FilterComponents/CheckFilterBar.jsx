@@ -6,6 +6,8 @@ import FormControl from '@material-ui/core/FormControl';
 
 import { CheckControlLabel } from './ControlLabel';
 
+
+
 const CheckFilterBar = ({ checked, data, onChange }) => {
 	const isChecked = datum => checked.includes(datum);
 

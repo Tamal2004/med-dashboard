@@ -26,7 +26,8 @@ import {
     ListTesters,
     ListTestersSearch,
     UpdateTester,
-    RemoveTester
+    RemoveTester,
+    ListTesterTowns
 } from 'graphql/tester';
 import { CreateContactNotes, CreateContactNote } from 'graphql/contactNotes';
 
@@ -38,12 +39,14 @@ import {
     CREATE_TESTER,
     LIST_TESTERS,
     LIST_TESTERS_SEARCH,
+    LIST_TESTER_TOWNS,
     FETCH_TESTER,
     UPDATE_TESTER,
     REMOVE_TESTER,
     MAIL_TESTER,
     MAIL_TESTERS,
     SET_FILTERS,
+    RESET_FILTERS,
     SET_PAGE,
     SET_SORT_INDEX
 } from 'actionTypes';
@@ -56,7 +59,8 @@ import {
     selectFullName,
     selectTesterSessionIds,
     selectTesterContactNoteIds,
-    selectIsValidTesterQuery
+    selectIsValidTesterQuery,
+    selectTowns
 } from 'selectors';
 
 import { testerSignUp } from './auth';
@@ -200,7 +204,7 @@ export const listTestersSearch = (filters, search) => async (
         }
     };
 
-    return runQuery();
+    return await runQuery();
 };
 
 // Fetch Tester
@@ -452,7 +456,6 @@ const publicRemoveTester = (
 };
 
 export const unsubscribeTester = id => async dispatch => {
-    console.log('artars');
     try {
         const {
             email,
@@ -626,9 +629,57 @@ export const requestMail = mail => async dispatch => {
     }
 };
 
+const listTesterTownsAction = (async, payload) => ({
+    type: LIST_TESTER_TOWNS,
+    async,
+    payload
+});
+
+export const listTesterTowns = () => async (dispatch, getState) => {
+    dispatch(listTesterTownsAction(REQUEST));
+
+    const runQuery = async (pageToken = null, firstTime = true) => {
+        if (firstTime || pageToken) {
+            const variables = {
+                ...(pageToken ? { nextToken: pageToken } : {})
+            };
+
+            try {
+                const {
+                    data: {
+                        listSortedTesters: {
+                            items: listSortedTesters = [],
+                            nextToken
+                        } = {}
+                    }
+                } = await API.graphql(
+                    graphqlOperation(ListTesterTowns, variables)
+                );
+
+                dispatch(
+                    listTesterTownsAction(
+                        SUCCESS,
+                        listSortedTesters.map(({ town }) => town)
+                    )
+                );
+
+                runQuery(nextToken, false);
+            } catch {
+                dispatch(listTesterTownsAction(FAIL));
+            }
+        }
+    };
+
+    if (!selectTowns(getState()).length) return await runQuery();
+};
+
 export const setFilter = filters => ({
     type: SET_FILTERS,
     payload: filters
+});
+
+export const resetFilters = () => ({
+    type: RESET_FILTERS
 });
 
 export const setPage = page => ({

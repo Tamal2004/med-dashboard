@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from 'react';
+import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import { FilterProvider, FilterConsumer } from './context';
 
@@ -11,10 +11,14 @@ import {
     MARITAL_STATUSES
 } from 'libs';
 
-import { CheckFilter, RangeFilter } from 'components/FilterComponents';
+import {
+    TownCheckFilter,
+    CheckFilter,
+    RangeFilter
+} from 'components/FilterComponents';
 
 // Selectors
-import { selectFilters } from 'selectors';
+import { selectFilters, selectTowns } from 'selectors';
 
 // Actions
 import { setFilter } from 'actions';
@@ -32,14 +36,19 @@ const FILTER_KEY = {
     ethnicities: 'Ethnicities',
     'marital-statuses': 'Marital Statuses',
     titles: 'Titles',
-    gender: 'Gender'
+    gender: 'Gender',
+    town: 'Town'
 };
 
 const TOGGLE_DATA = ['Yes', 'No'];
 
-const SearchFilter = ({ handleFilter, filterValues, setFilter }) => {
-    // const [filterValues, setFilter] = useState({});
-    console.log(filterValues);
+const SearchFilter = ({
+    handleFilter,
+    filterValues,
+    setFilter,
+    towns,
+    listTesterTowns
+}) => {
     const storeKey = key =>
         key
             .split(' ')
@@ -112,11 +121,6 @@ const SearchFilter = ({ handleFilter, filterValues, setFilter }) => {
 
         setFilter({ ...filterValues, ...keyValue });
     };
-    //
-    // useEffect(() => {
-    //     handleFilter(filterValues);
-    //     /*eslint-disable-next-line*/
-    // }, [filterValues]);
 
     return (
         <FilterProvider
@@ -127,6 +131,18 @@ const SearchFilter = ({ handleFilter, filterValues, setFilter }) => {
             <FilterConsumer>
                 {({ onChange }) => (
                     <Fragment>
+                        <TownCheckFilter
+                            data={towns}
+                            onChange={e =>
+                                onChange(e, FILTER_KEY['town'], 'checkbox')
+                            }
+                            title={FILTER_KEY['town']}
+                            checked={getFilterValues(
+                                FILTER_KEY['town'],
+                                'checkbox'
+                            )}
+                        />
+
                         <CheckFilter
                             data={GENDERS}
                             onChange={e =>
@@ -145,7 +161,8 @@ const SearchFilter = ({ handleFilter, filterValues, setFilter }) => {
                                 onChange(e, FILTER_KEY['age'], 'range', value)
                             }
                             onBlur={() => {}}
-                            value={[0, 80]}
+                            value={getFilterValues(
+                                FILTER_KEY['age'])}
                             step={1}
                         />
 
@@ -264,7 +281,8 @@ const SearchFilter = ({ handleFilter, filterValues, setFilter }) => {
 };
 
 const mapState = state => ({
-    filterValues: selectFilters(state)
+    filterValues: selectFilters(state),
+    towns: selectTowns(state)
 });
 
 const mapDispatch = { setFilter };

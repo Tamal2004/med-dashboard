@@ -66,7 +66,8 @@ class Tooltip extends Component {
 }
 
 Tooltip.defaultProps = {
-    title: ''
+    title: '',
+    placement: 'bottom'
 };
 
 Tooltip.propTypes = {

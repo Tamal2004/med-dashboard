@@ -84,50 +84,16 @@ export const composeFilters = filters => {
     }, []);
 };
 
-const searchFields = ['firstName', 'surname', 'email', 'town'];
+const searchFields = ['firstName', 'surname', 'email'];
 export const composeSearch = search => {
-    const searchStrings = search
-        .split('+')
-        .map(x => x.trim())
-        .slice(0, 2);
+    const searchValues = search.split(' or ').map(x => x.trim());
 
-    const searchQueries = searchStrings
-        .map((filterString, idx, array) => {
-            const otherStrings = array.filter((f, i) => i !== idx);
-
-            const compose = (currentFilter, otherFilters) =>
-                searchFields.map(
-                    (searchField, searchFieldIdx, searchFieldArray) => {
-                        const otherSearchFields = searchFieldArray.filter(
-                            (f, i) => i !== searchFieldIdx
-                        );
-
-                        const others = otherFilters.map(otherFilter => ({
-                            or: otherSearchFields.map(otherSearchField => ({
-                                [otherSearchField]: {
-                                    contains: otherFilter
-                                }
-                            }))
-                        }));
-
-                        return {
-                            and: [
-                                {
-                                    [searchField]: {
-                                        contains: currentFilter
-                                    }
-                                },
-                                ...others
-                            ]
-                        };
-                    }
-                );
-
-            return compose(
-                filterString,
-                otherStrings
-            );
-        })
+    const searchQueries = searchValues
+        .map(searchValue =>
+            searchFields.map(searchField => ({
+                [searchField]: { contains: searchValue }
+            }))
+        )
         .flatMap(x => x);
 
     return search

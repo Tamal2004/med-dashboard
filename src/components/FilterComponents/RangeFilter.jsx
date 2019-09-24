@@ -33,6 +33,7 @@ const useStyles = makeStyles(theme => ({
 const RangeFilter = ({ value, onChange, title, step, min, max }) => {
     const c = useStyles();
 
+
     const [rangeValue, setValue] = useState([min, max]);
     const [committedRangeValue, setCommittedValue] = useState([min, max]);
 
@@ -42,6 +43,10 @@ const RangeFilter = ({ value, onChange, title, step, min, max }) => {
         setCommittedValue(committedValue);
 
     const valuetext = value => value;
+
+    useEffect(() => {
+        setValue(value)
+    },[value])
 
     useEffect(() => {
         onChange(null, committedRangeValue);
