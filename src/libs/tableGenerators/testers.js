@@ -6,9 +6,9 @@ import { normalizeTime } from 'normalizers';
 import { composeSortableDate } from './common';
 
 export const generateTestersSearch = testersSearch =>
-    testersSearch.map(({ id, name, age, gender, email }) => ({
+    testersSearch.map(({ id, name, age, email }) => ({
         'Tester Name': {
-            Component: <Link to={`/tester/${id}`}>{name}</Link>,
+            Component: <Link to={`/tester/${id}?search=true`}>{name}</Link>,
             value: name
         },
         Age: age,

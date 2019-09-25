@@ -95,7 +95,6 @@ export const composeSearch = search => {
             }))
         )
         .flatMap(x => x);
-
     return search
         ? [
               {

@@ -63,7 +63,9 @@ const TesterHome = ({ testers, listTesters }) => {
         1;
 
     useEffect(() => {
-        listTesters().then(() => setLoading(false));
+        let cancelled = false;
+        listTesters().then(() => !cancelled && setLoading(false));
+        return () => cancelled = true;
         /*eslint-disable-next-line*/
     }, []);
 

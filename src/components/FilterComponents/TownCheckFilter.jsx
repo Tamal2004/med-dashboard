@@ -92,7 +92,7 @@ const TownCheckFilter = ({
 
     useEffect(() => {
         listTesterTowns();
-    }, []);
+    }, [listTesterTowns]);
 
     useEffect(() => {
         setTowns(
@@ -103,7 +103,7 @@ const TownCheckFilter = ({
                         town.toLowerCase().includes(input.toLowerCase()))
             )
         );
-    }, [input, checked]);
+    }, [input, checked, allTowns]);
 
     const isChecked = datum => checked.includes(datum);
 

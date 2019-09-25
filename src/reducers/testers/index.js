@@ -20,7 +20,8 @@ import {
     SET_FILTERS,
     RESET_FILTERS,
     SET_PAGE,
-    SET_SORT_INDEX
+    SET_SORT_INDEX,
+    SET_SORT_INDICES,
 } from 'actionTypes';
 
 const testersReducer = (
@@ -135,12 +136,10 @@ const testersReducer = (
                             queryId,
                             isSearching: true
                         },
-                        queryId,
-                        isSearching: true
                     };
                 }
                 case SUCCESS: {
-                    return state.queryId === queryId
+                    return state.search.queryId === queryId
                         ? {
                               ...state,
                               search: {
@@ -148,14 +147,12 @@ const testersReducer = (
                                   results: [...results, ...payload],
                                   isSearching: !isFinal
                               },
-                              isSearching: !isFinal
                           }
                         : state;
                 }
                 case FAIL: {
                     return {
                         ...state,
-                        isSearching: false,
                         search: { ...search, isSearching: false }
                     };
                 }
@@ -187,7 +184,7 @@ const testersReducer = (
         case RESET_FILTERS: {
             return {
                 ...state,
-                search: { ...search, filters: initialState.search.filters }
+                search: { ...initialState.search }
             };
         }
 
@@ -197,6 +194,10 @@ const testersReducer = (
 
         case SET_SORT_INDEX: {
             return { ...state, search: { ...search, sortIndex: payload } };
+        }
+
+        case SET_SORT_INDICES: {
+            return { ...state, search: { ...search, sortIndices: payload } };
         }
 
         default: {

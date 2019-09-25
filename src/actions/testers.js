@@ -48,7 +48,10 @@ import {
     SET_FILTERS,
     RESET_FILTERS,
     SET_PAGE,
-    SET_SORT_INDEX
+    SET_SORT_INDEX,
+    SET_SORT_INDICES,
+    MOVE_FORWARD_TESTER,
+    MOVE_BACKWARD_TESTER
 } from 'actionTypes';
 import { showNotification } from './notification';
 import { unsubscribeUser, changCongnitoUserInfo } from './auth';
@@ -60,7 +63,8 @@ import {
     selectTesterSessionIds,
     selectTesterContactNoteIds,
     selectIsValidTesterQuery,
-    selectTowns
+    selectTowns,
+    selectForwardTesterId
 } from 'selectors';
 
 import { testerSignUp } from './auth';
@@ -637,7 +641,6 @@ const listTesterTownsAction = (async, payload) => ({
 
 export const listTesterTowns = () => async (dispatch, getState) => {
     dispatch(listTesterTownsAction(REQUEST));
-
     const runQuery = async (pageToken = null, firstTime = true) => {
         if (firstTime || pageToken) {
             const variables = {
@@ -678,9 +681,14 @@ export const setFilter = filters => ({
     payload: filters
 });
 
-export const resetFilters = () => ({
+const resetFiltersAction = () => ({
     type: RESET_FILTERS
 });
+
+export const resetFilters = () => dispatch => {
+    dispatch(resetFiltersAction());
+    dispatch(listTesterTowns());
+};
 
 export const setPage = page => ({
     type: SET_PAGE,
@@ -691,3 +699,20 @@ export const setSortIndex = sortIndex => ({
     type: SET_SORT_INDEX,
     payload: sortIndex
 });
+
+export const setSortIndices = sortIndices => ({
+    type: SET_SORT_INDICES,
+    payload: sortIndices
+});
+
+const moveForwardTesterAction = () => ({
+    type: MOVE_FORWARD_TESTER
+});
+
+export const moveForwardTester = testerId => (_, getState) => {
+    const store = getState();
+    const sss = selectForwardTesterId(store, testerId)
+    console.log(sss)
+    history.replace(`/tester/${sss}?search=true`)
+
+};

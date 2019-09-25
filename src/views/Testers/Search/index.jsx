@@ -40,6 +40,7 @@ import {
     mailTesters,
     setPage,
     setSortIndex,
+    setSortIndices,
     resetFilters
 } from 'actions';
 
@@ -123,6 +124,7 @@ const TesterSearch = ({
     setPage,
     sortIndex,
     setSortIndex,
+    setSortIndices,
     resetFilters
 }) => {
     const c = useStyles();
@@ -264,6 +266,7 @@ const TesterSearch = ({
                                 checkAll={value => setSelectedTesters(value)}
                                 sortIndex={sortIndex}
                                 handleSortIndex={idx => setSortIndex(idx)}
+                                handleSortIndices={indices => setSortIndices(indices)}
                             />
                             {!!testers.length && (
                                 <GridContainer className={c.footer}>
@@ -309,6 +312,7 @@ const mapDispatch = {
     mailTesters,
     setPage,
     setSortIndex,
+    setSortIndices,
     resetFilters
 };
 

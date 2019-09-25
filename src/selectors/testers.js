@@ -63,14 +63,19 @@ export const selectTestersSearch = createCachedSelector(
     ({ search }) => search
 )(() => 'placeholder');
 
-export const selectTesterResults = createCachedSelector(
+export const selectResults = createCachedSelector(
     selectTestersSearch,
-    ({ results }) => generateTestersSearch(results)
+    ({ results }) => results
+)(() => 'placeholder');
+
+export const selectTesterResults = createCachedSelector(
+    selectResults,
+    results => generateTestersSearch(results)
 )(() => 'placeholder');
 
 export const selectTestersSearchInfo = createCachedSelector(
-    selectTestersSearch,
-    ({ results }) => results.map(({ id, email }) => ({ id, email }))
+    selectResults,
+    results => results.map(({ id, email }) => ({ id, email }))
 )(() => 'placeholder');
 
 export const selectIsValidTesterQuery = createCachedSelector(
@@ -102,4 +107,62 @@ export const selectSortIndex = createCachedSelector(
 export const selectTowns = createCachedSelector(
     selectTestersSearch,
     ({ towns }) => towns
+)(() => 'placeholder');
+
+export const selectSortIndices = createCachedSelector(
+    selectTestersSearch,
+    ({ sortIndices }) => sortIndices
+)(() => 'placeholder');
+
+export const selectInSearchMode = createCachedSelector(
+    selectTestersSearch,
+    (_, testerId) => testerId,
+    ({ results }, testerId) => results.some(({ id }) => id === testerId)
+)(() => 'placeholder');
+
+export const selectCanMoveForwardTester = createCachedSelector(
+    selectInSearchMode,
+    selectResults,
+    selectSortIndices,
+    (_, testerId) => testerId,
+    (inSearch, results, sortIndices, testerId) => {
+        if (inSearch) {
+            const testerIdx = results.map(({ id }) => id).indexOf(testerId);
+
+            return sortIndices.indexOf(testerIdx) + 1 !== sortIndices.length;
+        } else {
+            return false;
+        }
+    }
+)(() => 'placeholder');
+
+export const selectCanMoveBackwardTester = createCachedSelector(
+    selectInSearchMode,
+    selectResults,
+    selectSortIndices,
+    (_, testerId) => testerId,
+    (inSearch, results, sortIndices, testerId) => {
+        if (inSearch) {
+            const testerIdx = results.map(({ id }) => id).indexOf(testerId);
+
+            return sortIndices.indexOf(testerIdx) !== 0;
+        } else {
+            return false;
+        }
+    }
+)(() => 'placeholder');
+
+export const selectForwardTesterId = createCachedSelector(
+    selectResults,
+    selectSortIndices,
+    (_, testerId) => testerId,
+    (results, sortIndices, testerId) => {
+        const resultIds = results.map(({ id }) => id);
+        const testerIdx = resultIds.indexOf(testerId);
+
+        const forwardTesterIdx =
+            sortIndices[sortIndices.indexOf(testerIdx) + 1];
+
+        return resultIds[forwardTesterIdx];
+    }
 )(() => 'placeholder');

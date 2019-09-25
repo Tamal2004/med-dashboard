@@ -17,9 +17,12 @@ import { Logo } from 'assets';
 import { Link } from 'components';
 import { history } from 'libs/history';
 
+// Local
+import TesterSearchNavigateButtons from 'views/Testers/Search/TesterSearchNavigateButtons';
+
 const useStyles = styles;
 
-export default function Dashboard(props) {
+const Dashboard = props => {
     const c = useStyles();
     const [open, setOpen] = React.useState(true);
     const handleDrawerOpen = () => {
@@ -77,6 +80,7 @@ export default function Dashboard(props) {
                     </IconButton>
                     <NavIcon />
                     <BarTitle />
+                    <TesterSearchNavigateButtons />
                 </Toolbar>
             </AppBar>
             <Drawer
@@ -110,4 +114,7 @@ export default function Dashboard(props) {
             </main>
         </div>
     );
-}
+};
+
+
+export default Dashboard;

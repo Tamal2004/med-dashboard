@@ -97,10 +97,11 @@ class Table extends Component {
 
     componentWillUnmount() {
         const {
-            state: { sortIndex },
-            props: { handleSortIndex }
+            state: { sortIndex, sortIndices },
+            props: { handleSortIndex, handleSortIndices }
         } = this;
         handleSortIndex(sortIndex);
+        handleSortIndices(sortIndices);
     }
 
     handleSort = idx => {
@@ -476,7 +477,8 @@ Table.defaultProps = {
     itemsPerPage: 10,
     noResultsText: 'No results',
     sortIndex: null,
-    handleSortIndex: () => {}
+    handleSortIndex: () => {},
+    handleSortIndices: () => {}
 };
 
 Table.propTypes = {
