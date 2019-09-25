@@ -1,5 +1,4 @@
-import React, { Fragment, useEffect, useRef, useState } from 'react';
-import clsx from 'clsx';
+import React, { useEffect, useRef, useState } from 'react';
 
 import { withStyles, Button } from '@material-ui/core';
 
@@ -39,7 +38,7 @@ const ButtonBase = ({
 
     useEffect(() => {
         loading >= 100 && unscopedSetLoading(false);
-    });
+    }, [loading]);
 
     const { loader, container, ...c } = composeClasses({
         classes,

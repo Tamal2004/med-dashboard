@@ -3,9 +3,7 @@ import initialState from './initialState';
 
 // Action Types
 import {
-    REQUEST,
     SUCCESS,
-    FAIL,
     LIST_CLIENTS,
     CREATE_CLIENT,
     UPDATE_CLIENT,

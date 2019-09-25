@@ -4,13 +4,7 @@ import API, { graphqlOperation } from '@aws-amplify/api';
 import { normalizeUsers } from 'normalizers';
 
 // Graph QL
-import {
-    CreateUser,
-    DeleteUser,
-    UpdateUser,
-    ListUsers,
-    FetchUserByEmail
-} from 'graphql/users';
+import { CreateUser, DeleteUser, ListUsers } from 'graphql/users';
 
 // Action Types
 import {

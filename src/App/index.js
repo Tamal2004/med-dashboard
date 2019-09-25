@@ -15,7 +15,7 @@ import {
     Loading
 } from 'aws-amplify-react';
 
-import { OpenTesterForm, UnsubscribeUser } from 'views';
+import { OpenTesterForm } from 'views';
 
 // Material
 import { MuiThemeProvider } from '@material-ui/core/styles';

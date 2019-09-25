@@ -49,9 +49,7 @@ import {
     RESET_FILTERS,
     SET_PAGE,
     SET_SORT_INDEX,
-    SET_SORT_INDICES,
-    MOVE_FORWARD_TESTER,
-    MOVE_BACKWARD_TESTER
+    SET_SORT_INDICES
 } from 'actionTypes';
 import { showNotification } from './notification';
 import { unsubscribeUser, changCongnitoUserInfo } from './auth';
@@ -704,10 +702,6 @@ export const setSortIndex = sortIndex => ({
 export const setSortIndices = sortIndices => ({
     type: SET_SORT_INDICES,
     payload: sortIndices
-});
-
-const moveForwardTesterAction = () => ({
-    type: MOVE_FORWARD_TESTER
 });
 
 export const moveBackwardTester = testerId => (dispatch, getState) => {

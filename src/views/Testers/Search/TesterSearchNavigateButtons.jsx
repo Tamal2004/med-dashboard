@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { makeStyles, Typography } from '@material-ui/core';
 
 // Components
-import { Link, NavigateButton } from 'components';
+import { NavigateButton } from 'components';
 
 // Libs
 import { history } from 'libs';
@@ -44,7 +44,8 @@ const TesterSearchNavigateButtons = ({
     testerId,
     isSearch,
     canMoveBackward,
-    canMoveForward,moveBackwardTester,
+    canMoveForward,
+    moveBackwardTester,
     moveForwardTester
 }) => {
     const c = useStyles();
@@ -64,22 +65,21 @@ const TesterSearchNavigateButtons = ({
                 >
                     Previous Tester
                 </NavigateButton>
-                {/*<Link to={'/tester/204649f2-a075-48c0-bdce-ec13065292cd?search=true'}>*/}
-                    <NavigateButton
-                        color='secondary'
-                        styles={buttonStyles}
-                        onClick={() => moveForwardTester(testerId)}
-                        disabled={!canMoveForward}
-                    >
-                        Next Tester
-                    </NavigateButton>
-                {/*</Link>*/}
+                <NavigateButton
+                    color='secondary'
+                    styles={buttonStyles}
+                    onClick={() => moveForwardTester(testerId)}
+                    disabled={!canMoveForward}
+                >
+                    Next Tester
+                </NavigateButton>
             </div>
         )
     );
 };
 
 const mapState = state => {
+    // eslint-disable-next-line
     const [_, path, testerId] = history.location.pathname.split('/');
 
     const isSearchLocation =

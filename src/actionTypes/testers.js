@@ -15,6 +15,3 @@ export const RESET_FILTERS = '@@REACT__reset-filters';
 export const SET_PAGE = '@@REACT__set-page';
 export const SET_SORT_INDEX = '@@REACT__set-sort-index';
 export const SET_SORT_INDICES = '@@REACT__set-sort-indices';
-
-export const MOVE_FORWARD_TESTER = '@@REACT__move-forward-tester';
-export const MOVE_BACKWARD_TESTER = '@@REACT__move-backward-tester';
