@@ -19,15 +19,11 @@ export const serializeDate = date =>
         .reverse()
         .join('-');
 
-export const calculateAge = dob => {
-    const splitDate = dob.split('/');
-    [splitDate[0], splitDate[1]] = [splitDate[1], splitDate[0]]; //swap first two value
-    const newDate = splitDate.join('/');
-
-    return dob
+export const calculateAge = dob =>
+    dob
         ? Math.floor(
               (new Date().setHours(0, 0, 0, 0) -
-                  new Date(newDate).setHours(0, 0, 0, 0)) /
+                  new Date(dob).setHours(0, 0, 0, 0)) /
                   60 /
                   60 /
                   24 /
@@ -35,6 +31,5 @@ export const calculateAge = dob => {
                   1000
           )
         : 'Invalid DoB';
-};
 
 export const today = () => serializeDate(deserializeDate(new Date()));
