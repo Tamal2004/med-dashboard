@@ -37,6 +37,7 @@ const TesterSingle = ({
     const [isLoading, setLoading] = useState(true);
     useEffect(() => {
         let cancelled = false;
+        setLoading(true);
         if (isTester)
             testerId &&
                 fetchPublicTester(testerId).then(
@@ -45,7 +46,7 @@ const TesterSingle = ({
         else id && fetchTester(id).then(() => !cancelled && setLoading(false));
         return () => (cancelled = true);
         /*eslint-disable-next-line*/
-    }, [testerId]);
+    }, [testerId, id]);
 
     return (
         <Fragment>

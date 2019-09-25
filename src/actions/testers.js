@@ -64,6 +64,7 @@ import {
     selectTesterContactNoteIds,
     selectIsValidTesterQuery,
     selectTowns,
+    selectBackwardTesterId,
     selectForwardTesterId
 } from 'selectors';
 
@@ -709,10 +710,16 @@ const moveForwardTesterAction = () => ({
     type: MOVE_FORWARD_TESTER
 });
 
-export const moveForwardTester = testerId => (_, getState) => {
+export const moveBackwardTester = testerId => (dispatch, getState) => {
     const store = getState();
-    const sss = selectForwardTesterId(store, testerId)
-    console.log(sss)
-    history.replace(`/tester/${sss}?search=true`)
+    const { id, page } = selectBackwardTesterId(store, testerId);
+    history.push(`/tester/${id}?search=true`);
+    page && dispatch(setPage(page));
+};
 
+export const moveForwardTester = testerId => (dispatch, getState) => {
+    const store = getState();
+    const { id, page } = selectForwardTesterId(store, testerId);
+    history.push(`/tester/${id}?search=true`);
+    page && dispatch(setPage(page));
 };

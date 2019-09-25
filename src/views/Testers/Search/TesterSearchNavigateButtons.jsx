@@ -18,7 +18,7 @@ import {
 } from 'selectors';
 
 // Actions
-import { moveForwardTester } from 'actions';
+import { moveBackwardTester, moveForwardTester } from 'actions';
 
 const useStyles = makeStyles(({ spacing, typography }) => ({
     container: {
@@ -44,7 +44,7 @@ const TesterSearchNavigateButtons = ({
     testerId,
     isSearch,
     canMoveBackward,
-    canMoveForward,
+    canMoveForward,moveBackwardTester,
     moveForwardTester
 }) => {
     const c = useStyles();
@@ -59,12 +59,12 @@ const TesterSearchNavigateButtons = ({
                 <NavigateButton
                     color='primary'
                     styles={buttonStyles}
-                    onClick={() => console.log('arstr')}
+                    onClick={() => moveBackwardTester(testerId)}
                     disabled={!canMoveBackward}
                 >
                     Previous Tester
                 </NavigateButton>
-                <Link to={'/tester/204649f2-a075-48c0-bdce-ec13065292cd?search=true'}>
+                {/*<Link to={'/tester/204649f2-a075-48c0-bdce-ec13065292cd?search=true'}>*/}
                     <NavigateButton
                         color='secondary'
                         styles={buttonStyles}
@@ -73,7 +73,7 @@ const TesterSearchNavigateButtons = ({
                     >
                         Next Tester
                     </NavigateButton>
-                </Link>
+                {/*</Link>*/}
             </div>
         )
     );
@@ -95,7 +95,7 @@ const mapState = state => {
             isSearchLocation && selectCanMoveBackwardTester(state, testerId)
     };
 };
-const mapDispatch = { moveForwardTester };
+const mapDispatch = { moveBackwardTester, moveForwardTester };
 
 export default connect(
     mapState,

@@ -152,17 +152,42 @@ export const selectCanMoveBackwardTester = createCachedSelector(
     }
 )(() => 'placeholder');
 
-export const selectForwardTesterId = createCachedSelector(
+export const selectBackwardTesterId = createCachedSelector(
     selectResults,
     selectSortIndices,
+    selectPage,
     (_, testerId) => testerId,
-    (results, sortIndices, testerId) => {
+    (results, sortIndices, page, testerId) => {
         const resultIds = results.map(({ id }) => id);
         const testerIdx = resultIds.indexOf(testerId);
 
-        const forwardTesterIdx =
-            sortIndices[sortIndices.indexOf(testerIdx) + 1];
+        const backwardTesterSortedIdx = sortIndices.indexOf(testerIdx) - 1;
+        const backwardTesterPage = Math.floor(backwardTesterSortedIdx / 10) + 1;
+        const backwardTesterIdx = sortIndices[backwardTesterSortedIdx];
 
-        return resultIds[forwardTesterIdx];
+        return {
+            id: resultIds[backwardTesterIdx],
+            page: backwardTesterPage === page ? null : backwardTesterPage
+        };
+    }
+)(() => 'placeholder');
+
+export const selectForwardTesterId = createCachedSelector(
+    selectResults,
+    selectSortIndices,
+    selectPage,
+    (_, testerId) => testerId,
+    (results, sortIndices, page, testerId) => {
+        const resultIds = results.map(({ id }) => id);
+        const testerIdx = resultIds.indexOf(testerId);
+
+        const forwardTesterSortedIdx = sortIndices.indexOf(testerIdx) + 1;
+        const forwardTesterPage = Math.floor(forwardTesterSortedIdx / 10) + 1;
+        const forwardTesterIdx = sortIndices[forwardTesterSortedIdx];
+
+        return {
+            id: resultIds[forwardTesterIdx],
+            page: forwardTesterPage === page ? null : forwardTesterPage
+        };
     }
 )(() => 'placeholder');

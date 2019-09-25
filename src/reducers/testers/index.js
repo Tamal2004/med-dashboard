@@ -21,7 +21,7 @@ import {
     RESET_FILTERS,
     SET_PAGE,
     SET_SORT_INDEX,
-    SET_SORT_INDICES,
+    SET_SORT_INDICES
 } from 'actionTypes';
 
 const testersReducer = (
@@ -135,7 +135,7 @@ const testersReducer = (
                             results: [],
                             queryId,
                             isSearching: true
-                        },
+                        }
                     };
                 }
                 case SUCCESS: {
@@ -146,7 +146,7 @@ const testersReducer = (
                                   ...search,
                                   results: [...results, ...payload],
                                   isSearching: !isFinal
-                              },
+                              }
                           }
                         : state;
                 }
