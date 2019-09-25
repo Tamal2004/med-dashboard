@@ -49,7 +49,7 @@ const ButtonBase = ({
 
     const loaderProps = {
         className: loader,
-        style: { top: `${height - 4}px`, width },
+        style: { top: height - 4, width },
         color: restProps.color,
         value: isLoading ? loading : false
     };
@@ -71,7 +71,7 @@ const ButtonBase = ({
     };
 
     return (
-        <div className={container} style={{ height: `${height}px` }}>
+        <div className={container} style={{ height }}>
             <Button
                 ref={buttonRef}
                 variant={isLoading ? 'outlined' : variant}
