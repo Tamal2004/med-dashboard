@@ -55,8 +55,8 @@ const test = ({ children }) => {
                 left: 0,
                 backgroundImage: `url(${Background})`,
                 backgroundPosition: 'center',
-                display: 'flex',
-                alignItems: 'center'
+                backgroundRepeat: 'no-repeat',
+                backgroundSize: 'cover'
             }}
         >
             {children}
