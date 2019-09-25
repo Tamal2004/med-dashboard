@@ -49,7 +49,7 @@ const ButtonBase = ({
 
     const loaderProps = {
         className: loader,
-        style: { top: height - 4, width },
+        style: { top: -4, width }, // works on live, not on local
         color: restProps.color,
         value: isLoading ? loading : false
     };
