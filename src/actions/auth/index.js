@@ -1,4 +1,5 @@
 import AWS from 'aws-sdk';
+import API, { graphqlOperation } from '@aws-amplify/api';
 import { Auth } from 'aws-amplify';
 import { history } from 'libs/history';
 import { reset } from 'redux-form';
@@ -38,13 +39,12 @@ const COGNITO_CLIENT = new AWS.CognitoIdentityServiceProvider({
 });
 
 const TEMP_PASSWORD = () =>
-    Math.random()
+    `W${Math.random()
         .toString(36)
-        .substring(4) +
-    Math.random()
+        .substring(4)}e${Math.random()
         .toString(36)
         .substring(6)
-        .toUpperCase();
+        .toUpperCase()}9`;
 
 /***********
  * API CALL *
@@ -150,13 +150,58 @@ export const createUserByAdmin = ({ email, family_name, given_name }) => {
     };
 };
 
-export const b1ulkCreateTesterUsers = () => async dispatch => {};
+const fetchTesterData = async () => {
+    const query = `
+            query ListArchivedTesters($nextToken: String) {
+                listSortedTesters(
+                    limit: 2000
+                    nextToken: $nextToken
+                ) {
+                    items {
+                        id
+                        firstName
+                        surname
+                        email
+                    }
+                    nextToken
+                }
+            }
+    `;
 
-export const bulkCreateTesterUsers = async ({
-    email = 'matthew.tamal@gmail.com',
-    firstName = 'Matt',
-    surname = 'Tamal',
-    testerId = '3827409c-c15a-4153-bbcf-29a7b2ae18ce'
+    const runQuery = async (pageToken = null, firstTime = true, data = []) => {
+        if (firstTime || pageToken) {
+            const variables = {
+                ...(pageToken ? { nextToken: pageToken } : {})
+            };
+
+            const {
+                data: {
+                    listSortedTesters: {
+                        items: listSortedTesters = [],
+                        nextToken
+                    } = {},
+                    error = null
+                }
+            } = await API.graphql(graphqlOperation(query, { ...variables }));
+
+            if (error) {
+                console.log('error', error);
+            }
+            console.log('Fetching tester data');
+            return runQuery(nextToken, false, [...data, ...listSortedTesters]);
+        } else {
+            return data;
+        }
+    };
+
+    return await runQuery();
+};
+
+const initializeTesterUser = async ({
+    email,
+    firstName,
+    surname,
+    id: testerId
 }) =>
     await new Promise(resolve => {
         const password = TEMP_PASSWORD();
@@ -206,6 +251,35 @@ export const bulkCreateTesterUsers = async ({
             return resolve();
         });
     });
+
+export const bulkCreateTesterUsers = () => async dispatch => {
+    const initializeTesters = async testerData => {
+        const totalTesters = testerData.length;
+        for (let i = 0; i < totalTesters; i++) {
+            const testerDatum = testerData[i];
+            console.log(`Starting creation of ${testerDatum.id}`);
+
+            await initializeTesterUser(testerDatum);
+            console.log('Wait started');
+            await new Promise(resolve => setTimeout(() => resolve(), 2000));
+            console.log('Wait finished');
+
+            console.log(
+                `Creation complete. ${i + 1}/${totalTesters} updated. ${
+                    testerDatum.email
+                } account created!`
+            );
+        }
+    };
+
+    const testerData = await fetchTesterData();
+
+    await initializeTesters(
+        testerData.filter(
+            ({ id }) => id === '3827409c-c15a-4153-bbcf-29a7b2ae18ce'
+        )
+    );
+};
 
 export const deleteWupUser = ({ id, email, ownAccount = false }) => {
     const payload = {
