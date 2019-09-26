@@ -11,6 +11,9 @@ const styles = ({ shadows, shape, palette }) => ({
             backgroundColor: palette.grey[400]
         }
     },
+    label: {
+        textTransform: 'none'
+    },
     containedPrimary: {
         color: palette.common.offWhite
     },
