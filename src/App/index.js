@@ -23,11 +23,11 @@ import { MuiThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
 // Local
+import AuthWrapper from './AuthWrapper';
 import theme from 'components/theme';
 import { Notification } from 'components';
 import { setAuthUserInfo, getAuthUserInfo } from 'actions';
 import { history } from 'libs/history';
-import { Background } from 'assets';
 import App from './App';
 
 Auth.configure(config);
@@ -42,27 +42,6 @@ const authScreenLabels = {
 
 I18n.setLanguage('en');
 I18n.putVocabularies(authScreenLabels);
-
-const test = ({ children }) => {
-    return (
-        <div
-            style={{
-                width: '100vw',
-                height: '100vh',
-                position: 'absolute',
-                zIndex: 0,
-                top: 0,
-                left: 0,
-                backgroundImage: `url(${Background})`,
-                backgroundPosition: 'center',
-                backgroundRepeat: 'no-repeat',
-                backgroundSize: 'cover'
-            }}
-        >
-            {children}
-        </div>
-    );
-};
 
 class IndexApp extends Component {
     constructor(props) {
@@ -92,7 +71,7 @@ class IndexApp extends Component {
                     <CssBaseline />
 
                     <Authenticator
-                        container={test}
+                        container={AuthWrapper}
                         authState={composePath()}
                         amplifyConfig={config}
                         onStateChange={authState => {
