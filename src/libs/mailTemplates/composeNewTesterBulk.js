@@ -1,8 +1,6 @@
-import baseTemplate from './baseTemplate';
-
 const { REACT_APP_SES_ADMIN_EMAIL, REACT_APP_DOMAIN } = process.env;
 
-const mailContent = ({ firstName, surname, email, password }) => `
+const composeBulkTesterContent = ({ firstName, surname, email, password }) => `
     <tr>
         <td className="bodycopy">
             <p>Dear ${firstName} ${surname},</p>
@@ -28,18 +26,10 @@ const mailContent = ({ firstName, surname, email, password }) => `
     </tr>
 `;
 
-export const composeNewTesterBulk = ({
-    firstName,
-    surname,
-    email,
-    password,
-    testerId
-}) => ({
+export const composeNewTesterBulk = ({ email, testerId, ...contentData }) => ({
     from: REACT_APP_SES_ADMIN_EMAIL,
     to: [email],
-    subject: 'A new Web Usability account has been created!',
-    body: baseTemplate(
-        mailContent({ firstName, surname, email, password }),
-        testerId
-    )
+    subject: 'Your new Web Usability account has been created',
+    body: composeBulkTesterContent({ email, ...contentData }),
+    testerId
 });

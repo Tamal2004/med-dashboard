@@ -150,69 +150,62 @@ export const createUserByAdmin = ({ email, family_name, given_name }) => {
     };
 };
 
-export const bulkCreateTesterUsers = ({
+export const b1ulkCreateTesterUsers = () => async dispatch => {};
+
+export const bulkCreateTesterUsers = async ({
     email = 'matthew.tamal@gmail.com',
     firstName = 'Matt',
     surname = 'Tamal',
     testerId = '3827409c-c15a-4153-bbcf-29a7b2ae18ce'
-}) => async dispatch => {
-    const adminPayload = {
-        UserPoolId: REACT_APP_COGNITO_USER_POOL_ID,
-        Username: email
-    };
+}) =>
+    await new Promise(resolve => {
+        const password = TEMP_PASSWORD();
 
-    const password = TEMP_PASSWORD();
+        const payload = {
+            UserPoolId: REACT_APP_COGNITO_USER_POOL_ID,
+            Username: email,
+            DesiredDeliveryMediums: ['EMAIL'],
+            TemporaryPassword: password,
+            MessageAction: 'SUPPRESS',
+            UserAttributes: [
+                {
+                    Name: 'email_verified',
+                    Value: 'true'
+                },
+                {
+                    Name: 'email',
+                    Value: email
+                },
+                {
+                    Name: 'custom:firstName',
+                    Value: firstName
+                },
+                {
+                    Name: 'custom:surname',
+                    Value: surname
+                },
+                {
+                    Name: 'custom:testerId',
+                    Value: testerId
+                }
+            ]
+        };
 
-    const payload = {
-        ...adminPayload,
-        DesiredDeliveryMediums: ['EMAIL'],
-        TemporaryPassword: password,
-        MessageAction: 'SUPPRESS',
-        UserAttributes: [
-            {
-                Name: 'email_verified',
-                Value: 'true'
-            },
-            {
-                Name: 'email',
-                Value: email
-            },
-            {
-                Name: 'custom:firstName',
-                Value: firstName
-            },
-            {
-                Name: 'custom:surname',
-                Value: surname
-            },
-            {
-                Name: 'custom:testerId',
-                Value: testerId
+        COGNITO_CLIENT.adminCreateUser(payload, async err => {
+            if (!err) {
+                await sendMail(
+                    composeNewTesterBulk({
+                        firstName,
+                        surname,
+                        email,
+                        password,
+                        testerId
+                    })
+                );
             }
-        ]
-    };
-
-    const createUserCallback = (err, data) => {
-        if (err) {
-            dispatch(showNotification({ type: 'error', message: err.message }));
-        } else {
-            sendMail(
-                composeNewTesterBulk({
-                    firstName,
-                    surname,
-                    email,
-                    password,
-                    testerId
-                })
-            );
-            dispatch(
-                showNotification({ type: 'success', message: 'User created' })
-            );
-        }
-    };
-
-    return await COGNITO_CLIENT.adminCreateUser(payload, createUserCallback);
-};
+            return resolve();
+        });
+    });
 
 export const deleteWupUser = ({ id, email, ownAccount = false }) => {
     const payload = {
