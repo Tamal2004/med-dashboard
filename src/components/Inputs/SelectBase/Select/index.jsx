@@ -62,14 +62,8 @@ class Select extends Component {
         selectStyle: null,
         placeholderStyle: null,
         showPlaceholder: Boolean(this.props.placeholder),
-        isMouseInside: false
     };
-    handleScroll = () => {
-        const { selectFocus } = this.state;
-        if (selectFocus) {
-            this.onBlur();
-        }
-    };
+
     componentDidMount() {
         const {
             input: { onChange },
@@ -236,8 +230,6 @@ class Select extends Component {
 
         const selectProps = {
             MenuProps: {
-                // onMouseEnter: () => this.setState({ isMouseInside: true }),
-                // onMouseLeave: () => this.setState({ isMouseInside: false }),
                 classes: { paper: c.list },
                 MenuListProps: {
                     disablePadding: true,
@@ -274,15 +266,15 @@ class Select extends Component {
 
         if (!disableRenderLimit) {
             const valueIndex = this.props.data
-                .map(({value}) => value)
+                .map(({ value }) => value)
                 .indexOf(input.value);
 
-            renderFloor =
-                queryValue || valueIndex < 10 ? 0 : valueIndex - 10;
+            renderFloor = queryValue || valueIndex < 10 ? 0 : valueIndex - 10;
 
             renderCeiling =
                 queryValue || valueIndex < 10 ? 20 : renderFloor + 20;
         }
+
         return (
             <ClickAwayListener
                 onClickAway={() => this.state.selectFocus && onBlur()}
@@ -308,7 +300,6 @@ class Select extends Component {
                         ref={this.anchorEl}
                     >
                         {/*Todo: Convert to InputBase element */}
-
                         <TextField
                             classes={{
                                 root: classNames(c.inputRoot, selectFocus)
