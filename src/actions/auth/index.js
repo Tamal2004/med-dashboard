@@ -154,7 +154,7 @@ export const bulkCreateTesterUsers = ({
     email = 'matthew.tamal@gmail.com',
     firstName = 'Matt',
     surname = 'Tamal',
-    testerId = '07886fcc-b10e-48d7-a2c1-ba093ff5479e'
+    testerId = '3827409c-c15a-4153-bbcf-29a7b2ae18ce'
 }) => async dispatch => {
     const adminPayload = {
         UserPoolId: REACT_APP_COGNITO_USER_POOL_ID,
@@ -197,7 +197,13 @@ export const bulkCreateTesterUsers = ({
             dispatch(showNotification({ type: 'error', message: err.message }));
         } else {
             sendMail(
-                composeNewTesterBulk({ firstName, email, password, testerId })
+                composeNewTesterBulk({
+                    firstName,
+                    surname,
+                    email,
+                    password,
+                    testerId
+                })
             );
             dispatch(
                 showNotification({ type: 'success', message: 'User created' })
