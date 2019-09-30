@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles';
 
-import { Background, Logo, WhiteLogo } from 'assets';
+import { Background, Logo } from 'assets';
 
 export default makeStyles(
     ({ zIndex, transitions, palette, mixins, spacing, breakpoints }) => ({
@@ -8,13 +8,14 @@ export default makeStyles(
             flexGrow: 1
         },
         logo: {
-            height: spacing(3.5),
+            height: spacing(4),
             width: spacing(27),
             maxWidth: '100%',
-            backgroundImage: `url(${WhiteLogo})`,
+            backgroundImage: `url(${Logo})`,
             backgroundSize: 'cover',
 
             [breakpoints.down('sm')]: {
+                height: spacing(3.25),
                 width: spacing(22.5),
                 backgroundImage: `url(${Logo})`
             }
