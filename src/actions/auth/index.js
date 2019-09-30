@@ -274,11 +274,7 @@ export const bulkCreateTesterUsers = () => async dispatch => {
 
     const testerData = await fetchTesterData();
 
-    await initializeTesters(
-        testerData.filter(
-            ({ id }) => id === '3827409c-c15a-4153-bbcf-29a7b2ae18ce'
-        )
-    );
+    await initializeTesters(testerData);
 };
 
 export const deleteWupUser = ({ id, email, ownAccount = false }) => {
