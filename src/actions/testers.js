@@ -128,19 +128,32 @@ const listTestersAction = (async, payload = []) => ({
 
 export const listTesters = () => async dispatch => {
     dispatch(listTestersAction(REQUEST));
-    const {
-        data: {
-            listSortedTesters: { items: listSortedTesters = [] },
-            error = null
-        }
-    } = await API.graphql(graphqlOperation(ListTesters));
 
-    if (!error) {
+    try {
+        const {
+            data: {
+                listSortedTesters: { items: listSortedTesters = [] }
+            }
+        } = await API.graphql(graphqlOperation(ListTesters));
+
         dispatch(
             listTestersAction(SUCCESS, normalizeTestersList(listSortedTesters))
         );
-    } else {
-        dispatch(listTestersAction(FAIL));
+    } catch ({
+        data: {
+            listSortedTesters: { items: listSortedTesters = [] }
+        }
+    }) {
+        if (!!listSortedTesters) {
+            dispatch(
+                listTestersAction(
+                    SUCCESS,
+                    normalizeTestersList(listSortedTesters)
+                )
+            );
+        } else {
+            dispatch(listTestersAction(FAIL));
+        }
     }
 };
 

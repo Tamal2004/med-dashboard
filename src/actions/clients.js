@@ -80,19 +80,25 @@ export const listClients = (search = null) => async dispatch => {
         : {};
     const query = !!search ? SearchClients : ListClients;
     dispatch(listClientsAction(REQUEST, [], !!search));
-    const {
-        data: {
-            listSortedClients: { items: listSortedClients = [] } = {},
-            error = null
-        }
-    } = await API.graphql(graphqlOperation(query, filter));
 
-    if (!error) {
+    try {
+        const {
+            data: { listSortedClients: { items: listSortedClients = [] } = {} }
+        } = await API.graphql(graphqlOperation(query, filter));
+
         dispatch(
             listClientsAction(SUCCESS, normalizeClients(listSortedClients))
         );
-    } else {
-        dispatch(listClientsAction(FAIL));
+    } catch ({
+        data: { listSortedClients: { items: listSortedClients = [] } = {} }
+    }) {
+        if (!!listSortedClients) {
+            dispatch(
+                listClientsAction(SUCCESS, normalizeClients(listSortedClients))
+            );
+        } else {
+            dispatch(listClientsAction(FAIL));
+        }
     }
 };
 
