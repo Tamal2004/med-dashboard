@@ -8,7 +8,6 @@ import Container from '@material-ui/core/Container';
 
 // Local
 import styles from './styles';
-import { Logo } from 'assets';
 import history from 'libs/history';
 
 const useStyles = styles;

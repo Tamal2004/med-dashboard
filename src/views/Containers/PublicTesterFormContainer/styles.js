@@ -31,7 +31,8 @@ export default makeStyles(
             backgroundColor: palette.common.transparent,
             [breakpoints.down('sm')]: {
                 backgroundColor: 'white',
-                borderBottom: '1px solid rgba(0, 0, 0, 0.12)'
+                borderBottom: '1px solid rgba(0, 0, 0, 0.12)',
+                opacity: 0.95
             }
         },
         appBarSpacer: mixins.toolbar,
