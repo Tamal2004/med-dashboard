@@ -1,4 +1,4 @@
-const { REACT_APP_SES_ADMIN_EMAIL } = process.env;
+const { REACT_APP_SES_ADMIN_EMAIL, REACT_APP_DOMAIN } = process.env;
 
 const composeNewAccountContent = ({
     firstName,
@@ -19,6 +19,7 @@ const composeNewAccountContent = ({
             login in details:</p>
             <p>Username: ${email}</p>
             <p>Password: ${password}</p>
+            <p><a href="${REACT_APP_DOMAIN}">Please click here to sign in.</a></p>
             <p>Once logged in, you will be asked to change your password and verify 
             your email address to keep your record secure.</p>
             <p>If you have any questions, please to get in touch at 

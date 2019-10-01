@@ -223,6 +223,7 @@ const TesterDetails = ({
                 isCard
                 active={isEditing}
                 required={isEditing}
+                disableRenderLimit
             />
             <Select
                 label='Ethnic Background'
