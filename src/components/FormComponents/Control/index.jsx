@@ -34,7 +34,7 @@ const Control = ({
                         {active && <span className={c.required}>{error}</span>}
                     </FormLabel>
                     {memo && (
-                        <Typography className={c.memo} variant='subtitle2'>
+                        <Typography className={c.memo} variant={isCard ? 'caption' : 'subtitle2'}>
                             {memo}
                         </Typography>
                     )}
