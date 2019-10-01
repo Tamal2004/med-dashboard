@@ -24,7 +24,8 @@ const useStyles = styles;
 
 const Dashboard = props => {
     const c = useStyles();
-    const [open, setOpen] = React.useState(true);
+    const [open, setOpen] = React.useState(false);
+
     const handleDrawerOpen = () => {
         setOpen(true);
     };
@@ -115,6 +116,5 @@ const Dashboard = props => {
         </div>
     );
 };
-
 
 export default Dashboard;
