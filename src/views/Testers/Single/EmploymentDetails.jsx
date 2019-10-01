@@ -71,6 +71,7 @@ const EmploymentDetails = ({
                         name='employmentSector'
                         isCard
                         active={isEditing}
+                        disableRenderLimit
                     />
                     <Select
                         label={`${

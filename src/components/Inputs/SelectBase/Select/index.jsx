@@ -23,6 +23,7 @@ import { composeClasses } from 'libs';
 import SelectCancellableIcon from './SelectCancellableIcon';
 import SelectDropdownIcon from './SelectDropdownIcon';
 import SelectPlaceholder from './SelectPlaceholder';
+import { Tooltip } from '../../../Tooltips/Tooltip';
 
 // Todo: First click after load is eaten up, fix
 /*
@@ -61,7 +62,7 @@ class Select extends Component {
         textFocus: false,
         selectStyle: null,
         placeholderStyle: null,
-        showPlaceholder: Boolean(this.props.placeholder),
+        showPlaceholder: Boolean(this.props.placeholder)
     };
 
     componentDidMount() {
@@ -344,7 +345,13 @@ class Select extends Component {
                                             key={id + index}
                                             value={value}
                                         >
-                                            {label}
+                                            <Tooltip
+                                                placement='bottom-start'
+                                                title={label}
+                                                dark
+                                            >
+                                                <span className={c.listItemText}>{label}</span>
+                                            </Tooltip>
                                         </MenuItem>
                                     )
                             )}

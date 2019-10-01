@@ -2,6 +2,7 @@ export default ({ unitHeight, unitWidth, listMaxNumber, iconRight }) => ({
     spacing,
     palette,
     shape,
+    typography,
     zIndex
 }) => {
     const menuItemHeight = unitHeight / 2;
@@ -15,6 +16,7 @@ export default ({ unitHeight, unitWidth, listMaxNumber, iconRight }) => ({
     // const listItemWidth = unitWidth - spacing(7);
 
     return {
+        listItemText: { fontSize: typography['subtitle2'].fontSize },
         root: {
             display: 'flex',
             fontSize: 'inherit',
