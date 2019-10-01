@@ -72,6 +72,7 @@ const ContactDetails = ({
                 isCard
                 active={isEditing}
                 required={isEditing}
+                disableRenderLimit
             />
             <Input label='Postcode' name='postcode' isCard active={isEditing} />
             {isEditing && (
