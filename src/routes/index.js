@@ -21,7 +21,7 @@ const AdminUserRoutes = () => (
             <Route path={'/project'} component={ProjectRoutes} />
             <Route path={'/tester'} component={TesterRoutes} />
             <Route path={'/profile'} component={AdminAccountRoutes} />
-            <Route path={'*'} component={NotFoundPage} />
+            <Route path={'*'} component={ProjectRoutes} />
         </Switch>
     </PrivateContainer>
 );
@@ -31,7 +31,7 @@ const TesterUserRoutes = () => (
         <Switch>
             <Route path={'/'} exact component={TesterSingle} />
             <Route path={'/profile'} component={TesterAccountRoutes} />
-            <Route path={'*'} component={NotFoundPage} />
+            <Route path={'*'} component={TesterSingle} />
         </Switch>
     </PrivateContainer>
 );
