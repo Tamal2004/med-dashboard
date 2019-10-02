@@ -45,18 +45,19 @@ export default makeStyles(({ palette, spacing, typography, breakpoints }) => ({
         }
     },
     submitContainer: {
-        marginLeft: spacing(),
-        marginRight: spacing(4),
+        marginRight: spacing(),
+        marginLeft: spacing(4),
         [breakpoints.down('xs')]: {
             margin: 0,
             marginTop: spacing(2)
-        },
-        display: 'flex',
-        justifyContent: 'center'
+        }
     },
     submit: {
         width: `calc(100% - ${spacing(6)}px)`,
-        height: spacing(6)
+        height: spacing(6),
+        [breakpoints.down('xs')]: {
+            width: '100%'
+        }
     },
     checkboxTypography: {
         [breakpoints.down('xs')]: {
