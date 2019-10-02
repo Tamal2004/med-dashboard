@@ -155,7 +155,7 @@ const TesterApplication = memo(
                     />
                     <Input
                         label='Date of Birth'
-                        placeholder='MM/DD/YYYY'
+                        placeholder='DD/MM/YYYY'
                         name='dob'
                         required
                         validate={validateDate}
