@@ -40,13 +40,12 @@ const COGNITO_CLIENT = new AWS.CognitoIdentityServiceProvider({
 });
 
 const TEMP_PASSWORD = () =>
-    Math.random()
+    `W${Math.random()
         .toString(36)
-        .substring(4) +
-    Math.random()
+        .substring(4)}e${Math.random()
         .toString(36)
         .substring(6)
-        .toUpperCase();
+        .toUpperCase()}9`;
 
 /***********
  * API CALL *

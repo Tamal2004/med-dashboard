@@ -16,8 +16,7 @@ export default makeStyles(
 
             [breakpoints.down('sm')]: {
                 height: spacing(3.25),
-                width: spacing(22.5),
-                backgroundImage: `url(${Logo})`
+                width: spacing(22.5)
             }
         },
         appBar: {

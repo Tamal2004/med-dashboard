@@ -35,8 +35,8 @@ API.configure(config);
 
 const authScreenLabels = {
     en: {
-        Username: 'Email Address',
-        'Enter your username': 'Enter your email address'
+        Email: 'Email Address',
+        'Enter your email': 'Enter your email address'
     }
 };
 
@@ -47,6 +47,21 @@ class IndexApp extends Component {
     constructor(props) {
         super(props);
         this._validAuthStates = ['signIn'];
+    }
+
+    componentDidMount() {
+        // Delayed fix
+        setTimeout(() => {
+            const inputElements = document.getElementsByTagName('input');
+            Array.from(inputElements).forEach(input => {
+                if (
+                    input.getAttribute('placeholder') ===
+                    'Enter your email address'
+                ) {
+                    input.setAttribute('autocapitalize', 'none');
+                }
+            });
+        }, 100);
     }
 
     render() {
@@ -72,6 +87,7 @@ class IndexApp extends Component {
 
                     <Authenticator
                         container={AuthWrapper}
+                        usernameAttributes='email'
                         authState={composePath()}
                         amplifyConfig={config}
                         onStateChange={authState => {

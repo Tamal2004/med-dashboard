@@ -10,6 +10,9 @@ export default makeStyles(({ palette, spacing, typography }) => ({
         marginTop: spacing(0.5),
         marginBottom: spacing(0.5)
     },
+    memoRoot: {
+        height: '100%'
+    },
     scrollEnable: {
         overflowY: 'scroll'
     },

@@ -24,7 +24,8 @@ const MultiInput = ({
             c.root,
             isCard && cardRoot,
             !active && inactiveRoot,
-            active && c.scrollEnable
+            active && c.scrollEnable,
+            !!memo && c.memoRoot
         )
     };
     const controlProps = { required, label, isCard, memo, width, error };

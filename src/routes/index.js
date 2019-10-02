@@ -3,7 +3,7 @@ import { Route, Switch, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import { PrivateContainer } from 'views/Containers';
-import { TesterSingle, NotFoundPage } from 'views';
+import { TesterSingle } from 'views';
 import {
     AdminAccountRoutes,
     TesterAccountRoutes,

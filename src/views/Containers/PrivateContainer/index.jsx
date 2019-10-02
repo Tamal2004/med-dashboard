@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react';
+import { connect } from 'react-redux';
 import clsx from 'clsx';
 import Drawer from '@material-ui/core/Drawer';
 import Divider from '@material-ui/core/Divider';
@@ -17,6 +18,9 @@ import { Logo } from 'assets';
 import { Link } from 'components';
 import { history } from 'libs/history';
 
+// Selectors
+import { selectIsTester } from 'selectors';
+
 // Local
 import TesterSearchNavigateButtons from 'views/Testers/Search/TesterSearchNavigateButtons';
 
@@ -24,7 +28,7 @@ const useStyles = styles;
 
 const Dashboard = props => {
     const c = useStyles();
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = React.useState(!props.isTester);
 
     const handleDrawerOpen = () => {
         setOpen(true);
@@ -84,29 +88,31 @@ const Dashboard = props => {
                     <TesterSearchNavigateButtons />
                 </Toolbar>
             </AppBar>
-            <Drawer
-                variant='permanent'
-                classes={{
-                    paper: clsx(c.drawerPaper, !open && c.drawerPaperClose)
-                }}
-                open={open}
-            >
-                <div className={c.toolbarIcon}>
-                    <Link to='/'>
-                        <img className={c.logo} src={Logo} alt='WUP' />
-                    </Link>
-                    <IconButton size='small' onClick={handleDrawerClose}>
-                        <CloseIcon />
-                    </IconButton>
-                </div>
-                <Divider />
-                <List
-                    className={(!open && c.menuItemHidden) || ''}
-                    disablePadding={true}
+            {open && (
+                <Drawer
+                    variant='permanent'
+                    classes={{
+                        paper: clsx(c.drawerPaper, !open && c.drawerPaperClose)
+                    }}
+                    open={open}
                 >
-                    <ListItems />
-                </List>
-            </Drawer>
+                    <div className={c.toolbarIcon}>
+                        <Link to='/'>
+                            <img className={c.logo} src={Logo} alt='WUP' />
+                        </Link>
+                        <IconButton size='small' onClick={handleDrawerClose}>
+                            <CloseIcon />
+                        </IconButton>
+                    </div>
+                    <Divider />
+                    <List
+                        className={(!open && c.menuItemHidden) || ''}
+                        disablePadding={true}
+                    >
+                        <ListItems />
+                    </List>
+                </Drawer>
+            )}
             <main className={c.content}>
                 <div className={c.appBarSpacer} />
                 <Container maxWidth='lg' className={c.container}>
@@ -117,4 +123,8 @@ const Dashboard = props => {
     );
 };
 
-export default Dashboard;
+const mapState = state => ({ isTester: selectIsTester(state) });
+
+const _Dashboard = connect(mapState)(Dashboard);
+
+export default _Dashboard;

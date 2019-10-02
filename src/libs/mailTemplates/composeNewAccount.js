@@ -19,7 +19,8 @@ const composeNewAccountContent = ({
             login in details:</p>
             <p>Username: ${email}</p>
             <p>Password: ${password}</p>
-            <p><a href="${REACT_APP_DOMAIN}">Please click here to sign in.</a></p>
+            <p>Login here: <a href="${REACT_APP_DOMAIN}">${REACT_APP_DOMAIN}</a></p>
+            </br>
             <p>Once logged in, you will be asked to change your password and verify 
             your email address to keep your record secure.</p>
             <p>If you have any questions, please to get in touch at 

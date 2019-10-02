@@ -248,16 +248,22 @@ const TesterDetails = ({
             />
             <MultiInput
                 label='Disability'
+                memo={
+                    isTester &&
+                    `Please describe any disability you have and, if relevant, ` +
+                        `the assistive technology you use (e.g. screen reader, screen magnifier).`
+                }
                 name='disability'
                 isCard
                 active={isEditing}
             />
             <MultiInput
-                label='Tell us a bit about yourself'
-                memo={isTester &&
-                    (`Please include information about your family, hobbies, interests, ` +
-                    `experiences, previous jobs, areas of expertise or anything else that ` +
-                    `might help us match you to relevant projects.`)
+                label={isTester ? 'About yourself' : 'Screening Information'}
+                memo={
+                    isTester &&
+                    `Please include information about your family, hobbies, interests, ` +
+                        `experiences, previous jobs, areas of expertise or anything else that ` +
+                        `might help us match you to relevant projects.`
                 }
                 name='about'
                 isCard
