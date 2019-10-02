@@ -13,7 +13,7 @@ const composeBulkTesterContent = ({ firstName, surname, email, password }) => `
             </br>
             <p>Email: ${email}</p>
             <p>Password: ${password}</p>
-            <p><a href="${REACT_APP_DOMAIN}">Click here to get started.</a></p>
+            <p>Login here: <a href="${REACT_APP_DOMAIN}">${REACT_APP_DOMAIN}</a></p>
             </br>
             <p>Once logged in, you will be asked to change your password and 
             verify your email address to keep your record secure.</p>
