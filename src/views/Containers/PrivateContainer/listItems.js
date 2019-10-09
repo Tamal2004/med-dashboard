@@ -203,9 +203,14 @@ const ListItems = ({ auth: { isTester, name }, logoutUser }) => (
                     <LinkListItem text='Profile' />
                 </LinkItem>
                 {!isTester && (
-                    <LinkItem to={'/profile/users'} title={'All users'}>
-                        <LinkListItem text='All users' />
-                    </LinkItem>
+                    <Fragment>
+                        <LinkItem to={'/profile/users'} title={'All users'}>
+                            <LinkListItem text='All users' />
+                        </LinkItem>
+                        <LinkItem to={'/profile/admin'} title={'Admin'}>
+                            <LinkListItem text='Admin' />
+                        </LinkItem>
+                    </Fragment>
                 )}
                 <LinkListItem onClick={() => logoutUser()} text='Logout' />
             </MenuItem>

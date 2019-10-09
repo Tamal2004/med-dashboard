@@ -478,7 +478,7 @@ export const unsubscribeTester = id => async dispatch => {
             sessionIds,
             contactNoteIds
         } = await publicFetchTesterEmail(id);
-        console.log(email);
+
         if (!email) {
             dispatch(
                 showNotification({
