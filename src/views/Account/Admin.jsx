@@ -107,10 +107,15 @@ const validate = values => ({
     ...validateRequired(values, ['email'])
 });
 
-const onSubmit = ({ email }, dispatch) => async setLoading =>
-    await dispatch(resetTester(email, setLoading)).catch(({ message }) =>
-        dispatch(updateSyncErrors('ResetAccount', { email: message }))
-    );
+const onSubmit = ({ email }, dispatch, { reset }) => async setLoading => {
+    try {
+        const response = await dispatch(resetTester(email, setLoading));
+        reset();
+        return response;
+    } catch ({ message }) {
+        dispatch(updateSyncErrors('ResetAccount', { email: message }));
+    }
+};
 
 const _AdminHome = compose(
     connect(),
