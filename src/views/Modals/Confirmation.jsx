@@ -31,7 +31,7 @@ const ConfirmationModal = ({
     onSubmit
 }) => {
     const c = useStyles();
-
+    console.log('onsubmit' ,onSubmit)
     return (
         <Fragment>
             <ModalHeader onClose={onClose}>{title}</ModalHeader>

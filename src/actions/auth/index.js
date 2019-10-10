@@ -404,11 +404,13 @@ export const logoutUser = () => {
     };
 };
 
-const fetchTesterData = async () => {
+const fetchTesterData = async email => {
     const query = `
-            query ListArchivedTesters($nextToken: String) {
+            query ListArchivedTesters($filter: ModelTesterFilterInput $nextToken: String) {
                 listSortedTesters(
+                    filter: $filter
                     limit: 2000
+                    sortDirection: DESC
                     nextToken: $nextToken
                 ) {
                     items {
@@ -422,9 +424,10 @@ const fetchTesterData = async () => {
             }
     `;
 
-    const runQuery = async (pageToken = null, firstTime = true, data = []) => {
+    const runQuery = async (pageToken = null, firstTime = true) => {
         if (firstTime || pageToken) {
             const variables = {
+                filter: { email: { eq: email } },
                 ...(pageToken ? { nextToken: pageToken } : {})
             };
 
@@ -433,18 +436,15 @@ const fetchTesterData = async () => {
                     listSortedTesters: {
                         items: listSortedTesters = [],
                         nextToken
-                    } = {},
-                    error = null
+                    } = {}
                 }
             } = await API.graphql(graphqlOperation(query, { ...variables }));
 
-            if (error) {
-                console.log('error', error);
+            if (!!listSortedTesters.length) {
+                return listSortedTesters[0];
+            } else {
+                return await runQuery(nextToken, false);
             }
-            console.log('Fetching tester data');
-            return runQuery(nextToken, false, [...data, ...listSortedTesters]);
-        } else {
-            return data;
         }
     };
 
@@ -506,32 +506,40 @@ const initializeTesterUser = async ({
         });
     });
 
-export const bulkCreateTesterUsers = () => async dispatch => {
-    const initializeTesters = async testerData => {
-        const totalTesters = testerData.length;
-        for (let i = 0; i < totalTesters; i++) {
-            const testerDatum = testerData[i];
-            console.log(`Starting creation of ${testerDatum.id}`);
+const removeTesterAccount = async email =>
+    await new Promise((resolve, reject) => {
+        const payload = {
+            UserPoolId: REACT_APP_COGNITO_USER_POOL_ID,
+            Username: email
+        };
+        COGNITO_CLIENT.adminDeleteUser(payload, err => {
+            if (err) {
+                return reject(err.message);
+            }
+            return resolve();
+        });
+    });
 
-            await initializeTesterUser(testerDatum);
-            console.log('Wait started');
-            await new Promise(resolve => setTimeout(() => resolve(), 2000));
-            console.log('Wait finished');
+export const resetTester = (emailAddress, setLoading) => async dispatch => {
+    try {
+        setLoading(1);
+        const testerData = await fetchTesterData(emailAddress);
+        setLoading(33);
+        await removeTesterAccount(testerData.email);
+        setLoading(66);
+        await initializeTesterUser(testerData);
+        setLoading(100);
 
-            console.log(
-                `Creation complete. ${i + 1}/${totalTesters} updated. ${
-                    testerDatum.email
-                } account created!`
-            );
-        }
-    };
-
-    const testerData = await fetchTesterData();
-
-    const oneTester = testerData.filter(
-        ({ id }) => id === '19ef46d6-e691-4185-9a07-4f847b5bf23d'
-    );
-    console.log(oneTester);
-    //
-    // await initializeTesters(oneTester);
+        dispatch(
+            showNotification({
+                type: 'success',
+                message: 'Tester reset successful!'
+            })
+        );
+    } catch (error) {
+        dispatch(
+            showNotification({ type: 'error', message: 'Tester reset failed' })
+        );
+        throw new Error("Email address doesn't exist");
+    }
 };

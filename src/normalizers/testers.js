@@ -131,11 +131,11 @@ export const normalizeTester = ({
     ...testerData
 }) => {
     const sessions = sessionsData
-        .filter(session => !!session)
+        .filter(session => !!session && !!session.project)
         .map(normalizeSessionTester);
 
     const contactNotes = contactNotesData
-        .filter(contactNote => !!contactNote)
+        .filter(contactNote => !!contactNote && !!contactNote.project)
         .map(normalizeContactNote);
 
     return {

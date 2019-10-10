@@ -1,17 +1,16 @@
 import React from 'react';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
-import { reduxForm } from 'redux-form';
+import { reduxForm, updateSyncErrors } from 'redux-form';
 
 import { Grid, makeStyles, Paper, Typography } from '@material-ui/core';
-import { NavigateButton, Input, withModal, Container } from 'components';
+import { NavigateButton, Input, Container } from 'components';
 
 //Local
-import { ConfirmationModal } from 'views/Modals';
-import { deleteOwnAccount } from 'actions';
-import { validateEmail, validateRequired, checkEmailQuery } from 'libs';
+import { resetTester } from 'actions';
+import { validateEmail, validateRequired } from 'libs';
 
-const useStyles = makeStyles(({ palette, spacing }) => ({
+const useStyles = makeStyles(({ spacing }) => ({
     root: {
         margin: spacing(4),
         padding: spacing(4),
@@ -44,24 +43,8 @@ const useStyles = makeStyles(({ palette, spacing }) => ({
     }
 }));
 
-const ResetAccount = ({
-    handleConfirmationModal,
-    deleteOwnAccount,
-    email,
-    testerId,
-    invalid,
-    asyncValidating
-}) => {
+const AdminHome = ({ handleSubmit, invalid }) => {
     const c = useStyles();
-
-    const confirmationProps = {
-        title: 'Confirmation',
-        promptText:
-            'Are you sure you want to reset this account? This action is irreversible.',
-        cancelText: 'Cancel',
-        submitText: 'Reset',
-        onSubmit: async () => await deleteOwnAccount(email, testerId)
-    };
 
     return (
         <Paper className={c.root}>
@@ -72,7 +55,8 @@ const ResetAccount = ({
                 Enter any valid email address, and the account will be reset.
                 This can be used for resetting their temporary password and/or
                 resetting the account. They will be sent an initial invitation
-                email.
+                email. NOTE: The email is case-sensitive; best to search the
+                tester record first.
             </Typography>
             <Container>
                 <Input
@@ -88,10 +72,12 @@ const ResetAccount = ({
                                 root: c.button,
                                 container: c.passwordContainer
                             }}
-                            onClick={() => console.log('arstarst')}
+                            onClick={async ({ setLoading }) =>
+                                await handleSubmit()(setLoading)
+                            }
                             enableLoader
                             color='secondary'
-                            disabled={invalid || !!asyncValidating }
+                            disabled={invalid}
                         >
                             Reset Password
                         </NavigateButton>
@@ -102,9 +88,11 @@ const ResetAccount = ({
                                 root: c.button,
                                 container: c.accountContainer
                             }}
-                            onClick={() => {}}
+                            onClick={async ({ setLoading }) =>
+                                await handleSubmit()(setLoading)
+                            }
                             enableLoader
-                            disabled={invalid || !!asyncValidating}
+                            disabled={invalid}
                         >
                             Reset Account
                         </NavigateButton>
@@ -115,39 +103,22 @@ const ResetAccount = ({
     );
 };
 
-const mapModal = {
-    handleConfirmationModal: ConfirmationModal
-};
-
-const mapState = ({ auth: { email, testerId } }) => ({
-    email,
-    testerId
-});
-
-const mapDispatch = {
-    deleteOwnAccount
-};
-
 const validate = values => ({
     ...validateRequired(values, ['email'])
 });
 
-const asyncValidate = async ({ email, isPublicUser }) => {
-    return await checkEmailQuery(email, isPublicUser);
-};
+const onSubmit = ({ email }, dispatch) => async setLoading =>
+    await dispatch(resetTester(email, setLoading)).catch(({ message }) =>
+        dispatch(updateSyncErrors('ResetAccount', { email: message }))
+    );
 
-const _ResetAccount = compose(
-    connect(
-        mapState,
-        mapDispatch
-    ),
+const _AdminHome = compose(
+    connect(),
     reduxForm({
         form: 'ResetAccount',
         validate,
-        asyncValidate,
-        asyncBlurFields: ['email']
-    }),
-    withModal(mapModal)
-)(ResetAccount);
+        onSubmit
+    })
+)(AdminHome);
 
-export { _ResetAccount as default, _ResetAccount as ResetAccount };
+export { _AdminHome as default, _AdminHome as AdminHome };
