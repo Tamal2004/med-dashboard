@@ -696,7 +696,6 @@ export const listTesterFilterData = () => async (dispatch, getState) => {
 
                 runQuery(nextToken, false);
             } catch (error) {
-                console.log(error);
                 dispatch(listTesterFilterDataAction(FAIL));
             }
         }
