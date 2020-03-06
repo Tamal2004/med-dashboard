@@ -1,3 +1,4 @@
+import gql from 'graphql-tag';
 const {
     REACT_APP_QUERY_TABLE_LIMIT,
     REACT_APP_QUERY_LIST_LIMIT,
@@ -45,6 +46,24 @@ export const ListTesterTowns = `query ListTesterTowns($nextToken: String) {
     listSortedTesters(limit: ${REACT_APP_QUERY_SEARCH_LIMIT} sortDirection: DESC nextToken: $nextToken) {
         items {
             town
+        }
+        nextToken
+    }
+}`;
+
+export const ListTesterJobs = gql`query ListTesterJobs($nextToken: String) {
+    listSortedTesters(limit: ${REACT_APP_QUERY_SEARCH_LIMIT} sortDirection: DESC nextToken: $nextToken) {
+        items {
+            jobTitle
+        }
+        nextToken
+    }
+}`;
+export const ListTesterFilterData = gql`query ListTesterFilterData($nextToken: String) {
+    listSortedTesters(limit: ${REACT_APP_QUERY_SEARCH_LIMIT} sortDirection: DESC nextToken: $nextToken) {
+        items {
+            town
+            jobTitle
         }
         nextToken
     }

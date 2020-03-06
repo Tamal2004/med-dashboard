@@ -21,7 +21,7 @@ import { CheckControlLabel } from './ControlLabel';
 import { Divider } from 'components';
 
 // Selectors
-import { selectTowns } from 'selectors';
+import { selectJobs } from 'selectors';
 
 
 const useStyles = makeStyles(({ spacing, palette, shape, typography }) => ({
@@ -66,14 +66,14 @@ const useStyles = makeStyles(({ spacing, palette, shape, typography }) => ({
     }
 }));
 
-const TownCheckFilter = ({
+const JobCheckFilter = ({
     checked,
-    allTowns,
+    allJobs,
     onChange,
-    title,
+    title
 }) => {
     const c = useStyles();
-    const [towns, setTowns] = useState(allTowns);
+    const [jobs, setJobs] = useState(allJobs);
     const [input, setInput] = useState('');
 
     const checkSize = 34;
@@ -81,43 +81,43 @@ const TownCheckFilter = ({
     const totalShown = 10;
 
     const height =
-        towns.length < totalShown - checked.length
-            ? towns.length * checkSize
+        jobs.length < totalShown - checked.length
+            ? jobs.length * checkSize
             : checked.length > totalShown - checkedShown
             ? (totalShown - checkedShown) * checkSize
             : (totalShown - checked.length) * checkSize;
 
 
     useEffect(() => {
-        setTowns(
-            allTowns.filter(
-                town =>
-                    !checked.includes(town) &&
+        setJobs(
+            allJobs.filter(
+                job =>
+                    !checked.includes(job) &&
                     (input === '' ||
-                        town.toLowerCase().includes(input.toLowerCase()))
+                        job.toLowerCase().includes(input.toLowerCase()))
             )
         );
-    }, [input, checked, allTowns]);
+    }, [input, checked, allJobs]);
 
     const isChecked = datum => checked.includes(datum);
 
-    const Town = ({ index, style }) => {
+    const Job = ({ index, style }) => {
         return (
             <CheckControlLabel
                 styles={{ root: c.check }}
                 style={style}
                 key={index}
-                checked={isChecked(towns[index])}
-                value={towns[index]}
+                checked={isChecked(jobs[index])}
+                value={jobs[index]}
             />
         );
     };
 
-    const resultsText = `Showing ${towns.length} out of ${allTowns.length -
+    const resultsText = `Showing ${jobs.length} out of ${allJobs.length -
         checked.length}`;
 
-    const selectedText = !!towns.length ? resultsText : 'No matches';
-    const unselectedText = !!towns.length
+    const selectedText = !!jobs.length ? resultsText : 'No matches';
+    const unselectedText = !!jobs.length
         ? `${resultsText} unselected`
         : 'No more matches';
 
@@ -164,10 +164,10 @@ const TownCheckFilter = ({
                         height={height}
                         width={'100%'}
                         itemSize={34}
-                        itemCount={towns.length}
+                        itemCount={jobs.length}
                         className={c.fixed}
                     >
-                        {Town}
+                        {Job}
                     </FixedSizeList>
                 </FormGroup>
             </FormControl>
@@ -175,15 +175,15 @@ const TownCheckFilter = ({
     );
 };
 
-TownCheckFilter.propTypes = {
+JobCheckFilter.propTypes = {
     checked: PropTypes.array.isRequired,
     title: PropTypes.string.isRequired
 };
 
-const mapState = state => ({ allTowns: selectTowns(state) });
+const mapState = state => ({ allJobs: selectJobs(state) });
 
-const _TownCheckFilter = connect(
+const _JobCheckFilter = connect(
     mapState
-)(TownCheckFilter);
+)(JobCheckFilter);
 
-export { _TownCheckFilter as default, _TownCheckFilter as TownCheckFilter };
+export { _JobCheckFilter as default, _JobCheckFilter as JobCheckFilter };

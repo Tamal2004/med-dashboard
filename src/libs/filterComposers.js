@@ -9,7 +9,8 @@ export const composeFilters = filters => {
         'business-sectors': 'employmentSector',
         'employee-counts': 'employeeCount',
         'employment-statuses': 'employmentStatus',
-        children: 'hasChildren'
+        children: 'hasChildren',
+        'job-title': 'jobTitle'
     };
 
     const localFilters = Object.keys(formatFilters);

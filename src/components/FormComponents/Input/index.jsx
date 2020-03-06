@@ -7,7 +7,7 @@ import useStyles from './styles';
 import { InputBase } from 'components';
 import { Control } from '../Control';
 
-const Input = ({ required, label, isCard, active, width, ...restProps }) => {
+const Input = ({ required, label, isCard, active, width, icon, ...restProps }) => {
     const { cardRoot, inactiveRoot, ...c } = useStyles();
 
     const [error, setError] = useState(false);
@@ -16,11 +16,12 @@ const Input = ({ required, label, isCard, active, width, ...restProps }) => {
         root: clsx(c.root, isCard && cardRoot, !active && inactiveRoot)
     };
 
-    const controlProps = { required, label, isCard, width, error, active};
+    const controlProps = { required, label, isCard, width, error, active, icon };
     return (
         <Control {...controlProps}>
             <InputBase
                 handleError={error => setError(error)}
+                readOnly={!active}
                 styles={inputStyles}
                 normalize={value => (value.trim() === '' ? null : value)}
                 {...restProps}
@@ -32,6 +33,7 @@ const Input = ({ required, label, isCard, active, width, ...restProps }) => {
 Input.defaultProps = {
     required: false,
     isCard: false,
+    icon: false,
     active: true
 };
 

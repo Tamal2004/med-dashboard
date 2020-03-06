@@ -10,7 +10,7 @@ import { Input, EditableCard, EditableFooter, Select } from 'components';
 import { selectTesterId, selectCountries } from 'selectors';
 
 // Actions
-import { updateTester } from 'actions';
+import { updateTester, copyToClipboard } from 'actions';
 
 // Normalizers
 import { normalizePhone } from 'normalizers';
@@ -18,10 +18,10 @@ import { normalizePhone } from 'normalizers';
 const ContactDetails = ({
     countries,
     invalid,
-    change,
     reset,
     handleSubmit,
-    submitting
+    submitting,
+    copyEmail
 }) => {
     const [isEditing, setEditing] = useState(false);
     return (
@@ -40,6 +40,7 @@ const ContactDetails = ({
                 isCard
                 active={false}
                 required={isEditing}
+                icon={copyEmail}
             />
             <Input
                 label='Phone number'
@@ -96,8 +97,9 @@ const mapState = state => ({
         'manualAddress'
     )
 });
-
-const mapDispatch = { change };
+const mapDispatch = (dispatch) => ({
+    copyEmail: () => dispatch(copyToClipboard('ContactDetails', 'email'))
+});
 
 const validate = values => {
     const required = ['email', 'phone', 'town', 'country'];

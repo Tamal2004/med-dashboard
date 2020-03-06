@@ -21,7 +21,7 @@ const useStyles = makeStyles(({ spacing, typography, palette, shadows }) => ({
         textTransform: 'uppercase',
         fontSize: '1rem',
         color: palette.common.black,
-        fontWeight: 700,
+        fontWeight: 700
     },
     cellDataRoot: {
         width: '28vw'
@@ -49,8 +49,8 @@ const ReportTable = ({ data, type }) => {
         </TableCell>
     );
 
-    return data.map(row => (
-        <Paper key={row.testerId} className={c.root}>
+    return data.map((row, index) => (
+        <Paper key={`${row.testerId}${index}`} className={c.root}>
             <Table className={c.table}>
                 <TableHead>
                     <TableRow>
@@ -112,39 +112,8 @@ const ReportTable = ({ data, type }) => {
     ));
 };
 
-const rows = [
-    {
-        testerId: 'Testeraitr',
-        date: '12/12/1212',
-        time: '12:30PM',
-        location: 'Marse',
-        profile: 'Hello',
-        name: 'Jhon Doe',
-        phoneNumber: '123-455',
-        age: 20,
-        sex: 'Male',
-        ethnicity: 'Marsian',
-        jobTitle: 'Astronaut',
-        notes: 'beware of dusts'
-    },
-    {
-        testerId: 'Testerastitarn',
-        date: '11/11/1111',
-        time: '00:30AM',
-        location: 'Bay of Bengal',
-        profile: 'World',
-        name: 'Jane Doe',
-        phoneNumber: '234-466',
-        age: 22,
-        sex: 'Female',
-        ethnicity: 'Mermaid',
-        jobTitle: 'Surfing',
-        notes: "don't throw plastics in the ocean"
-    }
-];
-
 ReportTable.defaultProps = {
-    data: rows,
+    data: [],
     type: 'named'
 };
 

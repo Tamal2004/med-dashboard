@@ -15,7 +15,7 @@ import {
     FETCH_TESTER,
     LIST_TESTERS,
     LIST_TESTERS_SEARCH,
-    LIST_TESTER_TOWNS,
+    LIST_TESTER_FILTER_DATA,
     LIST_INCOMPLETE_PROJECTS,
     SET_FILTERS,
     RESET_FILTERS,
@@ -162,15 +162,22 @@ const testersReducer = (
             }
         }
 
-        case LIST_TESTER_TOWNS: {
+        case LIST_TESTER_FILTER_DATA: {
             if (isSuccess) {
-                const towns = payload
-                    ? [...new Set([...search.towns, ...payload])]
+                const { towns: townsPayload, jobs: jobsPayload } = payload;
+
+                const jobs = jobsPayload
+                    ? [...new Set([...search.jobs, ...jobsPayload])]
                     : [];
+                const towns = townsPayload
+                    ? [...new Set([...search.towns, ...townsPayload])]
+                    : [];
+
                 return {
                     ...state,
                     search: {
                         ...search,
+                        jobs,
                         towns
                     }
                 };

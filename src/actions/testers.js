@@ -1,5 +1,5 @@
 import API, { graphqlOperation } from '@aws-amplify/api';
-import { initialize } from 'redux-form';
+import { initialize, formValueSelector } from 'redux-form';
 import { gql } from 'apollo-boost';
 import uuid from 'uuid/v4';
 
@@ -27,7 +27,7 @@ import {
     ListTestersSearch,
     UpdateTester,
     RemoveTester,
-    ListTesterTowns
+    ListTesterFilterData
 } from 'graphql/tester';
 import { CreateContactNotes, CreateContactNote } from 'graphql/contactNotes';
 
@@ -39,7 +39,7 @@ import {
     CREATE_TESTER,
     LIST_TESTERS,
     LIST_TESTERS_SEARCH,
-    LIST_TESTER_TOWNS,
+    LIST_TESTER_FILTER_DATA,
     FETCH_TESTER,
     UPDATE_TESTER,
     REMOVE_TESTER,
@@ -62,6 +62,7 @@ import {
     selectTesterContactNoteIds,
     selectIsValidTesterQuery,
     selectTowns,
+    selectJobs,
     selectBackwardTesterId,
     selectForwardTesterId
 } from 'selectors';
@@ -645,14 +646,14 @@ export const requestMail = mail => async dispatch => {
     }
 };
 
-const listTesterTownsAction = (async, payload) => ({
-    type: LIST_TESTER_TOWNS,
+const listTesterFilterDataAction = (async, payload) => ({
+    type: LIST_TESTER_FILTER_DATA,
     async,
     payload
 });
 
-export const listTesterTowns = () => async (dispatch, getState) => {
-    dispatch(listTesterTownsAction(REQUEST));
+export const listTesterFilterData = () => async (dispatch, getState) => {
+    dispatch(listTesterFilterDataAction(REQUEST));
     const runQuery = async (pageToken = null, firstTime = true) => {
         if (firstTime || pageToken) {
             const variables = {
@@ -668,24 +669,43 @@ export const listTesterTowns = () => async (dispatch, getState) => {
                         } = {}
                     }
                 } = await API.graphql(
-                    graphqlOperation(ListTesterTowns, variables)
+                    graphqlOperation(ListTesterFilterData, variables)
                 );
 
                 dispatch(
-                    listTesterTownsAction(
+                    listTesterFilterDataAction(
                         SUCCESS,
-                        listSortedTesters.map(({ town }) => town)
+                        listSortedTesters.reduce(
+                            (acm, { town, jobTitle = null }) => {
+                                const towns = [...acm.towns, town];
+                                if (!!jobTitle) {
+                                    const job =
+                                        jobTitle.length < 28
+                                            ? jobTitle
+                                            : `${jobTitle.substring(0, 28)}...`;
+                                    return {
+                                        towns,
+                                        jobs: [...acm.jobs, job]
+                                    };
+                                } else return { ...acm, towns };
+                            },
+                            { towns: [], jobs: [] }
+                        )
                     )
                 );
 
                 runQuery(nextToken, false);
-            } catch {
-                dispatch(listTesterTownsAction(FAIL));
+            } catch (error) {
+                console.log(error);
+                dispatch(listTesterFilterDataAction(FAIL));
             }
         }
     };
 
-    if (!selectTowns(getState()).length) return await runQuery();
+    const store = getState();
+    const needsTowns = !selectTowns(store).length;
+    const needsJobs = !selectJobs(store).length;
+    if (needsTowns || needsJobs) return await runQuery();
 };
 
 export const setFilter = filters => ({
@@ -699,7 +719,7 @@ const resetFiltersAction = () => ({
 
 export const resetFilters = () => dispatch => {
     dispatch(resetFiltersAction());
-    dispatch(listTesterTowns());
+    dispatch(listTesterFilterData());
 };
 
 export const setPage = page => ({
@@ -729,4 +749,9 @@ export const moveForwardTester = testerId => (dispatch, getState) => {
     const { id, page } = selectForwardTesterId(store, testerId);
     history.push(`/tester/${id}?search=true`);
     page && dispatch(setPage(page));
+};
+
+export const copyToClipboard = (form, field) => async (_, getState) => {
+    const copyValue = formValueSelector(form)(getState(), field);
+    return await navigator.clipboard.writeText(copyValue);
 };

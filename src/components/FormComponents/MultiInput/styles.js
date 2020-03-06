@@ -1,11 +1,16 @@
 import { makeStyles } from '@material-ui/core';
 
-export default makeStyles(({ palette, spacing, typography }) => ({
+export default makeStyles(({ spacing, typography }) => ({
     root: {
-        height: spacing(18)
+        height: spacing(18),
+        padding: 0,
+        paddingLeft: spacing(2)
     },
     cardRoot: {
-        height: spacing(12),
+        paddingTop: spacing(),
+        paddingBottom: spacing(),
+        paddingRight: spacing(2),
+        height: '100%',
         fontSize: typography['subtitle2'].fontSize,
         marginTop: spacing(0.5),
         marginBottom: spacing(0.5)
@@ -21,6 +26,12 @@ export default makeStyles(({ palette, spacing, typography }) => ({
         pointerEvents: 'none'
     },
     inputMultiline: {
-        overflow: 'hidden'
+        paddingTop: spacing(),
+        paddingBottom: spacing(),
+        overflowY: 'scroll'
+    },
+    cardInputMultiline: {
+        paddingTop: 0,
+        paddingBottom: 0
     }
 }));

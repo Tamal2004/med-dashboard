@@ -62,8 +62,30 @@ export const selectAreProjectsSearching = createCachedSelector(
     ({ isSearching }) => isSearching
 )(() => 'placeholder');
 
+const composeReportTimestamp = ({ date, time }) => {
+    const [day, month, year] = date.split('/');
+    const [hour, minute] = time.split(':');
+    const hourTime = hour * 60 * 60 * 1000;
+    const minuteTime = minute * 60 * 1000;
+    const dateTime = new Date(`${month}/${day}/${year}`).getTime();
+    return dateTime + hourTime + minuteTime;
+};
+
 // Project Report
 export const selectProjectReport = createCachedSelector(
     selectProjects,
-    ({ report }) => report
+    ({ report: { reportData, ...restReport } }) => {
+        if (!!reportData) {
+            const sortedReportData = reportData.sort((a, b) => {
+                const aTime = composeReportTimestamp(a);
+                const bTime = composeReportTimestamp(b);
+                if (aTime > bTime) return 1;
+                if (aTime < bTime) return -1;
+                if (aTime === bTime) return 0;
+            });
+
+            return { reportData: sortedReportData, ...restReport };
+        }
+        return { reportData, ...restReport };
+    }
 )(() => 'placeholder');

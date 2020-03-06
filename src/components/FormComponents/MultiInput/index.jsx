@@ -16,7 +16,13 @@ const MultiInput = ({
     width,
     ...restProps
 }) => {
-    const { cardRoot, inactiveRoot, ...c } = useStyles();
+    const {
+        cardRoot,
+        inactiveRoot,
+        inputMultiline,
+        cardInputMultiline,
+        ...c
+    } = useStyles();
     const [error, setError] = useState(false);
     const multiInputStyles = {
         ...c,
@@ -24,9 +30,9 @@ const MultiInput = ({
             c.root,
             isCard && cardRoot,
             !active && inactiveRoot,
-            active && c.scrollEnable,
             !!memo && c.memoRoot
-        )
+        ),
+        inputMultiline: clsx(inputMultiline, isCard && cardInputMultiline)
     };
     const controlProps = { required, label, isCard, memo, width, error };
 
@@ -35,9 +41,9 @@ const MultiInput = ({
             <InputBase
                 handleError={error => setError(error)}
                 styles={multiInputStyles}
+                readOnly={!active}
                 multiline
-                rows={8}
-                rowsMax={8}
+                rows={isCard ? '' : 8}
                 normalize={value => (value.trim() === '' ? null : value)}
                 {...restProps}
             />

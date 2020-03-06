@@ -4,7 +4,8 @@ import PropTypes from 'prop-types';
 
 // Local
 import useStyles from './styles';
-import { Grid, FormLabel, Typography } from '@material-ui/core';
+import { Grid, FormLabel, Typography, IconButton } from '@material-ui/core';
+import CopyIcon from '@material-ui/icons/FileCopy';
 
 const Control = ({
     required = false,
@@ -14,7 +15,8 @@ const Control = ({
     children,
     width,
     error,
-    active
+    active,
+    icon
 }) => {
     const c = useStyles();
     return (
@@ -31,10 +33,26 @@ const Control = ({
                         >
                             {label}
                         </Typography>
+
+                        {icon && (
+                            <IconButton
+                                className={c.iconButton}
+                                size='small'
+                                onClick={icon}
+                            >
+                                <CopyIcon
+                                    className={c.icon}
+                                    color='secondary'
+                                />
+                            </IconButton>
+                        )}
                         {active && <span className={c.required}>{error}</span>}
                     </FormLabel>
                     {memo && (
-                        <Typography className={c.memo} variant={isCard ? 'caption' : 'subtitle2'}>
+                        <Typography
+                            className={c.memo}
+                            variant={isCard ? 'caption' : 'subtitle2'}
+                        >
                             {memo}
                         </Typography>
                     )}
@@ -55,6 +73,7 @@ const Control = ({
 Control.defaultProps = {
     required: false,
     isCard: false,
+    icon: false,
     isCompact: false,
     width: 6,
     isError: false,

@@ -9,6 +9,7 @@ export default {
         sortIndices: [],
         queryId: null,
         isSearching: false,
-        towns: []
+        towns: [],
+        jobs: []
     }
 };

@@ -109,6 +109,11 @@ export const selectTowns = createCachedSelector(
     ({ towns }) => towns
 )(() => 'placeholder');
 
+export const selectJobs = createCachedSelector(
+    selectTestersSearch,
+    ({ jobs }) => jobs
+)(() => 'placeholder');
+
 export const selectSortIndices = createCachedSelector(
     selectTestersSearch,
     ({ sortIndices }) => sortIndices

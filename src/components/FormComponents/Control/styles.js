@@ -44,5 +44,11 @@ export default makeStyles(({ breakpoints, palette, spacing }) => ({
         color: 'red',
         fontSize: 13,
         marginLeft: 10
+    },
+    iconButton: {
+        marginLeft: spacing(0.5)
+    },
+    icon: {
+        fontSize: spacing(2)
     }
 }));
