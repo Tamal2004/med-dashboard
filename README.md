@@ -1,4 +1,4 @@
-# Web Usabability Database Portal
+# Med Database Portal
  - Developers: Matt, Nabil
  
 # Features
